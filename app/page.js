@@ -99,7 +99,8 @@ export default function Home() {
           className={`text-lg md:text-xl max-w-2xl mb-10 text-gray-600 leading-relaxed ${mounted ? "animate-fade-in-up" : "opacity-0"}`}
           style={{animationDelay: "0.7s"}}
         >
-          Our new platform is coming soon. We're building exceptional web solutions, custom software, and innovative SaaS products.
+          Our new platform is coming soon. We are
+            building exceptional web solutions, custom software, and innovative SaaS products.
         </p>
         
         <div 
