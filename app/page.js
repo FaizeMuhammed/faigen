@@ -1,12 +1,29 @@
 'use client'
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeTab, setActiveTab] = useState('web');
-
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const textVariants = ["Innovative", "Powerful", "Seamless"];
+  
+  // Ref for the animated gradient background
+  const canvasRef = useRef(null);
+  
+  // Add link to Montserrat font in the head section
+  useEffect(() => {
+    const linkElement = document.createElement('link');
+    linkElement.rel = 'stylesheet';
+    linkElement.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap';
+    document.head.appendChild(linkElement);
+    
+    return () => {
+      document.head.removeChild(linkElement);
+    };
+  }, []);
+  
   useEffect(() => {
     setMounted(true);
     
@@ -15,399 +32,478 @@ export default function Home() {
     };
     
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    
+    // Text rotation effect
+    const textInterval = setInterval(() => {
+      setCurrentTextIndex((prev) => (prev + 1) % textVariants.length);
+    }, 3000);
+    
+    // Initialize gradient canvas
+    if (canvasRef.current) {
+      initGradientCanvas();
+    }
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearInterval(textInterval);
+    };
   }, []);
-
+  
+  // Elegant wave-like background animation with gradient
+  const initGradientCanvas = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // Create gradient background
+    let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradient.addColorStop(0, '#ffffff');
+    gradient.addColorStop(0.5, '#f5f5f5');
+    gradient.addColorStop(1, '#fafafa');
+    
+    // Animation parameters
+    let time = 0;
+    const waveCount = 6;
+    const dotCount = Math.floor(window.innerWidth / 30); // Dots per wave
+    
+    function animate() {
+      // Clear canvas and fill with gradient
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw very subtle grid
+      const gridSize = 50;
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.02)';
+      ctx.lineWidth = 1;
+      
+      for (let x = 0; x < canvas.width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      
+      for (let y = 0; y < canvas.height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+      
+      // Draw waves with dots
+      for (let waveIndex = 0; waveIndex < waveCount; waveIndex++) {
+        const waveHeight = canvas.height / (waveCount + 1) * (waveIndex + 1);
+        const amplitude = 40;
+        const frequency = 0.01;
+        const phaseShift = time * 0.5 + waveIndex * Math.PI / 4;
+        
+        // Draw connecting line (very subtle)
+        ctx.beginPath();
+        ctx.moveTo(0, waveHeight);
+        
+        for (let x = 0; x < canvas.width; x += 2) {
+          const y = waveHeight + Math.sin(x * frequency + phaseShift) * amplitude;
+          ctx.lineTo(x, y);
+        }
+        
+        // Create gradient for the wave lines
+        const waveGradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        waveGradient.addColorStop(0, 'rgba(0, 0, 0, 0.01)');
+        waveGradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.04)');
+        waveGradient.addColorStop(1, 'rgba(0, 0, 0, 0.01)');
+        
+        ctx.strokeStyle = waveGradient;
+        ctx.stroke();
+        
+        // Draw dots on the wave
+        for (let i = 0; i < dotCount; i++) {
+          const x = (canvas.width / (dotCount - 1)) * i;
+          const y = waveHeight + Math.sin(x * frequency + phaseShift) * amplitude;
+          
+          // Draw main dot
+          const dotSize = (i % 3 === 0) ? 2.5 : 1.5;
+          ctx.beginPath();
+          ctx.arc(x, y, dotSize, 0, Math.PI * 2);
+          
+          // Add gradient to dots - darker in the middle of the screen
+          const opacity = 0.1 + (0.1 * Math.sin((x / canvas.width) * Math.PI));
+          ctx.fillStyle = `rgba(0, 0, 0, ${opacity})`;
+          ctx.fill();
+          
+          // Sometimes draw connector lines between dots
+          if (i > 0 && i % 4 === 0) {
+            const prevX = (canvas.width / (dotCount - 1)) * (i - 1);
+            const prevY = waveHeight + Math.sin(prevX * frequency + phaseShift) * amplitude;
+            
+            ctx.beginPath();
+            ctx.moveTo(prevX, prevY);
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.stroke();
+          }
+        }
+      }
+      
+      // Draw a few floating isolated dots with gradient opacity
+      for (let i = 0; i < 30; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const size = Math.random() * 1.5 + 0.5;
+        
+        // Calculate opacity based on position for gradient effect
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const distFromCenter = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+        const maxDist = Math.sqrt(Math.pow(canvas.width/2, 2) + Math.pow(canvas.height/2, 2));
+        const opacity = 0.05 + (0.05 * (1 - distFromCenter/maxDist));
+        
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 0, 0, ${opacity})`;
+        ctx.fill();
+      }
+      
+      // Update time for animation
+      time += 0.01;
+      
+      requestAnimationFrame(animate);
+    }
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      // Update gradient on resize
+      gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, '#ffffff');
+      gradient.addColorStop(0.5, '#f5f5f5');
+      gradient.addColorStop(1, '#fafafa');
+    });
+    
+    animate();
+  };
+  
+  // Framer motion variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+  
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10
+      }
+    }
+  };
+  
   return (
-    <div className="min-h-screen bg-white text-black flex flex-col overflow-hidden">
+    <div className="min-h-screen text-black flex flex-col overflow-hidden relative">
+      {/* Minimal Grid Animation Background */}
+      <canvas 
+        ref={canvasRef} 
+        className="absolute inset-0 w-full h-full -z-10"
+      ></canvas>
+      
       {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? "py-2 bg-white/90 backdrop-blur-lg shadow-sm" : "py-4"}`}>
+      <motion.nav 
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? "py-2 backdrop-blur-lg  shadow-sm" : "py-4 "}`}
+      >
         <div className="flex justify-between items-center px-4 md:px-8 lg:px-16 max-w-7xl mx-auto w-full">
           <div className={`w-32 h-12 relative transition-all duration-500 ${scrolled ? "scale-90" : ""}`}>
-            {/* Logo placeholder */}
             <div className="absolute inset-0 flex items-center">
-              <Image 
-                src="/ChatGPT_Image_Apr_4__2025__10_40_51_PM-removebg-preview.png" 
-                alt="Faigen" 
-                width={80} 
-                height={48} 
-                className="object-contain"
-              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Replace with your logo */}
+                {/* <Image 
+                  src="/ChatGPT_Image_Apr_4__2025__10_40_51_PM-removebg-preview.png" 
+                  alt="Your Company" 
+                  width={80} 
+                  height={48} 
+                  className="object-contain"
+                /> */}
+              </motion.div>
             </div>
           </div>
           
-          <div className="flex items-center space-x-4">
-            <div className="hidden md:flex space-x-6 mr-8">
-              {["Web", "Software", "Products"].map((item) => (
-                <a 
+          <motion.div 
+            className="flex items-center space-x-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            <div className="hidden md:flex space-x-8 mr-8">
+              {["Products", "Solutions", "Resources", "Pricing"].map((item, index) => (
+                <motion.a 
                   key={item} 
                   href="#" 
-                  className="relative text-sm font-medium hover:text-gray-600 transition-colors duration-300 group"
+                  className="relative text-sm font-medium text-black transition-colors duration-300 group"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 + index * 0.1 }}
+                  whileHover={{ y: -2 }}
                 >
                   {item}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-                </a>
+                </motion.a>
               ))}
             </div>
             
-            <button className="px-6 py-2.5 text-sm font-medium border border-black rounded-full hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105">
+            <motion.button 
+              className="px-6 py-2.5 text-sm font-medium border border-black rounded-full hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               Contact
-            </button>
-            <button className="p-2 md:hidden">
+            </motion.button>
+            
+            <motion.button 
+              className="p-2 md:hidden text-black"
+              whileTap={{ scale: 0.9 }}
+            >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Hero Section */}
-      <main className="flex flex-col items-center justify-center px-4 md:px-8 py-24 md:py-28 text-center max-w-7xl mx-auto w-full mt-12">
-        <div 
-          className={`mb-8 w-48 h-48 relative mx-auto ${mounted ? "animate-fade-in-up" : "opacity-0"}`} 
-          style={{animationDelay: "0.2s"}}
-        >
-          {/* Animated logo */}
-          <div className="absolute inset-0 flex items-center justify-center animate-floating">
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gray-100/80 rounded-full blur-xl"></div>
-              <Image 
-                src="/WhatsApp_Image_2025-04-04_at_9.53.44_PM-removebg-preview.png" 
-                alt="Faigen" 
-                width={180} 
-                height={180} 
-                className="object-contain relative z-10"
-              />
-            </div>
-          </div>
-        </div>
-        
-        <h1 
-          className={`text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-black via-gray-700 to-black ${mounted ? "animate-fade-in-up" : "opacity-0"}`}
-          style={{animationDelay: "0.4s"}}
-        >
-          Crafting Digital Excellence
-        </h1>
-        
-        <div
-          className={`relative w-24 h-1 bg-black mx-auto mb-8 ${mounted ? "animate-width-expand" : "w-0"}`}
-          style={{animationDelay: "0.6s"}}
-        ></div>
-        
-        <p 
-          className={`text-lg md:text-xl max-w-2xl mb-10 text-gray-600 leading-relaxed ${mounted ? "animate-fade-in-up" : "opacity-0"}`}
-          style={{animationDelay: "0.7s"}}
-        >
-          Our new platform is coming soon. We are
-            building exceptional web solutions, custom software, and innovative SaaS products.
-        </p>
-        
-        <div 
-          className={`flex flex-col sm:flex-row gap-4 ${mounted ? "animate-fade-in-up" : "opacity-0"}`}
-          style={{animationDelay: "0.9s"}}
-        >
-          <button className="px-8 py-4 bg-black text-white rounded-full hover:bg-gray-900 transition-all duration-300 text-lg font-medium transform hover:scale-105 hover:shadow-lg group overflow-hidden relative">
-            <span className="flex items-center justify-center relative z-10">
-              Request Early Access
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </span>
-            <span className="absolute bottom-0 left-0 w-full h-0 bg-gray-800 transition-all duration-300 group-hover:h-full -z-0"></span>
-          </button>
-        </div>
-        
-        {/* Countdown Timer */}
-        <div 
-          className={`mt-16 flex justify-center space-x-2 md:space-x-6 max-w-2xl w-full ${mounted ? "animate-fade-in-up" : "opacity-0"}`}
-          style={{animationDelay: "1.1s"}}
-        >
-          {[
-            { value: "15", label: "Days" },
-            { value: "08", label: "Hours" },
-            { value: "24", label: "Minutes" },
-            { value: "33", label: "Seconds" }
-          ].map((item, index) => (
-            <div key={index} className="bg-white border border-gray-200 px-3 py-4 md:px-6 md:py-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 group hover:border-black">
-              <div className="text-2xl md:text-4xl font-bold">{item.value}</div>
-              <div className="text-xs md:text-sm text-gray-500 group-hover:text-black transition-colors duration-300">{item.label}</div>
-            </div>
-          ))}
-        </div>
-      </main>
-
-      {/* Services Preview */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-6xl mx-auto px-4 md:px-8">
-          <div className="flex justify-center mb-12 overflow-x-auto py-2 no-scrollbar">
-            <div className="flex space-x-2 md:space-x-4 rounded-full bg-gray-100 p-1.5">
-              {[
-                { id: 'web', label: 'Web Development' },
-                { id: 'software', label: 'Software Solutions' },
-                { id: 'saas', label: 'SaaS Products' }
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-base font-medium transition-all duration-300 ${
-                    activeTab === tab.id 
-                      ? 'bg-white text-black shadow-md transform scale-105' 
-                      : 'text-gray-500 hover:text-gray-800'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className={`transition-all duration-500 transform ${activeTab === 'web' ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 absolute'}`}>
-              <div className="bg-white border border-gray-100 p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 h-full">
-                <div className="h-64 bg-gray-50 rounded-xl mb-6 overflow-hidden relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <svg className="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                    </svg>
-                  </div>
-                  <div className="absolute top-4 left-4 right-4 h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full w-3/4 bg-gray-300 rounded-full"></div>
-                  </div>
-                  <div className="absolute top-10 left-4 right-4 grid grid-cols-3 gap-2">
-                    <div className="h-8 bg-gray-200 rounded"></div>
-                    <div className="h-8 bg-gray-200 rounded"></div>
-                    <div className="h-8 bg-gray-200 rounded"></div>
+      <main className="flex flex-col md:flex-row items-center justify-between px-4 md:px-8 py-12 md:py-28 min-h-screen max-w-7xl mx-auto w-full">
+        {mounted && (
+          <>
+            {/* Left content */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="z-10 w-full md:w-3/5 text-left"
+            >
+              {/* Logo */}
+              <motion.div 
+                variants={itemVariants}
+                className="mb-12 w-32 h-32 relative"
+              >
+                <div className="flex items-center justify-start">
+                  <div className="relative">
+                    {/* Simple circle around logo */}
+                    <div className="absolute -inset-1 border border-black/10 rounded-full"></div>
+                    {/* Logo */}
+                    <Image 
+                      src="/WhatsApp_Image_2025-04-04_at_9.53.44_PM-removebg-preview.png" 
+                      alt="Faigen" 
+                      width={100} 
+                      height={100} 
+                      className="object-contain relative z-10"
+                    />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-3">Web Development</h3>
-                <p className="text-gray-600">Responsive, modern, and performance-optimized websites built with the latest technologies.</p>
-              </div>
-            </div>
-            
-            <div className={`transition-all duration-500 transform ${activeTab === 'software' ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 absolute'}`}>
-              <div className="bg-white border border-gray-100 p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 h-full">
-                <div className="h-64 bg-gray-50 rounded-xl mb-6 overflow-hidden relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <svg className="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                  </div>
-                  <div className="absolute top-6 left-6 right-6 bottom-6 border-2 border-dashed border-gray-200 rounded-lg flex items-center justify-center">
-                    <div className="w-3/4 h-3/4 bg-gray-200 rounded-lg grid grid-cols-2 gap-2 p-4">
-                      <div className="h-4 bg-gray-300 rounded"></div>
-                      <div className="h-4 bg-gray-300 rounded"></div>
-                      <div className="h-4 bg-gray-300 rounded"></div>
-                      <div className="h-4 bg-gray-300 rounded"></div>
-                    </div>
-                  </div>
+              </motion.div>
+              
+              {/* Dynamic text heading with different font */}
+              <motion.div variants={itemVariants} className="overflow-hidden mb-12">
+                <div className="">
+                  <motion.h1 
+                    key={currentTextIndex}
+                    initial={{ y: 40, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -40, opacity: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-none font-sans md:leading-[0.9] lg:leading-[0.9]"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    <span className="block">We Create</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-700 to-black">
+                      {textVariants[currentTextIndex]}
+                    </span>
+                    <span className="block">Solutions.</span>
+                  </motion.h1>
                 </div>
-                <h3 className="text-xl font-bold mb-3">Software Solutions</h3>
-                <p className="text-gray-600">Custom software development tailored to your business needs, from desktop applications to enterprise systems.</p>
-              </div>
-            </div>
+              </motion.div>
+              
+              {/* <motion.div
+                variants={itemVariants}
+                className="relative w-24 h-0.5 bg-black mb-8"
+              ></motion.div> */}
+              
+              {/* Paragraph only visible on mobile */}
+              <motion.p 
+                variants={itemVariants}
+                className="text-lg md:text-xl max-w-xl mb-10 text-black/80 leading-relaxed md:hidden"
+              >
+                Building exceptional digital experiences that transform 
+                how businesses operate in the modern world.
+              </motion.p>
+              
+              {/* Removed all buttons */}
+              <motion.div 
+                variants={itemVariants}
+                className="h-16" /* Empty space where buttons were */
+              >
+              </motion.div>
+            </motion.div>
             
-            <div className={`transition-all duration-500 transform ${activeTab === 'saas' ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 absolute'}`}>
-              <div className="bg-white border border-gray-100 p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 h-full">
-                <div className="h-64 bg-gray-50 rounded-xl mb-6 overflow-hidden relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <svg className="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                    </svg>
-                  </div>
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32">
-                    <div className="absolute inset-0 rounded-full border-4 border-gray-200 border-dashed animate-slow-spin"></div>
-                    <div className="absolute inset-4 rounded-full border-4 border-gray-300 border-dashed animate-reverse-spin"></div>
-                    <div className="absolute inset-8 rounded-full border-4 border-gray-200 border-dashed animate-slow-spin"></div>
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold mb-3">SaaS Products</h3>
-                <p className="text-gray-600">Innovative cloud-based software solutions that scale with your business and provide recurring value.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Email Capture */}
-      <section className="py-16 md:py-24 px-4 md:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gray-50 -z-10"></div>
-        <div className="absolute inset-0 opacity-10 -z-10">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
-          <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-transparent via-gray-500 to-transparent"></div>
-          <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-transparent via-gray-500 to-transparent"></div>
-          <div className="grid grid-cols-12 h-full">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="border-l border-gray-200 h-full"></div>
-            ))}
-          </div>
-          <div className="grid grid-rows-6 w-full h-full">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="border-t border-gray-200 w-full"></div>
-            ))}
-          </div>
-        </div>
-        
-        <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-xl relative z-10">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4">Stay in the Loop</h2>
-            <p className="text-gray-600">Be the first to experience our platform and receive exclusive updates.</p>
-          </div>
-          
-          <form className="flex flex-col md:flex-row gap-4">
-            <input 
-              type="email" 
-              placeholder="Enter your email" 
-              className="flex-1 px-6 py-4 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black/20 transition-all duration-300"
-            />
-            <button className="group relative px-8 py-4 bg-black text-white rounded-full overflow-hidden transition-all duration-300">
-              <span className="relative z-10 flex items-center justify-center transform group-hover:translate-x-1 transition-transform duration-300">
-                Notify Me
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-              </span>
-              <div className="absolute inset-0 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 bg-gray-800"></div>
-            </button>
-          </form>
-        </div>
-      </section>
-
-      {/* Abstract design elements */}
-      <div className="fixed top-1/4 right-0 w-96 h-96 bg-gray-100 rounded-full blur-3xl opacity-30 -z-10 animate-pulse"></div>
-      <div className="fixed bottom-1/4 left-0 w-96 h-96 bg-gray-100 rounded-full blur-3xl opacity-30 -z-10 animate-pulse" style={{animationDuration: "8s"}}></div>
-      <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-gray-200 rounded-full blur-3xl opacity-20 -z-10 animate-pulse" style={{animationDuration: "12s"}}></div>
-      
-      {/* Footer */}
-      <footer className="py-8 md:py-12 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-            <div className="mb-6 md:mb-0">
-              <div className="w-32 h-12 relative">
-                <Image 
-                  src="/ChatGPT_Image_Apr_4__2025__10_40_51_PM-removebg-preview.png" 
-                  alt="Faigen" 
-                  width={100} 
-                  height={48} 
-                  className="object-contain brightness-0 invert"
-                />
-              </div>
-            </div>
-            
-            <div className="flex flex-wrap justify-center gap-8">
-              {["Web Development", "Software Solutions", "SaaS Products", "About Us"].map((link) => (
-                <a key={link} href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
-                  {link}
-                </a>
-              ))}
-            </div>
-          </div>
-          
-          <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">© 2025 Faigen. All rights reserved.</p>
-            
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              {/* Social icons */}
-              {["github", "linkedin", "twitter"].map((social) => (
-                <a key={social} href="#" className="text-gray-400 hover:text-white transition-colors duration-300 hover:scale-110 transform inline-block">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    {social === "github" && <>
-                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                    </>}
-                    {social === "twitter" && <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>}
-                    {social === "linkedin" && <>
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                      <rect x="2" y="9" width="4" height="12"></rect>
-                      <circle cx="4" cy="4" r="2"></circle>
-                    </>}
+            {/* Right side - Tech image frame with developer icons - back to original size */}
+            <motion.div 
+              className="hidden md:block w-2/5 h-[500px] relative mt-10 md:mt-0"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <div className="absolute inset-0 border border-black/10 rounded-lg overflow-hidden backdrop-blur-sm bg-white/30 z-10">
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/5"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  {/* Abstract technology elements with coding icons */}
+                  <svg className="w-full h-full p-8 text-black" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {/* Circuit-like pattern */}
+                    <path d="M20 100 H70 M130 100 H180" stroke="currentColor" strokeWidth="1" strokeOpacity="0.2" />
+                    <path d="M100 20 V70 M100 130 V180" stroke="currentColor" strokeWidth="1" strokeOpacity="0.2" />
+                    <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" fill="none" />
+                    <circle cx="100" cy="100" r="30" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" fill="none" />
+                    <circle cx="100" cy="100" r="10" stroke="currentColor" strokeWidth="1" fill="none" />
+                    
+                    {/* Connection points */}
+                    <circle cx="100" cy="50" r="4" fill="currentColor" fillOpacity="0.5" />
+                    <circle cx="100" cy="150" r="4" fill="currentColor" fillOpacity="0.5" />
+                    <circle cx="50" cy="100" r="4" fill="currentColor" fillOpacity="0.5" />
+                    <circle cx="150" cy="100" r="4" fill="currentColor" fillOpacity="0.5" />
+                    
+                    {/* Diagonal lines */}
+                    <path d="M60 60 L140 140" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" />
+                    <path d="M140 60 L60 140" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" />
+                    
+                    {/* Small dots */}
+                    <circle cx="70" cy="70" r="2" fill="currentColor" fillOpacity="0.7" />
+                    <circle cx="130" cy="130" r="2" fill="currentColor" fillOpacity="0.7" />
+                    <circle cx="130" cy="70" r="2" fill="currentColor" fillOpacity="0.7" />
+                    <circle cx="70" cy="130" r="2" fill="currentColor" fillOpacity="0.7" />
+                    
+                    {/* Code brackets - Left */}
+                    <path d="M40 60 L30 100 L40 140" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.6" />
+                    
+                    {/* Code brackets - Right */}
+                    <path d="M160 60 L170 100 L160 140" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.6" />
+                    
+                    {/* React-like atom icon */}
+                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" transform="rotate(30 100 100)" />
+                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" transform="rotate(90 100 100)" />
+                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" transform="rotate(150 100 100)" />
                   </svg>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </footer>
+                </div>
+                
+                {/* Floating coding elements */}
+                {/* HTML tag - with higher z-index and more visibility */}
+                <div className="absolute top-1/4 left-1/4 px-3 py-2 border-2 border-black/50 rounded-lg bg-white/90 shadow-lg z-20 animate-float" style={{ animationDelay: '0s' }}>
+                  <div className="text-base font-mono font-bold text-black">&lt;/&gt;</div>
+                </div>
+                
+                {/* JavaScript icon - higher z-index */}
+                <div className="absolute bottom-1/3 right-1/4 w-12 h-12 flex items-center justify-center border-2 border-yellow-500/80 rounded-lg bg-yellow-100/90 shadow-lg z-20 animate-float" style={{ animationDelay: '1s' }}>
+                  <div className="text-sm font-mono font-bold text-yellow-800">JS</div>
+                </div>
+                
+                {/* Database icon - higher z-index */}
+                <div className="absolute top-1/2 right-1/3 w-11 h-11 border-2 border-blue-500/80 rounded-md bg-blue-100/90 shadow-lg z-20 flex flex-col items-center justify-center animate-float" style={{ animationDelay: '2s' }}>
+                  <div className="w-5 h-1 border-t border-blue-600/70 rounded-t-sm"></div>
+                  <div className="w-6 h-4 border border-blue-600/70 border-t-0"></div>
+                  <div className="w-5 h-1 border-t border-blue-600/70 rounded-b-sm"></div>
+                </div>
+                
+                {/* Git branch icon - higher z-index */}
+                <div className="absolute top-1/3 right-1/5 w-12 h-12 flex items-center justify-center border-2 border-gray-500/80 rounded-lg bg-white/90 shadow-lg z-20 animate-float" style={{ animationDelay: '3s' }}>
+                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none">
+                    <circle cx="12" cy="7" r="3" />
+                    <circle cx="17" cy="17" r="3" />
+                    <circle cx="7" cy="17" r="3" />
+                    <path d="M12 10v3.5a1.5 1.5 0 0 0 1.5 1.5h2" />
+                  </svg>
+                </div>
+                
+                {/* Code function icon - higher z-index */}
+                <div className="absolute bottom-1/4 left-1/3 px-3 py-2 border-2 border-gray-500/80 rounded-lg bg-white/90 shadow-lg z-20 animate-float" style={{ animationDelay: '1.5s' }}>
+                  <div className="text-sm font-mono font-bold">() =&gt;</div>
+                </div>
+                
+                {/* React/Framework icon - higher z-index */}
+                <div className="absolute top-1/6 right-1/4 w-11 h-11 flex items-center justify-center border-2 border-cyan-500/80 rounded-full bg-cyan-100/90 shadow-lg z-20 animate-float" style={{ animationDelay: '2.5s' }}>
+                  <div className="text-base font-bold">⚛️</div>
+                </div>
+                
+                {/* CSS icon - higher z-index */}
+                <div className="absolute bottom-1/5 left-1/5 w-11 h-11 flex items-center justify-center border-2 border-purple-500/80 rounded-lg bg-purple-100/90 shadow-lg z-20 animate-float" style={{ animationDelay: '0.5s' }}>
+                  <div className="text-sm font-bold text-purple-800">CSS</div>
+                </div>
+              </div>
+              
+              {/* Updated feature highlight with z-index */}
+              <div className="absolute -bottom-5 -right-5 p-4 bg-white border border-black/10 rounded-lg shadow-sm z-10">
+                <div className="text-sm font-semibold">Client Success Rate</div>
+                <div className="mt-1 flex items-center gap-1 text-2xl font-bold">
+                  98%
+                  <span className="text-xs text-black/60 font-normal ml-1">satisfaction</span>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </main>
       
       {/* CSS for animations */}
       <style jsx global>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        @keyframes spin-slow {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
         }
         
-        @keyframes floating {
-          0% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-          100% {
-            transform: translateY(0px);
-          }
+        @keyframes reverse-spin {
+          0% { transform: rotate(360deg); }
+          100% { transform: rotate(0deg); }
         }
         
-        @keyframes widthExpand {
-          from {
-            width: 0;
-          }
-          to {
-            width: 6rem;
-          }
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0px); }
         }
         
-        @keyframes slowSpin {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        
-        @keyframes reverseSpin {
-          from {
-            transform: rotate(360deg);
-          }
-          to {
-            transform: rotate(0deg);
-          }
-        }
-        
-        .animate-fade-in-up {
-          animation: fadeInUp 0.8s ease-out forwards;
-        }
-        
-        .animate-floating {
-          animation: floating 6s ease-in-out infinite;
-        }
-        
-        .animate-width-expand {
-          animation: widthExpand 1.2s ease-out forwards;
-        }
-        
-        .animate-slow-spin {
-          animation: slowSpin 12s linear infinite;
+        .animate-spin-slow {
+          animation: spin-slow 30s linear infinite;
         }
         
         .animate-reverse-spin {
-          animation: reverseSpin 10s linear infinite;
+          animation: reverse-spin 25s linear infinite;
         }
         
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
         }
         
-        .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+        body {
+          background-color: #fff;
+          margin: 0;
+          padding: 0;
+          overflow-x: hidden;
         }
       `}</style>
     </div>
