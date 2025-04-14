@@ -215,7 +215,7 @@ const ServicesSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative py-24 md:py-32 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto w-full overflow-hidden bg-gradient-to-b from-white/50 to-white/70"
+      className="relative py-24 md:py-32 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto w-full overflow-hidden "
     >
       {/* Premium background decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -402,7 +402,7 @@ const ServicesSection = () => {
             </motion.div>
             
             {/* Featured service details with fancy presentation */}
-            <div className="bg-white/90 backdrop-blur-md border border-black/5 rounded-3xl p-8 md:p-12 overflow-hidden shadow-2xl relative">
+            <div className="bg-white/90 backdrop-blur-md border border-black/5 rounded-3xl p-6 md:p-12 overflow-hidden shadow-2xl relative">
               {/* Inner glow effect for premium look */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/[0.01] pointer-events-none"></div>
               
@@ -410,9 +410,9 @@ const ServicesSection = () => {
               <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-black/[0.02] to-transparent rounded-bl-full"></div>
               <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-black/[0.03] to-transparent rounded-tr-full"></div>
               
-              <div className="flex flex-col lg:flex-row items-center">
+              <div className="flex flex-col lg:flex-row items-center gap-8">
                 {/* Service content */}
-                <div className="lg:w-1/2 p-4 md:p-8 relative z-20">
+                <div className="lg:w-1/2 p-2 md:p-8 relative z-20">
                   <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -511,12 +511,12 @@ const ServicesSection = () => {
                   </motion.div>
                 </div>
                 
-                {/* Service illustration with animated icons - Improved mobile visibility */}
-                <div className="lg:w-1/2 p-4 md:p-8 relative">
+                {/* Service illustration with animated icons - Fixed mobile visibility */}
+                <div className="w-full lg:w-1/2 p-2 md:p-6 relative">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeService}
-                      className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px]"
+                      className="relative w-full aspect-square max-h-[450px] sm:max-h-[500px] mx-auto"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
@@ -527,7 +527,7 @@ const ServicesSection = () => {
                         <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/5"></div>
                         
                         {/* Main service illustration */}
-                        <div className="absolute inset-0 flex items-center justify-center p-6 sm:p-10">
+                        <div className="absolute inset-0 flex items-center justify-center p-6">
                           <motion.div
                             initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
                             animate={{ 
@@ -557,7 +557,7 @@ const ServicesSection = () => {
                         <motion.div
                           custom={0}
                           variants={floatingIconVariant}
-                          className="absolute top-[10%] left-[10%] w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center border-2 border-black/10 rounded-2xl bg-white shadow-lg z-20 animate-float"
+                          className="absolute top-[10%] left-[10%] w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center border-2 border-black/10 rounded-2xl bg-white shadow-lg z-20 animate-float"
                           style={{ animationDelay: '0s' }}
                         >
                           <TechIcon index={(activeService * 3) % 8} />
@@ -567,7 +567,7 @@ const ServicesSection = () => {
                         <motion.div
                           custom={1}
                           variants={floatingIconVariant}
-                          className="absolute bottom-[15%] right-[10%] w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center border-2 border-black/10 rounded-2xl bg-white shadow-lg z-20 animate-float"
+                          className="absolute bottom-[15%] right-[10%] w-8 h-8 sm:w-12 sm:h-12 flex items-center justify-center border-2 border-black/10 rounded-2xl bg-white shadow-lg z-20 animate-float"
                           style={{ animationDelay: '1.5s' }}
                         >
                           <TechIcon index={(activeService * 3 + 1) % 8} />
@@ -577,7 +577,7 @@ const ServicesSection = () => {
                         <motion.div
                           custom={2}
                           variants={floatingIconVariant}
-                          className="absolute top-[60%] left-[5%] w-8 h-8 sm:w-12 sm:h-12 flex items-center justify-center border-2 border-black/10 rounded-2xl bg-white shadow-lg z-20 animate-float"
+                          className="absolute top-[60%] left-[5%] w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center border-2 border-black/10 rounded-2xl bg-white shadow-lg z-20 animate-float"
                           style={{ animationDelay: '3s' }}
                         >
                           <TechIcon index={(activeService * 3 + 2) % 8} />
@@ -589,10 +589,10 @@ const ServicesSection = () => {
                         initial={{ opacity: 0, y: 20, x: 20 }}
                         animate={{ opacity: 1, y: 0, x: 0 }}
                         transition={{ delay: 0.7, duration: 0.6 }}
-                        className="absolute -bottom-4 -right-4 p-3 sm:p-4 bg-white border border-black/10 rounded-xl shadow-xl z-10"
+                        className="absolute -bottom-2 -right-2 sm:-bottom-4 sm:-right-4 p-2 sm:p-4 bg-white border border-black/10 rounded-xl shadow-xl z-10"
                       >
                         <div className="text-xs sm:text-sm font-semibold">Success Rate</div>
-                        <div className="mt-1 flex items-center gap-1 text-lg sm:text-xl font-bold">
+                        <div className="mt-1 flex items-center gap-1 text-base sm:text-xl font-bold">
                           {services[activeService].stats.value}
                           <span className="text-[10px] sm:text-xs text-black/60 font-normal ml-1">
                             {services[activeService].stats.label}
