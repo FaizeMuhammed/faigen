@@ -1,12 +1,10 @@
 'use client'
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 const PortfolioSection = () => {
   const [mounted, setMounted] = useState(false);
-  const [activeProject, setActiveProject] = useState(null);
-  const [showContactPopup, setShowContactPopup] = useState(false); // Add state for contact popup
+  const [showContactPopup, setShowContactPopup] = useState(false);
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
   
@@ -15,35 +13,20 @@ const PortfolioSection = () => {
     {
       id: 1,
       title: "Fintech Dashboard",
-      description: "An intuitive financial analytics dashboard with real-time data visualization and comprehensive reporting tools for enterprise clients.",
-      // Using a meaningful dashboard image URL instead of a placeholder
-      image: "https://via.placeholder.com/600x400?text=Financial+Dashboard",
+      description: "An intuitive financial analytics dashboard with real-time data visualization and comprehensive reporting tools for enterprise clients. The solution includes customizable widgets, interactive charts, and secure data integration capabilities that help financial institutions monitor performance metrics and make data-driven decisions.",
       technologies: ["React", "Next.js", "TailwindCSS", "Chart.js"],
-      client: "GlobalFinance Inc.",
-      year: "2024",
-      link: "#"
     },
     {
       id: 2,
       title: "E-commerce Mobile App",
-      description: "A cross-platform shopping application with seamless checkout experience and personalized product recommendations.",
-      // Using a meaningful app image URL instead of a placeholder
-      image: "https://via.placeholder.com/600x400?text=Mobile+App+UI",
+      description: "A cross-platform shopping application with seamless checkout experience and personalized product recommendations. Features include user authentication, product search and filtering, wishlist functionality, shopping cart management, secure payment processing, order tracking, and push notifications for promotions and delivery updates.",
       technologies: ["React Native", "Node.js", "Firebase", "Stripe"],
-      client: "ShopEasy",
-      year: "2023",
-      link: "#"
     },
     {
       id: 3,
       title: "Healthcare Management System",
-      description: "Complete hospital management solution with patient records, scheduling, and integrated billing system for medical institutions.",
-      // Using a meaningful system image URL instead of a placeholder
-      image: "https://via.placeholder.com/600x400?text=Healthcare+Portal",
+      description: "Complete hospital management solution with patient records, scheduling, and integrated billing system for medical institutions. The platform streamlines administrative workflows, enhances patient care coordination, and offers comprehensive reporting and analytics tools. Includes modules for appointment scheduling, electronic health records, inventory management, and staff allocation.",
       technologies: ["Python", "Django", "PostgreSQL", "Docker"],
-      client: "MedCare Solutions",
-      year: "2024",
-      link: "#"
     }
   ];
   
@@ -99,27 +82,6 @@ const PortfolioSection = () => {
     }
   };
 
-  // Project details modal animation
-  const modalVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: { 
-      opacity: 1, 
-      scale: 1,
-      transition: { 
-        duration: 0.4,
-        ease: "easeOut"
-      }
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.9,
-      transition: { 
-        duration: 0.3,
-        ease: "easeIn"
-      }
-    }
-  };
-
   const backdropVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -132,26 +94,10 @@ const PortfolioSection = () => {
     }
   };
   
-  const handleProjectClick = (project) => {
-    setActiveProject(project);
-    // Prevent body scrolling when modal is open
-    if (typeof document !== 'undefined') {
-      document.body.style.overflow = 'hidden';
-    }
-  };
-  
-  const closeProjectModal = () => {
-    setActiveProject(null);
-    // Re-enable body scrolling
-    if (typeof document !== 'undefined') {
-      document.body.style.overflow = '';
-    }
-  };
-  
   return (
     <section 
       ref={sectionRef}
-      className="relative py-24 md:py-32 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto w-full overflow-hidden "
+      className="relative py-24 md:py-32 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto w-full overflow-hidden"
     >
       {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -246,7 +192,7 @@ const PortfolioSection = () => {
             </motion.div>
           </motion.div>
           
-          {/* Featured projects - premium showcase layout */}
+          {/* Featured projects - single row layout */}
           <motion.div variants={itemVariants} className="mb-16">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project, index) => (
@@ -255,8 +201,7 @@ const PortfolioSection = () => {
                   custom={index}
                   variants={cardVariants}
                   whileHover="hover"
-                  onClick={() => handleProjectClick(project)}
-                  className="bg-white border border-black/5 rounded-2xl overflow-hidden shadow-xl cursor-pointer group relative h-full"
+                  className="bg-white border border-black/5 rounded-2xl overflow-hidden shadow-xl group relative h-full"
                   style={{ 
                     boxShadow: '0 10px 40px -10px rgba(0, 0, 0, 0.1), 0 2px 10px -3px rgba(0, 0, 0, 0.05)'
                   }}
@@ -264,81 +209,114 @@ const PortfolioSection = () => {
                   {/* Inner glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/[0.01] pointer-events-none z-10"></div>
                   
-                  {/* Project image - Using dashboard/app frames instead of simple placeholders */}
+                  {/* Dashboard frame based on project type */}
                   <div className="relative h-56 md:h-64 overflow-hidden">
-                    {/* Dashboard/App frames based on project type */}
-                    <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-300">
-                      {index === 0 && (
-                        <div className="w-full h-full opacity-90 bg-center bg-cover transition-transform duration-700 group-hover:scale-110" 
-                          style={{ backgroundImage: `url('https://via.placeholder.com/600x400?text=Finance+Dashboard')` }}>
+                    {index === 0 && (
+                      <div className="w-full h-full bg-gray-900 p-4 flex flex-col">
+                        {/* Finance dashboard mockup */}
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="bg-gray-800 h-4 w-20 rounded-md"></div>
+                          <div className="flex space-x-1">
+                            <div className="bg-blue-500 h-4 w-4 rounded-md"></div>
+                            <div className="bg-gray-800 h-4 w-4 rounded-md"></div>
+                          </div>
                         </div>
-                      )}
-                      {index === 1 && (
-                        <div className="w-full h-full opacity-90 bg-center bg-cover transition-transform duration-700 group-hover:scale-110" 
-                          style={{ backgroundImage: `url('https://via.placeholder.com/600x400?text=E-commerce+App')` }}>
+                        <div className="grid grid-cols-3 gap-2 mb-2">
+                          <div className="bg-gray-800 h-12 rounded-lg"></div>
+                          <div className="bg-gray-800 h-12 rounded-lg"></div>
+                          <div className="bg-gray-800 h-12 rounded-lg"></div>
                         </div>
-                      )}
-                      {index === 2 && (
-                        <div className="w-full h-full opacity-90 bg-center bg-cover transition-transform duration-700 group-hover:scale-110" 
-                          style={{ backgroundImage: `url('https://via.placeholder.com/600x400?text=Healthcare+System')` }}>
+                        <div className="flex-1 bg-gray-800 rounded-lg"></div>
+                        <div className="mt-2 grid grid-cols-6 gap-1">
+                          <div className="bg-gray-700 h-2 rounded-md col-span-1"></div>
+                          <div className="bg-gray-700 h-2 rounded-md col-span-2"></div>
+                          <div className="bg-gray-700 h-2 rounded-md col-span-3"></div>
                         </div>
-                      )}
-                    </div>
-                    
-                    {/* Overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    {/* Client badge */}
-                    <div className="absolute top-4 right-4 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium shadow-md">
-                      {project.client}
-                    </div>
+                      </div>
+                    )}
+                    {index === 1 && (
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300">
+                        <div className="w-40 h-full relative bg-white rounded-2xl border-4 border-gray-800 flex flex-col overflow-hidden">
+                          {/* Mobile app mockup */}
+                          <div className="bg-gray-800 h-3 w-full flex justify-center items-center">
+                            <div className="bg-gray-600 h-1 w-8 rounded-full"></div>
+                          </div>
+                          <div className="flex-1 p-2 flex flex-col gap-2">
+                            <div className="bg-gray-100 h-4 w-full rounded-full"></div>
+                            <div className="grid grid-cols-2 gap-2 flex-1">
+                              <div className="bg-gray-100 rounded-lg"></div>
+                              <div className="bg-gray-100 rounded-lg"></div>
+                              <div className="bg-gray-100 rounded-lg"></div>
+                              <div className="bg-gray-100 rounded-lg"></div>
+                            </div>
+                            <div className="h-6 bg-blue-500 rounded-lg"></div>
+                          </div>
+                          <div className="h-6 bg-gray-100 w-full flex justify-around items-center px-2">
+                            <div className="h-3 w-3 bg-gray-300 rounded-full"></div>
+                            <div className="h-3 w-3 bg-gray-300 rounded-full"></div>
+                            <div className="h-3 w-3 bg-gray-300 rounded-full"></div>
+                            <div className="h-3 w-3 bg-gray-300 rounded-full"></div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {index === 2 && (
+                      <div className="w-full h-full p-4 bg-white flex flex-col border border-gray-200">
+                        {/* Healthcare system mockup */}
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="bg-teal-500 h-4 w-20 rounded-md"></div>
+                          <div className="flex space-x-1">
+                            <div className="bg-gray-200 h-4 w-4 rounded-full"></div>
+                            <div className="bg-gray-200 h-4 w-4 rounded-full"></div>
+                          </div>
+                        </div>
+                        <div className="flex gap-2 h-full">
+                          <div className="w-1/4 bg-gray-100 rounded-lg p-2">
+                            <div className="space-y-2">
+                              <div className="bg-gray-200 h-3 w-full rounded-md"></div>
+                              <div className="bg-gray-200 h-3 w-full rounded-md"></div>
+                              <div className="bg-gray-200 h-3 w-full rounded-md"></div>
+                              <div className="bg-teal-100 h-3 w-full rounded-md"></div>
+                            </div>
+                          </div>
+                          <div className="w-3/4 flex flex-col gap-2">
+                            <div className="h-6 bg-gray-100 rounded-lg flex items-center px-2">
+                              <div className="bg-gray-200 h-3 w-20 rounded-md"></div>
+                            </div>
+                            <div className="flex-1 bg-gray-100 rounded-lg grid grid-cols-3 gap-2 p-2">
+                              <div className="bg-white h-12 rounded-lg shadow"></div>
+                              <div className="bg-white h-12 rounded-lg shadow"></div>
+                              <div className="bg-white h-12 rounded-lg shadow"></div>
+                              <div className="bg-white h-12 rounded-lg shadow"></div>
+                              <div className="bg-white h-12 rounded-lg shadow"></div>
+                              <div className="bg-white h-12 rounded-lg shadow"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   
                   {/* Project details */}
-                  <div className="p-8">
-                    <h3 className="text-2xl font-bold mb-3 group-hover:text-black/80 transition-colors duration-300">{project.title}</h3>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-black/80 transition-colors duration-300">{project.title}</h3>
                     
                     {/* Line divider */}
-                    <div className="w-16 h-1 bg-gradient-to-r from-black/5 via-black/20 to-black/5 rounded-full mb-4"></div>
+                    <div className="w-12 h-1 bg-gradient-to-r from-black/5 via-black/20 to-black/5 rounded-full mb-3"></div>
                     
-                    <p className="text-black/60 text-base mb-6 line-clamp-3">{project.description}</p>
+                    {/* Short description */}
+                    <p className="text-black/60 text-sm mb-4 line-clamp-3">{project.description}</p>
                     
                     {/* Technologies used */}
-                    <div className="flex flex-wrap gap-2 mb-8">
+                    <div className="flex flex-wrap gap-1 mb-4">
                       {project.technologies.map((tech, i) => (
                         <span 
                           key={i} 
-                          className="px-3 py-1.5 bg-black/5 rounded-md text-black/70 text-xs font-medium"
+                          className="px-2 py-1 bg-black/5 rounded-md text-black/70 text-xs font-medium"
                         >
                           {tech}
                         </span>
                       ))}
-                    </div>
-                    
-                    {/* View details button that appears more visible on hover */}
-                    <div className="mt-auto">
-                      <motion.button
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.97 }}
-                        className="w-full px-5 py-3 bg-black text-white rounded-full text-sm font-medium inline-flex items-center justify-center gap-2 opacity-80 group-hover:opacity-100 transition-opacity duration-300 shadow-md group-hover:shadow-lg"
-                      >
-                        View Project Details
-                        <svg 
-                          xmlns="http://www.w3.org/2000/svg" 
-                          width="16" 
-                          height="16" 
-                          viewBox="0 0 24 24" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          strokeWidth="2" 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round"
-                          className="transition-transform duration-300 group-hover:translate-x-1"
-                        >
-                          <path d="M5 12h14"></path>
-                          <path d="m12 5 7 7-7 7"></path>
-                        </svg>
-                      </motion.button>
                     </div>
                   </div>
                 </motion.div>
@@ -403,156 +381,6 @@ const PortfolioSection = () => {
           </motion.div>
         </motion.div>
       )}
-      
-      {/* Project details modal */}
-      <AnimatePresence>
-        {activeProject && (
-          <>
-            {/* Backdrop */}
-            <motion.div 
-              variants={backdropVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
-              onClick={closeProjectModal}
-            ></motion.div>
-            
-            {/* Modal */}
-            <motion.div 
-              variants={modalVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-4xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl z-50 no-scrollbar"
-            >
-              {/* Close button */}
-              <button 
-                onClick={closeProjectModal}
-                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/5 flex items-center justify-center z-10 hover:bg-black/10 transition-colors duration-300"
-              >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  width="24" 
-                  height="24" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 6 6 18"></path>
-                  <path d="m6 6 12 12"></path>
-                </svg>
-              </button>
-              
-              {/* Project image - Using more realistic dashboard/app frames */}
-              <div className="relative h-64 md:h-80 overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900">
-                  {activeProject.id === 1 && (
-                    <div className="w-full h-full opacity-70 mix-blend-overlay bg-center bg-cover" 
-                      style={{ backgroundImage: `url('https://via.placeholder.com/1200x600?text=Financial+Dashboard+Analytics')` }}>
-                    </div>
-                  )}
-                  {activeProject.id === 2 && (
-                    <div className="w-full h-full opacity-70 mix-blend-overlay bg-center bg-cover" 
-                      style={{ backgroundImage: `url('https://via.placeholder.com/1200x600?text=E-commerce+Mobile+Application')` }}>
-                    </div>
-                  )}
-                  {activeProject.id === 3 && (
-                    <div className="w-full h-full opacity-70 mix-blend-overlay bg-center bg-cover" 
-                      style={{ backgroundImage: `url('https://via.placeholder.com/1200x600?text=Healthcare+Management+Platform')` }}>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent">
-                  <span className="inline-block px-4 py-1.5 bg-white/20 backdrop-blur-md rounded-full text-white text-xs font-medium mb-4">
-                    {activeProject.client}
-                  </span>
-                  <h3 className="text-white text-3xl md:text-4xl font-bold">{activeProject.title}</h3>
-                </div>
-              </div>
-              
-              {/* Project details */}
-              <div className="p-8">
-                <div className="flex flex-wrap gap-6 mb-8">
-                  <div>
-                    <h4 className="text-sm text-black/50 mb-1">Client</h4>
-                    <p className="font-medium">{activeProject.client}</p>
-                  </div>
-                  <div>
-                    <h4 className="text-sm text-black/50 mb-1">Year</h4>
-                    <p className="font-medium">{activeProject.year}</p>
-                  </div>
-                </div>
-                
-                <h4 className="text-xl font-bold mb-4">Project Overview</h4>
-                <p className="text-black/70 mb-8">
-                  {activeProject.description}
-                  {/* Additional dummy text for the modal */}
-                  <br /><br />
-                  This project was developed to address the specific needs of {activeProject.client}. Our team worked closely with stakeholders to ensure that all requirements were met and exceeded expectations. The solution was designed with scalability and performance in mind, resulting in a robust product that delivers exceptional value.
-                  <br /><br />
-                  The implementation process involved careful planning, agile development methodologies, and rigorous testing to ensure the highest quality standards were maintained throughout.
-                </p>
-                
-                <h4 className="text-xl font-bold mb-4">Technologies Used</h4>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {activeProject.technologies.map((tech, i) => (
-                    <span 
-                      key={i} 
-                      className="px-3 py-1.5 bg-black/5 rounded-md text-black/80 text-sm font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                
-                {/* Key achievements - dummy content */}
-                <h4 className="text-xl font-bold mb-4">Key Achievements</h4>
-                <ul className="list-disc pl-5 mb-8 space-y-2 text-black/70">
-                  <li>Increased user engagement by 45% through intuitive interface design</li>
-                  <li>Reduced loading times by 60% with performance optimizations</li>
-                  <li>Implemented responsive design for seamless experience across all devices</li>
-                  <li>Integrated advanced analytics for data-driven decision making</li>
-                </ul>
-                
-                {/* CTA - Changed to Contact Us button to match requested behavior */}
-                <div className="flex justify-center mt-12">
-                  <motion.button
-                    whileHover={{ scale: 1.05, y: -3 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="px-8 py-3.5 bg-black text-white rounded-full font-medium inline-flex items-center gap-2 group transition-all duration-300 shadow-lg hover:shadow-xl"
-                    onClick={() => {
-                      closeProjectModal(); // Close project modal first
-                      setTimeout(() => setShowContactPopup(true), 100); // Then open contact popup
-                    }}
-                  >
-                    Contact Us About This Project
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      width="20" 
-                      height="20" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round"
-                      className="transition-transform duration-300 group-hover:translate-x-1"
-                    >
-                      <path d="M5 12h14"></path>
-                      <path d="m12 5 7 7-7 7"></path>
-                    </svg>
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
       
       {/* Contact Popup Form */}
       <AnimatePresence>

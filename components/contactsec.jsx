@@ -447,8 +447,8 @@ const ContactSection = () => {
                       <div>
                         <h4 className="text-sm text-black/50 font-medium mb-1">Visit Us</h4>
                         <p className="text-lg">
-                          123 Business Avenue, <br />
-                          Tech District, CA 94107
+                          4th floor, Palal Tower, Mahatma Gandhi Rd, Ravipuram, <br />
+                           Perumanoor, Kochi, Ernakulam, Kerala 682016
                         </p>
                       </div>
                     </div>

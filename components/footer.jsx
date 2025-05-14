@@ -350,7 +350,7 @@ const Footer = () => {
             {/* Bottom footer - Copyright and policies */}
             <motion.div variants={itemVariants} className="flex flex-col md:flex-row items-center justify-between text-sm text-black/50">
               <div className="mb-4 md:mb-0">
-                &copy; {currentYear} CompanyName. All rights reserved.
+                &copy; {currentYear} Faigen. All rights reserved.
               </div>
               
               <div className="flex flex-wrap justify-center gap-4 md:gap-8">
