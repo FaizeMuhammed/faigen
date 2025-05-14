@@ -6,6 +6,7 @@ import Image from "next/image";
 const PortfolioSection = () => {
   const [mounted, setMounted] = useState(false);
   const [activeProject, setActiveProject] = useState(null);
+  const [showContactPopup, setShowContactPopup] = useState(false); // Add state for contact popup
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
   
@@ -15,7 +16,8 @@ const PortfolioSection = () => {
       id: 1,
       title: "Fintech Dashboard",
       description: "An intuitive financial analytics dashboard with real-time data visualization and comprehensive reporting tools for enterprise clients.",
-      image: "/portfolio-1.jpg", // This would be replaced with an actual image
+      // Using a meaningful dashboard image URL instead of a placeholder
+      image: "https://via.placeholder.com/600x400?text=Financial+Dashboard",
       technologies: ["React", "Next.js", "TailwindCSS", "Chart.js"],
       client: "GlobalFinance Inc.",
       year: "2024",
@@ -25,7 +27,8 @@ const PortfolioSection = () => {
       id: 2,
       title: "E-commerce Mobile App",
       description: "A cross-platform shopping application with seamless checkout experience and personalized product recommendations.",
-      image: "/portfolio-2.jpg",
+      // Using a meaningful app image URL instead of a placeholder
+      image: "https://via.placeholder.com/600x400?text=Mobile+App+UI",
       technologies: ["React Native", "Node.js", "Firebase", "Stripe"],
       client: "ShopEasy",
       year: "2023",
@@ -35,7 +38,8 @@ const PortfolioSection = () => {
       id: 3,
       title: "Healthcare Management System",
       description: "Complete hospital management solution with patient records, scheduling, and integrated billing system for medical institutions.",
-      image: "/portfolio-3.jpg",
+      // Using a meaningful system image URL instead of a placeholder
+      image: "https://via.placeholder.com/600x400?text=Healthcare+Portal",
       technologies: ["Python", "Django", "PostgreSQL", "Docker"],
       client: "MedCare Solutions",
       year: "2024",
@@ -260,13 +264,25 @@ const PortfolioSection = () => {
                   {/* Inner glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/[0.01] pointer-events-none z-10"></div>
                   
-                  {/* Project image */}
+                  {/* Project image - Using dashboard/app frames instead of simple placeholders */}
                   <div className="relative h-56 md:h-64 overflow-hidden">
-                    {/* Placeholder for project image */}
-                    <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-400">
-                      <div className="w-full h-full opacity-80 bg-center bg-cover transition-transform duration-700 group-hover:scale-110" 
-                        style={{ backgroundImage: `url(https://via.placeholder.com/600x400?text=${project.title.replace(' ', '+')})` }}>
-                      </div>
+                    {/* Dashboard/App frames based on project type */}
+                    <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-300">
+                      {index === 0 && (
+                        <div className="w-full h-full opacity-90 bg-center bg-cover transition-transform duration-700 group-hover:scale-110" 
+                          style={{ backgroundImage: `url('https://via.placeholder.com/600x400?text=Finance+Dashboard')` }}>
+                        </div>
+                      )}
+                      {index === 1 && (
+                        <div className="w-full h-full opacity-90 bg-center bg-cover transition-transform duration-700 group-hover:scale-110" 
+                          style={{ backgroundImage: `url('https://via.placeholder.com/600x400?text=E-commerce+App')` }}>
+                        </div>
+                      )}
+                      {index === 2 && (
+                        <div className="w-full h-full opacity-90 bg-center bg-cover transition-transform duration-700 group-hover:scale-110" 
+                          style={{ backgroundImage: `url('https://via.placeholder.com/600x400?text=Healthcare+System')` }}>
+                        </div>
+                      )}
                     </div>
                     
                     {/* Overlay gradient */}
@@ -354,7 +370,8 @@ const PortfolioSection = () => {
                 <motion.button
                   whileHover={{ scale: 1.05, y: -3 }}
                   whileTap={{ scale: 0.97 }}
-                  className="px-8 py-4 bg-black text-white rounded-full font-medium text-lg shadow-xl inline-flex items-center gap-2 group transition-all duration-300 hover:shadow-2xl"
+                  className="px-8 py-4 bg-black text-white rounded-full font-medium text-lg shadow-xl inline-flex items-center justify-center gap-2 group transition-all duration-300 hover:shadow-2xl"
+                  onClick={() => setShowContactPopup(true)} // Show contact popup
                 >
                   Start a Project
                   <svg 
@@ -430,13 +447,24 @@ const PortfolioSection = () => {
                 </svg>
               </button>
               
-              {/* Project image */}
+              {/* Project image - Using more realistic dashboard/app frames */}
               <div className="relative h-64 md:h-80 overflow-hidden">
                 <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900">
-                  {/* This would be replaced with an actual image */}
-                  <div className="w-full h-full opacity-70 mix-blend-overlay bg-center bg-cover" 
-                      style={{ backgroundImage: `url(https://via.placeholder.com/1200x600?text=${activeProject.title.replace(' ', '+')})` }}>
-                  </div>
+                  {activeProject.id === 1 && (
+                    <div className="w-full h-full opacity-70 mix-blend-overlay bg-center bg-cover" 
+                      style={{ backgroundImage: `url('https://via.placeholder.com/1200x600?text=Financial+Dashboard+Analytics')` }}>
+                    </div>
+                  )}
+                  {activeProject.id === 2 && (
+                    <div className="w-full h-full opacity-70 mix-blend-overlay bg-center bg-cover" 
+                      style={{ backgroundImage: `url('https://via.placeholder.com/1200x600?text=E-commerce+Mobile+Application')` }}>
+                    </div>
+                  )}
+                  {activeProject.id === 3 && (
+                    <div className="w-full h-full opacity-70 mix-blend-overlay bg-center bg-cover" 
+                      style={{ backgroundImage: `url('https://via.placeholder.com/1200x600?text=Healthcare+Management+Platform')` }}>
+                    </div>
+                  )}
                 </div>
                 
                 <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent">
@@ -491,17 +519,18 @@ const PortfolioSection = () => {
                   <li>Integrated advanced analytics for data-driven decision making</li>
                 </ul>
                 
-                {/* CTA */}
+                {/* CTA - Changed to Contact Us button to match requested behavior */}
                 <div className="flex justify-center mt-12">
-                  <motion.a
-                    href={activeProject.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <motion.button
                     whileHover={{ scale: 1.05, y: -3 }}
                     whileTap={{ scale: 0.97 }}
                     className="px-8 py-3.5 bg-black text-white rounded-full font-medium inline-flex items-center gap-2 group transition-all duration-300 shadow-lg hover:shadow-xl"
+                    onClick={() => {
+                      closeProjectModal(); // Close project modal first
+                      setTimeout(() => setShowContactPopup(true), 100); // Then open contact popup
+                    }}
                   >
-                    Visit Live Project
+                    Contact Us About This Project
                     <svg 
                       xmlns="http://www.w3.org/2000/svg" 
                       width="20" 
@@ -514,11 +543,39 @@ const PortfolioSection = () => {
                       strokeLinejoin="round"
                       className="transition-transform duration-300 group-hover:translate-x-1"
                     >
-                      <path d="M7 17l9.2-9.2M17 17V7H7" />
+                      <path d="M5 12h14"></path>
+                      <path d="m12 5 7 7-7 7"></path>
                     </svg>
-                  </motion.a>
+                  </motion.button>
                 </div>
               </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+      
+      {/* Contact Popup Form */}
+      <AnimatePresence>
+        {showContactPopup && (
+          <>
+            {/* Backdrop */}
+            <motion.div 
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowContactPopup(false)}
+            />
+            
+            {/* Modal */}
+            <motion.div 
+              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 z-50"
+              initial={{ opacity: 0, scale: 0.8, y: 50 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 50 }}
+              transition={{ type: "spring", duration: 0.5 }}
+            >
+              <ContactPopupForm onClose={() => setShowContactPopup(false)} />
             </motion.div>
           </>
         )}
@@ -536,6 +593,252 @@ const PortfolioSection = () => {
         }
       `}</style>
     </section>
+  );
+};
+
+// Contact Popup Form Component
+const ContactPopupForm = ({ onClose }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+    phoneNumber: ''
+  });
+  const [formStatus, setFormStatus] = useState(null);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Set loading state
+    setFormStatus('submitting');
+    
+    try {
+      // Send data to backend API
+      const response = await fetch('https://faigen-backend.onrender.com/mail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          subject: formData.subject,
+          description: formData.message, // Map message field to description
+          phoneNumber: formData.phoneNumber || ''
+        }),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        // Success
+        setFormStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+          phoneNumber: ''
+        });
+        
+        // Close popup after 3 seconds on success
+        setTimeout(() => {
+          onClose();
+        }, 3000);
+      } else {
+        // API returned an error
+        console.error('Contact form submission error:', data);
+        setFormStatus('error');
+        
+        // Reset error status after 5 seconds
+        setTimeout(() => {
+          setFormStatus(null);
+        }, 5000);
+      }
+    } catch (error) {
+      console.error('Contact form submission error:', error);
+      setFormStatus('error');
+      
+      // Reset error status after 5 seconds
+      setTimeout(() => {
+        setFormStatus(null);
+      }, 5000);
+    }
+  };
+
+  return (
+    <div className="bg-white/90 backdrop-blur-md border border-black/5 rounded-3xl p-8 md:p-10 shadow-2xl relative overflow-hidden">
+      {/* Inner glow effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/[0.01] pointer-events-none"></div>
+      
+      {/* Close button */}
+      <button 
+        onClick={onClose}
+        className="absolute top-6 right-6 w-8 h-8 rounded-full bg-black/5 flex items-center justify-center hover:bg-black/10 transition-colors duration-300"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      
+      {/* Form header */}
+      <div className="mb-10">
+        <h3 className="text-2xl md:text-3xl font-bold mb-4">Get In Touch</h3>
+        <div className="w-16 h-1 bg-gradient-to-r from-black/5 via-black/20 to-black/5 rounded-full"></div>
+        <p className="mt-4 text-black/60">Tell us about your project and we'll get back to you promptly.</p>
+      </div>
+      
+      {/* Contact form */}
+      <form onSubmit={handleFormSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Name field */}
+          <div>
+            <label htmlFor="popup-name" className="block text-sm font-medium text-black/70 mb-2">Your Name</label>
+            <input
+              type="text"
+              id="popup-name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+              className="w-full px-4 py-3 rounded-xl bg-black/[0.02] border border-black/10 focus:border-black/30 focus:outline-none focus:ring-2 focus:ring-black/5 transition-all duration-300"
+              placeholder="John Smith"
+            />
+          </div>
+          
+          {/* Email field */}
+          <div>
+            <label htmlFor="popup-email" className="block text-sm font-medium text-black/70 mb-2">Email Address</label>
+            <input
+              type="email"
+              id="popup-email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+              className="w-full px-4 py-3 rounded-xl bg-black/[0.02] border border-black/10 focus:border-black/30 focus:outline-none focus:ring-2 focus:ring-black/5 transition-all duration-300"
+              placeholder="john@example.com"
+            />
+          </div>
+        </div>
+        
+        {/* Subject field */}
+        <div>
+          <label htmlFor="popup-subject" className="block text-sm font-medium text-black/70 mb-2">Subject</label>
+          <input
+            type="text"
+            id="popup-subject"
+            name="subject"
+            value={formData.subject}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-3 rounded-xl bg-black/[0.02] border border-black/10 focus:border-black/30 focus:outline-none focus:ring-2 focus:ring-black/5 transition-all duration-300"
+            placeholder="Project Inquiry"
+          />
+        </div>
+        
+        {/* Phone number field */}
+        <div>
+          <label htmlFor="popup-phoneNumber" className="block text-sm font-medium text-black/70 mb-2">Phone Number (Optional)</label>
+          <input
+            type="tel"
+            id="popup-phoneNumber"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 rounded-xl bg-black/[0.02] border border-black/10 focus:border-black/30 focus:outline-none focus:ring-2 focus:ring-black/5 transition-all duration-300"
+            placeholder="+1 (234) 567-890"
+          />
+        </div>
+        
+        {/* Message field */}
+        <div>
+          <label htmlFor="popup-message" className="block text-sm font-medium text-black/70 mb-2">Your Message</label>
+          <textarea
+            id="popup-message"
+            name="message"
+            value={formData.message}
+            onChange={handleInputChange}
+            rows="4"
+            required
+            className="w-full px-4 py-3 rounded-xl bg-black/[0.02] border border-black/10 focus:border-black/30 focus:outline-none focus:ring-2 focus:ring-black/5 transition-all duration-300 resize-none"
+            placeholder="Tell us about your project..."
+          ></textarea>
+        </div>
+        
+        {/* Submit button */}
+        <div className="pt-4">
+          <motion.button
+            type="submit"
+            disabled={formStatus === 'submitting'}
+            whileHover={{ scale: 1.02, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full px-8 py-4 bg-black text-white rounded-xl font-medium text-lg shadow-xl inline-flex items-center justify-center gap-2 group transition-all duration-300 hover:shadow-2xl disabled:opacity-70 disabled:pointer-events-none"
+          >
+            {formStatus === 'submitting' ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+              </>
+            ) : (
+              <>
+                Send Message
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </>
+            )}
+          </motion.button>
+          
+          {/* Success/Error messages */}
+          <AnimatePresence>
+            {formStatus === 'success' && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="mt-4 p-4 bg-green-50 border border-green-200 text-green-800 rounded-xl text-center"
+              >
+                Your message has been sent successfully. We'll get back to you soon!
+              </motion.div>
+            )}
+            {formStatus === 'error' && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="mt-4 p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl text-center"
+              >
+                Something went wrong while sending your message. Please try again later.
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </form>
+    </div>
   );
 };
 

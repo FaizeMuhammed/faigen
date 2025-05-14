@@ -1,12 +1,15 @@
 'use client'
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const HomeSection = () => {
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showNav, setShowNav] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const textVariants = ["Innovative", "Powerful", "Seamless"];
   
   // Add link to Montserrat font in the head section
@@ -25,7 +28,21 @@ const HomeSection = () => {
     setMounted(true);
     
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      
+      // Check if we've scrolled down from our last position and we're not at the top
+      if (currentScrollY > lastScrollY && currentScrollY > 20) {
+        setShowNav(true);
+      } else if (currentScrollY <= 20) {
+        // Hide nav when at the top of the page
+        setShowNav(false);
+      }
+      
+      // Update scrolled state for styling
+      setScrolled(currentScrollY > 20);
+      
+      // Update our last scroll position
+      setLastScrollY(currentScrollY);
     };
     
     window.addEventListener("scroll", handleScroll);
@@ -39,7 +56,24 @@ const HomeSection = () => {
       window.removeEventListener("scroll", handleScroll);
       clearInterval(textInterval);
     };
-  }, []);
+  }, [lastScrollY]);
+
+  useEffect(() => {
+    // Prevent scrolling when mobile menu is open
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      // Show navigation when mobile menu is open regardless of scroll position
+      setShowNav(true);
+    } else {
+      document.body.style.overflow = '';
+      // When closing mobile menu, check if we should hide nav based on scroll position
+      setShowNav(window.scrollY > 20);
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
   
   // Framer motion variants
   const containerVariants = {
@@ -65,80 +99,230 @@ const HomeSection = () => {
       }
     }
   };
+
+  // Mobile menu animation variants
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      x: "100%",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 40
+      }
+    },
+    open: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 40,
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const menuItemVariants = {
+    closed: { x: 20, opacity: 0 },
+    open: { 
+      x: 0, 
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 20
+      }
+    }
+  };
+
+  // Nav animation variants
+  const navVariants = {
+    hidden: { y: -100, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { 
+        duration: 0.4, 
+        ease: "easeOut" 
+      }
+    }
+  };
   
   return (
     <>
-      {/* Navigation - only visible when scrolled */}
-      {scrolled && (
-        <motion.nav 
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="fixed w-full z-50 py-3 backdrop-blur-lg shadow-sm"
-        >
-          <div className="flex justify-between items-center px-6 md:px-12 lg:px-20 max-w-7xl mx-auto w-full">
-            <div className="w-32 h-12 relative scale-90">
-              <div className="absolute inset-0 flex items-center">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
+      {/* Navigation - Only visible when scrolling down */}
+      <AnimatePresence>
+        {(showNav || mobileMenuOpen) && (
+          <motion.nav 
+            key="navigation"
+            variants={navVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            className={`fixed w-full z-50 py-3 ${scrolled ? 'backdrop-blur-lg shadow-sm' : 'bg-transparent'}`}
+          >
+            <div className="flex justify-between items-center px-6 md:px-12 lg:px-20 max-w-7xl mx-auto w-full">
+              <div className="w-32 h-12 relative scale-90">
+                <div className="absolute inset-0 flex items-center">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {/* Logo in the nav */}
+                    <Image 
+                      src="/WhatsApp_Image_2025-04-04_at_9.53.44_PM-removebg-preview.png" 
+                      alt="Faigen" 
+                      width={80} 
+                      height={48} 
+                      className="object-contain"
+                    />
+                  </motion.div>
+                </div>
+              </div>
+              
+              <motion.div 
+                className="flex items-center space-x-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+              >
+                <div className="hidden md:flex space-x-10 mr-10">
+                  {["Products", "Solutions", "Resources", "Pricing"].map((item, index) => (
+                    <motion.a 
+                      key={item} 
+                      href="#" 
+                      className="relative text-sm font-medium text-black transition-colors duration-300 group"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.5 + index * 0.1 }}
+                      whileHover={{ y: -2 }}
+                    >
+                      {item}
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+                    </motion.a>
+                  ))}
+                </div>
+                
+                <motion.button 
+                  className="px-6 py-2.5 text-sm font-medium border border-black rounded-full hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105 hidden md:block"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {/* Logo in the nav */}
+                  Contact
+                </motion.button>
+                
+                <motion.button 
+                  className="p-2 md:hidden text-black relative z-50"
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  aria-label="Toggle mobile menu"
+                >
+                  <AnimatePresence mode="wait">
+                    {mobileMenuOpen ? (
+                      <motion.svg 
+                        key="close"
+                        xmlns="http://www.w3.org/2000/svg" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor" 
+                        className="w-6 h-6"
+                        initial={{ opacity: 0, rotate: -90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: 90 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </motion.svg>
+                    ) : (
+                      <motion.svg 
+                        key="menu"
+                        xmlns="http://www.w3.org/2000/svg" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor" 
+                        className="w-6 h-6"
+                        initial={{ opacity: 0, rotate: 90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: -90 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                      </motion.svg>
+                    )}
+                  </AnimatePresence>
+                </motion.button>
+              </motion.div>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Mobile navigation menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="fixed top-0 right-0 w-4/5 h-full bg-white z-40 shadow-xl flex flex-col overflow-hidden"
+            variants={menuVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+          >
+            <div className="flex flex-col p-8 space-y-8 h-full">
+              <div className="mt-16">
+                <motion.div
+                  variants={menuItemVariants}
+                  className="w-28 h-28 relative mx-auto mb-8"
+                >
                   <Image 
                     src="/WhatsApp_Image_2025-04-04_at_9.53.44_PM-removebg-preview.png" 
                     alt="Faigen" 
-                    width={80} 
-                    height={48} 
+                    width={100} 
+                    height={100} 
                     className="object-contain"
                   />
                 </motion.div>
-              </div>
-            </div>
-            
-            <motion.div 
-              className="flex items-center space-x-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              <div className="hidden md:flex space-x-10 mr-10">
-                {["Products", "Solutions", "Resources", "Pricing"].map((item, index) => (
+              
+                {["Products", "Solutions", "Resources", "Pricing"].map((item) => (
                   <motion.a 
-                    key={item} 
+                    key={item}
+                    variants={menuItemVariants}
                     href="#" 
-                    className="relative text-sm font-medium text-black transition-colors duration-300 group"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 + index * 0.1 }}
-                    whileHover={{ y: -2 }}
+                    className="block py-4 text-xl font-semibold border-b border-gray-100 text-black hover:text-gray-700 transition-colors"
                   >
                     {item}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
                   </motion.a>
                 ))}
               </div>
               
-              <motion.button 
-                className="px-6 py-2.5 text-sm font-medium border border-black rounded-full hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact
-              </motion.button>
-              
-              <motion.button 
-                className="p-2 md:hidden text-black"
-                whileTap={{ scale: 0.9 }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </motion.button>
-            </motion.div>
-          </div>
-        </motion.nav>
-      )}
+              <motion.div variants={menuItemVariants} className="mt-auto">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-3 bg-black text-white rounded-lg font-medium text-base transition-all duration-300"
+                >
+                  Contact Us
+                </motion.button>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section - Using flex-col on mobile and flex-row on desktop with better spacing */}
       <main className="flex flex-col md:flex-row items-start md:items-center justify-between px-6 md:px-12 lg:px-20 py-16 md:py-28 min-h-screen max-w-7xl mx-auto w-full">
@@ -202,7 +386,7 @@ const HomeSection = () => {
                 how businesses operate in the modern world.
               </motion.p>
               
-              {/* Call to action buttons instead of empty space */}
+              {/* Call to action buttons */}
               {/* <motion.div 
                 variants={itemVariants}
                 className="flex flex-wrap gap-5 mb-16 md:mb-0"
