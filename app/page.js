@@ -2,15 +2,16 @@
 import { useEffect } from "react";
 import AnimatedBackground from "@/components/animaedbg";
 import HomeSection from "@/components/homesec";
-import ServicesSection from "@/components/servisesec";
-import PortfolioSection from "@/components/portfoliyo";
-import ContactSection from "@/components/contactsec";
-import Footer from "@/components/footer";
+// import ServicesSection from "@/components/servisesec";
+// import PortfolioSection from "@/components/portfoliyo";
+// import ContactSection from "@/components/contactsec";
+// import Footer from "@/components/footer";
 
 export default function Home() {
-  // Add global style for body
+  // Add global style for body - dark theme
   useEffect(() => {
-    document.body.style.backgroundColor = '#fff';
+    document.body.style.backgroundColor = '#000000';
+    document.body.style.color = '#ffffff';
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflowX = 'hidden';
@@ -18,6 +19,7 @@ export default function Home() {
     return () => {
       // Reset styles on unmount if needed
       document.body.style.backgroundColor = '';
+      document.body.style.color = '';
       document.body.style.margin = '';
       document.body.style.padding = '';
       document.body.style.overflowX = '';
@@ -25,7 +27,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen text-black flex flex-col overflow-hidden relative">
+    <div className="min-h-screen text-white flex flex-col overflow-hidden relative">
       {/* Background Component - positioned fixed to cover all sections */}
       <AnimatedBackground />
       
@@ -34,11 +36,11 @@ export default function Home() {
         {/* Home Section Component */}
         <HomeSection />
         
-        {/* Services Section Component */}
-        <ServicesSection />
+        {/* Other sections - uncomment when ready */}
+        {/* <ServicesSection />
         <PortfolioSection />
         <ContactSection />
-        <Footer />
+        <Footer /> */}
       </div>
     </div>
   );
