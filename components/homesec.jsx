@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -8,6 +8,9 @@ const HomeSection = () => {
   const [scrolled, setScrolled] = useState(false);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHoveringText, setIsHoveringText] = useState(false);
+  const textRef = React.useRef(null);
   const textVariants = ["Innovative", "Powerful", "Seamless"];
   
   // Add link to Montserrat font in the head section
@@ -29,7 +32,19 @@ const HomeSection = () => {
       setScrolled(window.scrollY > 20);
     };
     
+    // Mouse tracking for torch effect
+    const handleMouseMove = (e) => {
+      if (textRef.current && isHoveringText) {
+        const rect = textRef.current.getBoundingClientRect();
+        setMousePosition({ 
+          x: e.clientX - rect.left, 
+          y: e.clientY - rect.top 
+        });
+      }
+    };
+    
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("mousemove", handleMouseMove);
     
     // Text rotation effect
     const textInterval = setInterval(() => {
@@ -38,6 +53,7 @@ const HomeSection = () => {
     
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouseMove);
       clearInterval(textInterval);
     };
   }, []);
@@ -122,17 +138,20 @@ const HomeSection = () => {
   ];
   
   return (
-    <>
-      {/* Curved Background Elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <section className="relative min-h-screen bg-white overflow-hidden isolate">
+      {/* Curved Background Elements - Contained within section */}
+      <div className="absolute inset-0 pointer-events-none">
         {/* Primary curved background */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="absolute -top-1/2 -right-1/4 w-[120vw] h-[120vh] transform rotate-12"
+          className="absolute -top-1/2 -right-1/4 w-[100vw] h-[100vh] transform rotate-12"
         >
-          <div className="w-full h-full bg-gradient-to-br from-gray-50 via-white to-gray-100 rounded-[40%] shadow-2xl opacity-60"></div>
+          <div className="w-full h-full bg-gradient-to-br from-gray-50 via-white to-gray-100 rounded-[40%] opacity-60" 
+               style={{ 
+                 boxShadow: '0 30px 60px -15px rgba(59, 130, 246, 0.25), 0 0 120px rgba(59, 130, 246, 0.18)' 
+               }}></div>
         </motion.div>
         
         {/* Secondary curved element */}
@@ -140,9 +159,12 @@ const HomeSection = () => {
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 2, delay: 0.5, ease: "easeOut" }}
-          className="absolute -bottom-1/3 -left-1/4 w-[100vw] h-[80vh] transform -rotate-45"
+          className="absolute -bottom-1/3 -left-1/4 w-[80vw] h-[60vh] transform -rotate-45"
         >
-          <div className="w-full h-full bg-gradient-to-tr from-black/5 via-gray-50 to-white rounded-[50%] shadow-xl opacity-40"></div>
+          <div className="w-full h-full bg-gradient-to-tr from-black/5 via-gray-50 to-white rounded-[50%] opacity-40"
+               style={{ 
+                 boxShadow: '0 25px 50px -12px rgba(59, 130, 246, 0.20), 0 0 100px rgba(59, 130, 246, 0.15)' 
+               }}></div>
         </motion.div>
         
         {/* Tertiary accent curves */}
@@ -150,9 +172,12 @@ const HomeSection = () => {
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1.8, delay: 1, ease: "easeOut" }}
-          className="absolute top-1/4 right-0 w-[60vw] h-[40vh] transform rotate-45"
+          className="absolute top-1/4 right-0 w-[50vw] h-[30vh] transform rotate-45"
         >
-          <div className="w-full h-full bg-gradient-to-l from-gray-900/10 via-transparent to-transparent rounded-[60%] opacity-30"></div>
+          <div className="w-full h-full bg-gradient-to-l from-gray-900/10 via-transparent to-transparent rounded-[60%] opacity-30"
+               style={{ 
+                 boxShadow: '0 20px 40px -10px rgba(59, 130, 246, 0.16), 0 0 80px rgba(59, 130, 246, 0.12)' 
+               }}></div>
         </motion.div>
         
         {/* Floating geometric shapes */}
@@ -167,6 +192,9 @@ const HomeSection = () => {
             ease: "easeInOut"
           }}
           className="absolute top-1/3 left-1/4 w-32 h-32 border border-black/10 rounded-full opacity-20"
+          style={{ 
+            boxShadow: '0 12px 24px -6px rgba(59, 130, 246, 0.14)' 
+          }}
         ></motion.div>
         
         <motion.div
@@ -181,6 +209,9 @@ const HomeSection = () => {
             delay: 2
           }}
           className="absolute bottom-1/4 right-1/3 w-24 h-24 border border-black/15 rounded-lg rotate-45 opacity-25"
+          style={{ 
+            boxShadow: '0 10px 20px -5px rgba(59, 130, 246, 0.12)' 
+          }}
         ></motion.div>
       </div>
 
@@ -397,11 +428,11 @@ const HomeSection = () => {
         )}
       </AnimatePresence>
 
-      {/* Hero Section - Enhanced with better spacing and visual hierarchy */}
+      {/* Hero Section - Back to original spacious layout */}
       <main className="relative flex flex-col md:flex-row items-start md:items-center justify-between px-6 md:px-12 lg:px-20 py-16 md:py-28 min-h-screen max-w-7xl mx-auto w-full">
         {mounted && (
           <>
-            {/* Left content with enhanced typography */}
+            {/* Left content with original spacing */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -489,20 +520,20 @@ const HomeSection = () => {
               </motion.div>
             </motion.div>
             
-            {/* Enhanced right side with sophisticated tech visualization */}
+            {/* Enhanced right side with business services visualization */}
             <motion.div 
-              className="w-full md:w-2/5 h-[400px] md:h-[550px] relative mt-8 md:mt-0"
+              className="w-full md:w-2/5 h-[300px] sm:h-[350px] md:h-[550px] relative mt-6 md:mt-0"
               initial={{ opacity: 0, y: 30, x: 0 }}
               animate={{ opacity: 1, y: 0, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
               <div className="absolute inset-0 overflow-hidden">
                 {/* Sophisticated background pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-50/30 via-white/50 to-gray-100/30 rounded-3xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-50/30 via-white/50 to-gray-100/30 rounded-2xl md:rounded-3xl"></div>
                 
                 {/* Enhanced central tech visualization */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <svg className="w-full h-full p-8 text-black" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="w-full h-full p-4 sm:p-6 md:p-8 text-black" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
                     {/* Sophisticated circuit pattern */}
                     <motion.g
                       animate={{ rotate: 360 }}
@@ -544,11 +575,11 @@ const HomeSection = () => {
                     <circle cx="45" cy="100" r="3" fill="currentColor" fillOpacity="0.6" />
                     <circle cx="155" cy="100" r="3" fill="currentColor" fillOpacity="0.6" />
                     
-                    {/* Code brackets with enhanced styling */}
+                    {/* Digital connection lines */}
                     <path d="M35 65 L25 100 L35 135" stroke="currentColor" strokeWidth="2.5" strokeOpacity="0.7" strokeLinecap="round" />
                     <path d="M165 65 L175 100 L165 135" stroke="currentColor" strokeWidth="2.5" strokeOpacity="0.7" strokeLinecap="round" />
                     
-                    {/* Sophisticated atom structure */}
+                    {/* Business network structure */}
                     <motion.g
                       animate={{ rotate: 360 }}
                       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -560,62 +591,66 @@ const HomeSection = () => {
                   </svg>
                 </div>
                 
-                {/* Enhanced floating elements with sophisticated styling */}
-                {/* HTML/Code tag */}
+                {/* Enhanced floating business service elements - Icons only */}
+                
+                {/* Web Development */}
                 <motion.div 
-                  className="absolute top-1/4 left-1/4 px-4 py-3 border-2 border-black/30 rounded-xl bg-white/95 shadow-2xl z-20 backdrop-blur-sm"
+                  className="absolute top-1/4 left-1/6 sm:left-1/4 w-10 h-10 sm:w-12 md:w-14 sm:h-12 md:h-14 flex items-center justify-center border-2 border-blue-400/60 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl sm:shadow-2xl z-20 backdrop-blur-sm"
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <div className="text-lg font-mono font-bold text-black">&lt;/&gt;</div>
-                </motion.div>
-                
-                {/* JavaScript badge */}
-                <motion.div 
-                  className="absolute bottom-1/3 right-1/4 w-14 h-14 flex items-center justify-center border-2 border-amber-400/60 rounded-xl bg-gradient-to-br from-amber-50 to-yellow-100 shadow-2xl z-20 backdrop-blur-sm"
-                  animate={{ y: [0, 10, 0], rotate: [0, 5, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                >
-                  <div className="text-base font-mono font-bold text-amber-800">JS</div>
-                </motion.div>
-                
-                {/* Database icon */}
-                <motion.div 
-                  className="absolute top-1/2 right-1/3 w-12 h-12 border-2 border-blue-400/60 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 shadow-2xl z-20 flex flex-col items-center justify-center backdrop-blur-sm"
-                  animate={{ y: [0, -6, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                >
-                  <div className="w-6 h-1.5 border-t-2 border-blue-600/70 rounded-t-md"></div>
-                  <div className="w-7 h-5 border-2 border-blue-600/70 border-t-0 rounded-b-sm"></div>
-                  <div className="w-6 h-1 border-t border-blue-600/70"></div>
-                </motion.div>
-                
-                {/* Git branch */}
-                <motion.div 
-                  className="absolute top-1/3 right-1/5 w-14 h-14 flex items-center justify-center border-2 border-gray-400/60 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 shadow-2xl z-20 backdrop-blur-sm"
-                  animate={{ y: [0, 8, 0], rotate: [0, -3, 0] }}
-                  transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-                >
-                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" className="text-gray-700">
-                    <circle cx="12" cy="7" r="3" />
-                    <circle cx="17" cy="17" r="3" />
-                    <circle cx="7" cy="17" r="3" />
-                    <path d="M12 10v3.5a1.5 1.5 0 0 0 1.5 1.5h2" />
+                  <svg className="w-5 h-5 sm:w-6 md:w-7 md:h-7 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/>
                   </svg>
                 </motion.div>
                 
-                {/* Arrow function */}
+                {/* Digital Marketing */}
                 <motion.div 
-                  className="absolute bottom-1/4 left-1/3 px-4 py-3 border-2 border-purple-400/60 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 shadow-2xl z-20 backdrop-blur-sm"
+                  className="absolute bottom-1/3 right-1/6 sm:right-1/4 w-10 h-10 sm:w-12 md:w-14 sm:h-12 md:h-14 flex items-center justify-center border-2 border-green-400/60 rounded-lg sm:rounded-xl bg-gradient-to-br from-green-50 to-green-100 shadow-xl sm:shadow-2xl z-20 backdrop-blur-sm"
+                  animate={{ y: [0, 10, 0], rotate: [0, 5, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                >
+                  <svg className="w-5 h-5 sm:w-6 md:w-7 md:h-7 text-green-700" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2l2.4 7.4h7.6l-6 4.6 2.4 7.4-6-4.6-6 4.6 2.4-7.4-6-4.6h7.6z"/>
+                  </svg>
+                </motion.div>
+                
+                {/* App Development */}
+                <motion.div 
+                  className="absolute top-1/2 right-1/4 sm:right-1/3 w-10 h-10 sm:w-12 md:w-14 sm:h-12 md:h-14 flex items-center justify-center border-2 border-purple-400/60 rounded-lg sm:rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 shadow-xl sm:shadow-2xl z-20 backdrop-blur-sm"
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                >
+                  <svg className="w-5 h-5 sm:w-6 md:w-7 md:h-7 text-purple-700" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M7 1h10c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2zm8 20V3H9v18h6z"/>
+                  </svg>
+                </motion.div>
+                
+                {/* E-Commerce */}
+                <motion.div 
+                  className="absolute top-1/3 right-1/6 sm:right-1/5 w-10 h-10 sm:w-12 md:w-14 sm:h-12 md:h-14 flex items-center justify-center border-2 border-orange-400/60 rounded-lg sm:rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 shadow-xl sm:shadow-2xl z-20 backdrop-blur-sm"
+                  animate={{ y: [0, 8, 0], rotate: [0, -3, 0] }}
+                  transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+                >
+                  <svg className="w-5 h-5 sm:w-6 md:w-7 md:h-7 text-orange-700" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M7 4V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3zM9 3v1h6V3H9zm-4 3v13h14V6H5z"/>
+                  </svg>
+                </motion.div>
+                
+                {/* SEO Services */}
+                <motion.div 
+                  className="absolute bottom-1/4 left-1/4 sm:left-1/3 w-10 h-10 sm:w-12 md:w-14 sm:h-12 md:h-14 flex items-center justify-center border-2 border-teal-400/60 rounded-lg sm:rounded-xl bg-gradient-to-br from-teal-50 to-teal-100 shadow-xl sm:shadow-2xl z-20 backdrop-blur-sm"
                   animate={{ y: [0, -7, 0] }}
                   transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
                 >
-                  <div className="text-sm font-mono font-bold text-purple-800">() =&gt;</div>
+                  <svg className="w-5 h-5 sm:w-6 md:w-7 md:h-7 text-teal-700" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                  </svg>
                 </motion.div>
                 
-                {/* React atom */}
+                {/* UI/UX Design */}
                 <motion.div 
-                  className="absolute top-1/6 right-1/4 w-12 h-12 flex items-center justify-center border-2 border-cyan-400/60 rounded-full bg-gradient-to-br from-cyan-50 to-cyan-100 shadow-2xl z-20 backdrop-blur-sm"
+                  className="absolute top-1/6 right-1/4 w-10 h-10 sm:w-12 md:w-14 sm:h-12 md:h-14 flex items-center justify-center border-2 border-pink-400/60 rounded-lg sm:rounded-xl bg-gradient-to-br from-pink-50 to-pink-100 shadow-xl sm:shadow-2xl z-20 backdrop-blur-sm"
                   animate={{ 
                     y: [0, -10, 0],
                     rotate: [0, 360, 0]
@@ -625,16 +660,20 @@ const HomeSection = () => {
                     rotate: { duration: 8, repeat: Infinity, ease: "linear" }
                   }}
                 >
-                  <div className="text-lg">⚛️</div>
+                  <svg className="w-5 h-5 sm:w-6 md:w-7 md:h-7 text-pink-700" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
                 </motion.div>
                 
-                {/* CSS badge */}
+                {/* Consulting */}
                 <motion.div 
-                  className="absolute bottom-1/5 left-1/5 w-12 h-12 flex items-center justify-center border-2 border-pink-400/60 rounded-lg bg-gradient-to-br from-pink-50 to-pink-100 shadow-2xl z-20 backdrop-blur-sm"
+                  className="absolute bottom-1/5 left-1/6 sm:left-1/5 w-10 h-10 sm:w-12 md:w-14 sm:h-12 md:h-14 flex items-center justify-center border-2 border-gray-400/60 rounded-lg sm:rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 shadow-xl sm:shadow-2xl z-20 backdrop-blur-sm"
                   animate={{ y: [0, 6, 0] }}
                   transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                 >
-                  <div className="text-xs font-bold text-pink-800">CSS</div>
+                  <svg className="w-5 h-5 sm:w-6 md:w-7 md:h-7 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 3l8 5v7c0 5.55-3.84 9.74-9 9.95-5.16-.21-9-4.4-9-9.95V8l8-5z"/>
+                  </svg>
                 </motion.div>
               </div>
             </motion.div>
@@ -681,6 +720,16 @@ const HomeSection = () => {
           animation: pulse-glow 4s ease-in-out infinite;
         }
         
+        /* Torch effect styles */
+        .torch-text {
+          transition: all 0.1s ease-out;
+          cursor: none;
+        }
+        
+        .torch-effect {
+          transition: background 0.1s ease-out;
+        }
+        
         /* Smooth scrolling for better UX */
         html {
           scroll-behavior: smooth;
@@ -707,8 +756,13 @@ const HomeSection = () => {
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
+        
+        /* Custom cursor for torch effect */
+        .torch-text:hover {
+          cursor: none;
+        }
       `}</style>
-    </>
+    </section>
   );
 };
 

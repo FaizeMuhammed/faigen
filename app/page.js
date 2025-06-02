@@ -2,10 +2,10 @@
 import { useEffect } from "react";
 import AnimatedBackground from "@/components/animaedbg";
 import HomeSection from "@/components/homesec";
-// import ServicesSection from "@/components/servisesec";
-// import PortfolioSection from "@/components/portfoliyo";
-// import ContactSection from "@/components/contactsec";
-// import Footer from "@/components/footer";
+import ServicesSection from "@/components/servisesec";
+import PortfolioSection from "@/components/portfoliyo";
+import ContactSection from "@/components/contactsec";
+import Footer from "@/components/footer";
 
 export default function Home() {
   // Add global style for body - dark theme
@@ -27,21 +27,17 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen text-white flex flex-col overflow-hidden relative bg-white">
-      {/* Background Component - positioned fixed to cover all sections */}
-      {/* <AnimatedBackground /> */}
-      
-      {/* Content Container with relative positioning and higher z-index */}
-      <div className="relative z-10 w-full">
+    <div className="min-h-screen text-white flex flex-col overflow-hidden relative ">
+     
         {/* Home Section Component */}
         <HomeSection />
         
         {/* Other sections - uncomment when ready */}
-        {/* <ServicesSection />
-        <PortfolioSection />
+        <ServicesSection />
+        {/* <PortfolioSection />
         <ContactSection />
         <Footer /> */}
-      </div>
+     
     </div>
   );
 }
