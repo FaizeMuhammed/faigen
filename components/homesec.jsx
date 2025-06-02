@@ -6,18 +6,15 @@ import { motion, AnimatePresence } from "framer-motion";
 const HomeSection = () => {
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [showNav, setShowNav] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showContactPopup, setShowContactPopup] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const textVariants = ["Innovative", "Powerful", "Seamless"];
   
   // Add link to Montserrat font in the head section
   useEffect(() => {
     const linkElement = document.createElement('link');
     linkElement.rel = 'stylesheet';
-    linkElement.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap';
+    linkElement.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap';
     document.head.appendChild(linkElement);
     
     return () => {
@@ -29,21 +26,7 @@ const HomeSection = () => {
     setMounted(true);
     
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // Check if we've scrolled down from our last position and we're not at the top
-      if (currentScrollY > lastScrollY && currentScrollY > 20) {
-        setShowNav(true);
-      } else if (currentScrollY <= 20) {
-        // Hide nav when at the top of the page
-        setShowNav(false);
-      }
-      
-      // Update scrolled state for styling
-      setScrolled(currentScrollY > 20);
-      
-      // Update our last scroll position
-      setLastScrollY(currentScrollY);
+      setScrolled(window.scrollY > 20);
     };
     
     window.addEventListener("scroll", handleScroll);
@@ -57,42 +40,20 @@ const HomeSection = () => {
       window.removeEventListener("scroll", handleScroll);
       clearInterval(textInterval);
     };
-  }, [lastScrollY]);
+  }, []);
 
+  // Prevent body scroll when menu is open
   useEffect(() => {
-    // Prevent scrolling when mobile menu is open
-    if (mobileMenuOpen) {
+    if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
-      // Show navigation when mobile menu is open regardless of scroll position
-      setShowNav(true);
     } else {
-      document.body.style.overflow = '';
-      // When closing mobile menu, check if we should hide nav based on scroll position
-      setShowNav(window.scrollY > 20);
+      document.body.style.overflow = 'unset';
     }
     
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = 'unset';
     };
-  }, [mobileMenuOpen]);
-
-  // Additional effect to handle body scroll when contact popup is open
-  useEffect(() => {
-    if (showContactPopup) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      // Only re-enable scrolling if mobile menu isn't open
-      if (!mobileMenuOpen) {
-        document.body.style.overflow = '';
-      }
-    }
-    
-    return () => {
-      if (!mobileMenuOpen) {
-        document.body.style.overflow = '';
-      }
-    };
-  }, [showContactPopup, mobileMenuOpen]);
+  }, [isMenuOpen]);
   
   // Framer motion variants
   const containerVariants = {
@@ -119,440 +80,569 @@ const HomeSection = () => {
     }
   };
 
-  // Mobile menu animation variants
+  // Full screen menu variants
   const menuVariants = {
     closed: {
+      y: "-100%",
       opacity: 0,
-      x: "100%",
       transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 40
+        duration: 0.6,
+        ease: [0.43, 0.13, 0.23, 0.96]
       }
     },
     open: {
+      y: 0,
       opacity: 1,
-      x: 0,
       transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 40,
-        staggerChildren: 0.1,
-        delayChildren: 0.2
+        duration: 0.6,
+        ease: [0.43, 0.13, 0.23, 0.96]
       }
     }
   };
 
   const menuItemVariants = {
-    closed: { x: 20, opacity: 0 },
-    open: { 
-      x: 0, 
+    closed: { x: -20, opacity: 0 },
+    open: (i) => ({
+      x: 0,
       opacity: 1,
       transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 20
+        delay: 0.3 + i * 0.1,
+        duration: 0.5
       }
-    }
+    })
   };
 
-  // Nav animation variants
-  const navVariants = {
-    hidden: { y: -100, opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1,
-      transition: { 
-        duration: 0.4, 
-        ease: "easeOut" 
-      }
-    }
-  };
-
-  // Function to handle logo click - refresh page
-  const handleLogoClick = () => {
-    window.location.reload();
-  };
+  const menuItems = [
+    "Products",
+    "Solutions", 
+    "Resources",
+    "Pricing",
+    "About",
+    "Contact"
+  ];
   
   return (
     <>
-      {/* Navigation - Only visible when scrolling down */}
-      <AnimatePresence>
-        {(showNav || mobileMenuOpen) && (
-          <motion.nav 
-            key="navigation"
-            variants={navVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            className={`fixed w-full z-50 py-3 ${scrolled ? 'shadow-lg bg-black/30 border-b border-white/10' : 'bg-transparent'}`}
-          >
-            <div className="flex justify-between items-center px-6 md:px-12 lg:px-20 max-w-7xl mx-auto w-full">
-              <div className="w-32 h-12 relative scale-90 cursor-pointer" onClick={handleLogoClick}>
-                <div className="absolute inset-0 flex items-center">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {/* Clickable Logo in the nav */}
-                    <Image 
-                      src="/WhatsApp_Image_2025-04-04_at_9.53.44_PM-removebg-preview.png" 
-                      alt="Faigen" 
-                      width={80} 
-                      height={48} 
-                      className="object-contain brightness-0 invert"
-                    />
-                  </motion.div>
-                </div>
-              </div>
-              
-              <motion.div 
-                className="flex items-center space-x-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-              >
-                <div className="hidden md:flex space-x-10 mr-10">
-                  {["Products", "Solutions", "Resources", "Pricing"].map((item, index) => (
-                    <motion.a 
-                      key={item} 
-                      href="#" 
-                      className="relative text-sm font-medium text-white transition-colors duration-300 group hover:text-gray-300"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 + index * 0.1 }}
-                      whileHover={{ y: -2 }}
-                    >
-                      {item}
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-                    </motion.a>
-                  ))}
-                </div>
-                
-                <motion.button 
-                  className="px-6 py-2.5 text-sm font-medium border border-white/30 text-white rounded-full hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105 hidden md:block"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setShowContactPopup(true)}
-                >
-                  Contact
-                </motion.button>
-                
-                <motion.button 
-                  className="p-2 md:hidden text-white relative z-50"
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  aria-label="Toggle mobile menu"
-                >
-                  <AnimatePresence mode="wait">
-                    {mobileMenuOpen ? (
-                      <motion.svg 
-                        key="close"
-                        xmlns="http://www.w3.org/2000/svg" 
-                        fill="none" 
-                        viewBox="0 0 24 24" 
-                        stroke="currentColor" 
-                        className="w-6 h-6"
-                        initial={{ opacity: 0, rotate: -90 }}
-                        animate={{ opacity: 1, rotate: 0 }}
-                        exit={{ opacity: 0, rotate: 90 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </motion.svg>
-                    ) : (
-                      <motion.svg 
-                        key="menu"
-                        xmlns="http://www.w3.org/2000/svg" 
-                        fill="none" 
-                        viewBox="0 0 24 24" 
-                        stroke="currentColor" 
-                        className="w-6 h-6"
-                        initial={{ opacity: 0, rotate: 90 }}
-                        animate={{ opacity: 1, rotate: 0 }}
-                        exit={{ opacity: 0, rotate: -90 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                      </motion.svg>
-                    )}
-                  </AnimatePresence>
-                </motion.button>
-              </motion.div>
-            </div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+      {/* Curved Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {/* Primary curved background */}
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="absolute -top-1/2 -right-1/4 w-[120vw] h-[120vh] transform rotate-12"
+        >
+          <div className="w-full h-full bg-gradient-to-br from-gray-50 via-white to-gray-100 rounded-[40%] shadow-2xl opacity-60"></div>
+        </motion.div>
+        
+        {/* Secondary curved element */}
+        <motion.div
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 2, delay: 0.5, ease: "easeOut" }}
+          className="absolute -bottom-1/3 -left-1/4 w-[100vw] h-[80vh] transform -rotate-45"
+        >
+          <div className="w-full h-full bg-gradient-to-tr from-black/5 via-gray-50 to-white rounded-[50%] shadow-xl opacity-40"></div>
+        </motion.div>
+        
+        {/* Tertiary accent curves */}
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1.8, delay: 1, ease: "easeOut" }}
+          className="absolute top-1/4 right-0 w-[60vw] h-[40vh] transform rotate-45"
+        >
+          <div className="w-full h-full bg-gradient-to-l from-gray-900/10 via-transparent to-transparent rounded-[60%] opacity-30"></div>
+        </motion.div>
+        
+        {/* Floating geometric shapes */}
+        <motion.div
+          animate={{ 
+            y: [0, -20, 0],
+            rotate: [0, 5, 0]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/3 left-1/4 w-32 h-32 border border-black/10 rounded-full opacity-20"
+        ></motion.div>
+        
+        <motion.div
+          animate={{ 
+            y: [0, 15, 0],
+            rotate: [0, -3, 0]
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+          className="absolute bottom-1/4 right-1/3 w-24 h-24 border border-black/15 rounded-lg rotate-45 opacity-25"
+        ></motion.div>
+      </div>
 
-      {/* Mobile menu overlay */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div 
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setMobileMenuOpen(false)}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Mobile navigation menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
+      {/* Menu Icon - Fixed position */}
+      <motion.div 
+        className="fixed top-6 right-6 md:top-8 md:right-8 z-50"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1, duration: 0.5 }}
+      >
+        <motion.button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="w-14 h-14 flex items-center justify-center bg-white/90 backdrop-blur-lg border-2 border-black/10 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:border-black/30"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <motion.div
-            className="fixed top-0 right-0 w-4/5 h-full bg-gray-900/95 backdrop-blur-lg border-l border-white/10 z-40 shadow-xl flex flex-col overflow-hidden"
+            animate={isMenuOpen ? "open" : "closed"}
+            className="flex flex-col items-center justify-center"
+          >
+            {/* Hamburger to X animation */}
+            <motion.span
+              variants={{
+                closed: { rotate: 0, y: 0 },
+                open: { rotate: 45, y: 6 }
+              }}
+              className="w-5 h-0.5 bg-black block mb-1.5 origin-center transition-all duration-300"
+            />
+            <motion.span
+              variants={{
+                closed: { opacity: 1 },
+                open: { opacity: 0 }
+              }}
+              className="w-5 h-0.5 bg-black block mb-1.5 transition-all duration-300"
+            />
+            <motion.span
+              variants={{
+                closed: { rotate: 0, y: 0 },
+                open: { rotate: -45, y: -6 }
+              }}
+              className="w-5 h-0.5 bg-black block origin-center transition-all duration-300"
+            />
+          </motion.div>
+        </motion.button>
+      </motion.div>
+
+      {/* Full Screen Navigation */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
             variants={menuVariants}
             initial="closed"
             animate="open"
             exit="closed"
+            className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl"
           >
-            <div className="flex flex-col p-8 space-y-8 h-full">
-              <div className="mt-16">
-                <motion.div
-                  variants={menuItemVariants}
-                  className="w-28 h-28 relative mx-auto mb-8 cursor-pointer"
-                  onClick={handleLogoClick}
-                >
+            {/* Enhanced Background with curved elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {/* Primary curved background for menu */}
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                className="absolute -top-1/3 -right-1/4 w-[100vw] h-[80vh] transform rotate-45"
+              >
+                <div className="w-full h-full bg-gradient-to-br from-gray-100 via-white to-gray-50 rounded-[50%] shadow-xl opacity-40"></div>
+              </motion.div>
+              
+              {/* Secondary curved element */}
+              <motion.div
+                initial={{ scale: 0.6, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.2, delay: 0.4, ease: "easeOut" }}
+                className="absolute -bottom-1/4 -left-1/3 w-[80vw] h-[60vh] transform -rotate-30"
+              >
+                <div className="w-full h-full bg-gradient-to-tr from-black/5 via-gray-100 to-white rounded-[60%] shadow-lg opacity-30"></div>
+              </motion.div>
+              
+              {/* Tertiary accent curve */}
+              <motion.div
+                initial={{ x: 100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 1.5, delay: 0.6, ease: "easeOut" }}
+                className="absolute top-1/2 right-0 w-[50vw] h-[30vh] transform rotate-12"
+              >
+                <div className="w-full h-full bg-gradient-to-l from-gray-200/20 via-transparent to-transparent rounded-[70%] opacity-25"></div>
+              </motion.div>
+              
+              {/* Floating circles for navigation */}
+              <motion.div
+                animate={{ 
+                  y: [0, -15, 0],
+                  rotate: [0, 10, 0]
+                }}
+                transition={{
+                  duration: 10,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="absolute top-1/4 left-1/6 w-20 h-20 border border-black/8 rounded-full opacity-30"
+              ></motion.div>
+              
+              <motion.div
+                animate={{ 
+                  y: [0, 12, 0],
+                  rotate: [0, -8, 0]
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 3
+                }}
+                className="absolute bottom-1/3 right-1/5 w-16 h-16 border border-black/10 rounded-lg rotate-45 opacity-20"
+              ></motion.div>
+            </div>
+            
+            {/* Navigation content */}
+            <div className="relative h-full flex flex-col justify-between px-4 sm:px-6 py-6 sm:py-8 md:py-12">
+              {/* Logo at top */}
+              <motion.div
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="flex justify-start"
+              >
+                <div className="relative">
+                  <div className="absolute -inset-2 border border-black/10 rounded-full shadow-lg bg-gradient-to-br from-white to-gray-50"></div>
                   <Image 
                     src="/WhatsApp_Image_2025-04-04_at_9.53.44_PM-removebg-preview.png" 
                     alt="Faigen" 
-                    width={100} 
-                    height={100} 
-                    className="object-contain brightness-0 invert"
+                    width={50} 
+                    height={50} 
+                    className="object-contain relative z-10 filter drop-shadow-sm sm:w-[60px] sm:h-[60px]"
                   />
-                </motion.div>
-              
-                {["Products", "Solutions", "Resources", "Pricing"].map((item) => (
-                  <motion.a 
-                    key={item}
-                    variants={menuItemVariants}
-                    href="#" 
-                    className="block py-4 text-xl font-semibold border-b border-white/10 text-white hover:text-gray-300 transition-colors"
-                  >
-                    {item}
-                  </motion.a>
+                </div>
+              </motion.div>
+
+              {/* Main navigation items - Centered */}
+              <nav className="flex-1 flex flex-col items-center justify-center text-center space-y-3 sm:space-y-4 md:space-y-6">
+                {menuItems.map((item, index) => (
+                  <div key={item} className="w-full">
+                    <motion.a
+                      href="#"
+                      custom={index}
+                      variants={menuItemVariants}
+                      initial="closed"
+                      animate="open"
+                      className="block text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-black hover:text-gray-600 transition-colors duration-300 py-1.5 sm:py-2 md:py-3"
+                      style={{ fontFamily: "'Montserrat', sans-serif" }}
+                      whileHover={{ x: 10 }}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item}
+                    </motion.a>
+                    
+                    {/* Separator - Don't show after last item */}
+                    {index < menuItems.length - 1 && (
+                      <motion.div
+                        initial={{ scaleX: 0, opacity: 0 }}
+                        animate={{ scaleX: 1, opacity: 1 }}
+                        transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
+                        className="w-16 sm:w-20 md:w-28 h-px bg-gradient-to-r from-transparent via-black/30 to-transparent mx-auto mt-2 sm:mt-3 md:mt-4"
+                      />
+                    )}
+                  </div>
                 ))}
-              </div>
-              
-              <motion.div variants={menuItemVariants} className="mt-auto">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full py-3 bg-white text-black rounded-lg font-medium text-base transition-all duration-300 hover:bg-gray-200"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    setTimeout(() => setShowContactPopup(true), 100);
-                  }}
-                >
-                  Contact Us
-                </motion.button>
+              </nav>
+
+              {/* Bottom content */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
+                className="text-center"
+              >
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-8">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-6 sm:px-8 py-2.5 sm:py-3 bg-black text-white rounded-full font-semibold text-sm sm:text-base transition-all duration-300 shadow-lg hover:shadow-xl"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    Get Started
+                  </motion.button>
+                  
+                  <div className="flex gap-4 sm:gap-6 text-xs sm:text-sm text-gray-600">
+                    <motion.a 
+                      href="#" 
+                      className="hover:text-black transition-colors duration-200"
+                      whileHover={{ y: -2 }}
+                    >
+                      Privacy
+                    </motion.a>
+                    <motion.a 
+                      href="#" 
+                      className="hover:text-black transition-colors duration-200"
+                      whileHover={{ y: -2 }}
+                    >
+                      Terms
+                    </motion.a>
+                    <motion.a 
+                      href="#" 
+                      className="hover:text-black transition-colors duration-200"
+                      whileHover={{ y: -2 }}
+                    >
+                      Support
+                    </motion.a>
+                  </div>
+                </div>
               </motion.div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Hero Section - Using flex-col on mobile and flex-row on desktop with better spacing */}
-      <main className="flex flex-col md:flex-row items-start md:items-center justify-between px-6 md:px-12 lg:px-20 py-16 md:py-28 min-h-screen max-w-7xl mx-auto w-full">
+      {/* Hero Section - Enhanced with better spacing and visual hierarchy */}
+      <main className="relative flex flex-col md:flex-row items-start md:items-center justify-between px-6 md:px-12 lg:px-20 py-16 md:py-28 min-h-screen max-w-7xl mx-auto w-full">
         {mounted && (
           <>
-            {/* Left content with improved spacing */}
+            {/* Left content with enhanced typography */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
               className="z-10 w-full md:w-3/5 text-left"
             >
-              {/* Logo with better positioning */}
+              {/* Enhanced logo with sophisticated styling */}
               <motion.div 
                 variants={itemVariants}
-                className="mb-12 md:mb-16 w-28 md:w-32 h-28 md:h-32 relative cursor-pointer"
-                onClick={handleLogoClick}
+                className="mb-12 md:mb-16 w-28 md:w-32 h-28 md:h-32 relative"
               >
                 <div className="flex items-center justify-start">
-                  <div className="relative">
-                    {/* Enhanced circle around logo */}
-                    <div className="absolute -inset-1 border border-white/20 rounded-full shadow-lg"></div>
-                    {/* Logo */}
+                  <div className="relative group">
+                    {/* Multi-layered circle design */}
+                    <div className="absolute -inset-3 border-2 border-black/5 rounded-full shadow-xl group-hover:border-black/15 transition-all duration-500"></div>
+                    <div className="absolute -inset-1 border border-black/10 rounded-full shadow-lg bg-gradient-to-br from-white to-gray-50 group-hover:shadow-2xl transition-all duration-500"></div>
+                    <div className="absolute -inset-0.5 bg-gradient-to-br from-gray-100 to-white rounded-full opacity-60"></div>
+                    
                     <Image 
                       src="/WhatsApp_Image_2025-04-04_at_9.53.44_PM-removebg-preview.png" 
                       alt="Faigen" 
                       width={100} 
                       height={100} 
-                      className="object-contain relative z-10 brightness-0 invert"
+                      className="object-contain relative z-10 filter drop-shadow-lg group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                 </div>
               </motion.div>
               
-              {/* Dynamic text heading with increased spacing and better sizing */}
+              {/* Enhanced dynamic text heading */}
               <motion.div variants={itemVariants} className="overflow-hidden mb-8 md:mb-16">
-                <div className="">
+                <div className="relative">
                   <motion.h1 
                     key={currentTextIndex}
                     initial={{ y: 40, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -40, opacity: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.1] md:leading-[0.9] lg:leading-[0.9] text-white"
+                    className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.1] md:leading-[0.9] lg:leading-[0.9]"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
-                    <span className="block">We Create</span>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-white">
+                    <span className="block text-black">We Create</span>
+                    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-600 to-black relative">
                       {textVariants[currentTextIndex]}
+                      {/* Subtle underline accent */}
+                      <div className="absolute bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-black/20 to-transparent rounded-full"></div>
                     </span>
-                    <span className="block">Solutions.</span>
+                    <span className="block text-black">Solutions.</span>
                   </motion.h1>
                 </div>
               </motion.div>
               
-              {/* Enhanced paragraph now visible on all screens with better width and spacing */}
+              {/* Enhanced description with better typography */}
               <motion.p 
                 variants={itemVariants}
-                className="text-lg md:text-xl max-w-xl mb-12 md:mb-16 text-gray-300 leading-relaxed"
+                className="text-lg md:text-xl max-w-xl mb-12 md:mb-16 text-gray-700 leading-relaxed font-medium tracking-wide"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
                 Building exceptional digital experiences that transform 
                 how businesses operate in the modern world.
               </motion.p>
               
-              
+              {/* Enhanced call to action buttons */}
+              <motion.div 
+                variants={itemVariants}
+                className="flex flex-wrap gap-5 mb-16 md:mb-0"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-black text-white rounded-full font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-2xl relative overflow-hidden group"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  <span className="relative z-10">Get Started</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 border-2 border-black/20 rounded-full font-semibold text-base transition-all duration-300 hover:border-black hover:bg-black hover:text-white relative overflow-hidden group"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  <span className="relative z-10">Learn More</span>
+                </motion.button>
+              </motion.div>
             </motion.div>
             
-            {/* Right side - Tech image frame with improved positioning and dimensions */}
+            {/* Enhanced right side with sophisticated tech visualization */}
             <motion.div 
               className="w-full md:w-2/5 h-[400px] md:h-[550px] relative mt-8 md:mt-0"
               initial={{ opacity: 0, y: 30, x: 0 }}
               animate={{ opacity: 1, y: 0, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              <div className="absolute inset-0 ">
-                <div className="absolute inset-0 "></div>
+              <div className="absolute inset-0 overflow-hidden">
+                {/* Sophisticated background pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-50/30 via-white/50 to-gray-100/30 rounded-3xl"></div>
+                
+                {/* Enhanced central tech visualization */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  {/* Abstract technology elements with coding icons */}
-                  <svg className="w-full h-full p-8 text-white" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    {/* Circuit-like pattern */}
-                    <path d="M20 100 H70 M130 100 H180" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" />
-                    <path d="M100 20 V70 M100 130 V180" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" />
-                    <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="1" strokeOpacity="0.5" fill="none" />
-                    <circle cx="100" cy="100" r="30" stroke="currentColor" strokeWidth="1" strokeOpacity="0.6" fill="none" />
-                    <circle cx="100" cy="100" r="10" stroke="currentColor" strokeWidth="1" fill="none" />
+                  <svg className="w-full h-full p-8 text-black" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {/* Sophisticated circuit pattern */}
+                    <motion.g
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                    >
+                      <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.2" fill="none" strokeDasharray="5,10" />
+                      <circle cx="100" cy="100" r="55" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.3" fill="none" strokeDasharray="3,8" />
+                    </motion.g>
                     
-                    {/* Connection points */}
-                    <circle cx="100" cy="50" r="4" fill="currentColor" fillOpacity="0.7" />
-                    <circle cx="100" cy="150" r="4" fill="currentColor" fillOpacity="0.7" />
-                    <circle cx="50" cy="100" r="4" fill="currentColor" fillOpacity="0.7" />
-                    <circle cx="150" cy="100" r="4" fill="currentColor" fillOpacity="0.7" />
+                    <motion.g
+                      animate={{ rotate: -360 }}
+                      transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+                    >
+                      <circle cx="100" cy="100" r="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" fill="none" strokeDasharray="2,6" />
+                      <circle cx="100" cy="100" r="25" stroke="currentColor" strokeWidth="1" strokeOpacity="0.5" fill="none" />
+                    </motion.g>
                     
-                    {/* Diagonal lines */}
-                    <path d="M60 60 L140 140" stroke="currentColor" strokeWidth="1" strokeOpacity="0.5" />
-                    <path d="M140 60 L60 140" stroke="currentColor" strokeWidth="1" strokeOpacity="0.5" />
+                    {/* Central core */}
+                    <circle cx="100" cy="100" r="8" stroke="currentColor" strokeWidth="2" fill="none" strokeOpacity="0.8" />
+                    <circle cx="100" cy="100" r="3" fill="currentColor" fillOpacity="0.6" />
                     
-                    {/* Small dots */}
-                    <circle cx="70" cy="70" r="2" fill="currentColor" fillOpacity="0.8" />
-                    <circle cx="130" cy="130" r="2" fill="currentColor" fillOpacity="0.8" />
-                    <circle cx="130" cy="70" r="2" fill="currentColor" fillOpacity="0.8" />
-                    <circle cx="70" cy="130" r="2" fill="currentColor" fillOpacity="0.8" />
+                    {/* Connection lines with animation */}
+                    <motion.g
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+                    >
+                      <path d="M20 100 H80 M120 100 H180" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" />
+                      <path d="M100 20 V80 M100 120 V180" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" />
+                    </motion.g>
                     
-                    {/* Code brackets - Left */}
-                    <path d="M40 60 L30 100 L40 140" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.7" />
+                    {/* Diagonal connections */}
+                    <path d="M65 65 L135 135" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.25" strokeDasharray="4,4" />
+                    <path d="M135 65 L65 135" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.25" strokeDasharray="4,4" />
                     
-                    {/* Code brackets - Right */}
-                    <path d="M160 60 L170 100 L160 140" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.7" />
+                    {/* Node points */}
+                    <circle cx="100" cy="45" r="3" fill="currentColor" fillOpacity="0.6" />
+                    <circle cx="100" cy="155" r="3" fill="currentColor" fillOpacity="0.6" />
+                    <circle cx="45" cy="100" r="3" fill="currentColor" fillOpacity="0.6" />
+                    <circle cx="155" cy="100" r="3" fill="currentColor" fillOpacity="0.6" />
                     
-                    {/* React-like atom icon */}
-                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.6" transform="rotate(30 100 100)" />
-                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.6" transform="rotate(90 100 100)" />
-                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.6" transform="rotate(150 100 100)" />
+                    {/* Code brackets with enhanced styling */}
+                    <path d="M35 65 L25 100 L35 135" stroke="currentColor" strokeWidth="2.5" strokeOpacity="0.7" strokeLinecap="round" />
+                    <path d="M165 65 L175 100 L165 135" stroke="currentColor" strokeWidth="2.5" strokeOpacity="0.7" strokeLinecap="round" />
+                    
+                    {/* Sophisticated atom structure */}
+                    <motion.g
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    >
+                      <ellipse cx="100" cy="100" rx="18" ry="45" stroke="currentColor" strokeWidth="1.2" strokeOpacity="0.4" transform="rotate(30 100 100)" />
+                      <ellipse cx="100" cy="100" rx="18" ry="45" stroke="currentColor" strokeWidth="1.2" strokeOpacity="0.4" transform="rotate(90 100 100)" />
+                      <ellipse cx="100" cy="100" rx="18" ry="45" stroke="currentColor" strokeWidth="1.2" strokeOpacity="0.4" transform="rotate(150 100 100)" />
+                    </motion.g>
                   </svg>
                 </div>
                 
-                {/* Enhanced floating coding elements with better shadow and animations */}
-                {/* HTML tag */}
-                <div className="absolute top-1/4 left-1/4 px-3 py-2 border-2 border-white/30 rounded-lg bg-gray-900/80 backdrop-blur-sm shadow-xl z-20 animate-float" style={{ animationDelay: '0s' }}>
-                  <div className="text-base font-mono font-bold text-white">&lt;/&gt;</div>
-                </div>
+                {/* Enhanced floating elements with sophisticated styling */}
+                {/* HTML/Code tag */}
+                <motion.div 
+                  className="absolute top-1/4 left-1/4 px-4 py-3 border-2 border-black/30 rounded-xl bg-white/95 shadow-2xl z-20 backdrop-blur-sm"
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <div className="text-lg font-mono font-bold text-black">&lt;/&gt;</div>
+                </motion.div>
                 
-                {/* JavaScript icon */}
-                <div className="absolute bottom-1/3 right-1/4 w-12 h-12 flex items-center justify-center border-2 border-yellow-400/60 rounded-lg bg-yellow-900/70 backdrop-blur-sm shadow-xl z-20 animate-float" style={{ animationDelay: '1s' }}>
-                  <div className="text-sm font-mono font-bold text-yellow-200">JS</div>
-                </div>
+                {/* JavaScript badge */}
+                <motion.div 
+                  className="absolute bottom-1/3 right-1/4 w-14 h-14 flex items-center justify-center border-2 border-amber-400/60 rounded-xl bg-gradient-to-br from-amber-50 to-yellow-100 shadow-2xl z-20 backdrop-blur-sm"
+                  animate={{ y: [0, 10, 0], rotate: [0, 5, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                >
+                  <div className="text-base font-mono font-bold text-amber-800">JS</div>
+                </motion.div>
                 
                 {/* Database icon */}
-                <div className="absolute top-1/2 right-1/3 w-11 h-11 border-2 border-blue-400/60 rounded-md bg-blue-900/70 backdrop-blur-sm shadow-xl z-20 flex flex-col items-center justify-center animate-float" style={{ animationDelay: '2s' }}>
-                  <div className="w-5 h-1 border-t border-blue-300/70 rounded-t-sm"></div>
-                  <div className="w-6 h-4 border border-blue-300/70 border-t-0"></div>
-                  <div className="w-5 h-1 border-t border-blue-300/70 rounded-b-sm"></div>
-                </div>
+                <motion.div 
+                  className="absolute top-1/2 right-1/3 w-12 h-12 border-2 border-blue-400/60 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 shadow-2xl z-20 flex flex-col items-center justify-center backdrop-blur-sm"
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                >
+                  <div className="w-6 h-1.5 border-t-2 border-blue-600/70 rounded-t-md"></div>
+                  <div className="w-7 h-5 border-2 border-blue-600/70 border-t-0 rounded-b-sm"></div>
+                  <div className="w-6 h-1 border-t border-blue-600/70"></div>
+                </motion.div>
                 
-                {/* Git branch icon */}
-                <div className="absolute top-1/3 right-1/5 w-12 h-12 flex items-center justify-center border-2 border-white/30 rounded-lg bg-gray-900/80 backdrop-blur-sm shadow-xl z-20 animate-float" style={{ animationDelay: '3s' }}>
-                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" className="text-white">
+                {/* Git branch */}
+                <motion.div 
+                  className="absolute top-1/3 right-1/5 w-14 h-14 flex items-center justify-center border-2 border-gray-400/60 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 shadow-2xl z-20 backdrop-blur-sm"
+                  animate={{ y: [0, 8, 0], rotate: [0, -3, 0] }}
+                  transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+                >
+                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" className="text-gray-700">
                     <circle cx="12" cy="7" r="3" />
                     <circle cx="17" cy="17" r="3" />
                     <circle cx="7" cy="17" r="3" />
                     <path d="M12 10v3.5a1.5 1.5 0 0 0 1.5 1.5h2" />
                   </svg>
-                </div>
+                </motion.div>
                 
-                {/* Code function icon */}
-                <div className="absolute bottom-1/4 left-1/3 px-3 py-2 border-2 border-white/30 rounded-lg bg-gray-900/80 backdrop-blur-sm shadow-xl z-20 animate-float" style={{ animationDelay: '1.5s' }}>
-                  <div className="text-sm font-mono font-bold text-white">() =&gt;</div>
-                </div>
+                {/* Arrow function */}
+                <motion.div 
+                  className="absolute bottom-1/4 left-1/3 px-4 py-3 border-2 border-purple-400/60 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 shadow-2xl z-20 backdrop-blur-sm"
+                  animate={{ y: [0, -7, 0] }}
+                  transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+                >
+                  <div className="text-sm font-mono font-bold text-purple-800">() =&gt;</div>
+                </motion.div>
                 
-                {/* React/Framework icon */}
-                <div className="absolute top-1/6 right-1/4 w-11 h-11 flex items-center justify-center border-2 border-cyan-400/60 rounded-full bg-cyan-900/70 backdrop-blur-sm shadow-xl z-20 animate-float" style={{ animationDelay: '2.5s' }}>
-                  <div className="text-base font-bold">⚛️</div>
-                </div>
+                {/* React atom */}
+                <motion.div 
+                  className="absolute top-1/6 right-1/4 w-12 h-12 flex items-center justify-center border-2 border-cyan-400/60 rounded-full bg-gradient-to-br from-cyan-50 to-cyan-100 shadow-2xl z-20 backdrop-blur-sm"
+                  animate={{ 
+                    y: [0, -10, 0],
+                    rotate: [0, 360, 0]
+                  }}
+                  transition={{ 
+                    y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2.5 },
+                    rotate: { duration: 8, repeat: Infinity, ease: "linear" }
+                  }}
+                >
+                  <div className="text-lg">⚛️</div>
+                </motion.div>
                 
-                {/* CSS icon */}
-                <div className="absolute bottom-1/5 left-1/5 w-11 h-11 flex items-center justify-center border-2 border-purple-400/60 rounded-lg bg-purple-900/70 backdrop-blur-sm shadow-xl z-20 animate-float" style={{ animationDelay: '0.5s' }}>
-                  <div className="text-sm font-bold text-purple-200">CSS</div>
-                </div>
+                {/* CSS badge */}
+                <motion.div 
+                  className="absolute bottom-1/5 left-1/5 w-12 h-12 flex items-center justify-center border-2 border-pink-400/60 rounded-lg bg-gradient-to-br from-pink-50 to-pink-100 shadow-2xl z-20 backdrop-blur-sm"
+                  animate={{ y: [0, 6, 0] }}
+                  transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                >
+                  <div className="text-xs font-bold text-pink-800">CSS</div>
+                </motion.div>
               </div>
-              
-              {/* Enhanced feature highlight with better shadow and positioning */}
-              {/* <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 p-4 bg-gray-900/90 backdrop-blur-sm border border-white/20 rounded-lg shadow-2xl z-10">
-                <div className="text-sm font-semibold text-white">Client Success Rate</div>
-                <div className="mt-1 flex items-center gap-1 text-xl md:text-2xl font-bold text-white">
-                  98%
-                  <span className="text-xs text-gray-400 font-normal ml-1">satisfaction</span>
-                </div>
-              </div> */}
             </motion.div>
           </>
         )}
       </main>
-
-      {/* Contact Popup Form */}
-      <AnimatePresence>
-        {showContactPopup && (
-          <>
-            {/* Backdrop */}
-            <motion.div 
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowContactPopup(false)}
-            />
-            
-            {/* Modal */}
-            <motion.div 
-              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 z-50"
-              initial={{ opacity: 0, scale: 0.8, y: 50 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 50 }}
-              transition={{ type: "spring", duration: 0.5 }}
-            >
-              <ContactPopupForm onClose={() => setShowContactPopup(false)} />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
       
-      {/* Enhanced CSS for animations */}
+      {/* Enhanced global styles */}
       <style jsx global>{`
         @keyframes spin-slow {
           0% { transform: rotate(0deg); }
@@ -566,8 +656,13 @@ const HomeSection = () => {
         
         @keyframes float {
           0% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(-10px) translateX(3px); }
+          50% { transform: translateY(-12px) translateX(4px); }
           100% { transform: translateY(0px) translateX(0px); }
+        }
+        
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+          50% { box-shadow: 0 0 20px rgba(0,0,0,0.2), 0 0 30px rgba(0,0,0,0.1); }
         }
         
         .animate-spin-slow {
@@ -582,262 +677,38 @@ const HomeSection = () => {
           animation: float 6s ease-in-out infinite;
         }
         
+        .animate-pulse-glow {
+          animation: pulse-glow 4s ease-in-out infinite;
+        }
+        
+        /* Smooth scrolling for better UX */
+        html {
+          scroll-behavior: smooth;
+        }
+        
+        /* Enhanced backdrop blur support */
+        .backdrop-blur-xl {
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+        }
+        
         /* Responsive animation adjustments */
         @media (max-width: 768px) {
           @keyframes float {
             0% { transform: translateY(0px) translateX(0px); }
-            50% { transform: translateY(-7px) translateX(2px); }
+            50% { transform: translateY(-8px) translateX(2px); }
             100% { transform: translateY(0px) translateX(0px); }
           }
         }
+        
+        /* Enhanced typography */
+        body {
+          font-family: 'Montserrat', sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
       `}</style>
     </>
-  );
-};
-
-// Contact Popup Form Component
-const ContactPopupForm = ({ onClose }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-    phoneNumber: ''
-  });
-  const [formStatus, setFormStatus] = useState(null);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Set loading state
-    setFormStatus('submitting');
-    
-    try {
-      // Send data to backend API
-      const response = await fetch('https://faigen-backend.onrender.com/mail', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          subject: formData.subject,
-          description: formData.message, // Map message field to description
-          phoneNumber: formData.phoneNumber || ''
-        }),
-      });
-      
-      const data = await response.json();
-      
-      if (response.ok) {
-        // Success
-        setFormStatus('success');
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: '',
-          phoneNumber: ''
-        });
-        
-        // Close popup after 3 seconds on success
-        setTimeout(() => {
-          onClose();
-        }, 3000);
-      } else {
-        // API returned an error
-        console.error('Contact form submission error:', data);
-        setFormStatus('error');
-        
-        // Reset error status after 5 seconds
-        setTimeout(() => {
-          setFormStatus(null);
-        }, 5000);
-      }
-    } catch (error) {
-      console.error('Contact form submission error:', error);
-      setFormStatus('error');
-      
-      // Reset error status after 5 seconds
-      setTimeout(() => {
-        setFormStatus(null);
-      }, 5000);
-    }
-  };
-
-  return (
-    <div className="bg-gray-900/95 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl relative overflow-hidden">
-      {/* Inner glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/[0.02] pointer-events-none"></div>
-      
-      {/* Close button */}
-      <button 
-        onClick={onClose}
-        className="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-300 text-white"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      
-      {/* Form header */}
-      <div className="mb-10">
-        <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white">Get In Touch</h3>
-        <div className="w-16 h-1 bg-gradient-to-r from-white/20 via-white/40 to-white/20 rounded-full"></div>
-        <p className="mt-4 text-gray-300">Tell us about your project and we'll get back to you promptly.</p>
-      </div>
-      
-      {/* Contact form */}
-      <form onSubmit={handleFormSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Name field */}
-          <div>
-            <label htmlFor="popup-name" className="block text-sm font-medium text-gray-300 mb-2">Your Name</label>
-            <input
-              type="text"
-              id="popup-name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-white/40 focus:outline-none focus:ring-2 focus:ring-white/10 transition-all duration-300 text-white placeholder-gray-400"
-              placeholder="John Smith"
-            />
-          </div>
-          
-          {/* Email field */}
-          <div>
-            <label htmlFor="popup-email" className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
-            <input
-              type="email"
-              id="popup-email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-white/40 focus:outline-none focus:ring-2 focus:ring-white/10 transition-all duration-300 text-white placeholder-gray-400"
-              placeholder="john@example.com"
-            />
-          </div>
-        </div>
-        
-        {/* Subject field */}
-        <div>
-          <label htmlFor="popup-subject" className="block text-sm font-medium text-gray-300 mb-2">Subject</label>
-          <input
-            type="text"
-            id="popup-subject"
-            name="subject"
-            value={formData.subject}
-            onChange={handleInputChange}
-            required
-            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-white/40 focus:outline-none focus:ring-2 focus:ring-white/10 transition-all duration-300 text-white placeholder-gray-400"
-            placeholder="Project Inquiry"
-          />
-        </div>
-        
-        {/* Phone number field */}
-        <div>
-          <label htmlFor="popup-phoneNumber" className="block text-sm font-medium text-gray-300 mb-2">Phone Number (Optional)</label>
-          <input
-            type="tel"
-            id="popup-phoneNumber"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleInputChange}
-            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-white/40 focus:outline-none focus:ring-2 focus:ring-white/10 transition-all duration-300 text-white placeholder-gray-400"
-            placeholder="+1 (234) 567-890"
-          />
-        </div>
-        
-        {/* Message field */}
-        <div>
-          <label htmlFor="popup-message" className="block text-sm font-medium text-gray-300 mb-2">Your Message</label>
-          <textarea
-            id="popup-message"
-            name="message"
-            value={formData.message}
-            onChange={handleInputChange}
-            rows="4"
-            required
-            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-white/40 focus:outline-none focus:ring-2 focus:ring-white/10 transition-all duration-300 resize-none text-white placeholder-gray-400"
-            placeholder="Tell us about your project..."
-          ></textarea>
-        </div>
-        
-        {/* Submit button */}
-        <div className="pt-4">
-          <motion.button
-            type="submit"
-            disabled={formStatus === 'submitting'}
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full px-8 py-4 bg-white text-black rounded-xl font-medium text-lg shadow-xl inline-flex items-center justify-center gap-2 group transition-all duration-300 hover:shadow-2xl hover:bg-gray-100 disabled:opacity-70 disabled:pointer-events-none"
-          >
-            {formStatus === 'submitting' ? (
-              <>
-                <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Sending...
-              </>
-            ) : (
-              <>
-                Send Message
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  width="20" 
-                  height="20" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                >
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </>
-            )}
-          </motion.button>
-          
-          {/* Success/Error messages */}
-          <AnimatePresence>
-            {formStatus === 'success' && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="mt-4 p-4 bg-green-900/50 border border-green-500/30 text-green-300 rounded-xl text-center backdrop-blur-sm"
-              >
-                Your message has been sent successfully. We'll get back to you soon!
-              </motion.div>
-            )}
-            {formStatus === 'error' && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="mt-4 p-4 bg-red-900/50 border border-red-500/30 text-red-300 rounded-xl text-center backdrop-blur-sm"
-              >
-                Something went wrong while sending your message. Please try again later.
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </form>
-    </div>
   );
 };
 
