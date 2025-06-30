@@ -1,172 +1,375 @@
-import React, { useEffect, useState } from "react";
+'use client'
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { Instagram, MessageCircle, Linkedin, Twitter, ArrowRight } from "lucide-react";
 
-const ResponsiveLanding = () => {
+const HomeSection = () => {
   const [mounted, setMounted] = useState(false);
-
+  const [scrolled, setScrolled] = useState(false);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const textVariants = ["Innovative", "Powerful", "Seamless"];
+  
+  // Add link to Montserrat font in the head section
+  useEffect(() => {
+    const linkElement = document.createElement('link');
+    linkElement.rel = 'stylesheet';
+    linkElement.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap';
+    document.head.appendChild(linkElement);
+    
+    return () => {
+      document.head.removeChild(linkElement);
+    };
+  }, []);
+  
   useEffect(() => {
     setMounted(true);
+    
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    
+    // Text rotation effect
+    const textInterval = setInterval(() => {
+      setCurrentTextIndex((prev) => (prev + 1) % textVariants.length);
+    }, 3000);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearInterval(textInterval);
+    };
   }, []);
-
-  if (!mounted) return null;
-
+  
+  // Framer motion variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+  
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10
+      }
+    }
+  };
+  
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gray-900">
-      {/* Background Image with better mobile support */}
-      <div className="absolute inset-0">
-        {/* Fallback gradient for when image doesn't load */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900" />
-        
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/0ae17053-e699-4988-9ca9-34609ac28f0a.png')`,
-            // Use contain on mobile for better visibility, cover on larger screens
-            backgroundSize: 'cover',
-            backgroundPosition: 'center center',
-            // Ensure image loads on mobile with proper rendering
-            WebkitBackgroundSize: 'cover',
-            MozBackgroundSize: 'cover',
-            OBackgroundSize: 'cover',
-          }}
-        />
-        
-        {/* Lighter overlay for mobile to ensure image visibility */}
-        <div 
-          className="absolute inset-0 md:hidden"
-          style={{
-            background: `linear-gradient(180deg, 
-              rgba(0, 0, 0, 0.1) 0%, 
-              rgba(0, 0, 0, 0.2) 50%, 
-              rgba(0, 0, 0, 0.3) 100%
-            )`
-          }}
-        />
-        
-        {/* Desktop overlay */}
-        <div 
-          className="absolute inset-0 hidden md:block"
-          style={{
-            background: `linear-gradient(180deg, 
-              rgba(0, 0, 0, 0.05) 0%, 
-              rgba(0, 0, 0, 0.1) 30%, 
-              rgba(0, 0, 0, 0.05) 50%, 
-              rgba(0, 0, 0, 0.1) 70%, 
-              rgba(0, 0, 0, 0.3) 100%
-            )`
-          }}
-        />
-      </div>
-
-      {/* Navigation */}
-      <nav className="relative z-50 flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-20 py-4 sm:py-6 md:py-8">
-        {/* Logo Area (Empty placeholder) */}
-        <div className="w-8 h-8 sm:w-10 sm:h-10"></div>
-
-        {/* Center Navigation - Hidden on mobile */}
-        <div className="hidden md:flex items-center space-x-6 lg:space-x-10">
-          {['About', 'Services', 'Portfolio', 'Contact Us'].map((item) => (
-            <a 
-              key={item}
-              href="#" 
-              className="text-white/80 hover:text-white transition-colors duration-300 text-sm lg:text-base"
+    <>
+      {/* Navigation - only visible when scrolled */}
+      {scrolled && (
+        <motion.nav 
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="fixed w-full z-50 py-3 backdrop-blur-lg shadow-sm"
+        >
+          <div className="flex justify-between items-center px-6 md:px-12 lg:px-20 max-w-7xl mx-auto w-full">
+            <div className="w-32 h-12 relative scale-90">
+              <div className="absolute inset-0 flex items-center">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {/* Logo in the nav */}
+                  <Image 
+                    src="/WhatsApp_Image_2025-04-04_at_9.53.44_PM-removebg-preview.png" 
+                    alt="Faigen" 
+                    width={80} 
+                    height={48} 
+                    className="object-contain"
+                  />
+                </motion.div>
+              </div>
+            </div>
+            
+            <motion.div 
+              className="flex items-center space-x-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
             >
-              {item}
-            </a>
-          ))}
-        </div>
-
-        {/* Get Started Button */}
-        <button className="border border-white/20 text-white px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-2.5 rounded-full hover:bg-white/10 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm backdrop-blur-sm">
-          <span>Get Started</span>
-          <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
-        </button>
-      </nav>
-
-      {/* Social Media Icons - Right Side */}
-      <div className="absolute right-4 sm:right-6 md:right-12 lg:right-20 top-1/4 sm:top-1/3 flex flex-col space-y-4 sm:space-y-6 z-40">
-        <Instagram className="w-5 h-5 sm:w-5 sm:h-5 text-white/60 hover:text-white cursor-pointer transition-colors" />
-        <MessageCircle className="w-5 h-5 sm:w-5 sm:h-5 text-white/60 hover:text-white cursor-pointer transition-colors" />
-        <Linkedin className="w-5 h-5 sm:w-5 sm:h-5 text-white/60 hover:text-white cursor-pointer transition-colors" />
-        <Twitter className="w-5 h-5 sm:w-5 sm:h-5 text-white/60 hover:text-white cursor-pointer transition-colors" />
-      </div>
-
-      {/* Main Content */}
-      <main className="relative z-30 flex flex-col items-center justify-center px-4 sm:px-6 md:px-12 lg:px-20 text-center pt-8 sm:pt-12 md:pt-16 lg:pt-20 pb-32 sm:pb-36 md:pb-40 lg:pb-44">
-        {/* Main Headline */}
-        <motion.h1 
-          className="text-8xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-light text-white leading-tight mb-6 sm:mb-6 md:mb-8 max-w-6xl"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <span className="block mb-2 sm:mb-2">Amazing website creation</span>
-          <span className="block">
-            with{' '}
-            <span className="bg-gradient-to-r from-purple-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent">
-              our agency
-            </span>
-          </span>
-        </motion.h1>
-
-        {/* Subtitle */}
-        <motion.p 
-          className="text-white/70 max-w-xl md:max-w-2xl mb-8 sm:mb-10 md:mb-12 text-base sm:text-lg md:text-lg leading-relaxed px-2 sm:px-0"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          help you to build website company that is modern, user friendly, good SEO, and Clean design
-        </motion.p>
-
-        {/* CTA Button */}
-        <motion.button
-          className="bg-white text-gray-900 px-6 sm:px-8 md:px-8 py-3 sm:py-3.5 md:py-3.5 rounded-full font-medium hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 sm:space-x-2 text-base sm:text-base shadow-xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <span>Get Started</span>
-          <ArrowRight className="w-5 h-5 sm:w-5 sm:h-5" />
-        </motion.button>
-      </main>
-
-      {/* Bottom Scroll Indicator */}
-      <div className="absolute bottom-8 sm:bottom-12 md:bottom-16 left-1/2 transform -translate-x-1/2">
-        <div className="relative w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24">
-          {/* Rotating Text Circle */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{ rotate: -360 }}
-            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          >
-            <svg className="w-full h-full" viewBox="0 0 96 96">
-              <defs>
-                <path
-                  id="circle-path"
-                  d="M 48, 48 m -36, 0 a 36, 36 0 1, 1 72, 0 a 36, 36 0 1, 1 -72, 0"
-                />
-              </defs>
-              <text className="text-[6px] sm:text-[6px] md:text-[7px] fill-white/40 font-normal tracking-[0.3em] uppercase">
-                <textPath href="#circle-path" startOffset="0%">
-                  scroll for works • scroll for works • 
-                </textPath>
-              </text>
-            </svg>
-          </motion.div>
-          
-          {/* Center Number */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-white text-2xl sm:text-2xl md:text-3xl font-light">0</span>
+              <div className="hidden md:flex space-x-10 mr-10">
+                {["Products", "Solutions", "Resources", "Pricing"].map((item, index) => (
+                  <motion.a 
+                    key={item} 
+                    href="#" 
+                    className="relative text-sm font-medium text-black transition-colors duration-300 group"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 + index * 0.1 }}
+                    whileHover={{ y: -2 }}
+                  >
+                    {item}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+                  </motion.a>
+                ))}
+              </div>
+              
+              <motion.button 
+                className="px-6 py-2.5 text-sm font-medium border border-black rounded-full hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Contact
+              </motion.button>
+              
+              <motion.button 
+                className="p-2 md:hidden text-black"
+                whileTap={{ scale: 0.9 }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </motion.button>
+            </motion.div>
           </div>
-        </div>
-      </div>
-    </div>
+        </motion.nav>
+      )}
+
+      {/* Hero Section - Using flex-col on mobile and flex-row on desktop with better spacing */}
+      <main className="flex flex-col md:flex-row items-start md:items-center justify-between px-6 md:px-12 lg:px-20 py-16 md:py-28 min-h-screen max-w-7xl mx-auto w-full">
+        {mounted && (
+          <>
+            {/* Left content with improved spacing */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="z-10 w-full md:w-3/5 text-left"
+            >
+              {/* Logo with better positioning */}
+              <motion.div 
+                variants={itemVariants}
+                className="mb-12 md:mb-16 w-28 md:w-32 h-28 md:h-32 relative"
+              >
+                <div className="flex items-center justify-start">
+                  <div className="relative">
+                    {/* Enhanced circle around logo */}
+                    <div className="absolute -inset-1 border border-black/15 rounded-full shadow-sm"></div>
+                    {/* Logo */}
+                    <Image 
+                      src="/WhatsApp_Image_2025-04-04_at_9.53.44_PM-removebg-preview.png" 
+                      alt="Faigen" 
+                      width={100} 
+                      height={100} 
+                      className="object-contain relative z-10"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+              
+              {/* Dynamic text heading with increased spacing and better sizing */}
+              <motion.div variants={itemVariants} className="overflow-hidden mb-8 md:mb-16">
+                <div className="">
+                  <motion.h1 
+                    key={currentTextIndex}
+                    initial={{ y: 40, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -40, opacity: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.1] md:leading-[0.9] lg:leading-[0.9]"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    <span className="block">We Create</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-700 to-black">
+                      {textVariants[currentTextIndex]}
+                    </span>
+                    <span className="block">Solutions.</span>
+                  </motion.h1>
+                </div>
+              </motion.div>
+              
+              {/* Enhanced paragraph now visible on all screens with better width and spacing */}
+              <motion.p 
+                variants={itemVariants}
+                className="text-lg md:text-xl max-w-xl mb-12 md:mb-16 text-black/80 leading-relaxed"
+              >
+                Building exceptional digital experiences that transform 
+                how businesses operate in the modern world.
+              </motion.p>
+              
+              {/* Call to action buttons instead of empty space */}
+              {/* <motion.div 
+                variants={itemVariants}
+                className="flex flex-wrap gap-5 mb-16 md:mb-0"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-3 bg-black text-white rounded-full font-medium text-base transition-all duration-300"
+                >
+                  Get Started
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-3 border border-black/30 rounded-full font-medium text-base transition-all duration-300 hover:border-black/70"
+                >
+                  Learn More
+                </motion.button>
+              </motion.div> */}
+            </motion.div>
+            
+            {/* Right side - Tech image frame with improved positioning and dimensions */}
+            <motion.div 
+              className="w-full md:w-2/5 h-[400px] md:h-[550px] relative mt-8 md:mt-0"
+              initial={{ opacity: 0, y: 30, x: 0 }}
+              animate={{ opacity: 1, y: 0, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <div className="absolute inset-0 border border-black/10 rounded-xl overflow-hidden backdrop-blur-sm bg-white/30 z-10 shadow-lg">
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/5"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  {/* Abstract technology elements with coding icons */}
+                  <svg className="w-full h-full p-8 text-black" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {/* Circuit-like pattern */}
+                    <path d="M20 100 H70 M130 100 H180" stroke="currentColor" strokeWidth="1" strokeOpacity="0.2" />
+                    <path d="M100 20 V70 M100 130 V180" stroke="currentColor" strokeWidth="1" strokeOpacity="0.2" />
+                    <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" fill="none" />
+                    <circle cx="100" cy="100" r="30" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" fill="none" />
+                    <circle cx="100" cy="100" r="10" stroke="currentColor" strokeWidth="1" fill="none" />
+                    
+                    {/* Connection points */}
+                    <circle cx="100" cy="50" r="4" fill="currentColor" fillOpacity="0.5" />
+                    <circle cx="100" cy="150" r="4" fill="currentColor" fillOpacity="0.5" />
+                    <circle cx="50" cy="100" r="4" fill="currentColor" fillOpacity="0.5" />
+                    <circle cx="150" cy="100" r="4" fill="currentColor" fillOpacity="0.5" />
+                    
+                    {/* Diagonal lines */}
+                    <path d="M60 60 L140 140" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" />
+                    <path d="M140 60 L60 140" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" />
+                    
+                    {/* Small dots */}
+                    <circle cx="70" cy="70" r="2" fill="currentColor" fillOpacity="0.7" />
+                    <circle cx="130" cy="130" r="2" fill="currentColor" fillOpacity="0.7" />
+                    <circle cx="130" cy="70" r="2" fill="currentColor" fillOpacity="0.7" />
+                    <circle cx="70" cy="130" r="2" fill="currentColor" fillOpacity="0.7" />
+                    
+                    {/* Code brackets - Left */}
+                    <path d="M40 60 L30 100 L40 140" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.6" />
+                    
+                    {/* Code brackets - Right */}
+                    <path d="M160 60 L170 100 L160 140" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.6" />
+                    
+                    {/* React-like atom icon */}
+                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" transform="rotate(30 100 100)" />
+                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" transform="rotate(90 100 100)" />
+                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" transform="rotate(150 100 100)" />
+                  </svg>
+                </div>
+                
+                {/* Enhanced floating coding elements with better shadow and animations */}
+                {/* HTML tag */}
+                <div className="absolute top-1/4 left-1/4 px-3 py-2 border-2 border-black/50 rounded-lg bg-white/90 shadow-lg z-20 animate-float" style={{ animationDelay: '0s' }}>
+                  <div className="text-base font-mono font-bold text-black">&lt;/&gt;</div>
+                </div>
+                
+                {/* JavaScript icon */}
+                <div className="absolute bottom-1/3 right-1/4 w-12 h-12 flex items-center justify-center border-2 border-yellow-500/80 rounded-lg bg-yellow-100/90 shadow-lg z-20 animate-float" style={{ animationDelay: '1s' }}>
+                  <div className="text-sm font-mono font-bold text-yellow-800">JS</div>
+                </div>
+                
+                {/* Database icon */}
+                <div className="absolute top-1/2 right-1/3 w-11 h-11 border-2 border-blue-500/80 rounded-md bg-blue-100/90 shadow-lg z-20 flex flex-col items-center justify-center animate-float" style={{ animationDelay: '2s' }}>
+                  <div className="w-5 h-1 border-t border-blue-600/70 rounded-t-sm"></div>
+                  <div className="w-6 h-4 border border-blue-600/70 border-t-0"></div>
+                  <div className="w-5 h-1 border-t border-blue-600/70 rounded-b-sm"></div>
+                </div>
+                
+                {/* Git branch icon */}
+                <div className="absolute top-1/3 right-1/5 w-12 h-12 flex items-center justify-center border-2 border-gray-500/80 rounded-lg bg-white/90 shadow-lg z-20 animate-float" style={{ animationDelay: '3s' }}>
+                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none">
+                    <circle cx="12" cy="7" r="3" />
+                    <circle cx="17" cy="17" r="3" />
+                    <circle cx="7" cy="17" r="3" />
+                    <path d="M12 10v3.5a1.5 1.5 0 0 0 1.5 1.5h2" />
+                  </svg>
+                </div>
+                
+                {/* Code function icon */}
+                <div className="absolute bottom-1/4 left-1/3 px-3 py-2 border-2 border-gray-500/80 rounded-lg bg-white/90 shadow-lg z-20 animate-float" style={{ animationDelay: '1.5s' }}>
+                  <div className="text-sm font-mono font-bold">() =&gt;</div>
+                </div>
+                
+                {/* React/Framework icon */}
+                <div className="absolute top-1/6 right-1/4 w-11 h-11 flex items-center justify-center border-2 border-cyan-500/80 rounded-full bg-cyan-100/90 shadow-lg z-20 animate-float" style={{ animationDelay: '2.5s' }}>
+                  <div className="text-base font-bold">⚛️</div>
+                </div>
+                
+                {/* CSS icon */}
+                <div className="absolute bottom-1/5 left-1/5 w-11 h-11 flex items-center justify-center border-2 border-purple-500/80 rounded-lg bg-purple-100/90 shadow-lg z-20 animate-float" style={{ animationDelay: '0.5s' }}>
+                  <div className="text-sm font-bold text-purple-800">CSS</div>
+                </div>
+              </div>
+              
+              {/* Enhanced feature highlight with better shadow and positioning */}
+              <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 p-4 bg-white border border-black/10 rounded-lg shadow-xl z-10">
+                <div className="text-sm font-semibold">Client Success Rate</div>
+                <div className="mt-1 flex items-center gap-1 text-xl md:text-2xl font-bold">
+                  98%
+                  <span className="text-xs text-black/60 font-normal ml-1">satisfaction</span>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </main>
+      
+      {/* Enhanced CSS for animations */}
+      <style jsx global>{`
+        @keyframes spin-slow {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes reverse-spin {
+          0% { transform: rotate(360deg); }
+          100% { transform: rotate(0deg); }
+        }
+        
+        @keyframes float {
+          0% { transform: translateY(0px) translateX(0px); }
+          50% { transform: translateY(-10px) translateX(3px); }
+          100% { transform: translateY(0px) translateX(0px); }
+        }
+        
+        .animate-spin-slow {
+          animation: spin-slow 30s linear infinite;
+        }
+        
+        .animate-reverse-spin {
+          animation: reverse-spin 25s linear infinite;
+        }
+        
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Responsive animation adjustments */
+        @media (max-width: 768px) {
+          @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-7px) translateX(2px); }
+            100% { transform: translateY(0px) translateX(0px); }
+          }
+        }
+      `}</style>
+    </>
   );
 };
 
-export default ResponsiveLanding;
+export default HomeSection;

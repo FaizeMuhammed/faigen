@@ -2,17 +2,12 @@
 import { useEffect } from "react";
 import AnimatedBackground from "@/components/animaedbg";
 import HomeSection from "@/components/homesec";
-
-import PortfolioSection from "@/components/portfoliyo";
-import ContactSection from "@/components/contactsec";
-import Footer from "@/components/footer";
-import AboutSection from "@/components/servisesec";
+import ServicesSection from "@/components/servisesec";
 
 export default function Home() {
-  // Add global style for body - dark theme
+  // Add global style for body
   useEffect(() => {
-    document.body.style.backgroundColor = '#000000';
-    document.body.style.color = '#ffffff';
+    document.body.style.backgroundColor = '#fff';
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflowX = 'hidden';
@@ -20,7 +15,6 @@ export default function Home() {
     return () => {
       // Reset styles on unmount if needed
       document.body.style.backgroundColor = '';
-      document.body.style.color = '';
       document.body.style.margin = '';
       document.body.style.padding = '';
       document.body.style.overflowX = '';
@@ -28,17 +22,18 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="  ">
-     
+    <div className="min-h-screen text-black flex flex-col overflow-hidden relative">
+      {/* Background Component - positioned fixed to cover all sections */}
+      <AnimatedBackground />
+      
+      {/* Content Container with relative positioning and higher z-index */}
+      <div className="relative z-10 w-full">
         {/* Home Section Component */}
         <HomeSection />
         
-        {/* Other sections - uncomment when ready */}
-        <AboutSection />
-        {/* <PortfolioSection />
-        <ContactSection />
-        <Footer /> */}
-     
+        {/* Services Section Component */}
+        <ServicesSection />
+      </div>
     </div>
   );
 }
