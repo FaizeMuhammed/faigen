@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <div className="min-h-screen text-black flex flex-col overflow-hidden relative">
       {/* Background Component - positioned fixed to cover all sections */}
-      <AnimatedBackground />
+      {/* <AnimatedBackground /> */}
       
       {/* Content Container with relative positioning and higher z-index */}
       <div className="relative z-10 w-full">

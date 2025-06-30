@@ -1,371 +1,504 @@
 'use client'
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const HomeSection = () => {
   const [mounted, setMounted] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const textVariants = ["Innovative", "Powerful", "Seamless"];
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const textVariants = ["Future-ready solutions.", "Human-first design.", "Scalable technology."];
   
-  // Add link to Montserrat font in the head section
   useEffect(() => {
     const linkElement = document.createElement('link');
     linkElement.rel = 'stylesheet';
-    linkElement.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap';
+    linkElement.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap';
     document.head.appendChild(linkElement);
     
     return () => {
-      document.head.removeChild(linkElement);
+      if (document.head.contains(linkElement)) {
+        document.head.removeChild(linkElement);
+      }
     };
   }, []);
   
   useEffect(() => {
     setMounted(true);
     
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    
-    window.addEventListener("scroll", handleScroll);
-    
-    // Text rotation effect
     const textInterval = setInterval(() => {
       setCurrentTextIndex((prev) => (prev + 1) % textVariants.length);
     }, 3000);
     
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       clearInterval(textInterval);
     };
   }, []);
   
-  // Framer motion variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
+        staggerChildren: 0.15,
+        delayChildren: 0.2
       }
     }
   };
   
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
         type: "spring",
-        stiffness: 100,
-        damping: 10
+        stiffness: 80,
+        damping: 12
       }
     }
   };
+
+  const menuItems = [
+    { name: "Services", href: "#services" },
+    { name: "Portfolio", href: "#portfolio" },
+    { name: "About", href: "#about" },
+    { name: "Process", href: "#process" },
+    { name: "Contact", href: "#contact" }
+  ];
   
   return (
     <>
-      {/* Navigation - only visible when scrolled */}
-      {scrolled && (
-        <motion.nav 
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="fixed w-full z-50 py-3 backdrop-blur-lg shadow-sm"
-        >
-          <div className="flex justify-between items-center px-6 md:px-12 lg:px-20 max-w-7xl mx-auto w-full">
-            <div className="w-32 h-12 relative scale-90">
-              <div className="absolute inset-0 flex items-center">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {/* Logo in the nav */}
-                  <Image 
-                    src="/WhatsApp_Image_2025-04-04_at_9.53.44_PM-removebg-preview.png" 
-                    alt="Faigen" 
-                    width={80} 
-                    height={48} 
-                    className="object-contain"
-                  />
-                </motion.div>
-              </div>
-            </div>
-            
-            <motion.div 
-              className="flex items-center space-x-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              <div className="hidden md:flex space-x-10 mr-10">
-                {["Products", "Solutions", "Resources", "Pricing"].map((item, index) => (
-                  <motion.a 
-                    key={item} 
-                    href="#" 
-                    className="relative text-sm font-medium text-black transition-colors duration-300 group"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 + index * 0.1 }}
-                    whileHover={{ y: -2 }}
-                  >
-                    {item}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-                  </motion.a>
-                ))}
-              </div>
-              
-              <motion.button 
-                className="px-6 py-2.5 text-sm font-medium border border-black rounded-full hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact
-              </motion.button>
-              
-              <motion.button 
-                className="p-2 md:hidden text-black"
-                whileTap={{ scale: 0.9 }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </motion.button>
-            </motion.div>
-          </div>
-        </motion.nav>
-      )}
+      {/* Background Elements */}
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        {/* Gradient Orbs */}
+        <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-gradient-to-r from-purple-400/20 to-pink-600/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
+        
+        {/* Floating Particles */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-black/10 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [-20, 20, -20],
+              opacity: [0.1, 0.3, 0.1],
+            }}
+            transition={{
+              duration: 4 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
 
-      {/* Hero Section - Using flex-col on mobile and flex-row on desktop with better spacing */}
-      <main className="flex flex-col md:flex-row items-start md:items-center justify-between px-6 md:px-12 lg:px-20 py-16 md:py-28 min-h-screen max-w-7xl mx-auto w-full">
-        {mounted && (
-          <>
-            {/* Left content with improved spacing */}
+      {/* Unique Corner Navigation Menu */}
+      <div className="fixed top-6 right-6 z-50">
+        <motion.button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="relative w-16 h-16 bg-black/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center group"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <motion.div
+            animate={isMenuOpen ? "open" : "closed"}
+            className="w-6 h-6 relative"
+          >
+            <motion.span
+              variants={{
+                closed: { rotate: 0, y: 0 },
+                open: { rotate: 45, y: 6 }
+              }}
+              className="absolute top-0 left-0 w-full h-0.5 bg-white rounded-full transform origin-center"
+            />
+            <motion.span
+              variants={{
+                closed: { opacity: 1 },
+                open: { opacity: 0 }
+              }}
+              className="absolute top-3 left-0 w-full h-0.5 bg-white rounded-full"
+            />
+            <motion.span
+              variants={{
+                closed: { rotate: 0, y: 0 },
+                open: { rotate: -45, y: -6 }
+              }}
+              className="absolute top-6 left-0 w-full h-0.5 bg-white rounded-full transform origin-center"
+            />
+          </motion.div>
+          
+          {/* Glowing ring effect */}
+          <motion.div
+            className="absolute inset-0 rounded-2xl border-2 border-white/20"
+            animate={{
+              scale: isMenuOpen ? [1, 1.2, 1] : 1,
+              opacity: isMenuOpen ? [1, 0.5, 1] : 0.7,
+            }}
+            transition={{ duration: 0.6, repeat: isMenuOpen ? Infinity : 0 }}
+          />
+        </motion.button>
+
+        {/* Menu Overlay */}
+        <AnimatePresence>
+          {isMenuOpen && (
             <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="z-10 w-full md:w-3/5 text-left"
+              initial={{ opacity: 0, scale: 0.8, originX: 1, originY: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="absolute top-20 right-0 w-72 bg-black/95 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden"
             >
-              {/* Logo with better positioning */}
-              <motion.div 
-                variants={itemVariants}
-                className="mb-12 md:mb-16 w-28 md:w-32 h-28 md:h-32 relative"
-              >
-                <div className="flex items-center justify-start">
-                  <div className="relative">
-                    {/* Enhanced circle around logo */}
-                    <div className="absolute -inset-1 border border-black/15 rounded-full shadow-sm"></div>
-                    {/* Logo */}
-                    <Image 
-                      src="/WhatsApp_Image_2025-04-04_at_9.53.44_PM-removebg-preview.png" 
-                      alt="Faigen" 
-                      width={100} 
-                      height={100} 
-                      className="object-contain relative z-10"
-                    />
-                  </div>
+              <div className="p-8">
+                <div className="mb-6">
+                  <h3 className="text-white font-semibold text-lg mb-2">Navigation</h3>
+                  <div className="w-12 h-0.5 bg-gradient-to-r from-white to-white/30 rounded-full"></div>
                 </div>
-              </motion.div>
-              
-              {/* Dynamic text heading with increased spacing and better sizing */}
-              <motion.div variants={itemVariants} className="overflow-hidden mb-8 md:mb-16">
-                <div className="">
-                  <motion.h1 
-                    key={currentTextIndex}
-                    initial={{ y: 40, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -40, opacity: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.1] md:leading-[0.9] lg:leading-[0.9]"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                
+                <nav className="space-y-3">
+                  {menuItems.map((item, index) => (
+                    <motion.a
+                      key={item.name}
+                      href={item.href}
+                      className="block text-white/80 hover:text-white font-medium py-3 px-4 rounded-xl hover:bg-white/10 transition-all duration-300 group"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <span className="flex items-center space-x-3">
+                        <span className="w-1.5 h-1.5 bg-white/50 rounded-full group-hover:bg-white transition-colors duration-300"></span>
+                        <span>{item.name}</span>
+                      </span>
+                    </motion.a>
+                  ))}
+                </nav>
+                
+                <div className="mt-8 pt-6 border-t border-white/10">
+                  <motion.button
+                    className="w-full py-3 bg-white text-black rounded-xl font-semibold hover:bg-white/90 transition-colors duration-300"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setIsMenuOpen(false)}
                   >
-                    <span className="block">We Create</span>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-700 to-black">
-                      {textVariants[currentTextIndex]}
-                    </span>
-                    <span className="block">Solutions.</span>
-                  </motion.h1>
+                    Start Project
+                  </motion.button>
                 </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Main Hero Section */}
+      <main className="relative min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-20 py-20">
+        <div className="max-w-7xl mx-auto w-full">
+          {mounted && (
+            <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+              
+              {/* Left Content */}
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="space-y-8"
+              >
+                {/* Brand Badge */}
+                <motion.div 
+                  variants={itemVariants}
+                  className="inline-flex items-center space-x-2 px-4 py-2 bg-black/5 backdrop-blur-sm rounded-full border border-black/10"
+                >
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-sm font-medium text-black/70">Available for new projects</span>
+                </motion.div>
+                
+                {/* Main Headline */}
+                <motion.div variants={itemVariants} className="space-y-4">
+                  <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[0.9] tracking-tight"
+                      style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    <span className="block text-black">We Build</span>
+                    <span className="block">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-600 to-black">
+                        Digital
+                      </span>
+                    </span>
+                    <span className="block text-black">Powerhouses</span>
+                  </h1>
+                </motion.div>
+                
+                {/* Dynamic Subheading */}
+                <motion.div variants={itemVariants} className="h-12 flex items-center">
+                  <motion.p 
+                    key={currentTextIndex}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -20, opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-2xl lg:text-3xl font-semibold text-black/70"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                  >
+                    {textVariants[currentTextIndex]}
+                  </motion.p>
+                </motion.div>
+                
+                {/* Description */}
+                <motion.p 
+                  variants={itemVariants}
+                  className="text-lg lg:text-xl text-black/60 leading-relaxed max-w-2xl"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  From startups to enterprises, Faigen crafts seamless, secure, and scalable 
+                  digital products with precision and purpose. We transform ideas into 
+                  digital experiences that drive growth.
+                </motion.p>
+                
+                {/* CTA Buttons */}
+                <motion.div 
+                  variants={itemVariants}
+                  className="flex flex-col sm:flex-row gap-4 pt-4"
+                >
+                  <motion.button
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group px-8 py-4 bg-black text-white rounded-2xl font-semibold text-base transition-all duration-300 shadow-xl hover:shadow-2xl relative overflow-hidden"
+                  >
+                    <span className="relative z-10">Get a Free Consultation</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </motion.button>
+                  
+                  <motion.button
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group px-8 py-4 border-2 border-black/20 hover:border-black/40 rounded-2xl font-semibold text-base transition-all duration-300 backdrop-blur-sm hover:bg-black/5"
+                  >
+                    <span className="flex items-center justify-center space-x-2">
+                      <span>See Our Work</span>
+                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  </motion.button>
+                </motion.div>
+                
+                {/* Stats */}
+                <motion.div 
+                  variants={itemVariants}
+                  className="flex items-center space-x-8 pt-8 border-t border-black/10"
+                >
+                  <div>
+                    <div className="text-2xl font-bold text-black">150+</div>
+                    <div className="text-sm text-black/60">Projects Delivered</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-black">98%</div>
+                    <div className="text-sm text-black/60">Client Satisfaction</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-black">24/7</div>
+                    <div className="text-sm text-black/60">Support</div>
+                  </div>
+                </motion.div>
               </motion.div>
               
-              {/* Enhanced paragraph now visible on all screens with better width and spacing */}
-              <motion.p 
-                variants={itemVariants}
-                className="text-lg md:text-xl max-w-xl mb-12 md:mb-16 text-black/80 leading-relaxed"
+              {/* Right Visual - Completely New Design */}
+              <motion.div 
+                className="relative h-[500px] lg:h-[600px]"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, delay: 0.5 }}
               >
-                Building exceptional digital experiences that transform 
-                how businesses operate in the modern world.
-              </motion.p>
-              
-              {/* Call to action buttons instead of empty space */}
-              {/* <motion.div 
-                variants={itemVariants}
-                className="flex flex-wrap gap-5 mb-16 md:mb-0"
-              >
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-3 bg-black text-white rounded-full font-medium text-base transition-all duration-300"
+                {/* Main Interactive Dashboard */}
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-black rounded-3xl overflow-hidden shadow-2xl border border-slate-700/50">
+                  
+                  {/* Dashboard Header */}
+                  <div className="p-6 border-b border-slate-700/50 bg-slate-800/50">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                        <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                        <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                      </div>
+                      <div className="text-slate-400 text-sm font-mono">faigen-dashboard.app</div>
+                    </div>
+                  </div>
+                  
+                  {/* Dashboard Content */}
+                  <div className="p-6 h-full">
+                    
+                    {/* Metrics Cards */}
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <motion.div 
+                        className="bg-gradient-to-br from-blue-500/20 to-blue-600/20 p-4 rounded-xl border border-blue-500/30"
+                        animate={{ scale: [1, 1.02, 1] }}
+                        transition={{ duration: 3, repeat: Infinity, delay: 0 }}
+                      >
+                        <div className="text-blue-400 text-sm mb-1">Active Projects</div>
+                        <div className="text-white text-2xl font-bold">24</div>
+                        <div className="text-green-400 text-xs">↗ +12%</div>
+                      </motion.div>
+                      
+                      <motion.div 
+                        className="bg-gradient-to-br from-purple-500/20 to-purple-600/20 p-4 rounded-xl border border-purple-500/30"
+                        animate={{ scale: [1, 1.02, 1] }}
+                        transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+                      >
+                        <div className="text-purple-400 text-sm mb-1">Team Members</div>
+                        <div className="text-white text-2xl font-bold">18</div>
+                        <div className="text-green-400 text-xs">↗ +3</div>
+                      </motion.div>
+                    </div>
+                    
+                    {/* Code Simulation */}
+                    <div className="bg-slate-900/80 rounded-xl p-4 mb-6 border border-slate-600/30">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <div className="text-slate-400 text-xs">Live Development</div>
+                      </div>
+                      
+                      <div className="font-mono text-xs space-y-1">
+                        <motion.div 
+                          className="text-slate-500"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 2 }}
+                        >
+                          <span className="text-blue-400">const</span> <span className="text-white">project</span> = <span className="text-yellow-400">'faigen-app'</span>
+                        </motion.div>
+                        <motion.div 
+                          className="text-slate-500"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 2.5 }}
+                        >
+                          <span className="text-purple-400">function</span> <span className="text-green-400">deployToProduction</span>() {`{`}
+                        </motion.div>
+                        <motion.div 
+                          className="text-slate-500 ml-4"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 3 }}
+                        >
+                          <span className="text-blue-400">console</span>.<span className="text-yellow-400">log</span>(<span className="text-green-400">'🚀 Deploying...'</span>)
+                        </motion.div>
+                        <motion.div 
+                          className="text-slate-500"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 3.5 }}
+                        >
+                          {`}`}
+                        </motion.div>
+                      </div>
+                    </div>
+                    
+                    {/* Project Timeline */}
+                    <div className="space-y-3">
+                      <div className="text-slate-400 text-sm mb-3">Recent Activity</div>
+                      
+                      {[
+                        { action: "UI Design Completed", time: "2m ago", color: "bg-green-400" },
+                        { action: "API Integration", time: "15m ago", color: "bg-blue-400" },
+                        { action: "Client Review", time: "1h ago", color: "bg-yellow-400" },
+                        { action: "Deploy to Staging", time: "3h ago", color: "bg-purple-400" }
+                      ].map((item, index) => (
+                        <motion.div
+                          key={index}
+                          className="flex items-center space-x-3 py-2"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 4 + index * 0.2 }}
+                        >
+                          <div className={`w-2 h-2 ${item.color} rounded-full`}></div>
+                          <div className="text-slate-300 text-sm flex-1">{item.action}</div>
+                          <div className="text-slate-500 text-xs">{item.time}</div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Floating Elements */}
+                  <motion.div
+                    className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg"
+                    animate={{ 
+                      rotate: 360,
+                      scale: [1, 1.1, 1]
+                    }}
+                    transition={{ 
+                      rotate: { duration: 10, repeat: Infinity, ease: "linear" },
+                      scale: { duration: 2, repeat: Infinity }
+                    }}
+                  >
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </motion.div>
+                </div>
+                
+                {/* Success Metric Card */}
+                <motion.div 
+                  className="absolute -bottom-6 -left-6 p-6 bg-white rounded-2xl shadow-2xl border border-black/5"
+                  initial={{ opacity: 0, y: 20, rotate: -5 }}
+                  animate={{ opacity: 1, y: 0, rotate: -5 }}
+                  transition={{ delay: 1.5, duration: 0.6 }}
                 >
-                  Get Started
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-3 border border-black/30 rounded-full font-medium text-base transition-all duration-300 hover:border-black/70"
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-green-600 mb-1">99.9%</div>
+                    <div className="text-sm text-black/60">Uptime</div>
+                    <div className="text-xs text-black/40 mt-1">Last 12 months</div>
+                  </div>
+                </motion.div>
+                
+                {/* Performance Indicator */}
+                <motion.div 
+                  className="absolute top-6 -right-6 p-4 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl shadow-xl text-white"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 2, duration: 0.6, type: "spring" }}
                 >
-                  Learn More
-                </motion.button>
-              </motion.div> */}
-            </motion.div>
-            
-            {/* Right side - Tech image frame with improved positioning and dimensions */}
-            <motion.div 
-              className="w-full md:w-2/5 h-[400px] md:h-[550px] relative mt-8 md:mt-0"
-              initial={{ opacity: 0, y: 30, x: 0 }}
-              animate={{ opacity: 1, y: 0, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-            >
-              <div className="absolute inset-0 border border-black/10 rounded-xl overflow-hidden backdrop-blur-sm bg-white/30 z-10 shadow-lg">
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/5"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {/* Abstract technology elements with coding icons */}
-                  <svg className="w-full h-full p-8 text-black" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    {/* Circuit-like pattern */}
-                    <path d="M20 100 H70 M130 100 H180" stroke="currentColor" strokeWidth="1" strokeOpacity="0.2" />
-                    <path d="M100 20 V70 M100 130 V180" stroke="currentColor" strokeWidth="1" strokeOpacity="0.2" />
-                    <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" fill="none" />
-                    <circle cx="100" cy="100" r="30" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" fill="none" />
-                    <circle cx="100" cy="100" r="10" stroke="currentColor" strokeWidth="1" fill="none" />
-                    
-                    {/* Connection points */}
-                    <circle cx="100" cy="50" r="4" fill="currentColor" fillOpacity="0.5" />
-                    <circle cx="100" cy="150" r="4" fill="currentColor" fillOpacity="0.5" />
-                    <circle cx="50" cy="100" r="4" fill="currentColor" fillOpacity="0.5" />
-                    <circle cx="150" cy="100" r="4" fill="currentColor" fillOpacity="0.5" />
-                    
-                    {/* Diagonal lines */}
-                    <path d="M60 60 L140 140" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" />
-                    <path d="M140 60 L60 140" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" />
-                    
-                    {/* Small dots */}
-                    <circle cx="70" cy="70" r="2" fill="currentColor" fillOpacity="0.7" />
-                    <circle cx="130" cy="130" r="2" fill="currentColor" fillOpacity="0.7" />
-                    <circle cx="130" cy="70" r="2" fill="currentColor" fillOpacity="0.7" />
-                    <circle cx="70" cy="130" r="2" fill="currentColor" fillOpacity="0.7" />
-                    
-                    {/* Code brackets - Left */}
-                    <path d="M40 60 L30 100 L40 140" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.6" />
-                    
-                    {/* Code brackets - Right */}
-                    <path d="M160 60 L170 100 L160 140" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.6" />
-                    
-                    {/* React-like atom icon */}
-                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" transform="rotate(30 100 100)" />
-                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" transform="rotate(90 100 100)" />
-                    <ellipse cx="100" cy="100" rx="15" ry="40" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" transform="rotate(150 100 100)" />
-                  </svg>
-                </div>
-                
-                {/* Enhanced floating coding elements with better shadow and animations */}
-                {/* HTML tag */}
-                <div className="absolute top-1/4 left-1/4 px-3 py-2 border-2 border-black/50 rounded-lg bg-white/90 shadow-lg z-20 animate-float" style={{ animationDelay: '0s' }}>
-                  <div className="text-base font-mono font-bold text-black">&lt;/&gt;</div>
-                </div>
-                
-                {/* JavaScript icon */}
-                <div className="absolute bottom-1/3 right-1/4 w-12 h-12 flex items-center justify-center border-2 border-yellow-500/80 rounded-lg bg-yellow-100/90 shadow-lg z-20 animate-float" style={{ animationDelay: '1s' }}>
-                  <div className="text-sm font-mono font-bold text-yellow-800">JS</div>
-                </div>
-                
-                {/* Database icon */}
-                <div className="absolute top-1/2 right-1/3 w-11 h-11 border-2 border-blue-500/80 rounded-md bg-blue-100/90 shadow-lg z-20 flex flex-col items-center justify-center animate-float" style={{ animationDelay: '2s' }}>
-                  <div className="w-5 h-1 border-t border-blue-600/70 rounded-t-sm"></div>
-                  <div className="w-6 h-4 border border-blue-600/70 border-t-0"></div>
-                  <div className="w-5 h-1 border-t border-blue-600/70 rounded-b-sm"></div>
-                </div>
-                
-                {/* Git branch icon */}
-                <div className="absolute top-1/3 right-1/5 w-12 h-12 flex items-center justify-center border-2 border-gray-500/80 rounded-lg bg-white/90 shadow-lg z-20 animate-float" style={{ animationDelay: '3s' }}>
-                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none">
-                    <circle cx="12" cy="7" r="3" />
-                    <circle cx="17" cy="17" r="3" />
-                    <circle cx="7" cy="17" r="3" />
-                    <path d="M12 10v3.5a1.5 1.5 0 0 0 1.5 1.5h2" />
-                  </svg>
-                </div>
-                
-                {/* Code function icon */}
-                <div className="absolute bottom-1/4 left-1/3 px-3 py-2 border-2 border-gray-500/80 rounded-lg bg-white/90 shadow-lg z-20 animate-float" style={{ animationDelay: '1.5s' }}>
-                  <div className="text-sm font-mono font-bold">() =&gt;</div>
-                </div>
-                
-                {/* React/Framework icon */}
-                <div className="absolute top-1/6 right-1/4 w-11 h-11 flex items-center justify-center border-2 border-cyan-500/80 rounded-full bg-cyan-100/90 shadow-lg z-20 animate-float" style={{ animationDelay: '2.5s' }}>
-                  <div className="text-base font-bold">⚛️</div>
-                </div>
-                
-                {/* CSS icon */}
-                <div className="absolute bottom-1/5 left-1/5 w-11 h-11 flex items-center justify-center border-2 border-purple-500/80 rounded-lg bg-purple-100/90 shadow-lg z-20 animate-float" style={{ animationDelay: '0.5s' }}>
-                  <div className="text-sm font-bold text-purple-800">CSS</div>
-                </div>
-              </div>
-              
-              {/* Enhanced feature highlight with better shadow and positioning */}
-              <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 p-4 bg-white border border-black/10 rounded-lg shadow-xl z-10">
-                <div className="text-sm font-semibold">Client Success Rate</div>
-                <div className="mt-1 flex items-center gap-1 text-xl md:text-2xl font-bold">
-                  98%
-                  <span className="text-xs text-black/60 font-normal ml-1">satisfaction</span>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">⚡</div>
+                    <div className="text-xs opacity-90">Fast Deploy</div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+          )}
+        </div>
       </main>
       
-      {/* Enhanced CSS for animations */}
+      {/* Enhanced Styles */}
       <style jsx global>{`
-        @keyframes spin-slow {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+        .bg-grid-pattern {
+          background-image: 
+            linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+          background-size: 50px 50px;
         }
         
-        @keyframes reverse-spin {
-          0% { transform: rotate(360deg); }
-          100% { transform: rotate(0deg); }
+        html {
+          scroll-behavior: smooth;
         }
         
-        @keyframes float {
-          0% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(-10px) translateX(3px); }
-          100% { transform: translateY(0px) translateX(0px); }
+        ::-webkit-scrollbar {
+          width: 6px;
         }
         
-        .animate-spin-slow {
-          animation: spin-slow 30s linear infinite;
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1;
         }
         
-        .animate-reverse-spin {
-          animation: reverse-spin 25s linear infinite;
+        ::-webkit-scrollbar-thumb {
+          background: #c1c1c1;
+          border-radius: 3px;
         }
         
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        /* Responsive animation adjustments */
-        @media (max-width: 768px) {
-          @keyframes float {
-            0% { transform: translateY(0px) translateX(0px); }
-            50% { transform: translateY(-7px) translateX(2px); }
-            100% { transform: translateY(0px) translateX(0px); }
-          }
+        ::-webkit-scrollbar-thumb:hover {
+          background: #a1a1a1;
         }
       `}</style>
     </>
