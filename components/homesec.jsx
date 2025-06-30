@@ -422,49 +422,13 @@ const HomeSection = () => {
                   </div>
                   
                   {/* Floating Elements */}
-                  <motion.div
-                    className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg"
-                    animate={{ 
-                      rotate: 360,
-                      scale: [1, 1.1, 1]
-                    }}
-                    transition={{ 
-                      rotate: { duration: 10, repeat: Infinity, ease: "linear" },
-                      scale: { duration: 2, repeat: Infinity }
-                    }}
-                  >
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </motion.div>
+                 
                 </div>
                 
-                {/* Success Metric Card */}
-                <motion.div 
-                  className="absolute -bottom-6 -left-6 p-6 bg-white rounded-2xl shadow-2xl border border-black/5"
-                  initial={{ opacity: 0, y: 20, rotate: -5 }}
-                  animate={{ opacity: 1, y: 0, rotate: -5 }}
-                  transition={{ delay: 1.5, duration: 0.6 }}
-                >
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-green-600 mb-1">99.9%</div>
-                    <div className="text-sm text-black/60">Uptime</div>
-                    <div className="text-xs text-black/40 mt-1">Last 12 months</div>
-                  </div>
-                </motion.div>
+                
                 
                 {/* Performance Indicator */}
-                <motion.div 
-                  className="absolute top-6 -right-6 p-4 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl shadow-xl text-white"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 2, duration: 0.6, type: "spring" }}
-                >
-                  <div className="text-center">
-                    <div className="text-2xl font-bold">⚡</div>
-                    <div className="text-xs opacity-90">Fast Deploy</div>
-                  </div>
-                </motion.div>
+                
               </motion.div>
             </div>
           )}
