@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import AnimatedBackground from "@/components/animaedbg";
 import HomeSection from "@/components/homesec";
 import ServicesSection from "@/components/servisesec";
+import WhyChooseUsSection from "@/components/whyus";
+import PortfolioSection from "@/components/portfoliyo";
 
 export default function Home() {
   // Add global style for body
@@ -33,6 +35,8 @@ export default function Home() {
         
         {/* Services Section Component */}
         <ServicesSection />
+        <WhyChooseUsSection/>
+        <PortfolioSection/>
       </div>
     </div>
   );

@@ -305,130 +305,267 @@ const HomeSection = () => {
                 </motion.div>
               </motion.div>
               
-              {/* Right Visual - Completely New Design */}
+              {/* Right Visual - Beautiful New Design */}
               <motion.div 
                 className="relative h-[500px] lg:h-[600px]"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, delay: 0.5 }}
               >
-                {/* Main Interactive Dashboard */}
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-black rounded-3xl overflow-hidden shadow-2xl border border-slate-700/50">
-                  
-                  {/* Dashboard Header */}
-                  <div className="p-6 border-b border-slate-700/50 bg-slate-800/50">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                        <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                        <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                      </div>
-                      <div className="text-slate-400 text-sm font-mono">faigen-dashboard.app</div>
+                {/* Central Glowing Orb */}
+                <motion.div 
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-gradient-to-r from-white/20 to-white/10 backdrop-blur-sm border border-white/20"
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    rotate: 360,
+                  }}
+                  transition={{ 
+                    scale: { duration: 4, repeat: Infinity },
+                    rotate: { duration: 20, repeat: Infinity, ease: "linear" }
+                  }}
+                >
+                  <div className="absolute inset-4 rounded-full bg-gradient-to-br from-black/80 to-black/60 backdrop-blur-xl flex items-center justify-center">
+                    <motion.div 
+                      className="text-white font-bold text-lg"
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      FAIGEN
+                    </motion.div>
+                  </div>
+                </motion.div>
+
+                {/* Floating UI Cards */}
+                <motion.div
+                  className="absolute top-16 left-8 w-48 bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-black/10"
+                  initial={{ y: 50, opacity: 0, rotate: -5 }}
+                  animate={{ 
+                    y: [0, -10, 0],
+                    opacity: 1,
+                    rotate: -5
+                  }}
+                  transition={{ 
+                    y: { duration: 6, repeat: Infinity },
+                    opacity: { delay: 0.8 },
+                    rotate: { delay: 0.8 }
+                  }}
+                >
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-sm text-black">Project Alpha</div>
+                      <div className="text-xs text-black/60">In Development</div>
                     </div>
                   </div>
-                  
-                  {/* Dashboard Content */}
-                  <div className="p-6 h-full">
-                    
-                    {/* Metrics Cards */}
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                      <motion.div 
-                        className="bg-gradient-to-br from-blue-500/20 to-blue-600/20 p-4 rounded-xl border border-blue-500/30"
-                        animate={{ scale: [1, 1.02, 1] }}
-                        transition={{ duration: 3, repeat: Infinity, delay: 0 }}
-                      >
-                        <div className="text-blue-400 text-sm mb-1">Active Projects</div>
-                        <div className="text-white text-2xl font-bold">24</div>
-                        <div className="text-green-400 text-xs">↗ +12%</div>
-                      </motion.div>
-                      
-                      <motion.div 
-                        className="bg-gradient-to-br from-purple-500/20 to-purple-600/20 p-4 rounded-xl border border-purple-500/30"
-                        animate={{ scale: [1, 1.02, 1] }}
-                        transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-                      >
-                        <div className="text-purple-400 text-sm mb-1">Team Members</div>
-                        <div className="text-white text-2xl font-bold">18</div>
-                        <div className="text-green-400 text-xs">↗ +3</div>
-                      </motion.div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-black/70">Progress</span>
+                      <span className="text-black font-medium">78%</span>
                     </div>
-                    
-                    {/* Code Simulation */}
-                    <div className="bg-slate-900/80 rounded-xl p-4 mb-6 border border-slate-600/30">
-                      <div className="flex items-center space-x-2 mb-3">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                        <div className="text-slate-400 text-xs">Live Development</div>
-                      </div>
-                      
-                      <div className="font-mono text-xs space-y-1">
-                        <motion.div 
-                          className="text-slate-500"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 2 }}
-                        >
-                          <span className="text-blue-400">const</span> <span className="text-white">project</span> = <span className="text-yellow-400">'faigen-app'</span>
-                        </motion.div>
-                        <motion.div 
-                          className="text-slate-500"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 2.5 }}
-                        >
-                          <span className="text-purple-400">function</span> <span className="text-green-400">deployToProduction</span>() {`{`}
-                        </motion.div>
-                        <motion.div 
-                          className="text-slate-500 ml-4"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 3 }}
-                        >
-                          <span className="text-blue-400">console</span>.<span className="text-yellow-400">log</span>(<span className="text-green-400">'🚀 Deploying...'</span>)
-                        </motion.div>
-                        <motion.div 
-                          className="text-slate-500"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 3.5 }}
-                        >
-                          {`}`}
-                        </motion.div>
-                      </div>
+                    <div className="w-full bg-black/10 rounded-full h-2">
+                      <motion.div 
+                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: "78%" }}
+                        transition={{ delay: 1.5, duration: 1.5 }}
+                      />
                     </div>
-                    
-                    {/* Project Timeline */}
-                    <div className="space-y-3">
-                      <div className="text-slate-400 text-sm mb-3">Recent Activity</div>
-                      
-                      {[
-                        { action: "UI Design Completed", time: "2m ago", color: "bg-green-400" },
-                        { action: "API Integration", time: "15m ago", color: "bg-blue-400" },
-                        { action: "Client Review", time: "1h ago", color: "bg-yellow-400" },
-                        { action: "Deploy to Staging", time: "3h ago", color: "bg-purple-400" }
-                      ].map((item, index) => (
-                        <motion.div
-                          key={index}
-                          className="flex items-center space-x-3 py-2"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 4 + index * 0.2 }}
-                        >
-                          <div className={`w-2 h-2 ${item.color} rounded-full`}></div>
-                          <div className="text-slate-300 text-sm flex-1">{item.action}</div>
-                          <div className="text-slate-500 text-xs">{item.time}</div>
-                        </motion.div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="absolute top-24 right-4 w-40 bg-gradient-to-br from-black/90 to-black/80 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/10"
+                  initial={{ y: -50, opacity: 0, rotate: 8 }}
+                  animate={{ 
+                    y: [0, 10, 0],
+                    opacity: 1,
+                    rotate: 8
+                  }}
+                  transition={{ 
+                    y: { duration: 5, repeat: Infinity, delay: 1 },
+                    opacity: { delay: 1.2 },
+                    rotate: { delay: 1.2 }
+                  }}
+                >
+                  <div className="text-white text-xs mb-2">Live Analytics</div>
+                  <div className="text-2xl font-bold text-white mb-1">2.4K</div>
+                  <div className="text-green-400 text-xs flex items-center">
+                    <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                    +24% this week
+                  </div>
+                  <div className="mt-3 flex space-x-1">
+                    {[...Array(8)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="bg-white/20 rounded-sm flex-1"
+                        style={{ height: `${Math.random() * 20 + 8}px` }}
+                        animate={{ 
+                          height: [
+                            `${Math.random() * 20 + 8}px`,
+                            `${Math.random() * 20 + 8}px`,
+                          ]
+                        }}
+                        transition={{ 
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: i * 0.2 + 2
+                        }}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="absolute bottom-20 left-4 w-52 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-black/5"
+                  initial={{ y: 50, opacity: 0, rotate: -3 }}
+                  animate={{ 
+                    y: [0, -8, 0],
+                    opacity: 1,
+                    rotate: -3
+                  }}
+                  transition={{ 
+                    y: { duration: 7, repeat: Infinity, delay: 2 },
+                    opacity: { delay: 1.8 },
+                    rotate: { delay: 1.8 }
+                  }}
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="font-semibold text-sm text-black">Team Collaboration</div>
+                    <div className="flex -space-x-2">
+                      {[...Array(3)].map((_, i) => (
+                        <div 
+                          key={i}
+                          className="w-6 h-6 rounded-full border-2 border-white"
+                          style={{ 
+                            background: `linear-gradient(45deg, ${['#3B82F6', '#8B5CF6', '#EF4444'][i]}, ${['#1D4ED8', '#7C3AED', '#DC2626'][i]})` 
+                          }}
+                        />
                       ))}
                     </div>
                   </div>
-                  
-                  {/* Floating Elements */}
-                 
-                </div>
-                
-                
-                
-                {/* Performance Indicator */}
-                
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <span className="text-xs text-black/70">Sarah is designing</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                      <span className="text-xs text-black/70">Alex is coding</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                      <span className="text-xs text-black/70">Mike is testing</span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="absolute bottom-16 right-8 w-44 bg-gradient-to-br from-black/95 to-black/85 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/10"
+                  initial={{ y: 30, opacity: 0, rotate: 5 }}
+                  animate={{ 
+                    y: [0, 12, 0],
+                    opacity: 1,
+                    rotate: 5
+                  }}
+                  transition={{ 
+                    y: { duration: 6, repeat: Infinity, delay: 3 },
+                    opacity: { delay: 2.2 },
+                    rotate: { delay: 2.2 }
+                  }}
+                >
+                  <div className="text-white text-xs mb-2">Deploy Status</div>
+                  <div className="flex items-center space-x-2 mb-3">
+                    <motion.div 
+                      className="w-3 h-3 bg-green-400 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    />
+                    <span className="text-green-400 text-sm font-medium">Production</span>
+                  </div>
+                  <div className="text-xs text-white/70 space-y-1">
+                    <div>✓ Build successful</div>
+                    <div>✓ Tests passed</div>
+                    <div>✓ Deploy complete</div>
+                  </div>
+                  <motion.div 
+                    className="mt-3 bg-gradient-to-r from-green-400/20 to-blue-400/20 rounded-lg p-2"
+                    animate={{ opacity: [0.7, 1, 0.7] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <div className="text-xs text-white/90 font-mono">
+                      v2.4.1 • 3 min ago
+                    </div>
+                  </motion.div>
+                </motion.div>
+
+                {/* Connecting Lines */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 500">
+                  <motion.path
+                    d="M200,250 Q180,200 120,160"
+                    stroke="rgba(0,0,0,0.1)"
+                    strokeWidth="1"
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 2, delay: 3 }}
+                  />
+                  <motion.path
+                    d="M200,250 Q320,220 350,180"
+                    stroke="rgba(0,0,0,0.1)"
+                    strokeWidth="1"
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 2, delay: 3.5 }}
+                  />
+                  <motion.path
+                    d="M200,250 Q160,350 120,420"
+                    stroke="rgba(0,0,0,0.1)"
+                    strokeWidth="1"
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 2, delay: 4 }}
+                  />
+                  <motion.path
+                    d="M200,250 Q280,350 320,420"
+                    stroke="rgba(0,0,0,0.1)"
+                    strokeWidth="1"
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 2, delay: 4.5 }}
+                  />
+                </svg>
+
+                {/* Floating Geometric Shapes */}
+                {[...Array(6)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-4 h-4 bg-gradient-to-r from-black/20 to-black/10 rounded backdrop-blur-sm"
+                    style={{
+                      left: `${20 + Math.random() * 60}%`,
+                      top: `${10 + Math.random() * 80}%`,
+                      rotate: `${Math.random() * 360}deg`,
+                    }}
+                    animate={{
+                      y: [-10, 10, -10],
+                      rotate: [0, 180, 360],
+                      opacity: [0.3, 0.8, 0.3],
+                    }}
+                    transition={{
+                      duration: 8 + Math.random() * 4,
+                      repeat: Infinity,
+                      delay: Math.random() * 5,
+                    }}
+                  />
+                ))}
               </motion.div>
             </div>
           )}
