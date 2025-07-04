@@ -1,11 +1,13 @@
 'use client'
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Palette, Zap, Rocket, Shield, Smartphone, Cloud } from "lucide-react";
 
 const HomeSection = () => {
   const [mounted, setMounted] = useState(false);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const textVariants = ["Future-ready solutions.", "Human-first design.", "Scalable technology."];
   
   useEffect(() => {
@@ -27,9 +29,17 @@ const HomeSection = () => {
     const textInterval = setInterval(() => {
       setCurrentTextIndex((prev) => (prev + 1) % textVariants.length);
     }, 3000);
+
+    // Scroll detection for logo visibility
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
     
     return () => {
       clearInterval(textInterval);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
   
@@ -97,6 +107,30 @@ const HomeSection = () => {
           />
         ))}
       </div>
+
+      {/* Top Left Logo - Visible on Scroll */}
+      <AnimatePresence>
+        {isScrolled && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-6 left-6 z-50"
+          >
+            <motion.div
+              className="bg-white/90 backdrop-blur-xl rounded-2xl border border-gray-200 shadow-xl p-3"
+              whileHover={{ scale: 1.05 }}
+            >
+              <img 
+                src="/ChatGPT_Image_Apr_4__2025__10_40_51_PM-removebg-preview.png" 
+                alt="Company Logo" 
+                className="h-18 w-auto"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Unique Corner Navigation Menu */}
       <div className="fixed top-6 right-6 z-50">
@@ -206,8 +240,20 @@ const HomeSection = () => {
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="space-y-8"
+                className="space-y-6"
               >
+                {/* Logo Section */}
+                {/* <motion.div 
+                  variants={itemVariants}
+                  className="inline-flex items-center px-4 py-2 rounded-full  "
+                >
+                  <img 
+                    src="/ChatGPT_Image_Apr_4__2025__10_36_21_PM-removebg-preview.png" 
+                    alt="Faigen Logo" 
+                    className="h-16 lg:h-18 w-auto"
+                  />
+                </motion.div> */}
+             
                 {/* Brand Badge */}
                 <motion.div 
                   variants={itemVariants}
@@ -218,7 +264,7 @@ const HomeSection = () => {
                 </motion.div>
                 
                 {/* Main Headline */}
-                <motion.div variants={itemVariants} className="space-y-4">
+                <motion.div variants={itemVariants} className="space-y-4 pt-2">
                   <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[0.9] tracking-tight"
                       style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                     <span className="block text-black">We Build</span>
@@ -305,267 +351,264 @@ const HomeSection = () => {
                 </motion.div>
               </motion.div>
               
-              {/* Right Visual - Beautiful New Design */}
+              {/* Right Visual - Abstract Energy Ecosystem */}
               <motion.div 
-                className="relative h-[500px] lg:h-[600px]"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
+                className="relative h-[400px] lg:h-[600px] flex items-center justify-center overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.5 }}
               >
-                {/* Central Glowing Orb */}
+                {/* Central Energy Core */}
                 <motion.div 
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-gradient-to-r from-white/20 to-white/10 backdrop-blur-sm border border-white/20"
-                  animate={{ 
-                    scale: [1, 1.1, 1],
-                    rotate: 360,
-                  }}
-                  transition={{ 
-                    scale: { duration: 4, repeat: Infinity },
-                    rotate: { duration: 20, repeat: Infinity, ease: "linear" }
-                  }}
+                  className="relative z-20"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 1.5, delay: 0.8 }}
                 >
-                  <div className="absolute inset-4 rounded-full bg-gradient-to-br from-black/80 to-black/60 backdrop-blur-xl flex items-center justify-center">
+                  <div className="w-32 lg:w-48 h-32 lg:h-48 relative">
+                    {/* Core Rings */}
                     <motion.div 
-                      className="text-white font-bold text-lg"
-                      animate={{ opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      className="absolute inset-0 rounded-full border-2 border-gradient-to-r from-blue-400/30 to-purple-600/30"
+                      style={{
+                        background: 'conic-gradient(from 0deg, rgba(59,130,246,0.1), rgba(147,51,234,0.3), rgba(59,130,246,0.1))'
+                      }}
+                      animate={{ 
+                        rotate: 360,
+                        scale: [1, 1.05, 1]
+                      }}
+                      transition={{ 
+                        rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                        scale: { duration: 4, repeat: Infinity }
+                      }}
+                    />
+                    
+                    {/* Inner Core - Now Pure White with Logo */}
+                    <motion.div 
+                      className="absolute inset-8 lg:inset-12 rounded-full bg-white backdrop-blur-xl border border-gray-200 shadow-xl flex items-center justify-center"
+                      animate={{ 
+                        boxShadow: [
+                          "0 0 20px rgba(59,130,246,0.3)",
+                          "0 0 40px rgba(147,51,234,0.5)",
+                          "0 0 20px rgba(59,130,246,0.3)"
+                        ]
+                      }}
+                      transition={{ duration: 3, repeat: Infinity }}
                     >
-                      FAIGEN
+                      <motion.div 
+                        className="w-full h-full flex items-center justify-center p-4"
+                        animate={{ opacity: [0.8, 1, 0.8] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        {/* Logo placeholder - replace src with your logo */}
+                        <img 
+                          src="/ChatGPT_Image_Apr_4__2025__10_36_21_PM-removebg-preview.png" 
+                          alt="Company Logo" 
+                          className="w-full h-full object-contain max-w-16 lg:max-w-20 max-h-16 lg:max-h-20"
+                        />
+                      </motion.div>
                     </motion.div>
                   </div>
                 </motion.div>
 
-                {/* Floating UI Cards */}
-                <motion.div
-                  className="absolute top-16 left-8 w-48 bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-black/10"
-                  initial={{ y: 50, opacity: 0, rotate: -5 }}
-                  animate={{ 
-                    y: [0, -10, 0],
-                    opacity: 1,
-                    rotate: -5
-                  }}
-                  transition={{ 
-                    y: { duration: 6, repeat: Infinity },
-                    opacity: { delay: 0.8 },
-                    rotate: { delay: 0.8 }
-                  }}
-                >
-                  <div className="flex items-center space-x-3 mb-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <div className="font-semibold text-sm text-black">Project Alpha</div>
-                      <div className="text-xs text-black/60">In Development</div>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-black/70">Progress</span>
-                      <span className="text-black font-medium">78%</span>
-                    </div>
-                    <div className="w-full bg-black/10 rounded-full h-2">
+                {/* Floating Capability Spheres */}
+                {[
+                  { 
+                    icon: Palette, 
+                    title: "Design", 
+                    color: "from-pink-400 to-red-500",
+                    position: { top: "10%", left: "20%" },
+                    delay: 1
+                  },
+                  { 
+                    icon: Zap, 
+                    title: "Speed", 
+                    color: "from-yellow-400 to-orange-500",
+                    position: { top: "15%", right: "15%" },
+                    delay: 1.3
+                  },
+                  { 
+                    icon: Rocket, 
+                    title: "Deploy", 
+                    color: "from-green-400 to-emerald-500",
+                    position: { bottom: "20%", right: "20%" },
+                    delay: 1.6
+                  },
+                  { 
+                    icon: Shield, 
+                    title: "Secure", 
+                    color: "from-blue-400 to-indigo-500",
+                    position: { bottom: "15%", left: "15%" },
+                    delay: 1.9
+                  },
+                  { 
+                    icon: Smartphone, 
+                    title: "Mobile", 
+                    color: "from-purple-400 to-violet-500",
+                    position: { top: "45%", left: "5%" },
+                    delay: 2.2
+                  },
+                  { 
+                    icon: Cloud, 
+                    title: "Cloud", 
+                    color: "from-cyan-400 to-blue-500",
+                    position: { top: "45%", right: "5%" },
+                    delay: 2.5
+                  }
+                ].map((sphere, index) => {
+                  const IconComponent = sphere.icon;
+                  return (
+                    <motion.div
+                      key={index}
+                      className="absolute z-10"
+                      style={sphere.position}
+                      initial={{ scale: 0, opacity: 0, y: 50 }}
+                      animate={{ 
+                        scale: 1, 
+                        opacity: 1, 
+                        y: [0, -10, 0],
+                        rotate: [0, 5, -5, 0]
+                      }}
+                      transition={{ 
+                        scale: { delay: sphere.delay, duration: 0.8 },
+                        opacity: { delay: sphere.delay, duration: 0.8 },
+                        y: { duration: 4, repeat: Infinity, delay: sphere.delay + 1 },
+                        rotate: { duration: 6, repeat: Infinity, delay: sphere.delay + 2 }
+                      }}
+                    >
                       <motion.div 
-                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full"
-                        initial={{ width: 0 }}
-                        animate={{ width: "78%" }}
-                        transition={{ delay: 1.5, duration: 1.5 }}
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  className="absolute top-24 right-4 w-40 bg-gradient-to-br from-black/90 to-black/80 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/10"
-                  initial={{ y: -50, opacity: 0, rotate: 8 }}
-                  animate={{ 
-                    y: [0, 10, 0],
-                    opacity: 1,
-                    rotate: 8
-                  }}
-                  transition={{ 
-                    y: { duration: 5, repeat: Infinity, delay: 1 },
-                    opacity: { delay: 1.2 },
-                    rotate: { delay: 1.2 }
-                  }}
-                >
-                  <div className="text-white text-xs mb-2">Live Analytics</div>
-                  <div className="text-2xl font-bold text-white mb-1">2.4K</div>
-                  <div className="text-green-400 text-xs flex items-center">
-                    <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                    +24% this week
-                  </div>
-                  <div className="mt-3 flex space-x-1">
-                    {[...Array(8)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="bg-white/20 rounded-sm flex-1"
-                        style={{ height: `${Math.random() * 20 + 8}px` }}
-                        animate={{ 
-                          height: [
-                            `${Math.random() * 20 + 8}px`,
-                            `${Math.random() * 20 + 8}px`,
+                        className={`w-16 lg:w-24 h-16 lg:h-24 rounded-full bg-gradient-to-br ${sphere.color} backdrop-blur-sm border border-white/20 shadow-2xl flex flex-col items-center justify-center text-white relative overflow-hidden`}
+                        whileHover={{ scale: 1.1, y: -5 }}
+                        animate={{
+                          boxShadow: [
+                            "0 10px 30px rgba(0,0,0,0.1)",
+                            "0 20px 40px rgba(0,0,0,0.2)",
+                            "0 10px 30px rgba(0,0,0,0.1)"
                           ]
                         }}
-                        transition={{ 
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: i * 0.2 + 2
-                        }}
-                      />
-                    ))}
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  className="absolute bottom-20 left-4 w-52 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-black/5"
-                  initial={{ y: 50, opacity: 0, rotate: -3 }}
-                  animate={{ 
-                    y: [0, -8, 0],
-                    opacity: 1,
-                    rotate: -3
-                  }}
-                  transition={{ 
-                    y: { duration: 7, repeat: Infinity, delay: 2 },
-                    opacity: { delay: 1.8 },
-                    rotate: { delay: 1.8 }
-                  }}
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="font-semibold text-sm text-black">Team Collaboration</div>
-                    <div className="flex -space-x-2">
-                      {[...Array(3)].map((_, i) => (
-                        <div 
-                          key={i}
-                          className="w-6 h-6 rounded-full border-2 border-white"
-                          style={{ 
-                            background: `linear-gradient(45deg, ${['#3B82F6', '#8B5CF6', '#EF4444'][i]}, ${['#1D4ED8', '#7C3AED', '#DC2626'][i]})` 
+                        transition={{ duration: 3, repeat: Infinity }}
+                      >
+                        {/* Glowing Effect */}
+                        <motion.div 
+                          className="absolute inset-0 rounded-full opacity-30"
+                          style={{
+                            background: `conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent)`
                           }}
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                         />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-xs text-black/70">Sarah is designing</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                      <span className="text-xs text-black/70">Alex is coding</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-                      <span className="text-xs text-black/70">Mike is testing</span>
-                    </div>
-                  </div>
-                </motion.div>
+                        
+                        <IconComponent className="w-6 lg:w-8 h-6 lg:h-8 mb-1 relative z-10" />
+                        <div className="text-xs lg:text-sm font-semibold relative z-10">{sphere.title}</div>
+                      </motion.div>
+                    </motion.div>
+                  );
+                })}
 
-                <motion.div
-                  className="absolute bottom-16 right-8 w-44 bg-gradient-to-br from-black/95 to-black/85 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/10"
-                  initial={{ y: 30, opacity: 0, rotate: 5 }}
-                  animate={{ 
-                    y: [0, 12, 0],
-                    opacity: 1,
-                    rotate: 5
-                  }}
-                  transition={{ 
-                    y: { duration: 6, repeat: Infinity, delay: 3 },
-                    opacity: { delay: 2.2 },
-                    rotate: { delay: 2.2 }
-                  }}
-                >
-                  <div className="text-white text-xs mb-2">Deploy Status</div>
-                  <div className="flex items-center space-x-2 mb-3">
-                    <motion.div 
-                      className="w-3 h-3 bg-green-400 rounded-full"
-                      animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
+                {/* Energy Streams */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none z-5" viewBox="0 0 400 400">
+                  {/* Connecting Energy Lines */}
+                  {[
+                    "M80,60 Q200,100 320,60",
+                    "M360,100 Q250,200 360,300",
+                    "M320,340 Q200,300 80,340",
+                    "M40,300 Q150,200 40,100",
+                    "M80,60 Q150,150 40,100",
+                    "M320,60 Q250,150 360,100"
+                  ].map((path, index) => (
+                    <motion.path
+                      key={index}
+                      d={path}
+                      stroke="url(#energyGradient)"
+                      strokeWidth="1.5"
+                      fill="none"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ 
+                        pathLength: [0, 1, 0],
+                        opacity: [0, 0.6, 0]
+                      }}
+                      transition={{ 
+                        duration: 4,
+                        repeat: Infinity,
+                        delay: index * 0.8 + 3
+                      }}
                     />
-                    <span className="text-green-400 text-sm font-medium">Production</span>
-                  </div>
-                  <div className="text-xs text-white/70 space-y-1">
-                    <div>✓ Build successful</div>
-                    <div>✓ Tests passed</div>
-                    <div>✓ Deploy complete</div>
-                  </div>
-                  <motion.div 
-                    className="mt-3 bg-gradient-to-r from-green-400/20 to-blue-400/20 rounded-lg p-2"
-                    animate={{ opacity: [0.7, 1, 0.7] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <div className="text-xs text-white/90 font-mono">
-                      v2.4.1 • 3 min ago
-                    </div>
-                  </motion.div>
-                </motion.div>
-
-                {/* Connecting Lines */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 500">
-                  <motion.path
-                    d="M200,250 Q180,200 120,160"
-                    stroke="rgba(0,0,0,0.1)"
-                    strokeWidth="1"
-                    fill="none"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 2, delay: 3 }}
-                  />
-                  <motion.path
-                    d="M200,250 Q320,220 350,180"
-                    stroke="rgba(0,0,0,0.1)"
-                    strokeWidth="1"
-                    fill="none"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 2, delay: 3.5 }}
-                  />
-                  <motion.path
-                    d="M200,250 Q160,350 120,420"
-                    stroke="rgba(0,0,0,0.1)"
-                    strokeWidth="1"
-                    fill="none"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 2, delay: 4 }}
-                  />
-                  <motion.path
-                    d="M200,250 Q280,350 320,420"
-                    stroke="rgba(0,0,0,0.1)"
-                    strokeWidth="1"
-                    fill="none"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 2, delay: 4.5 }}
-                  />
+                  ))}
+                  
+                  <defs>
+                    <linearGradient id="energyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="rgba(59,130,246,0.8)" />
+                      <stop offset="50%" stopColor="rgba(147,51,234,0.9)" />
+                      <stop offset="100%" stopColor="rgba(239,68,68,0.8)" />
+                    </linearGradient>
+                  </defs>
                 </svg>
 
-                {/* Floating Geometric Shapes */}
-                {[...Array(6)].map((_, i) => (
+                {/* Floating Data Particles */}
+                {[...Array(15)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="absolute w-4 h-4 bg-gradient-to-r from-black/20 to-black/10 rounded backdrop-blur-sm"
+                    className="absolute w-1 lg:w-2 h-1 lg:h-2 rounded-full"
                     style={{
-                      left: `${20 + Math.random() * 60}%`,
-                      top: `${10 + Math.random() * 80}%`,
-                      rotate: `${Math.random() * 360}deg`,
+                      background: `linear-gradient(45deg, ${
+                        ['#3B82F6', '#8B5CF6', '#EF4444', '#10B981', '#F59E0B'][i % 5]
+                      }, ${
+                        ['#1E40AF', '#7C3AED', '#DC2626', '#059669', '#D97706'][i % 5]
+                      })`,
+                      left: `${Math.random() * 100}%`,
+                      top: `${Math.random() * 100}%`,
                     }}
                     animate={{
-                      y: [-10, 10, -10],
-                      rotate: [0, 180, 360],
-                      opacity: [0.3, 0.8, 0.3],
+                      x: [0, Math.random() * 100 - 50],
+                      y: [0, Math.random() * 100 - 50],
+                      scale: [0, 1, 0],
+                      opacity: [0, 0.8, 0],
                     }}
                     transition={{
-                      duration: 8 + Math.random() * 4,
+                      duration: 6 + Math.random() * 4,
                       repeat: Infinity,
                       delay: Math.random() * 5,
                     }}
                   />
                 ))}
+
+                {/* Geometric Background Elements */}
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute border border-white/5 rounded-lg"
+                    style={{
+                      width: `${40 + Math.random() * 60}px`,
+                      height: `${40 + Math.random() * 60}px`,
+                      left: `${Math.random() * 80 + 10}%`,
+                      top: `${Math.random() * 80 + 10}%`,
+                      transform: `rotate(${Math.random() * 360}deg)`,
+                    }}
+                    animate={{
+                      rotate: [0, 360],
+                      scale: [1, 1.1, 1],
+                      opacity: [0.1, 0.3, 0.1],
+                    }}
+                    transition={{
+                      duration: 10 + Math.random() * 10,
+                      repeat: Infinity,
+                      delay: Math.random() * 5,
+                    }}
+                  />
+                ))}
+
+                {/* Holographic Grid */}
+                <motion.div 
+                  className="absolute inset-0 opacity-5"
+                  animate={{ opacity: [0.02, 0.08, 0.02] }}
+                  transition={{ duration: 8, repeat: Infinity }}
+                  style={{
+                    backgroundImage: `
+                      linear-gradient(rgba(59,130,246,0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(59,130,246,0.1) 1px, transparent 1px)
+                    `,
+                    backgroundSize: '30px 30px'
+                  }}
+                />
               </motion.div>
             </div>
           )}
