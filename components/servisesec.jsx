@@ -1,11 +1,12 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 import { useRouter } from 'next/navigation';
 
 const ServicesSection = () => {
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeCard, setActiveCard] = useState(null);
   const router = useRouter();
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, threshold: 0.1 });
@@ -25,6 +26,16 @@ const ServicesSection = () => {
   
   useEffect(() => {
     setMounted(true);
+    
+    // Detect if device supports touch (mobile/tablet)
+    const checkIfMobile = () => {
+      setIsMobile('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
+    return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
 
   // Navigation handlers
@@ -34,6 +45,13 @@ const ServicesSection = () => {
 
   const handleViewProcess = () => {
     router.push('/ourprocess');
+  };
+
+  // Mobile card interaction
+  const handleCardTouch = (index) => {
+    if (isMobile) {
+      setActiveCard(activeCard === index ? null : index);
+    }
   };
   
   const containerVariants = {
@@ -228,6 +246,18 @@ const ServicesSection = () => {
                   solutions that drive real business results. Every service is crafted 
                   with precision and optimized for performance.
                 </motion.p>
+                
+                {/* Mobile instruction */}
+                {isMobile && (
+                  <motion.p 
+                    className="text-sm text-white/50 mt-4 md:hidden"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                  >
+                    💡 Tap on cards to explore our services
+                  </motion.p>
+                )}
               </motion.div>
 
               {/* Services Grid */}
@@ -235,131 +265,211 @@ const ServicesSection = () => {
                 variants={containerVariants}
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
               >
-                {services.map((service, index) => (
-                  <motion.div
-                    key={service.title}
-                    variants={cardVariants}
-                    className="group relative"
-                  >
-                    <motion.div 
-                      className="relative h-full p-8 bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl overflow-hidden transition-all duration-500 hover:shadow-white/10 hover:shadow-2xl"
-                      whileHover={{ 
-                        y: -8,
-                        transition: { type: "spring", stiffness: 300, damping: 20 }
-                      }}
+                {services.map((service, index) => {
+                  const isActive = activeCard === index;
+                  
+                  return (
+                    <motion.div
+                      key={service.title}
+                      variants={cardVariants}
+                      className="group relative"
                     >
-                      {/* Background Gradient on Hover */}
                       <motion.div 
-                        className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-                      />
-                      
-                      {/* Border Gradient on Hover */}
-                      <motion.div 
-                        className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${service.borderGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-                        style={{ padding: '1px' }}
+                        className={`relative h-full p-8 bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl overflow-hidden transition-all duration-500 cursor-pointer
+                          ${isMobile ? (isActive ? 'bg-white/15 border-white/30' : '') : 'hover:shadow-white/10 hover:shadow-2xl'}
+                        `}
+                        onClick={() => handleCardTouch(index)}
+                        onTouchStart={() => handleCardTouch(index)}
+                        animate={isMobile ? {
+                          y: isActive ? -8 : 0,
+                          scale: isActive ? 1.02 : 1,
+                        } : {}}
+                        whileHover={!isMobile ? { 
+                          y: -8,
+                          transition: { type: "spring", stiffness: 300, damping: 20 }
+                        } : {}}
+                        whileTap={isMobile ? { scale: 0.98 } : {}}
                       >
-                        <div className="w-full h-full bg-black/90 backdrop-blur-xl rounded-3xl" />
-                      </motion.div>
-                      
-                      {/* Content */}
-                      <div className="relative z-10 space-y-6">
-                        {/* Icon */}
+                        {/* Background Gradient - Desktop: on hover, Mobile: when active */}
                         <motion.div 
-                          className="w-16 h-16 bg-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 border border-white/20"
-                          whileHover={{ rotate: 5 }}
+                          className={`absolute inset-0 bg-gradient-to-br ${service.gradient} transition-opacity duration-500
+                            ${isMobile 
+                              ? (isActive ? 'opacity-100' : 'opacity-0')
+                              : 'opacity-0 group-hover:opacity-100'
+                            }
+                          `}
+                        />
+                        
+                        {/* Border Gradient - Desktop: on hover, Mobile: when active */}
+                        <motion.div 
+                          className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${service.borderGradient} transition-opacity duration-500
+                            ${isMobile 
+                              ? (isActive ? 'opacity-100' : 'opacity-0')
+                              : 'opacity-0 group-hover:opacity-100'
+                            }
+                          `}
+                          style={{ padding: '1px' }}
                         >
-                          {service.icon}
-                          
-                          {/* Glowing effect */}
-                          <motion.div
-                            className="absolute inset-0 rounded-2xl border-2 border-white/30 opacity-0 group-hover:opacity-100"
-                            animate={{
-                              scale: [1, 1.1, 1],
-                            }}
-                            transition={{ 
-                              duration: 2, 
-                              repeat: Infinity,
-                              repeatType: "reverse"
-                            }}
-                          />
+                          <div className="w-full h-full bg-black/90 backdrop-blur-xl rounded-3xl" />
                         </motion.div>
                         
-                        {/* Title */}
-                        <motion.h3 
-                          className="text-xl lg:text-2xl font-bold text-white group-hover:text-white transition-colors duration-300"
-                          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                        >
-                          {service.title}
-                        </motion.h3>
-                        
-                        {/* Description */}
-                        <motion.p 
-                          className="text-white/70 group-hover:text-white/90 leading-relaxed transition-colors duration-300"
-                          style={{ fontFamily: "'Inter', sans-serif" }}
-                        >
-                          {service.description}
-                        </motion.p>
-                        
-                        {/* Technologies */}
-                        <motion.div className="flex flex-wrap gap-2">
-                          {service.technologies.map((tech, techIndex) => (
-                            <motion.span
-                              key={tech}
-                              className="px-3 py-1 bg-white/10 group-hover:bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white/80 group-hover:text-white transition-all duration-300 border border-white/10"
-                              initial={{ opacity: 0, scale: 0.8 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: index * 0.1 + techIndex * 0.05 }}
-                            >
-                              {tech}
-                            </motion.span>
-                          ))}
-                        </motion.div>
-                        
-                        {/* Learn More Link */}
-                        <motion.div 
-                          className="pt-4 border-t border-white/20 group-hover:border-white/30 transition-colors duration-300"
-                        >
-                          <motion.button
-                            className="flex items-center space-x-2 text-white/70 group-hover:text-white font-medium text-sm transition-colors duration-300"
-                            whileHover={{ x: 4 }}
+                        {/* Content */}
+                        <div className="relative z-10 space-y-6">
+                          {/* Icon */}
+                          <motion.div 
+                            className={`w-16 h-16 bg-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center text-white border border-white/20 transition-all duration-300
+                              ${isMobile 
+                                ? (isActive ? 'bg-white/15 border-white/30 scale-110' : '')
+                                : 'group-hover:scale-110 group-hover:bg-white/15 group-hover:border-white/30'
+                              }
+                            `}
+                            animate={isMobile ? (isActive ? { rotate: 5 } : { rotate: 0 }) : {}}
+                            whileHover={!isMobile ? { rotate: 5 } : {}}
                           >
-                            <span>Learn More</span>
-                            <motion.svg 
-                              className="w-4 h-4" 
-                              fill="none" 
-                              stroke="currentColor" 
-                              viewBox="0 0 24 24"
-                              animate={{ x: [0, 4, 0] }}
+                            {service.icon}
+                            
+                            {/* Glowing effect */}
+                            <motion.div
+                              className={`absolute inset-0 rounded-2xl border-2 border-white/30 transition-opacity duration-300
+                                ${isMobile 
+                                  ? (isActive ? 'opacity-100' : 'opacity-0')
+                                  : 'opacity-0 group-hover:opacity-100'
+                                }
+                              `}
+                              animate={{
+                                scale: [1, 1.1, 1],
+                              }}
                               transition={{ 
                                 duration: 2, 
                                 repeat: Infinity,
-                                ease: "easeInOut" 
+                                repeatType: "reverse"
                               }}
+                            />
+                          </motion.div>
+                          
+                          {/* Title */}
+                          <motion.h3 
+                            className={`text-xl lg:text-2xl font-bold text-white transition-colors duration-300
+                              ${isMobile ? '' : 'group-hover:text-white'}
+                            `}
+                            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                          >
+                            {service.title}
+                          </motion.h3>
+                          
+                          {/* Description */}
+                          <motion.p 
+                            className={`text-white/70 leading-relaxed transition-colors duration-300
+                              ${isMobile 
+                                ? (isActive ? 'text-white/90' : '')
+                                : 'group-hover:text-white/90'
+                              }
+                            `}
+                            style={{ fontFamily: "'Inter', sans-serif" }}
+                          >
+                            {service.description}
+                          </motion.p>
+                          
+                          {/* Technologies */}
+                          <motion.div className="flex flex-wrap gap-2">
+                            {service.technologies.map((tech, techIndex) => (
+                              <motion.span
+                                key={tech}
+                                className={`px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs font-medium text-white/80 border border-white/10 transition-all duration-300
+                                  ${isMobile 
+                                    ? (isActive ? 'bg-white/20 text-white border-white/20' : '')
+                                    : 'group-hover:bg-white/20 group-hover:text-white group-hover:border-white/20'
+                                  }
+                                `}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: index * 0.1 + techIndex * 0.05 }}
+                              >
+                                {tech}
+                              </motion.span>
+                            ))}
+                          </motion.div>
+                          
+                          {/* Learn More Link */}
+                          <motion.div 
+                            className={`pt-4 border-t border-white/20 transition-colors duration-300
+                              ${isMobile 
+                                ? (isActive ? 'border-white/30' : '')
+                                : 'group-hover:border-white/30'
+                              }
+                            `}
+                          >
+                            <motion.button
+                              className={`flex items-center space-x-2 text-white/70 font-medium text-sm transition-colors duration-300
+                                ${isMobile 
+                                  ? (isActive ? 'text-white' : '')
+                                  : 'group-hover:text-white'
+                                }
+                              `}
+                              animate={isMobile ? (isActive ? { x: 4 } : { x: 0 }) : {}}
+                              whileHover={!isMobile ? { x: 4 } : {}}
                             >
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </motion.svg>
-                          </motion.button>
-                        </motion.div>
-                      </div>
-                      
-                      {/* Floating Elements */}
-                      <motion.div
-                        className="absolute top-4 right-4 w-20 h-20 border border-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                      />
-                      
-                      <motion.div
-                        className="absolute bottom-4 left-4 w-2 h-2 bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        animate={{ 
-                          scale: [1, 1.5, 1],
-                          opacity: [0.3, 0.7, 0.3]
-                        }}
-                        transition={{ duration: 3, repeat: Infinity }}
-                      />
+                              <span>Learn More</span>
+                              <motion.svg 
+                                className="w-4 h-4" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                                animate={{ x: [0, 4, 0] }}
+                                transition={{ 
+                                  duration: 2, 
+                                  repeat: Infinity,
+                                  ease: "easeInOut" 
+                                }}
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </motion.svg>
+                            </motion.button>
+                          </motion.div>
+                        </div>
+                        
+                        {/* Floating Elements */}
+                        <motion.div
+                          className={`absolute top-4 right-4 w-20 h-20 border border-white/10 rounded-full transition-opacity duration-500
+                            ${isMobile 
+                              ? (isActive ? 'opacity-100' : 'opacity-0')
+                              : 'opacity-0 group-hover:opacity-100'
+                            }
+                          `}
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        />
+                        
+                        <motion.div
+                          className={`absolute bottom-4 left-4 w-2 h-2 bg-white/30 rounded-full transition-opacity duration-500
+                            ${isMobile 
+                              ? (isActive ? 'opacity-100' : 'opacity-0')
+                              : 'opacity-0 group-hover:opacity-100'
+                            }
+                          `}
+                          animate={{ 
+                            scale: [1, 1.5, 1],
+                            opacity: [0.3, 0.7, 0.3]
+                          }}
+                          transition={{ duration: 3, repeat: Infinity }}
+                        />
+                        
+                        {/* Mobile tap indicator */}
+                        {isMobile && (
+                          <motion.div
+                            className={`absolute top-4 left-4 text-white/50 transition-opacity duration-300
+                              ${isActive ? 'opacity-0' : 'opacity-100'}
+                            `}
+                          >
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M6.672 1.911a1 1 0 10-1.932.518l.259.966a1 1 0 001.932-.518l-.26-.966zM2.429 4.74a1 1 0 10-.517 1.932l.966.259a1 1 0 00.517-1.932l-.966-.26zm8.814-.569a1 1 0 00-1.415-1.414l-.707.707a1 1 0 101.415 1.415l.707-.708zm-7.071 7.072l.707-.707A1 1 0 003.465 9.12l-.708.707a1 1 0 001.415 1.415zm3.2-5.171a1 1 0 00-1.3 1.3l4 10a1 1 0 001.823.075l1.38-2.759 3.018 3.02a1 1 0 001.414-1.415l-3.019-3.02 2.76-1.379a1 1 0 00-.076-1.822l-10-4z" clipRule="evenodd" />
+                            </svg>
+                          </motion.div>
+                        )}
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                ))}
+                  );
+                })}
               </motion.div>
 
               {/* Bottom CTA */}
@@ -444,6 +554,13 @@ const ServicesSection = () => {
             linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
           background-size: 50px 50px;
+        }
+        
+        /* Custom touch styles for mobile */
+        @media (max-width: 768px) {
+          .group:active {
+            transform: scale(0.98);
+          }
         }
       `}</style>
     </>
