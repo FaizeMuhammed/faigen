@@ -337,33 +337,33 @@ const HomeSection = () => {
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 1.2, delay: 0.8 }}
                 >
-                  {/* Laptop Container */}
+                  {/* Laptop Container with Enhanced Black Border */}
                   <div className="relative">
-                    {/* Laptop Screen */}
+                    {/* Laptop Screen with Prominent Black Border */}
                     <motion.div 
-                      className="w-72 sm:w-80 lg:w-96 h-44 sm:h-52 lg:h-60 bg-black rounded-t-3xl border-4 border-gray-300 shadow-2xl relative overflow-hidden"
+                      className="w-72 sm:w-80 lg:w-96 h-44 sm:h-52 lg:h-60 bg-gray-900 rounded-t-3xl border-4 border-black shadow-2xl relative overflow-hidden"
                       animate={{ 
                         rotateY: [0, -2, 0],
                         rotateX: [0, 1, 0]
                       }}
                       transition={{ duration: 8, repeat: Infinity }}
                     >
-                      {/* Screen Content - E-commerce Store */}
-                      <div className="w-full h-full bg-white relative">
+                      {/* Inner Screen Bezel */}
+                      <div className="absolute inset-1.5 bg-white rounded-t-2xl overflow-hidden">
                         {/* Browser Header */}
-                        <div className="flex items-center justify-between p-2 lg:p-4 border-b border-gray-200">
+                        <div className="flex items-center justify-between p-2 lg:p-3 border-b border-gray-200 bg-gray-50">
                           <div className="flex items-center space-x-2">
-                            <div className="flex space-x-2">
-                              <div className="w-2 lg:w-3 h-2 lg:h-3 bg-red-400 rounded-full"></div>
-                              <div className="w-2 lg:w-3 h-2 lg:h-3 bg-yellow-400 rounded-full"></div>
-                              <div className="w-2 lg:w-3 h-2 lg:h-3 bg-green-400 rounded-full"></div>
+                            <div className="flex space-x-1.5">
+                              <div className="w-2.5 lg:w-3 h-2.5 lg:h-3 bg-red-500 rounded-full"></div>
+                              <div className="w-2.5 lg:w-3 h-2.5 lg:h-3 bg-yellow-500 rounded-full"></div>
+                              <div className="w-2.5 lg:w-3 h-2.5 lg:h-3 bg-green-500 rounded-full"></div>
                             </div>
-                            <span className="text-xs lg:text-sm font-medium text-gray-600 ml-2 lg:ml-4">Faigen Store - E-commerce</span>
+                            <span className="text-xs lg:text-sm font-medium text-gray-700 ml-2 lg:ml-4">Faigen Store - E-commerce</span>
                           </div>
                         </div>
                         
-                          {/* E-commerce Content */}
-                        <div className="p-3 lg:p-6 space-y-2 lg:space-y-4">
+                        {/* E-commerce Content */}
+                        <div className="p-3 lg:p-4 space-y-3 lg:space-y-4 bg-white">
                           {/* Store Header */}
                           <div className="flex items-center justify-between">
                             <div className="text-sm lg:text-lg font-bold text-gray-800">Premium Collection</div>
@@ -391,7 +391,7 @@ const HomeSection = () => {
                                 animate={{ scale: [1, 1.02, 1] }}
                                 transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
                               >
-                                <div className="w-full h-8 lg:h-12 bg-white rounded mb-1 lg:mb-2"></div>
+                                <div className="w-full h-6 lg:h-10 bg-white rounded mb-1 lg:mb-2"></div>
                                 <div className="text-xs font-medium text-gray-700">{product.name}</div>
                                 <div className="text-xs lg:text-sm font-bold text-gray-900">{product.price}</div>
                               </motion.div>
@@ -399,7 +399,7 @@ const HomeSection = () => {
                           </div>
                           
                           {/* Sales Stats */}
-                          <div className="bg-gradient-to-r from-green-50 to-blue-50 p-2 lg:p-3 rounded-lg">
+                          <div className="bg-gradient-to-r from-green-50 to-blue-50 p-2 lg:p-3 rounded-lg border border-green-200">
                             <div className="flex justify-between items-center">
                               <div>
                                 <div className="text-xs text-gray-600">Today's Sales</div>
@@ -422,19 +422,21 @@ const HomeSection = () => {
                       </div>
                       
                       {/* Screen Reflection */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none rounded-t-3xl"></div>
                     </motion.div>
                     
-                    {/* Laptop Base */}
-                    <div className="w-72 sm:w-80 lg:w-96 h-4 lg:h-6 bg-gradient-to-br from-gray-200 to-gray-300 rounded-b-3xl shadow-lg border-x-4 border-b-4 border-gray-300 relative">
-                      <div className="absolute inset-0 bg-gradient-to-t from-gray-300 to-transparent rounded-b-3xl"></div>
+                    {/* Laptop Base with Enhanced Black Border */}
+                    <div className="w-72 sm:w-80 lg:w-96 h-6 lg:h-8 bg-gradient-to-br from-gray-300 to-gray-400 rounded-b-3xl shadow-xl border-x-4 border-b-4 border-black relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-400 to-transparent rounded-b-3xl"></div>
+                      {/* Trackpad */}
+                      <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-16 lg:w-20 h-3 lg:h-4 bg-gray-200 rounded-lg border border-gray-300"></div>
                     </div>
                   </div>
                 </motion.div>
 
-                {/* Mobile Phone - Right (Hidden on mobile) */}
+                {/* Mobile Phone - Right */}
                 <motion.div
-                  className="absolute right-[-40px] lg:right-[-60px] top-16 z-10 hidden md:block"
+                  className="absolute right-[-30px] lg:right-[-50px] top-12 z-10 hidden md:block"
                   initial={{ opacity: 0, x: 100, rotate: 15 }}
                   animate={{ 
                     opacity: 1, 
@@ -449,82 +451,170 @@ const HomeSection = () => {
                     y: { duration: 4, repeat: Infinity }
                   }}
                 >
-                  <div className="w-20 lg:w-24 h-40 lg:h-48 bg-black rounded-3xl shadow-xl border-2 border-gray-800 relative overflow-hidden transform rotate-12">
-                    <div className="w-full h-full bg-white relative">
+                  <div className="w-24 lg:w-28 h-48 lg:h-56 bg-black rounded-3xl shadow-2xl border-2 border-black relative overflow-hidden transform rotate-12">
+                    {/* Inner Phone Bezel - Corrected Alignment */}
+                    <div className="absolute inset-0.5 bg-white rounded-3xl overflow-hidden">
                       {/* Status Bar */}
-                      <div className="flex justify-between items-center px-2 py-1 text-xs border-b border-gray-100">
-                        <span className="font-medium">9:41</span>
+                      <div className="flex justify-between items-center px-2 py-1.5 text-xs border-b border-gray-100 bg-gray-50">
+                        <span className="font-semibold text-xs">9:41</span>
                         <div className="flex items-center space-x-1">
                           <div className="flex space-x-0.5">
-                            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                            <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                            <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                            <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                            <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
                           </div>
-                          <div className="w-5 h-2 border border-gray-400 rounded-sm relative">
+                          <div className="w-5 h-2.5 border border-gray-600 rounded-sm relative">
                             <div className="w-4/5 h-full bg-green-500 rounded-sm"></div>
                           </div>
                         </div>
                       </div>
                       
                       {/* App Header */}
-                      <div className="text-center py-2 px-2 bg-gradient-to-r from-purple-50 to-pink-50">
-                        <div className="text-sm lg:text-base font-bold text-purple-600">ShopApp</div>
-                        <div className="text-xs text-gray-500">Your Shopping Partner</div>
+                      <div className="text-center py-2 px-2 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100">
+                        <div className="text-xs lg:text-sm font-bold text-blue-700">Faigen App</div>
+                        <div className="text-xs text-blue-500">Mobile First</div>
                       </div>
                       
-                      {/* Shopping Categories */}
+                      {/* Mobile Analytics */}
                       <div className="p-2 space-y-2">
+                        {/* Quick Metrics */}
                         <div className="grid grid-cols-2 gap-1.5">
                           {[
-                            { name: 'Fashion', icon: '👕', color: 'bg-pink-100' },
-                            { name: 'Tech', icon: '📱', color: 'bg-blue-100' },
-                            { name: 'Home', icon: '🏠', color: 'bg-green-100' },
-                            { name: 'Sports', icon: '⚽', color: 'bg-orange-100' }
-                          ].map((category, i) => (
+                            { label: 'Revenue', value: '₹45k', color: 'bg-green-50 border-green-200 text-green-700' },
+                            { label: 'Users', value: '2.1k', color: 'bg-blue-50 border-blue-200 text-blue-700' },
+                            { label: 'Sales', value: '834', color: 'bg-purple-50 border-purple-200 text-purple-700' },
+                            { label: 'Growth', value: '+18%', color: 'bg-orange-50 border-orange-200 text-orange-700' }
+                          ].map((metric, i) => (
                             <motion.div
                               key={i}
-                              className={`${category.color} p-1.5 rounded-lg text-center border border-white`}
+                              className={`${metric.color} p-1.5 rounded-lg border text-center`}
                               animate={{ scale: [1, 1.05, 1] }}
-                              transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                              transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.4 }}
                             >
-                              <div className="text-sm mb-0.5">{category.icon}</div>
-                              <div className="text-xs font-medium text-gray-700">{category.name}</div>
+                              <div className="text-xs font-medium opacity-70">{metric.label}</div>
+                              <div className="text-xs font-bold">{metric.value}</div>
                             </motion.div>
                           ))}
                         </div>
                         
-                        {/* Featured Products */}
-                        <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-2 rounded-lg border border-purple-100">
-                          <div className="text-xs font-bold text-purple-700 mb-1">🔥 Hot Deals</div>
-                          <div className="grid grid-cols-2 gap-1">
-                            {[...Array(4)].map((_, i) => (
+                        {/* Mini Chart */}
+                        <div className="bg-gray-50 p-1.5 rounded-lg border border-gray-200">
+                          <div className="text-xs font-semibold text-gray-700 mb-1">📊 Live Analytics</div>
+                          <div className="flex items-end space-x-0.5 h-6">
+                            {[...Array(8)].map((_, i) => (
                               <motion.div
                                 key={i}
-                                className="h-6 bg-white rounded border border-purple-200 flex items-center justify-center"
-                                animate={{ opacity: [0.7, 1, 0.7] }}
-                                transition={{ duration: 2, repeat: Infinity, delay: i * 0.4 }}
-                              >
-                                <div className="text-xs text-purple-600">-{20 + i * 10}%</div>
-                              </motion.div>
+                                className="bg-gradient-to-t from-blue-500 to-blue-400 rounded-sm flex-1"
+                                style={{ height: `${40 + Math.random() * 60}%` }}
+                                animate={{ 
+                                  height: [`${40 + Math.random() * 60}%`, `${40 + Math.random() * 60}%`]
+                                }}
+                                transition={{ 
+                                  duration: 2, 
+                                  repeat: Infinity, 
+                                  delay: i * 0.15 
+                                }}
+                              />
                             ))}
+                          </div>
+                        </div>
+                        
+                        {/* Action Buttons */}
+                        <div className="grid grid-cols-2 gap-1.5">
+                          <div className="bg-blue-500 text-white p-1.5 rounded-lg text-center">
+                            <div className="text-xs font-semibold">🚀 Deploy</div>
+                          </div>
+                          <div className="bg-green-500 text-white p-1.5 rounded-lg text-center">
+                            <div className="text-xs font-semibold">✅ Live</div>
                           </div>
                         </div>
                       </div>
                       
                       {/* Bottom Navigation */}
-                      <div className="absolute bottom-1 left-1 right-1 bg-gray-50 rounded-lg py-1">
+                      <div className="absolute bottom-1.5 left-1.5 right-1.5 bg-gray-100 rounded-lg py-1.5">
                         <div className="flex justify-around">
-                          {['🏠', '🔍', '❤️', '👤'].map((icon, i) => (
+                          {['📊', '📱', '⚙️', '👤'].map((icon, i) => (
                             <motion.div
                               key={i}
-                              className={`w-6 h-6 flex items-center justify-center rounded ${i === 0 ? 'bg-purple-100' : ''}`}
-                              animate={{ scale: [1, 1.2, 1] }}
+                              className={`w-6 h-5 flex items-center justify-center rounded ${i === 0 ? 'bg-blue-100' : ''}`}
+                              animate={{ scale: [1, 1.1, 1] }}
                               transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
                             >
                               <span className="text-xs">{icon}</span>
                             </motion.div>
                           ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Tablet/Small Device - Left (New Addition) */}
+                <motion.div
+                  className="absolute left-[-20px] lg:left-[-40px] bottom-16 z-10 hidden lg:block"
+                  initial={{ opacity: 0, x: -100, rotate: -10 }}
+                  animate={{ 
+                    opacity: 1, 
+                    x: 0,
+                    rotate: [-10, -5, -10],
+                    y: [0, -6, 0]
+                  }}
+                  transition={{ 
+                    opacity: { delay: 2, duration: 1 },
+                    x: { delay: 2, duration: 1 },
+                    rotate: { duration: 5, repeat: Infinity },
+                    y: { duration: 3, repeat: Infinity }
+                  }}
+                >
+                  <div className="w-20 h-32 bg-black rounded-2xl shadow-xl border border-black relative overflow-hidden transform -rotate-12">
+                    {/* Inner Device Bezel - Corrected Alignment */}
+                    <div className="absolute inset-0.5 bg-white rounded-2xl overflow-hidden">
+                      {/* Header */}
+                      <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-1.5 border-b border-green-100">
+                        <div className="text-xs font-bold text-green-700 text-center">Analytics</div>
+                      </div>
+                      
+                      {/* Mini Dashboard */}
+                      <div className="p-1.5 space-y-1.5">
+                        {/* Key Metrics */}
+                        <div className="space-y-1">
+                          {[
+                            { label: 'Users', value: '2.1k', color: 'text-blue-600' },
+                            { label: 'Sales', value: '₹8.4L', color: 'text-green-600' },
+                            { label: 'Views', value: '12k', color: 'text-purple-600' }
+                          ].map((metric, i) => (
+                            <motion.div
+                              key={i}
+                              className="flex justify-between items-center py-0.5 px-1 bg-gray-50 rounded text-xs"
+                              animate={{ opacity: [0.7, 1, 0.7] }}
+                              transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                            >
+                              <span className="text-gray-600 text-xs">{metric.label}</span>
+                              <span className={`font-bold text-xs ${metric.color}`}>{metric.value}</span>
+                            </motion.div>
+                          ))}
+                        </div>
+                        
+                        {/* Mini Chart */}
+                        <div className="bg-gray-50 p-1 rounded">
+                          <div className="flex items-end space-x-0.5 h-5">
+                            {[...Array(6)].map((_, i) => (
+                              <motion.div
+                                key={i}
+                                className="bg-gradient-to-t from-green-500 to-green-400 rounded-sm flex-1"
+                                style={{ height: `${50 + Math.random() * 50}%` }}
+                                animate={{ 
+                                  height: [`${50 + Math.random() * 50}%`, `${50 + Math.random() * 50}%`]
+                                }}
+                                transition={{ 
+                                  duration: 2.5, 
+                                  repeat: Infinity, 
+                                  delay: i * 0.2 
+                                }}
+                              />
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
