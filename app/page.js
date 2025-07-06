@@ -26,7 +26,7 @@ export default function Home() {
   // }, []);
 
   return (
-    <div className="min-h-screen text-black flex flex-col overflow-hidden relative bg-white">
+    <div className=" bg-white text-black">
       {/* Background Component - positioned fixed to cover all sections */}
       {/* <AnimatedBackground /> */}
       
