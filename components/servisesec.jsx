@@ -2,9 +2,11 @@
 import { useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useRouter } from 'next/navigation';
 
 const ServicesSection = () => {
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, threshold: 0.1 });
   
@@ -24,6 +26,15 @@ const ServicesSection = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Navigation handlers
+  const handleStartProject = () => {
+    router.push('/startyourproject');
+  };
+
+  const handleViewProcess = () => {
+    router.push('/ourprocess');
+  };
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -369,6 +380,7 @@ const ServicesSection = () => {
                     <motion.button
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
+                      onClick={handleStartProject}
                       className="group px-8 py-4 bg-white text-black rounded-2xl font-semibold text-base transition-all duration-300 shadow-xl hover:shadow-2xl relative overflow-hidden"
                     >
                       <span className="relative z-10">Start Your Project</span>
@@ -378,6 +390,7 @@ const ServicesSection = () => {
                     <motion.button
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
+                      onClick={handleViewProcess}
                       className="group px-8 py-4 border-2 border-white/30 hover:border-white/50 rounded-2xl font-semibold text-base transition-all duration-300 backdrop-blur-sm hover:bg-white/10 text-white"
                     >
                       <span className="flex items-center justify-center space-x-2">
