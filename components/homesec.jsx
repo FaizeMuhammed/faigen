@@ -323,62 +323,211 @@ const HomeSection = () => {
                 </motion.div>
               </motion.div>
               
-              {/* Right Visual - Abstract Energy Ecosystem */}
+              {/* Right Visual - Centered Device Hero */}
               <motion.div 
-                className="relative h-[400px] lg:h-[600px] flex items-center justify-center overflow-hidden"
+                className="relative h-[400px] sm:h-[500px] lg:h-[600px] flex items-center justify-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.5 }}
               >
-                {/* Central Energy Core */}
+                {/* Central Laptop */}
                 <motion.div 
                   className="relative z-20"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 1.5, delay: 0.8 }}
+                  transition={{ duration: 1.2, delay: 0.8 }}
                 >
-                  <div className="w-32 lg:w-48 h-32 lg:h-48 relative">
-                    {/* Core Rings */}
+                  {/* Laptop Container */}
+                  <div className="relative">
+                    {/* Laptop Screen */}
                     <motion.div 
-                      className="absolute inset-0 rounded-full border-2 border-gradient-to-r from-blue-400/30 to-purple-600/30"
-                      style={{
-                        background: 'conic-gradient(from 0deg, rgba(59,130,246,0.1), rgba(147,51,234,0.3), rgba(59,130,246,0.1))'
-                      }}
+                      className="w-72 sm:w-80 lg:w-96 h-44 sm:h-52 lg:h-60 bg-black rounded-t-3xl border-4 border-gray-300 shadow-2xl relative overflow-hidden"
                       animate={{ 
-                        rotate: 360,
-                        scale: [1, 1.05, 1]
+                        rotateY: [0, -2, 0],
+                        rotateX: [0, 1, 0]
                       }}
-                      transition={{ 
-                        rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                        scale: { duration: 4, repeat: Infinity }
-                      }}
-                    />
-                    
-                    {/* Inner Core - Now Pure White with Logo */}
-                    <motion.div 
-                      className="absolute inset-8 lg:inset-12 rounded-full bg-white backdrop-blur-xl border border-gray-200 shadow-xl flex items-center justify-center"
-                      animate={{ 
-                        boxShadow: [
-                          "0 0 20px rgba(59,130,246,0.3)",
-                          "0 0 40px rgba(147,51,234,0.5)",
-                          "0 0 20px rgba(59,130,246,0.3)"
-                        ]
-                      }}
-                      transition={{ duration: 3, repeat: Infinity }}
+                      transition={{ duration: 8, repeat: Infinity }}
                     >
-                      <motion.div 
-                        className="w-full h-full flex items-center justify-center p-4"
-                        animate={{ opacity: [0.8, 1, 0.8] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      >
-                        {/* Logo placeholder - replace src with your logo */}
-                        <img 
-                          src="/ChatGPT_Image_Apr_4__2025__10_36_21_PM-removebg-preview.png" 
-                          alt="Company Logo" 
-                          className="w-full h-full object-contain max-w-16 lg:max-w-20 max-h-16 lg:max-h-20"
-                        />
-                      </motion.div>
+                      {/* Screen Content - E-commerce Store */}
+                      <div className="w-full h-full bg-white relative">
+                        {/* Browser Header */}
+                        <div className="flex items-center justify-between p-2 lg:p-4 border-b border-gray-200">
+                          <div className="flex items-center space-x-2">
+                            <div className="flex space-x-2">
+                              <div className="w-2 lg:w-3 h-2 lg:h-3 bg-red-400 rounded-full"></div>
+                              <div className="w-2 lg:w-3 h-2 lg:h-3 bg-yellow-400 rounded-full"></div>
+                              <div className="w-2 lg:w-3 h-2 lg:h-3 bg-green-400 rounded-full"></div>
+                            </div>
+                            <span className="text-xs lg:text-sm font-medium text-gray-600 ml-2 lg:ml-4">Faigen Store - E-commerce</span>
+                          </div>
+                        </div>
+                        
+                          {/* E-commerce Content */}
+                        <div className="p-3 lg:p-6 space-y-2 lg:space-y-4">
+                          {/* Store Header */}
+                          <div className="flex items-center justify-between">
+                            <div className="text-sm lg:text-lg font-bold text-gray-800">Premium Collection</div>
+                            <div className="flex items-center space-x-1 lg:space-x-2">
+                              <div className="w-4 lg:w-6 h-4 lg:h-6 bg-blue-500 rounded flex items-center justify-center">
+                                <span className="text-white text-xs">🛒</span>
+                              </div>
+                              <span className="text-xs lg:text-sm text-gray-600">3</span>
+                            </div>
+                          </div>
+                          
+                          {/* Product Grid */}
+                          <div className="grid grid-cols-3 gap-2 lg:gap-3">
+                            {[
+                              { name: 'Sneakers', price: '₹6,999', color: 'bg-blue-100' },
+                              { name: 'Watch', price: '₹15,999', color: 'bg-purple-100' },
+                              { name: 'Bag', price: '₹9,999', color: 'bg-green-100' },
+                              { name: 'Phone', price: '₹64,999', color: 'bg-red-100' },
+                              { name: 'Laptop', price: '₹99,999', color: 'bg-yellow-100' },
+                              { name: 'Camera', price: '₹49,999', color: 'bg-pink-100' }
+                            ].map((product, i) => (
+                              <motion.div
+                                key={i}
+                                className={`${product.color} p-2 lg:p-3 rounded-lg border border-gray-200`}
+                                animate={{ scale: [1, 1.02, 1] }}
+                                transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+                              >
+                                <div className="w-full h-8 lg:h-12 bg-white rounded mb-1 lg:mb-2"></div>
+                                <div className="text-xs font-medium text-gray-700">{product.name}</div>
+                                <div className="text-xs lg:text-sm font-bold text-gray-900">{product.price}</div>
+                              </motion.div>
+                            ))}
+                          </div>
+                          
+                          {/* Sales Stats */}
+                          <div className="bg-gradient-to-r from-green-50 to-blue-50 p-2 lg:p-3 rounded-lg">
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <div className="text-xs text-gray-600">Today's Sales</div>
+                                <div className="text-sm lg:text-lg font-bold text-green-600">₹2,31,847</div>
+                              </div>
+                              <div className="flex space-x-1">
+                                {[...Array(6)].map((_, i) => (
+                                  <motion.div
+                                    key={i}
+                                    className="w-1 lg:w-2 bg-gradient-to-t from-green-400 to-green-500 rounded-sm"
+                                    style={{ height: `${Math.random() * 16 + 8}px` }}
+                                    animate={{ height: [`${Math.random() * 16 + 8}px`, `${Math.random() * 16 + 8}px`] }}
+                                    transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Screen Reflection */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none"></div>
                     </motion.div>
+                    
+                    {/* Laptop Base */}
+                    <div className="w-72 sm:w-80 lg:w-96 h-4 lg:h-6 bg-gradient-to-br from-gray-200 to-gray-300 rounded-b-3xl shadow-lg border-x-4 border-b-4 border-gray-300 relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-300 to-transparent rounded-b-3xl"></div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Mobile Phone - Right (Hidden on mobile) */}
+                <motion.div
+                  className="absolute right-[-40px] lg:right-[-60px] top-16 z-10 hidden md:block"
+                  initial={{ opacity: 0, x: 100, rotate: 15 }}
+                  animate={{ 
+                    opacity: 1, 
+                    x: 0,
+                    rotate: [15, 8, 15],
+                    y: [0, -8, 0]
+                  }}
+                  transition={{ 
+                    opacity: { delay: 1.5, duration: 1 },
+                    x: { delay: 1.5, duration: 1 },
+                    rotate: { duration: 6, repeat: Infinity },
+                    y: { duration: 4, repeat: Infinity }
+                  }}
+                >
+                  <div className="w-20 lg:w-24 h-40 lg:h-48 bg-black rounded-3xl shadow-xl border-2 border-gray-800 relative overflow-hidden transform rotate-12">
+                    <div className="w-full h-full bg-white relative">
+                      {/* Status Bar */}
+                      <div className="flex justify-between items-center px-2 py-1 text-xs border-b border-gray-100">
+                        <span className="font-medium">9:41</span>
+                        <div className="flex items-center space-x-1">
+                          <div className="flex space-x-0.5">
+                            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                          </div>
+                          <div className="w-5 h-2 border border-gray-400 rounded-sm relative">
+                            <div className="w-4/5 h-full bg-green-500 rounded-sm"></div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* App Header */}
+                      <div className="text-center py-2 px-2 bg-gradient-to-r from-purple-50 to-pink-50">
+                        <div className="text-sm lg:text-base font-bold text-purple-600">ShopApp</div>
+                        <div className="text-xs text-gray-500">Your Shopping Partner</div>
+                      </div>
+                      
+                      {/* Shopping Categories */}
+                      <div className="p-2 space-y-2">
+                        <div className="grid grid-cols-2 gap-1.5">
+                          {[
+                            { name: 'Fashion', icon: '👕', color: 'bg-pink-100' },
+                            { name: 'Tech', icon: '📱', color: 'bg-blue-100' },
+                            { name: 'Home', icon: '🏠', color: 'bg-green-100' },
+                            { name: 'Sports', icon: '⚽', color: 'bg-orange-100' }
+                          ].map((category, i) => (
+                            <motion.div
+                              key={i}
+                              className={`${category.color} p-1.5 rounded-lg text-center border border-white`}
+                              animate={{ scale: [1, 1.05, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                            >
+                              <div className="text-sm mb-0.5">{category.icon}</div>
+                              <div className="text-xs font-medium text-gray-700">{category.name}</div>
+                            </motion.div>
+                          ))}
+                        </div>
+                        
+                        {/* Featured Products */}
+                        <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-2 rounded-lg border border-purple-100">
+                          <div className="text-xs font-bold text-purple-700 mb-1">🔥 Hot Deals</div>
+                          <div className="grid grid-cols-2 gap-1">
+                            {[...Array(4)].map((_, i) => (
+                              <motion.div
+                                key={i}
+                                className="h-6 bg-white rounded border border-purple-200 flex items-center justify-center"
+                                animate={{ opacity: [0.7, 1, 0.7] }}
+                                transition={{ duration: 2, repeat: Infinity, delay: i * 0.4 }}
+                              >
+                                <div className="text-xs text-purple-600">-{20 + i * 10}%</div>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Bottom Navigation */}
+                      <div className="absolute bottom-1 left-1 right-1 bg-gray-50 rounded-lg py-1">
+                        <div className="flex justify-around">
+                          {['🏠', '🔍', '❤️', '👤'].map((icon, i) => (
+                            <motion.div
+                              key={i}
+                              className={`w-6 h-6 flex items-center justify-center rounded ${i === 0 ? 'bg-purple-100' : ''}`}
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+                            >
+                              <span className="text-xs">{icon}</span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
 
@@ -387,51 +536,50 @@ const HomeSection = () => {
                   { 
                     icon: Palette, 
                     title: "Design", 
-                    position: { top: "10%", left: "20%" },
-                    delay: 1
+                    position: "top-4 lg:top-8 left-4 lg:left-8",
+                    delay: 2.5
                   },
                   { 
                     icon: Zap, 
                     title: "Speed", 
-                    position: { top: "15%", right: "15%" },
-                    delay: 1.3
+                    position: "top-4 lg:top-8 right-4 lg:right-8",
+                    delay: 2.8
                   },
                   { 
                     icon: Rocket, 
                     title: "Deploy", 
-                    position: { bottom: "20%", right: "20%" },
-                    delay: 1.6
+                    position: "bottom-4 lg:bottom-8 right-4 lg:right-8",
+                    delay: 3.1
                   },
                   { 
                     icon: Shield, 
                     title: "Secure", 
-                    position: { bottom: "15%", left: "15%" },
-                    delay: 1.9
+                    position: "bottom-4 lg:bottom-8 left-4 lg:left-8",
+                    delay: 3.4
                   },
                   { 
                     icon: Smartphone, 
                     title: "Mobile", 
-                    position: { top: "45%", left: "5%" },
-                    delay: 2.2
+                    position: "top-1/2 left-0 lg:left-2 transform -translate-y-1/2",
+                    delay: 3.7
                   },
                   { 
                     icon: Cloud, 
                     title: "Cloud", 
-                    position: { top: "45%", right: "5%" },
-                    delay: 2.5
+                    position: "top-1/2 right-0 lg:right-2 transform -translate-y-1/2",
+                    delay: 4
                   }
                 ].map((sphere, index) => {
                   const IconComponent = sphere.icon;
                   return (
                     <motion.div
                       key={index}
-                      className="absolute z-10"
-                      style={sphere.position}
+                      className={`absolute z-5 ${sphere.position}`}
                       initial={{ scale: 0, opacity: 0, y: 50 }}
                       animate={{ 
                         scale: 1, 
                         opacity: 1, 
-                        y: [0, -10, 0],
+                        y: [0, -8, 0],
                         rotate: [0, 5, -5, 0]
                       }}
                       transition={{ 
@@ -442,62 +590,120 @@ const HomeSection = () => {
                       }}
                     >
                       <motion.div 
-                        className="w-16 lg:w-24 h-16 lg:h-24 rounded-full bg-gray-50/90 backdrop-blur-xl border border-gray-200 shadow-xl flex flex-col items-center justify-center text-gray-700 relative"
+                        className="w-14 sm:w-16 lg:w-20 h-14 sm:h-16 lg:h-20 rounded-full bg-gray-50/90 backdrop-blur-xl border border-gray-200 shadow-xl flex flex-col items-center justify-center text-gray-700 relative"
                         whileHover={{ 
                           scale: 1.1, 
                           y: -5
                         }}
-                        animate={{
-                          boxShadow: [
-                            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                            "0 25px 30px -5px rgba(0, 0, 0, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.06)",
-                            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-                          ]
-                        }}
-                        transition={{ duration: 3, repeat: Infinity }}
                       >
-                        <IconComponent className="w-6 lg:w-8 h-6 lg:h-8 mb-1" />
-                        <div className="text-xs lg:text-sm font-medium">{sphere.title}</div>
+                        <IconComponent className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 mb-1" />
+                        <div className="text-xs font-medium hidden sm:block">{sphere.title}</div>
                       </motion.div>
                     </motion.div>
                   );
                 })}
 
-                {/* Energy Streams */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none z-5" viewBox="0 0 400 400">
-                  {/* Connecting Energy Lines */}
+                {/* Connecting Ribbons - More Outer and Visible */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none z-1" viewBox="0 0 500 400">
+                  {/* Main ribbon connections to capability spheres */}
                   {[
-                    "M80,60 Q200,100 320,60",
-                    "M360,100 Q250,200 360,300",
-                    "M320,340 Q200,300 80,340",
-                    "M40,300 Q150,200 40,100",
-                    "M80,60 Q150,150 40,100",
-                    "M320,60 Q250,150 360,100"
+                    "M250,200 Q100,50 40,40",     // Center to top-left
+                    "M250,200 Q400,50 460,40",    // Center to top-right
+                    "M250,200 Q100,350 40,360",   // Center to bottom-left
+                    "M250,200 Q400,350 460,360",  // Center to bottom-right
+                    "M250,200 Q50,200 10,200",    // Center to left
+                    "M250,200 Q450,200 490,200"   // Center to right
                   ].map((path, index) => (
                     <motion.path
                       key={index}
                       d={path}
-                      stroke="url(#energyGradient)"
-                      strokeWidth="1.5"
+                      stroke="url(#ribbonGradient)"
+                      strokeWidth="3"
                       fill="none"
+                      strokeDasharray="12,6"
                       initial={{ pathLength: 0, opacity: 0 }}
                       animate={{ 
                         pathLength: [0, 1, 0],
-                        opacity: [0, 0.6, 0]
+                        opacity: [0, 0.8, 0],
+                        strokeDashoffset: [0, -18]
+                      }}
+                      transition={{ 
+                        duration: 5,
+                        repeat: Infinity,
+                        delay: index * 0.8 + 4
+                      }}
+                    />
+                  ))}
+                  
+                  {/* Connection to mobile phone */}
+                  {[
+                    "M250,200 Q350,150 380,120",  // Center to mobile area
+                    "M250,200 Q330,180 360,160"   // Secondary connection to mobile
+                  ].map((path, index) => (
+                    <motion.path
+                      key={`mobile-${index}`}
+                      d={path}
+                      stroke="url(#ribbonGradient2)"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeDasharray="8,4"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ 
+                        pathLength: [0, 1, 0],
+                        opacity: [0, 0.6, 0],
+                        strokeDashoffset: [0, -12]
                       }}
                       transition={{ 
                         duration: 4,
                         repeat: Infinity,
-                        delay: index * 0.8 + 3
+                        delay: index * 0.8 + 6
+                      }}
+                    />
+                  ))}
+                  
+                  {/* Additional flowing ribbons for visual richness */}
+                  {[
+                    "M250,200 Q150,100 80,80",    // Additional curved paths
+                    "M250,200 Q350,100 420,80",
+                    "M250,200 Q150,300 80,320",
+                    "M250,200 Q350,300 420,320"
+                  ].map((path, index) => (
+                    <motion.path
+                      key={`flow-${index}`}
+                      d={path}
+                      stroke="url(#ribbonGradient3)"
+                      strokeWidth="1.5"
+                      fill="none"
+                      strokeDasharray="6,3"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ 
+                        pathLength: [0, 1, 0],
+                        opacity: [0, 0.4, 0],
+                        strokeDashoffset: [0, -9]
+                      }}
+                      transition={{ 
+                        duration: 6,
+                        repeat: Infinity,
+                        delay: index * 0.5 + 8
                       }}
                     />
                   ))}
                   
                   <defs>
-                    <linearGradient id="energyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                       <stop offset="0%" stopColor="rgba(59,130,246,0.8)" />
                       <stop offset="50%" stopColor="rgba(147,51,234,0.9)" />
                       <stop offset="100%" stopColor="rgba(239,68,68,0.8)" />
+                    </linearGradient>
+                    <linearGradient id="ribbonGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="rgba(16,185,129,0.7)" />
+                      <stop offset="50%" stopColor="rgba(245,158,11,0.8)" />
+                      <stop offset="100%" stopColor="rgba(168,85,247,0.7)" />
+                    </linearGradient>
+                    <linearGradient id="ribbonGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="rgba(59,130,246,0.5)" />
+                      <stop offset="50%" stopColor="rgba(34,197,94,0.6)" />
+                      <stop offset="100%" stopColor="rgba(251,146,60,0.5)" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -506,7 +712,7 @@ const HomeSection = () => {
                 {[...Array(15)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="absolute w-1 lg:w-2 h-1 lg:h-2 rounded-full"
+                    className="absolute w-2 h-2 rounded-full z-0"
                     style={{
                       background: `linear-gradient(45deg, ${
                         ['#3B82F6', '#8B5CF6', '#EF4444', '#10B981', '#F59E0B'][i % 5]
@@ -529,45 +735,6 @@ const HomeSection = () => {
                     }}
                   />
                 ))}
-
-                {/* Geometric Background Elements */}
-                {[...Array(8)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute border border-white/5 rounded-lg"
-                    style={{
-                      width: `${40 + Math.random() * 60}px`,
-                      height: `${40 + Math.random() * 60}px`,
-                      left: `${Math.random() * 80 + 10}%`,
-                      top: `${Math.random() * 80 + 10}%`,
-                      transform: `rotate(${Math.random() * 360}deg)`,
-                    }}
-                    animate={{
-                      rotate: [0, 360],
-                      scale: [1, 1.1, 1],
-                      opacity: [0.1, 0.3, 0.1],
-                    }}
-                    transition={{
-                      duration: 10 + Math.random() * 10,
-                      repeat: Infinity,
-                      delay: Math.random() * 5,
-                    }}
-                  />
-                ))}
-
-                {/* Holographic Grid */}
-                <motion.div 
-                  className="absolute inset-0 opacity-5"
-                  animate={{ opacity: [0.02, 0.08, 0.02] }}
-                  transition={{ duration: 8, repeat: Infinity }}
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(rgba(59,130,246,0.1) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(59,130,246,0.1) 1px, transparent 1px)
-                    `,
-                    backgroundSize: '30px 30px'
-                  }}
-                />
               </motion.div>
             </div>
           )}
