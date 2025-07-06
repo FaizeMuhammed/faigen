@@ -77,7 +77,7 @@ const PortfolioSection = () => {
       features: ["Real-time notifications", "Social integration", "Payment gateway", "Event analytics"],
       duration: "3 months",
       client: "EventHub Inc.",
-      gradient: "from-blue-500/20 to-purple-500/20",
+      gradient: "from-blue-500/30 to-purple-500/30",
       accentColor: "bg-blue-500",
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,7 +95,7 @@ const PortfolioSection = () => {
       features: ["Offline functionality", "Book cataloging", "Member tracking", "Report generation"],
       duration: "2 months",
       client: "Central Library",
-      gradient: "from-green-500/20 to-emerald-500/20",
+      gradient: "from-green-500/30 to-emerald-500/30",
       accentColor: "bg-green-500",
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,11 +113,11 @@ const PortfolioSection = () => {
       features: ["Mobile-first design", "SEO optimization", "Fast loading", "Contact forms"],
       duration: "1 month",
       client: "TechCorp Solutions",
-      gradient: "from-purple-500/20 to-pink-500/20",
+      gradient: "from-purple-500/30 to-pink-500/30",
       accentColor: "bg-purple-500",
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s1.343-9 3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
         </svg>
       )
     },
@@ -131,7 +131,7 @@ const PortfolioSection = () => {
       features: ["Inventory management", "Payment integration", "Admin dashboard", "Customer analytics"],
       duration: "4 months",
       client: "ShopMart",
-      gradient: "from-orange-500/20 to-red-500/20",
+      gradient: "from-orange-500/30 to-red-500/30",
       accentColor: "bg-orange-500",
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -149,7 +149,7 @@ const PortfolioSection = () => {
       features: ["Real-time charts", "Data visualization", "Automated reports", "User permissions"],
       duration: "3.5 months",
       client: "FinanceFirst",
-      gradient: "from-indigo-500/20 to-blue-500/20",
+      gradient: "from-indigo-500/30 to-blue-500/30",
       accentColor: "bg-indigo-500",
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,7 +167,7 @@ const PortfolioSection = () => {
       features: ["Appointment booking", "Medical records", "Video consultations", "Prescription tracking"],
       duration: "5 months",
       client: "MedCare Solutions",
-      gradient: "from-cyan-500/20 to-teal-500/20",
+      gradient: "from-cyan-500/30 to-teal-500/30",
       accentColor: "bg-cyan-500",
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -189,7 +189,7 @@ const PortfolioSection = () => {
         {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1.5 h-1.5 bg-black/10 rounded-full"
+            className="absolute w-1.5 h-1.5 bg-white/20 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -211,7 +211,7 @@ const PortfolioSection = () => {
       <section 
         ref={sectionRef}
         id="portfolio" 
-        className="relative py-20 lg:py-32 px-6 md:px-12 lg:px-20"
+        className="relative py-20 lg:py-32 px-6 md:px-12 lg:px-20 bg-black"
       >
         <div className="max-w-7xl mx-auto">
           {mounted && (
@@ -227,27 +227,27 @@ const PortfolioSection = () => {
                 className="text-center space-y-6"
               >
                 <motion.div 
-                  className="inline-flex items-center space-x-2 px-4 py-2 bg-black/5 backdrop-blur-sm rounded-full border border-black/10"
+                  className="inline-flex items-center space-x-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20"
                 >
-                  <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-black/70">Our Portfolio</span>
+                  <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+                  <span className="text-sm font-medium text-white/80">Our Portfolio</span>
                 </motion.div>
                 
                 <motion.h2 
                   className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[0.9] tracking-tight"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                 >
-                  <span className="block text-black">Success Stories</span>
+                  <span className="block text-white">Success Stories</span>
                   <span className="block mt-2">
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-600 to-black">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-white">
                       that Speak for
                     </span>
                   </span>
-                  <span className="block text-black">Themselves</span>
+                  <span className="block text-white">Themselves</span>
                 </motion.h2>
                 
                 <motion.p 
-                  className="text-lg lg:text-xl text-black/60 leading-relaxed max-w-3xl mx-auto"
+                  className="text-lg lg:text-xl text-white/70 leading-relaxed max-w-3xl mx-auto"
                   style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   From concept to deployment — here's how we turned ideas into impact. 
@@ -268,7 +268,7 @@ const PortfolioSection = () => {
                     onClick={() => setSelectedProject(project)}
                   >
                     <motion.div 
-                      className="relative h-full bg-white/70 backdrop-blur-xl rounded-3xl border border-black/10 shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl"
+                      className="relative h-full bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl overflow-hidden transition-all duration-500 hover:shadow-white/10 hover:shadow-2xl"
                       whileHover={{ 
                         y: -12,
                         transition: { type: "spring", stiffness: 300, damping: 20 }
@@ -280,9 +280,9 @@ const PortfolioSection = () => {
                       />
                       
                       {/* Project Image Placeholder */}
-                      <div className="relative h-48 bg-gradient-to-br from-black/5 to-black/10 overflow-hidden">
+                      <div className="relative h-48 bg-gradient-to-br from-white/5 to-white/10 overflow-hidden">
                         <motion.div 
-                          className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"
+                          className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"
                         />
                         
                         {/* Mock UI Elements */}
@@ -294,7 +294,7 @@ const PortfolioSection = () => {
                             >
                               {project.icon}
                             </motion.div>
-                            <div className="flex-1 h-2 bg-black/10 rounded-full">
+                            <div className="flex-1 h-2 bg-white/20 rounded-full">
                               <motion.div 
                                 className={`h-full ${project.accentColor} rounded-full`}
                                 initial={{ width: 0 }}
@@ -305,13 +305,13 @@ const PortfolioSection = () => {
                           </div>
                           
                           <div className="space-y-2">
-                            <div className="h-3 bg-black/10 rounded-full w-3/4"></div>
-                            <div className="h-3 bg-black/5 rounded-full w-1/2"></div>
+                            <div className="h-3 bg-white/20 rounded-full w-3/4"></div>
+                            <div className="h-3 bg-white/10 rounded-full w-1/2"></div>
                           </div>
                           
                           <div className="absolute bottom-4 right-4">
                             <motion.div 
-                              className="w-16 h-16 border-2 border-black/10 rounded-full"
+                              className="w-16 h-16 border-2 border-white/20 rounded-full"
                               animate={{ rotate: 360 }}
                               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                             />
@@ -322,7 +322,7 @@ const PortfolioSection = () => {
                         {[...Array(3)].map((_, i) => (
                           <motion.div
                             key={i}
-                            className="absolute w-2 h-2 bg-black/20 rounded-full"
+                            className="absolute w-2 h-2 bg-white/30 rounded-full"
                             style={{
                               left: `${20 + i * 25}%`,
                               top: `${60 + i * 10}%`,
@@ -344,17 +344,17 @@ const PortfolioSection = () => {
                       <div className="relative z-10 p-6 space-y-4">
                         {/* Technology Badge */}
                         <motion.div className="flex items-center justify-between">
-                          <span className="px-3 py-1 bg-black/10 group-hover:bg-black/20 backdrop-blur-sm rounded-full text-xs font-medium text-black/70 group-hover:text-black transition-all duration-300">
+                          <span className="px-3 py-1 bg-white/10 group-hover:bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white/80 group-hover:text-white transition-all duration-300 border border-white/10">
                             {project.technology}
                           </span>
-                          <span className="text-xs text-black/50 group-hover:text-black/70 transition-colors duration-300">
+                          <span className="text-xs text-white/60 group-hover:text-white/80 transition-colors duration-300">
                             {project.category}
                           </span>
                         </motion.div>
                         
                         {/* Title */}
                         <motion.h3 
-                          className="text-xl lg:text-2xl font-bold text-black group-hover:text-black transition-colors duration-300"
+                          className="text-xl lg:text-2xl font-bold text-white group-hover:text-white transition-colors duration-300"
                           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                         >
                           {project.title}
@@ -362,29 +362,29 @@ const PortfolioSection = () => {
                         
                         {/* Description */}
                         <motion.p 
-                          className="text-black/70 group-hover:text-black/80 leading-relaxed transition-colors duration-300 text-sm line-clamp-2"
+                          className="text-white/70 group-hover:text-white/90 leading-relaxed transition-colors duration-300 text-sm line-clamp-2"
                           style={{ fontFamily: "'Inter', sans-serif" }}
                         >
                           {project.description}
                         </motion.p>
                         
                         {/* Result */}
-                        <motion.div className="flex items-center justify-between pt-4 border-t border-black/10 group-hover:border-black/20 transition-colors duration-300">
+                        <motion.div className="flex items-center justify-between pt-4 border-t border-white/20 group-hover:border-white/30 transition-colors duration-300">
                           <div>
                             <motion.div 
-                              className="text-lg font-bold text-black"
+                              className="text-lg font-bold text-white"
                               style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                             >
                               {project.result}
                             </motion.div>
-                            <div className="text-xs text-black/60">Key Result</div>
+                            <div className="text-xs text-white/60">Key Result</div>
                           </div>
                           
                           <motion.div
-                            className="w-8 h-8 bg-black/10 group-hover:bg-black/20 rounded-full flex items-center justify-center transition-colors duration-300"
+                            className="w-8 h-8 bg-white/10 group-hover:bg-white/20 rounded-full flex items-center justify-center transition-colors duration-300 border border-white/10"
                             whileHover={{ scale: 1.1 }}
                           >
-                            <svg className="w-4 h-4 text-black/70 group-hover:text-black transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 text-white/70 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                           </motion.div>
@@ -393,7 +393,7 @@ const PortfolioSection = () => {
                       
                       {/* Hover overlay */}
                       <motion.div 
-                        className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
+                        className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
                       />
                     </motion.div>
                   </motion.div>
@@ -408,7 +408,7 @@ const PortfolioSection = () => {
                 <motion.button
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group px-8 py-4 border-2 border-black/20 hover:border-black/40 rounded-2xl font-semibold text-base transition-all duration-300 backdrop-blur-sm hover:bg-black/5"
+                  className="group px-8 py-4 border-2 border-white/30 hover:border-white/50 rounded-2xl font-semibold text-base transition-all duration-300 backdrop-blur-sm hover:bg-white/10 text-white"
                 >
                   <span className="flex items-center justify-center space-x-2">
                     <span>View All Projects</span>
@@ -425,14 +425,14 @@ const PortfolioSection = () => {
                 className="text-center pt-16 space-y-8"
               >
                 <motion.h3 
-                  className="text-2xl lg:text-3xl font-bold text-black"
+                  className="text-2xl lg:text-3xl font-bold text-white"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                 >
                   Ready to Create Your Success Story?
                 </motion.h3>
                 
                 <motion.p 
-                  className="text-lg text-black/70 max-w-2xl mx-auto"
+                  className="text-lg text-white/70 max-w-2xl mx-auto"
                   style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   Let's discuss your project and turn your vision into a digital reality 
@@ -443,16 +443,16 @@ const PortfolioSection = () => {
                   <motion.button
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
-                    className="group px-8 py-4 bg-black text-white rounded-2xl font-semibold text-base transition-all duration-300 shadow-xl hover:shadow-2xl relative overflow-hidden"
+                    className="group px-8 py-4 bg-white text-black rounded-2xl font-semibold text-base transition-all duration-300 shadow-xl hover:shadow-2xl relative overflow-hidden"
                   >
                     <span className="relative z-10">Start Your Project</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </motion.button>
                   
                   <motion.button
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
-                    className="group px-8 py-4 border-2 border-black/20 hover:border-black/40 rounded-2xl font-semibold text-base transition-all duration-300 backdrop-blur-sm hover:bg-black/5"
+                    className="group px-8 py-4 border-2 border-white/30 hover:border-white/50 rounded-2xl font-semibold text-base transition-all duration-300 backdrop-blur-sm hover:bg-white/10 text-white"
                   >
                     <span className="flex items-center justify-center space-x-2">
                       <span>Get Free Consultation</span>
@@ -470,13 +470,13 @@ const PortfolioSection = () => {
         {/* Additional Background Elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {/* Subtle Grid Pattern */}
-          <div className="absolute inset-0 bg-grid-pattern opacity-[0.008]"></div>
+          <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
           
           {/* Geometric Accents */}
           {[...Array(8)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-4 h-4 border border-black/8 rounded backdrop-blur-sm"
+              className="absolute w-4 h-4 border border-white/10 rounded backdrop-blur-sm"
               style={{
                 left: `${10 + Math.random() * 80}%`,
                 top: `${10 + Math.random() * 80}%`,
@@ -501,8 +501,8 @@ const PortfolioSection = () => {
       <style jsx global>{`
         .bg-grid-pattern {
           background-image: 
-            linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+            linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
           background-size: 40px 40px;
         }
         

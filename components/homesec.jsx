@@ -2,12 +2,13 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Palette, Zap, Rocket, Shield, Smartphone, Cloud } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const HomeSection = () => {
   const [mounted, setMounted] = useState(false);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
   const textVariants = ["Future-ready solutions.", "Human-first design.", "Scalable technology."];
   
   useEffect(() => {
@@ -29,19 +30,21 @@ const HomeSection = () => {
     const textInterval = setInterval(() => {
       setCurrentTextIndex((prev) => (prev + 1) % textVariants.length);
     }, 3000);
-
-    // Scroll detection for logo visibility
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
     
     return () => {
       clearInterval(textInterval);
-      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const scrollToPortfolio = () => {
+    const portfolioSection = document.getElementById('portfolio');
+    if (portfolioSection) {
+      portfolioSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -108,29 +111,24 @@ const HomeSection = () => {
         ))}
       </div>
 
-      {/* Top Left Logo - Visible on Scroll */}
-      <AnimatePresence>
-        {isScrolled && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-6 left-6 z-50"
-          >
-            <motion.div
-              className="bg-white/90 backdrop-blur-xl rounded-2xl border border-gray-200 shadow-xl p-3"
-              whileHover={{ scale: 1.05 }}
-            >
-              <img 
-                src="/ChatGPT_Image_Apr_4__2025__10_40_51_PM-removebg-preview.png" 
-                alt="Company Logo" 
-                className="h-18 w-auto"
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Top Left Logo - Always Visible */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="fixed top-4 left-4 md:top-6 md:left-6 z-50"
+      >
+        <motion.div
+          className="bg-white/90 backdrop-blur-xl rounded-xl md:rounded-2xl border border-gray-200 shadow-xl p-2 md:p-3"
+          whileHover={{ scale: 1.05 }}
+        >
+          <img 
+            src="/ChatGPT_Image_Apr_4__2025__10_40_51_PM-removebg-preview.png" 
+            alt="Company Logo" 
+            className="h-12 md:h-16 lg:h-18 w-auto"
+          />
+        </motion.div>
+      </motion.div>
 
       {/* Unique Corner Navigation Menu */}
       <div className="fixed top-6 right-6 z-50">
@@ -218,7 +216,10 @@ const HomeSection = () => {
                     className="w-full py-3 bg-white text-black rounded-xl font-semibold hover:bg-white/90 transition-colors duration-300"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      router.push('/consultation');
+                    }}
                   >
                     Start Project
                   </motion.button>
@@ -242,18 +243,6 @@ const HomeSection = () => {
                 animate="visible"
                 className="space-y-6"
               >
-                {/* Logo Section */}
-                {/* <motion.div 
-                  variants={itemVariants}
-                  className="inline-flex items-center px-4 py-2 rounded-full  "
-                >
-                  <img 
-                    src="/ChatGPT_Image_Apr_4__2025__10_36_21_PM-removebg-preview.png" 
-                    alt="Faigen Logo" 
-                    className="h-16 lg:h-18 w-auto"
-                  />
-                </motion.div> */}
-             
                 {/* Brand Badge */}
                 <motion.div 
                   variants={itemVariants}
@@ -309,6 +298,7 @@ const HomeSection = () => {
                   className="flex flex-col sm:flex-row gap-4 pt-4"
                 >
                   <motion.button
+                    onClick={() => router.push('/consultation')}
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                     className="group px-8 py-4 bg-black text-white rounded-2xl font-semibold text-base transition-all duration-300 shadow-xl hover:shadow-2xl relative overflow-hidden"
@@ -318,6 +308,7 @@ const HomeSection = () => {
                   </motion.button>
                   
                   <motion.button
+                    onClick={scrollToPortfolio}
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                     className="group px-8 py-4 border-2 border-black/20 hover:border-black/40 rounded-2xl font-semibold text-base transition-all duration-300 backdrop-blur-sm hover:bg-black/5"
@@ -329,25 +320,6 @@ const HomeSection = () => {
                       </svg>
                     </span>
                   </motion.button>
-                </motion.div>
-                
-                {/* Stats */}
-                <motion.div 
-                  variants={itemVariants}
-                  className="flex items-center space-x-8 pt-8 border-t border-black/10"
-                >
-                  <div>
-                    <div className="text-2xl font-bold text-black">150+</div>
-                    <div className="text-sm text-black/60">Projects Delivered</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-black">98%</div>
-                    <div className="text-sm text-black/60">Client Satisfaction</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-black">24/7</div>
-                    <div className="text-sm text-black/60">Support</div>
-                  </div>
                 </motion.div>
               </motion.div>
               
@@ -415,42 +387,36 @@ const HomeSection = () => {
                   { 
                     icon: Palette, 
                     title: "Design", 
-                    color: "from-pink-400 to-red-500",
                     position: { top: "10%", left: "20%" },
                     delay: 1
                   },
                   { 
                     icon: Zap, 
                     title: "Speed", 
-                    color: "from-yellow-400 to-orange-500",
                     position: { top: "15%", right: "15%" },
                     delay: 1.3
                   },
                   { 
                     icon: Rocket, 
                     title: "Deploy", 
-                    color: "from-green-400 to-emerald-500",
                     position: { bottom: "20%", right: "20%" },
                     delay: 1.6
                   },
                   { 
                     icon: Shield, 
                     title: "Secure", 
-                    color: "from-blue-400 to-indigo-500",
                     position: { bottom: "15%", left: "15%" },
                     delay: 1.9
                   },
                   { 
                     icon: Smartphone, 
                     title: "Mobile", 
-                    color: "from-purple-400 to-violet-500",
                     position: { top: "45%", left: "5%" },
                     delay: 2.2
                   },
                   { 
                     icon: Cloud, 
                     title: "Cloud", 
-                    color: "from-cyan-400 to-blue-500",
                     position: { top: "45%", right: "5%" },
                     delay: 2.5
                   }
@@ -476,29 +442,22 @@ const HomeSection = () => {
                       }}
                     >
                       <motion.div 
-                        className={`w-16 lg:w-24 h-16 lg:h-24 rounded-full bg-gradient-to-br ${sphere.color} backdrop-blur-sm border border-white/20 shadow-2xl flex flex-col items-center justify-center text-white relative overflow-hidden`}
-                        whileHover={{ scale: 1.1, y: -5 }}
+                        className="w-16 lg:w-24 h-16 lg:h-24 rounded-full bg-gray-50/90 backdrop-blur-xl border border-gray-200 shadow-xl flex flex-col items-center justify-center text-gray-700 relative"
+                        whileHover={{ 
+                          scale: 1.1, 
+                          y: -5
+                        }}
                         animate={{
                           boxShadow: [
-                            "0 10px 30px rgba(0,0,0,0.1)",
-                            "0 20px 40px rgba(0,0,0,0.2)",
-                            "0 10px 30px rgba(0,0,0,0.1)"
+                            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                            "0 25px 30px -5px rgba(0, 0, 0, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.06)",
+                            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
                           ]
                         }}
                         transition={{ duration: 3, repeat: Infinity }}
                       >
-                        {/* Glowing Effect */}
-                        <motion.div 
-                          className="absolute inset-0 rounded-full opacity-30"
-                          style={{
-                            background: `conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent)`
-                          }}
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                        />
-                        
-                        <IconComponent className="w-6 lg:w-8 h-6 lg:h-8 mb-1 relative z-10" />
-                        <div className="text-xs lg:text-sm font-semibold relative z-10">{sphere.title}</div>
+                        <IconComponent className="w-6 lg:w-8 h-6 lg:h-8 mb-1" />
+                        <div className="text-xs lg:text-sm font-medium">{sphere.title}</div>
                       </motion.div>
                     </motion.div>
                   );

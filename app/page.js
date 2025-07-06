@@ -5,26 +5,28 @@ import HomeSection from "@/components/homesec";
 import ServicesSection from "@/components/servisesec";
 import WhyChooseUsSection from "@/components/whyus";
 import PortfolioSection from "@/components/portfoliyo";
+import CTASection from "@/components/cta";
+import ContactFooterSection from "@/components/footer";
 
 export default function Home() {
   // Add global style for body
-  useEffect(() => {
-    document.body.style.backgroundColor = '#fff';
-    document.body.style.margin = '0';
-    document.body.style.padding = '0';
-    document.body.style.overflowX = 'hidden';
+  // useEffect(() => {
+  //   document.body.style.backgroundColor = '#fff';
+  //   document.body.style.margin = '0';
+  //   document.body.style.padding = '0';
+  //   document.body.style.overflowX = 'hidden';
     
-    return () => {
-      // Reset styles on unmount if needed
-      document.body.style.backgroundColor = '';
-      document.body.style.margin = '';
-      document.body.style.padding = '';
-      document.body.style.overflowX = '';
-    };
-  }, []);
+  //   return () => {
+  //     // Reset styles on unmount if needed
+  //     document.body.style.backgroundColor = '';
+  //     document.body.style.margin = '';
+  //     document.body.style.padding = '';
+  //     document.body.style.overflowX = '';
+  //   };
+  // }, []);
 
   return (
-    <div className="min-h-screen text-black flex flex-col overflow-hidden relative">
+    <div className="min-h-screen text-black flex flex-col overflow-hidden relative bg-white">
       {/* Background Component - positioned fixed to cover all sections */}
       {/* <AnimatedBackground /> */}
       
@@ -37,6 +39,8 @@ export default function Home() {
         <ServicesSection />
         <WhyChooseUsSection/>
         <PortfolioSection/>
+        <CTASection/>
+        <ContactFooterSection/>
       </div>
     </div>
   );

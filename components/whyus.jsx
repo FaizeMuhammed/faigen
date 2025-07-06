@@ -303,44 +303,6 @@ const WhyChooseUsSection = () => {
                 ))}
               </motion.div>
 
-              {/* Stats Section */}
-              <motion.div 
-                variants={itemVariants}
-                className="border-t border-black/10 pt-16"
-              >
-                <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-                  {[
-                    { number: "150+", label: "Projects Delivered" },
-                    { number: "98%", label: "Client Satisfaction" },
-                    { number: "24/7", label: "Support Available" },
-                    { number: "5+", label: "Years of Excellence" }
-                  ].map((stat, index) => (
-                    <motion.div
-                      key={stat.label}
-                      className="text-center space-y-2"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 + 1 }}
-                    >
-                      <motion.div 
-                        className="text-3xl lg:text-4xl font-bold text-black"
-                        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                        animate={{ scale: [1, 1.05, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
-                      >
-                        {stat.number}
-                      </motion.div>
-                      <div 
-                        className="text-sm lg:text-base text-black/60"
-                        style={{ fontFamily: "'Inter', sans-serif" }}
-                      >
-                        {stat.label}
-                      </div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </motion.div>
-
               {/* CTA Section */}
               <motion.div 
                 variants={itemVariants}
