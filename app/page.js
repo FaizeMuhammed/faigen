@@ -30,112 +30,74 @@ const ContactFooterSection = dynamic(() => import("@/components/footer"), {
 });
 
 export default function Home() {
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [showContent, setShowContent] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showLogo, setShowLogo] = useState(true);
 
   useEffect(() => {
-    // Set body styles immediately
+    // Set initial body styles
+    const originalStyles = {
+      backgroundColor: document.body.style.backgroundColor,
+      margin: document.body.style.margin,
+      padding: document.body.style.padding,
+      overflowX: document.body.style.overflowX,
+    };
+
+    // Apply styles immediately
     document.body.style.backgroundColor = '#ffffff';
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflowX = 'hidden';
     
-    // Show content after logo animation
-    const contentTimer = setTimeout(() => {
-      setShowContent(true);
-    }, 1500); // Logo animation duration
+    // Shorter, more reliable loading sequence
+    const logoTimer = setTimeout(() => {
+      setShowLogo(false);
+    }, 1200);
     
-    // Remove initial load state after animation
-    const loadTimer = setTimeout(() => {
-      setIsInitialLoad(false);
-    }, 1900); // Slight delay after content appears
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1400);
     
     return () => {
-      clearTimeout(contentTimer);
-      clearTimeout(loadTimer);
-      // Reset styles on unmount if needed
-      document.body.style.backgroundColor = '';
-      document.body.style.margin = '';
-      document.body.style.padding = '';
-      document.body.style.overflowX = '';
+      clearTimeout(logoTimer);
+      clearTimeout(loadingTimer);
+      // Restore original styles
+      Object.assign(document.body.style, originalStyles);
     };
   }, []);
 
-  // Show animated logo loading state
-  if (isInitialLoad) {
+  // Show loading screen with logo animation
+  if (isLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center relative overflow-hidden">
-        {/* Background gradient for depth */}
+      <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
+        {/* Background with immediate render */}
         <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-white"></div>
         
-        {/* Animated Logo Container */}
+        {/* Logo Container */}
         <div className="relative z-10 flex flex-col items-center justify-center">
-          {/* Logo Animation */}
-          <div className="relative">
+          <div 
+            className={`relative transition-all duration-1000 ease-out ${
+              showLogo 
+                ? 'scale-75 opacity-0 rotate-[-5deg]' 
+                : 'scale-100 opacity-100 rotate-0'
+            }`}
+          >
             {/* Main Logo */}
-            <div 
-              className="relative rounded-2xl flex items-center justify-center shadow-2xl overflow-hidden"
-              style={{
-                animation: 'logoScale 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
-                width: '60px',
-                height: '60px'
-              }}
-            >
-              {/* Replace this src with your actual logo */}
+            <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-2xl flex items-center justify-center shadow-2xl overflow-hidden bg-white border border-gray-200">
               <img 
                 src="/ChatGPT_Image_Apr_4__2025__10_40_51_PM-removebg-preview.png" 
                 alt="Faigen Logo" 
-                className="w-auto h-26 object-contain"
+                className="w-20 h-20 md:w-26 md:h-26 object-contain"
                 onError={(e) => {
-                  // Fallback if logo doesn't load - shows 'F' letter
                   e.target.style.display = 'none';
-                  e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-black via-gray-800 to-black rounded-2xl flex items-center justify-center text-white font-bold text-2xl">F</div>';
+                  e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-black via-gray-800 to-black rounded-2xl flex items-center justify-center text-white font-bold text-3xl">F</div>';
                 }}
               />
               
-              {/* Glow effect */}
-              <div 
-                className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-2xl blur-xl"
-                style={{
-                  animation: 'logoGlow 1.5s ease-out forwards'
-                }}
-              ></div>
+              {/* Subtle glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-purple-600/10 rounded-2xl"></div>
             </div>
-            
-            {/* Pulsing rings */}
-            <div 
-              className="absolute inset-0 border-2 border-gray-300 rounded-2xl"
-              style={{
-                animation: 'pulseRing1 1.5s ease-out forwards'
-              }}
-            ></div>
-            <div 
-              className="absolute inset-0 border border-gray-200 rounded-2xl"
-              style={{
-                animation: 'pulseRing2 1.5s ease-out 0.3s forwards'
-              }}
-            ></div>
           </div>
         </div>
-
-        {/* Content fade in */}
-        {showContent && (
-          <div 
-            className="absolute inset-0 bg-white z-20"
-            style={{
-              animation: 'contentFadeIn 0.6s ease-out forwards'
-            }}
-          >
-            <div className="relative z-10 w-full">
-              <HomeSection />
-              <ServicesSection />
-              <WhyChooseUsSection />
-              <PortfolioSection />
-              <CTASection />
-              <ContactFooterSection />
-            </div>
-          </div>
-        )}
       </div>
     );
   }
@@ -150,9 +112,9 @@ export default function Home() {
         
         body {
           background-color: white !important;
-          margin: 0;
-          padding: 0;
-          overflow-x: hidden;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow-x: hidden !important;
           font-family: system-ui, -apple-system, sans-serif;
         }
         
@@ -169,91 +131,14 @@ export default function Home() {
           font-family: 'Inter', system-ui, sans-serif;
         }
 
-        /* Logo Animation Keyframes */
-        @keyframes logoScale {
-          0% {
-            transform: scale(0.3) rotate(-5deg);
-            opacity: 0;
-            width: 60px;
-            height: 60px;
-          }
-          30% {
-            transform: scale(0.8) rotate(0deg);
-            opacity: 0.7;
-          }
-          60% {
-            transform: scale(1.1);
-            opacity: 1;
-            width: 120px;
-            height: 120px;
-          }
-          80% {
-            transform: scale(0.95);
-            width: 120px;
-            height: 120px;
-          }
-          100% {
-            transform: scale(1);
-            opacity: 1;
-            width: 120px;
-            height: 120px;
-          }
-        }
-
-        @keyframes logoGlow {
-          0% {
-            opacity: 0;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.6;
-            transform: scale(1.5);
-          }
-          100% {
-            opacity: 0.3;
-            transform: scale(2);
-          }
-        }
-
-        @keyframes pulseRing1 {
-          0% {
-            transform: scale(1);
-            opacity: 0;
-          }
-          30% {
-            opacity: 0.6;
-          }
-          100% {
-            transform: scale(2.5);
-            opacity: 0;
-          }
-        }
-
-        @keyframes pulseRing2 {
-          0% {
-            transform: scale(1);
-            opacity: 0;
-          }
-          30% {
-            opacity: 0.4;
-          }
-          100% {
-            transform: scale(3);
-            opacity: 0;
-          }
-        }
-
-        @keyframes contentFadeIn {
-          0% {
-            opacity: 0;
-          }
-          100% {
-            opacity: 1;
-          }
+        /* Smooth transitions */
+        .transition-all {
+          transition-property: all;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         }
       `}</style>
 
-      <div className="bg-white text-black">
+      <div className="bg-white text-black min-h-screen">
         {/* Content Container */}
         <div className="relative z-10 w-full">
           {/* Home Section - Loads immediately */}
