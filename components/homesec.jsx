@@ -1,14 +1,37 @@
 'use client'
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Palette, Zap, Rocket, Shield, Smartphone, Cloud } from "lucide-react";
-import { useRouter } from "next/navigation";
+import * as THREE from "three";
+import { 
+  Globe, 
+  Smartphone, 
+  Database, 
+  Zap, 
+  Shield, 
+  Code,
+  Server,
+  Cloud
+} from "lucide-react";
 
 const HomeSection = () => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const router = useRouter();
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+  const canvasRef = useRef(null);
+  const sceneRef = useRef(null);
+  const rendererRef = useRef(null);
+  const animationRef = useRef(null);
   const textVariants = ["Future-ready solutions.", "Human-first design.", "Scalable technology."];
+  
+  // Services that rotate
+  const services = [
+    { icon: Globe, title: "Web Applications", desc: "Modern & responsive", color: "text-blue-600" },
+    { icon: Smartphone, title: "Mobile Apps", desc: "iOS & Android", color: "text-green-600" },
+    { icon: Database, title: "Database Solutions", desc: "Scalable & secure", color: "text-purple-600" },
+    { icon: Code, title: "API Development", desc: "RESTful & GraphQL", color: "text-orange-600" },
+    { icon: Cloud, title: "Cloud Infrastructure", desc: "AWS & Azure", color: "text-cyan-600" },
+    { icon: Shield, title: "Security", desc: "Enterprise-grade", color: "text-red-600" }
+  ];
   
   useEffect(() => {
     // Load fonts immediately without blocking render
@@ -32,6 +55,488 @@ const HomeSection = () => {
     }, 3000);
     
     return () => clearInterval(textInterval);
+  }, []);
+
+  useEffect(() => {
+    const serviceInterval = setInterval(() => {
+      setCurrentServiceIndex((prev) => (prev + 1) % services.length);
+    }, 2500);
+    
+    return () => clearInterval(serviceInterval);
+  }, []);
+
+  // Sophisticated Three.js Scene
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    // Scene setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ 
+      canvas: canvasRef.current, 
+      antialias: true, 
+      alpha: true 
+    });
+    
+    renderer.setSize(600, 600);
+    renderer.setClearColor(0x000000, 0);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    sceneRef.current = scene;
+    rendererRef.current = renderer;
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(10, 10, 5);
+    directionalLight.castShadow = true;
+    directionalLight.shadow.mapSize.width = 2048;
+    directionalLight.shadow.mapSize.height = 2048;
+    scene.add(directionalLight);
+
+    const pointLight = new THREE.PointLight(0xffffff, 0.5, 100);
+    pointLight.position.set(0, 0, 5);
+    scene.add(pointLight);
+
+    // Enhanced Black & White + Accent Colors Materials
+    const serverMaterial = new THREE.MeshStandardMaterial({
+      color: 0x333333,
+      roughness: 0.3,
+      metalness: 0.8,
+    });
+
+    const databaseMaterial = new THREE.MeshStandardMaterial({
+      color: 0x666666,
+      roughness: 0.4,
+      metalness: 0.6,
+    });
+
+    const networkMaterial = new THREE.MeshStandardMaterial({
+      color: 0x999999,
+      roughness: 0.2,
+      metalness: 0.9,
+    });
+
+    const cloudMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.8,
+      roughness: 0.1,
+      metalness: 0.1,
+    });
+
+    const wireMaterial = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.3,
+    });
+
+    // Accent color materials for highlights
+    const accentBlueMaterial = new THREE.MeshBasicMaterial({
+      color: 0x3b82f6,
+      transparent: true,
+      opacity: 0.8,
+    });
+
+    const accentGreenMaterial = new THREE.MeshBasicMaterial({
+      color: 0x10b981,
+      transparent: true,
+      opacity: 0.8,
+    });
+
+    const accentOrangeMaterial = new THREE.MeshBasicMaterial({
+      color: 0xf59e0b,
+      transparent: true,
+      opacity: 0.8,
+    });
+
+    // Central cloud platform
+    const platformGeometry = new THREE.CylinderGeometry(2.5, 2.8, 0.4, 8);
+    const platform = new THREE.Mesh(platformGeometry, cloudMaterial);
+    platform.position.y = 0;
+    platform.castShadow = true;
+    platform.receiveShadow = true;
+    scene.add(platform);
+
+    // Add platform details
+    const platformWire = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.8, 0.4, 8), wireMaterial);
+    platform.add(platformWire);
+
+    // Tech infrastructure elements
+    const techElements = [];
+    
+    // Server Racks (Cubes representing servers)
+    for (let i = 0; i < 4; i++) {
+      const serverGroup = new THREE.Group();
+      
+      // Main server body
+      const serverGeometry = new THREE.BoxGeometry(0.6, 1.2, 0.4);
+      const server = new THREE.Mesh(serverGeometry, serverMaterial);
+      
+      // Server details (Colored LED indicators)
+      for (let j = 0; j < 3; j++) {
+        const ledGeometry = new THREE.SphereGeometry(0.02, 8, 8);
+        let ledMaterial;
+        if (j === 0) ledMaterial = accentGreenMaterial; // Green for active
+        else if (j === 1) ledMaterial = accentBlueMaterial; // Blue for processing 
+        else ledMaterial = accentOrangeMaterial; // Orange for standby
+        
+        const led = new THREE.Mesh(ledGeometry, ledMaterial);
+        led.position.set(-0.25, 0.3 - j * 0.3, 0.21);
+        server.add(led);
+      }
+      
+      // Server screen/panel
+      const screenGeometry = new THREE.PlaneGeometry(0.4, 0.3);
+      const screenMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+      const screen = new THREE.Mesh(screenGeometry, screenMaterial);
+      screen.position.set(0, 0.2, 0.21);
+      server.add(screen);
+      
+      serverGroup.add(server);
+      
+      const angle = (i / 4) * Math.PI * 2;
+      serverGroup.position.set(
+        Math.cos(angle) * 4,
+        Math.sin(i * 0.5) * 1.5,
+        Math.sin(angle) * 4
+      );
+      
+      server.castShadow = true;
+      scene.add(serverGroup);
+      techElements.push({
+        mesh: serverGroup,
+        type: 'server',
+        angle: angle,
+        radius: 4,
+        floatSpeed: 0.5,
+        rotationSpeed: { x: 0.005, y: 0.01, z: 0 }
+      });
+    }
+
+    // Database Cylinders
+    for (let i = 0; i < 3; i++) {
+      const dbGroup = new THREE.Group();
+      
+      // Main database cylinder
+      const dbGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.8, 12);
+      const database = new THREE.Mesh(dbGeometry, databaseMaterial);
+      
+      // Database rings (representing data layers)
+      for (let j = 0; j < 4; j++) {
+        const ringGeometry = new THREE.TorusGeometry(0.32, 0.02, 8, 16);
+        const ring = new THREE.Mesh(ringGeometry, wireMaterial);
+        ring.position.y = -0.3 + j * 0.2;
+        ring.rotation.x = Math.PI / 2;
+        database.add(ring);
+      }
+      
+      dbGroup.add(database);
+      
+      const angle = (i / 3) * Math.PI * 2 + Math.PI / 3;
+      dbGroup.position.set(
+        Math.cos(angle) * 5,
+        Math.sin(i * 0.8) * 2,
+        Math.sin(angle) * 5
+      );
+      
+      database.castShadow = true;
+      scene.add(dbGroup);
+      techElements.push({
+        mesh: dbGroup,
+        type: 'database',
+        angle: angle,
+        radius: 5,
+        floatSpeed: 0.4,
+        rotationSpeed: { x: 0, y: 0.02, z: 0 }
+      });
+    }
+
+    // API Nodes (Octahedrons representing connection points)
+    for (let i = 0; i < 6; i++) {
+      const nodeGroup = new THREE.Group();
+      
+      const nodeGeometry = new THREE.OctahedronGeometry(0.2, 1);
+      const node = new THREE.Mesh(nodeGeometry, networkMaterial);
+      
+      // Connection points
+      const connectionGeometry = new THREE.SphereGeometry(0.05, 8, 8);
+      for (let j = 0; j < 4; j++) {
+        const connectionPoint = new THREE.Mesh(connectionGeometry, new THREE.MeshBasicMaterial({ color: 0x000000 }));
+        const connAngle = (j / 4) * Math.PI * 2;
+        connectionPoint.position.set(
+          Math.cos(connAngle) * 0.25,
+          0,
+          Math.sin(connAngle) * 0.25
+        );
+        node.add(connectionPoint);
+      }
+      
+      nodeGroup.add(node);
+      
+      const radius = 3 + Math.random() * 1.5;
+      const angle = (i / 6) * Math.PI * 2;
+      const height = (Math.random() - 0.5) * 3;
+      
+      nodeGroup.position.set(
+        Math.cos(angle) * radius,
+        height,
+        Math.sin(angle) * radius
+      );
+      
+      node.castShadow = true;
+      scene.add(nodeGroup);
+      techElements.push({
+        mesh: nodeGroup,
+        type: 'api',
+        angle: angle,
+        radius: radius,
+        floatSpeed: 0.6,
+        rotationSpeed: { x: 0.02, y: 0.03, z: 0.01 },
+        pulsePhase: i * 0.5
+      });
+    }
+
+    // Central processing unit (CPU/Brain)
+    const coreGeometry = new THREE.BoxGeometry(1, 1, 0.2);
+    const core = new THREE.Mesh(coreGeometry, serverMaterial);
+    core.position.y = 1.5;
+    
+    // CPU grid pattern
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 5; j++) {
+        const pinGeometry = new THREE.BoxGeometry(0.05, 0.05, 0.1);
+        const pin = new THREE.Mesh(pinGeometry, new THREE.MeshBasicMaterial({ color: 0x000000 }));
+        pin.position.set(-0.4 + i * 0.2, 0, -0.4 + j * 0.2);
+        core.add(pin);
+      }
+    }
+    
+    scene.add(core);
+
+    // Data flow rings around CPU with colors
+    const dataRings = [];
+    const ringColors = [0x3b82f6, 0x10b981, 0xf59e0b]; // Blue, Green, Orange
+    for (let i = 0; i < 3; i++) {
+      const ringGeometry = new THREE.TorusGeometry(1.5 + i * 0.4, 0.03, 8, 32);
+      const ringMaterial = new THREE.MeshBasicMaterial({
+        color: ringColors[i],
+        transparent: true,
+        opacity: 0.6,
+      });
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+      ring.position.copy(core.position);
+      ring.rotation.x = Math.PI / 2;
+      ring.rotation.z = (i * Math.PI) / 3;
+      scene.add(ring);
+      dataRings.push({
+        mesh: ring,
+        speed: 0.8 + i * 0.3,
+        axis: i % 2 === 0 ? 'x' : 'z',
+        material: ringMaterial
+      });
+    }
+
+    // Data packet particles
+    const particleCount = 30;
+    const particleGeometry = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    const particleVelocities = [];
+
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      particlePositions[i3] = (Math.random() - 0.5) * 15;
+      particlePositions[i3 + 1] = (Math.random() - 0.5) * 15;
+      particlePositions[i3 + 2] = (Math.random() - 0.5) * 15;
+      
+      particleVelocities.push({
+        x: (Math.random() - 0.5) * 0.03,
+        y: (Math.random() - 0.5) * 0.03,
+        z: (Math.random() - 0.5) * 0.03,
+      });
+    }
+
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    
+    const particleMaterial = new THREE.PointsMaterial({
+      color: 0x3b82f6, // Blue data packets
+      size: 0.08,
+      transparent: true,
+      opacity: 0.7,
+    });
+    
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particles);
+
+    // Network connections between tech elements
+    const connections = [];
+    for (let i = 0; i < techElements.length - 1; i += 2) {
+      if (techElements[i + 1]) {
+        const start = techElements[i].mesh.position;
+        const end = techElements[i + 1].mesh.position;
+        
+        const curve = new THREE.CatmullRomCurve3([
+          start.clone(),
+          new THREE.Vector3(0, 1.5, 0), // Route through CPU
+          end.clone()
+        ]);
+        
+        const tubeGeometry = new THREE.TubeGeometry(curve, 20, 0.02, 8, false);
+        const tubeMaterial = new THREE.MeshBasicMaterial({
+          color: 0x3b82f6, // Blue data connections
+          transparent: true,
+          opacity: 0.4,
+        });
+        
+        const tube = new THREE.Mesh(tubeGeometry, tubeMaterial);
+        scene.add(tube);
+        connections.push({
+          mesh: tube,
+          material: tubeMaterial,
+          originalOpacity: 0.5
+        });
+      }
+    }
+
+    camera.position.set(0, 3, 10);
+    camera.lookAt(0, 0, 0);
+
+    // Animation loop
+    const animate = () => {
+      const time = Date.now() * 0.001;
+      
+      // Rotate entire scene slowly
+      scene.rotation.y = time * 0.08;
+      
+      // Animate cloud platform
+      platform.rotation.y = time * 0.3;
+      platform.position.y = Math.sin(time * 0.6) * 0.1;
+      
+      // Animate CPU core
+      core.rotation.x = time * 0.2;
+      core.rotation.y = time * 0.3;
+      core.position.y = 1.5 + Math.sin(time * 1.0) * 0.2;
+      
+      // Animate data flow rings around CPU with color pulsing
+      dataRings.forEach((ring, index) => {
+        if (ring.axis === 'x') {
+          ring.mesh.rotation.x += ring.speed * 0.02;
+        } else {
+          ring.mesh.rotation.z += ring.speed * 0.02;
+        }
+        ring.mesh.position.y = core.position.y;
+        
+        // Pulse opacity for data flow effect
+        ring.material.opacity = 0.4 + Math.sin(time * 2 + index) * 0.3;
+      });
+      
+      // Animate tech infrastructure elements
+      techElements.forEach((element, index) => {
+        const { mesh, floatSpeed, rotationSpeed, angle, radius, type } = element;
+        
+        // Orbital motion around the cloud platform
+        const newAngle = angle + time * 0.15;
+        mesh.position.x = Math.cos(newAngle) * radius;
+        mesh.position.z = Math.sin(newAngle) * radius;
+        mesh.position.y += Math.sin(time * floatSpeed + index) * 0.008;
+        
+        // Rotation
+        mesh.rotation.x += rotationSpeed.x;
+        mesh.rotation.y += rotationSpeed.y;
+        mesh.rotation.z += rotationSpeed.z;
+        
+        // Special animations for different tech types
+        if (type === 'server') {
+          // Servers pulse subtly
+          const scale = 1 + Math.sin(time * 1.5 + index) * 0.05;
+          mesh.scale.setScalar(scale);
+          
+          // Animate LED indicators
+          const server = mesh.children[0];
+          if (server && server.children) {
+            server.children.forEach((child, i) => {
+              if (child.geometry && child.geometry.type === 'SphereGeometry') {
+                child.material.opacity = 0.5 + Math.sin(time * 2 + i) * 0.5;
+              }
+            });
+          }
+        }
+        
+        if (type === 'database') {
+          // Databases rotate and occasionally "process data"
+          const db = mesh.children[0];
+          if (db) {
+            db.rotation.y = time * 0.5;
+            // Animate data layer rings
+            db.children.forEach((ring, i) => {
+              if (ring.geometry && ring.geometry.type === 'TorusGeometry') {
+                ring.material.opacity = 0.3 + Math.sin(time * 3 + i * 0.5) * 0.2;
+              }
+            });
+          }
+        }
+        
+        if (type === 'api') {
+          // API nodes pulse and their connection points light up
+          const pulse = 1 + Math.sin(time * 2 + element.pulsePhase) * 0.1;
+          mesh.scale.setScalar(pulse);
+          
+          const node = mesh.children[0];
+          if (node && node.children) {
+            node.children.forEach((point, i) => {
+              if (point.geometry && point.geometry.type === 'SphereGeometry') {
+                point.material.opacity = 0.3 + Math.sin(time * 4 + i) * 0.7;
+              }
+            });
+          }
+        }
+      });
+      
+      // Animate data packets
+      const positions = particles.geometry.attributes.position.array;
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3;
+        
+        positions[i3] += particleVelocities[i].x;
+        positions[i3 + 1] += particleVelocities[i].y;
+        positions[i3 + 2] += particleVelocities[i].z;
+        
+        // Reset particles that go too far
+        if (Math.abs(positions[i3]) > 8) particleVelocities[i].x *= -1;
+        if (Math.abs(positions[i3 + 1]) > 8) particleVelocities[i].y *= -1;
+        if (Math.abs(positions[i3 + 2]) > 8) particleVelocities[i].z *= -1;
+      }
+      particles.geometry.attributes.position.needsUpdate = true;
+      
+      // Animate network connections with data flow effect
+      connections.forEach((connection, index) => {
+        const flow = connection.originalOpacity + Math.sin(time * 2 + index * 0.8) * 0.3;
+        connection.material.opacity = Math.max(0.1, flow);
+      });
+      
+      // Subtle lighting changes
+      pointLight.intensity = 0.5 + Math.sin(time * 1.5) * 0.2;
+      pointLight.position.x = Math.cos(time * 0.3) * 2;
+      pointLight.position.z = Math.sin(time * 0.3) * 2;
+      
+      renderer.render(scene, camera);
+      animationRef.current = requestAnimationFrame(animate);
+    };
+    
+    animate();
+
+    // Cleanup
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      if (rendererRef.current) {
+        rendererRef.current.dispose();
+      }
+    };
   }, []);
 
   const scrollToPortfolio = () => {
@@ -190,7 +695,7 @@ const HomeSection = () => {
                     className="w-full py-2.5 bg-white text-black rounded-lg font-semibold hover:bg-white/90 transition-colors duration-200"
                     onClick={() => {
                       setIsMenuOpen(false);
-                      router.push('/consultation');
+                      // router.push('/consultation');
                     }}
                   >
                     Start Project
@@ -268,7 +773,7 @@ const HomeSection = () => {
                 className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 sm:pt-4"
               >
                 <motion.button
-                  onClick={() => router.push('/consultation')}
+                  onClick={() => console.log('Consultation clicked')}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="px-5 sm:px-6 py-3 bg-black text-white rounded-xl font-semibold text-sm sm:text-base transition-all duration-200 shadow-lg hover:shadow-xl w-full sm:w-auto"
@@ -292,664 +797,95 @@ const HomeSection = () => {
               </motion.div>
             </motion.div>
             
-            {/* Right Visual - Enhanced Symmetric 3D Tech Constellation */}
+            {/* Right Visual - Sophisticated Three.js Scene */}
             <motion.div 
               className="relative h-[350px] sm:h-[450px] lg:h-[600px] flex items-center justify-center order-2 lg:order-2 overflow-hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
             >
-              {/* 3D Wireframe Container with Tech Enhancement */}
-              <div className="absolute inset-0 flex items-center justify-center" style={{ perspective: '1200px' }}>
+              {/* 3D Canvas Container */}
+              <div className="relative w-full h-full flex items-center justify-center">
+                <canvas 
+                  ref={canvasRef}
+                  className="max-w-full max-h-full"
+                  style={{ filter: 'drop-shadow(0 0 20px rgba(79, 70, 229, 0.3))' }}
+                />
                 
-                {/* Digital Grid Background */}
-                <div className="absolute inset-0" style={{
-                  backgroundImage: `
-                    linear-gradient(rgba(34,211,238,0.1) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(34,211,238,0.1) 1px, transparent 1px)
-                  `,
-                  backgroundSize: '20px 20px',
-                  animation: 'gridPulse 4s ease-in-out infinite'
-                }}></div>
-
-                {/* Binary Code Streams */}
-                {[...Array(8)].map((_, i) => (
-                  <motion.div
-                    key={`binary-${i}`}
-                    className="absolute text-xs font-mono text-cyan-400/40 pointer-events-none"
-                    style={{
-                      left: `${10 + i * 12}%`,
-                      transform: 'rotate(-90deg)',
-                    }}
-                    animate={{
-                      y: [-400, 400],
-                      opacity: [0, 0.6, 0],
-                    }}
-                    transition={{
-                      duration: 6 + i * 0.5,
-                      repeat: Infinity,
-                      delay: i * 0.3
-                    }}
-                  >
-                    {Array.from({length: 20}, () => Math.round(Math.random())).join('')}
-                  </motion.div>
-                ))}
-                
-                {/* Central Symmetric Wireframe Structure */}
-                <motion.div
-                  className="relative"
-                  initial={{ scale: 0, rotateY: 0 }}
-                  animate={{ 
-                    scale: 1, 
-                    rotateY: 360,
-                    rotateX: [0, 10, -10, 0]
-                  }}
-                  transition={{ 
-                    scale: { duration: 1.5, delay: 0.8 },
-                    rotateY: { duration: 30, repeat: Infinity, ease: "linear" },
-                    rotateX: { duration: 8, repeat: Infinity }
-                  }}
-                  style={{ transformStyle: 'preserve-3d' }}
-                >
+                {/* Clean, Minimal UI Overlay */}
+                <div className="absolute inset-0 pointer-events-none">
                   
-                  {/* Enhanced Octahedral Wireframe Core */}
-                  <div className="relative w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56">
-                    
-                    {/* Top Pyramid with Tech Enhancement */}
-                    <motion.div 
-                      className="absolute inset-0 flex items-center justify-center"
-                      style={{ transformStyle: 'preserve-3d' }}
-                    >
-                      {[0, 72, 144, 216, 288].map((angle, i) => (
-                        <motion.div
-                          key={`top-${i}`}
-                          className="absolute w-px bg-gradient-to-b from-cyan-400 via-blue-500 to-transparent"
-                          style={{
-                            height: '100px',
-                            transformOrigin: 'bottom center',
-                            transform: `rotateY(${angle}deg) rotateX(-35deg) translateZ(50px)`,
-                            filter: 'drop-shadow(0 0 3px currentColor)'
-                          }}
-                          animate={{
-                            background: [
-                              'linear-gradient(to bottom, #22d3ee 0%, #3b82f6 50%, transparent 100%)',
-                              'linear-gradient(to bottom, #3b82f6 0%, #8b5cf6 50%, transparent 100%)',
-                              'linear-gradient(to bottom, #8b5cf6 0%, #10b981 50%, transparent 100%)',
-                              'linear-gradient(to bottom, #10b981 0%, #22d3ee 50%, transparent 100%)'
-                            ]
-                          }}
-                          transition={{ 
-                            duration: 4, 
-                            repeat: Infinity, 
-                            delay: i * 0.2 
-                          }}
-                        />
-                      ))}
-                    </motion.div>
-
-                    {/* Bottom Pyramid with Enhanced Glow */}
-                    <motion.div 
-                      className="absolute inset-0 flex items-center justify-center"
-                      style={{ transformStyle: 'preserve-3d' }}
-                    >
-                      {[0, 72, 144, 216, 288].map((angle, i) => (
-                        <motion.div
-                          key={`bottom-${i}`}
-                          className="absolute w-px bg-gradient-to-t from-purple-400 via-pink-500 to-transparent"
-                          style={{
-                            height: '100px',
-                            transformOrigin: 'top center',
-                            transform: `rotateY(${angle}deg) rotateX(35deg) translateZ(50px)`,
-                            filter: 'drop-shadow(0 0 3px currentColor)'
-                          }}
-                          animate={{
-                            background: [
-                              'linear-gradient(to top, #c084fc 0%, #ec4899 50%, transparent 100%)',
-                              'linear-gradient(to top, #ec4899 0%, #f59e0b 50%, transparent 100%)',
-                              'linear-gradient(to top, #f59e0b 0%, #10b981 50%, transparent 100%)',
-                              'linear-gradient(to top, #10b981 0%, #c084fc 50%, transparent 100%)'
-                            ]
-                          }}
-                          transition={{ 
-                            duration: 4, 
-                            repeat: Infinity, 
-                            delay: i * 0.3 
-                          }}
-                        />
-                      ))}
-                    </motion.div>
-
-                    {/* Enhanced Central Ring with Tech Pulse */}
-                    <motion.div
-                      className="absolute inset-0 flex items-center justify-center"
-                      style={{ transformStyle: 'preserve-3d' }}
-                    >
-                      {[...Array(12)].map((_, i) => (
-                        <motion.div
-                          key={`ring-${i}`}
-                          className="absolute w-px h-20 bg-gradient-to-b from-emerald-400 via-blue-500 to-emerald-400"
-                          style={{
-                            transformOrigin: 'center center',
-                            transform: `rotateY(${i * 30}deg) translateZ(60px)`,
-                            filter: 'drop-shadow(0 0 2px currentColor)'
-                          }}
-                          animate={{
-                            scaleY: [0.5, 1.5, 0.5],
-                            background: [
-                              'linear-gradient(to bottom, #10b981 0%, #3b82f6 50%, #10b981 100%)',
-                              'linear-gradient(to bottom, #3b82f6 0%, #8b5cf6 50%, #3b82f6 100%)',
-                              'linear-gradient(to bottom, #8b5cf6 0%, #22d3ee 50%, #8b5cf6 100%)',
-                              'linear-gradient(to bottom, #22d3ee 0%, #10b981 50%, #22d3ee 100%)'
-                            ]
-                          }}
-                          transition={{ 
-                            duration: 3, 
-                            repeat: Infinity, 
-                            delay: i * 0.1 
-                          }}
-                        />
-                      ))}
-                    </motion.div>
-
-                    {/* Tech-Enhanced Central Core */}
-                    <motion.div
-                      className="absolute inset-0 flex items-center justify-center"
-                      animate={{
-                        scale: [1, 1.2, 1],
-                      }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
+                  {/* Rotating Service Showcase - Bottom Center */}
+                  <motion.div
+                    className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 2, duration: 0.6 }}
+                  >
+                    <AnimatePresence mode="wait">
                       <motion.div
-                        className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-full border-2 border-cyan-400"
-                        animate={{
-                          background: [
-                            'radial-gradient(circle, #22d3ee 0%, #3b82f6 50%, transparent 100%)',
-                            'radial-gradient(circle, #8b5cf6 0%, #ec4899 50%, transparent 100%)',
-                            'radial-gradient(circle, #10b981 0%, #f59e0b 50%, transparent 100%)',
-                            'radial-gradient(circle, #22d3ee 0%, #3b82f6 50%, transparent 100%)'
-                          ],
-                          boxShadow: [
-                            '0 0 20px #22d3ee, 0 0 40px #3b82f6, 0 0 60px #22d3ee',
-                            '0 0 20px #8b5cf6, 0 0 40px #ec4899, 0 0 60px #8b5cf6',
-                            '0 0 20px #10b981, 0 0 40px #f59e0b, 0 0 60px #10b981',
-                            '0 0 20px #22d3ee, 0 0 40px #3b82f6, 0 0 60px #22d3ee'
-                          ]
-                        }}
-                        transition={{ duration: 4, repeat: Infinity }}
+                        key={currentServiceIndex}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.4 }}
+                        className="bg-white/95 backdrop-blur-xl rounded-2xl p-4 border border-gray-200/50 shadow-xl"
                       >
-                        {/* Tech Symbol in Center */}
-                        <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-xs">
-                          ⚡
+                        <div className="flex items-center space-x-4">
+                          <div className={`p-3 bg-gray-50 rounded-xl ${services[currentServiceIndex].color}`}>
+                            {React.createElement(services[currentServiceIndex].icon, { className: "w-6 h-6" })}
+                          </div>
+                          <div>
+                            <div className="text-lg font-semibold text-gray-800">
+                              {services[currentServiceIndex].title}
+                            </div>
+                            <div className="text-sm text-gray-600">
+                              {services[currentServiceIndex].desc}
+                            </div>
+                          </div>
                         </div>
                       </motion.div>
-                    </motion.div>
-                  </div>
-                </motion.div>
-
-                {/* Floating Tech Icons Around Constellation */}
-                {[
-                  { 
-                    symbol: "⚛️", 
-                    name: "React", 
-                    position: { x: 120, y: -80, z: 60 },
-                    delay: 2,
-                    color: "#61dafb"
-                  },
-                  { 
-                    symbol: "💾", 
-                    name: "Database", 
-                    position: { x: -120, y: -80, z: 60 },
-                    delay: 2.3,
-                    color: "#4caf50"
-                  },
-                  { 
-                    symbol: "☁️", 
-                    name: "Cloud", 
-                    position: { x: 120, y: 80, z: -60 },
-                    delay: 2.6,
-                    color: "#2196f3"
-                  },
-                  { 
-                    symbol: "🔒", 
-                    name: "Security", 
-                    position: { x: -120, y: 80, z: -60 },
-                    delay: 2.9,
-                    color: "#ff9800"
-                  },
-                  { 
-                    symbol: "📡", 
-                    name: "API", 
-                    position: { x: 0, y: -120, z: 0 },
-                    delay: 3.2,
-                    color: "#9c27b0"
-                  },
-                  { 
-                    symbol: "⚙️", 
-                    name: "Config", 
-                    position: { x: 0, y: 120, z: 0 },
-                    delay: 3.5,
-                    color: "#ff5722"
-                  }
-                ].map((tech, i) => (
-                  <motion.div
-                    key={`tech-${i}`}
-                    className="absolute flex flex-col items-center pointer-events-none"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ 
-                      scale: [0, 1, 0],
-                      opacity: [0, 1, 0],
-                      rotateY: [0, 360],
-                    }}
-                    transition={{ 
-                      scale: { duration: 4, repeat: Infinity, delay: tech.delay },
-                      opacity: { duration: 4, repeat: Infinity, delay: tech.delay },
-                      rotateY: { duration: 8, repeat: Infinity }
-                    }}
-                    style={{
-                      transform: `translate3d(${tech.position.x}px, ${tech.position.y}px, ${tech.position.z}px)`,
-                      transformStyle: 'preserve-3d'
-                    }}
-                  >
-                    <motion.div
-                      className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-lg bg-black/80 backdrop-blur-xl border border-white/20 flex items-center justify-center shadow-2xl"
-                      animate={{
-                        boxShadow: [
-                          `0 0 20px ${tech.color}40`,
-                          `0 0 30px ${tech.color}60`,
-                          `0 0 20px ${tech.color}40`
-                        ]
-                      }}
-                      transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
-                    >
-                      <span className="text-lg sm:text-xl lg:text-2xl">{tech.symbol}</span>
-                    </motion.div>
-                    <motion.div
-                      className="mt-2 px-2 py-1 bg-black/60 backdrop-blur-sm rounded text-xs text-white font-mono border border-white/10"
-                      animate={{ opacity: [0.7, 1, 0.7] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
-                    >
-                      {tech.name}
-                    </motion.div>
+                    </AnimatePresence>
                   </motion.div>
-                ))}
 
-                {/* Enhanced Orbital Symmetric Lines with Tech Labels */}
-                {[...Array(6)].map((_, i) => (
+                  {/* Simple Status Indicator - Top Right */}
                   <motion.div
-                    key={`orbital-${i}`}
-                    className="absolute inset-0 flex items-center justify-center"
-                    initial={{ opacity: 0 }}
-                    animate={{ 
-                      opacity: 1,
-                      rotateZ: 360,
-                    }}
-                    transition={{ 
-                      opacity: { delay: 2 + i * 0.2 },
-                      rotateZ: { duration: 20 + i * 5, repeat: Infinity, ease: "linear" }
-                    }}
-                    style={{ 
-                      transformStyle: 'preserve-3d',
-                      transform: `rotateX(${i * 30}deg) rotateY(${i * 60}deg)`
-                    }}
-                  >
-                    <motion.div
-                      className="w-48 h-48 sm:w-60 sm:h-60 lg:w-72 lg:h-72 border-2 border-blue-400/20 rounded-full"
-                      animate={{
-                        borderColor: [
-                          'rgba(59, 130, 246, 0.2)',
-                          'rgba(139, 92, 246, 0.3)',
-                          'rgba(34, 211, 238, 0.2)',
-                          'rgba(16, 185, 129, 0.3)',
-                          'rgba(59, 130, 246, 0.2)'
-                        ],
-                        filter: [
-                          'drop-shadow(0 0 10px #3b82f640)',
-                          'drop-shadow(0 0 15px #8b5cf660)',
-                          'drop-shadow(0 0 10px #22d3ee40)'
-                        ]
-                      }}
-                      transition={{ 
-                        duration: 6, 
-                        repeat: Infinity, 
-                        delay: i * 0.5 
-                      }}
-                    />
-                  </motion.div>
-                ))}
-
-                {/* Code Syntax Floating Elements */}
-                {[
-                  { text: "{ }", pos: { x: 80, y: -60 }, color: "#fbbf24" },
-                  { text: "< />", pos: { x: -80, y: -60 }, color: "#22d3ee" },
-                  { text: "=>", pos: { x: 80, y: 60 }, color: "#a78bfa" },
-                  { text: "( )", pos: { x: -80, y: 60 }, color: "#34d399" },
-                ].map((syntax, i) => (
-                  <motion.div
-                    key={`syntax-${i}`}
-                    className="absolute font-mono font-bold text-lg sm:text-xl lg:text-2xl pointer-events-none"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{
-                      scale: [0, 1, 0],
-                      opacity: [0, 0.8, 0],
-                      rotateZ: [0, 180, 360],
-                      color: [syntax.color, '#ffffff', syntax.color]
-                    }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      delay: i * 0.7 + 3
-                    }}
-                    style={{
-                      left: `calc(50% + ${syntax.pos.x}px)`,
-                      top: `calc(50% + ${syntax.pos.y}px)`,
-                      filter: `drop-shadow(0 0 8px ${syntax.color})`
-                    }}
-                  >
-                    {syntax.text}
-                  </motion.div>
-                ))}
-
-                {/* Enhanced Symmetric Node Points with Tech Icons */}
-                {[
-                  { x: 0, y: -140, z: 0, icon: "📊", label: "Analytics", color: "#22d3ee" },
-                  { x: 120, y: -70, z: 80, icon: "🚀", label: "Deploy", color: "#8b5cf6" },
-                  { x: -120, y: -70, z: 80, icon: "🔧", label: "DevOps", color: "#10b981" },
-                  { x: 120, y: 70, z: -80, icon: "💻", label: "Frontend", color: "#f59e0b" },
-                  { x: -120, y: 70, z: -80, icon: "🗄️", label: "Backend", color: "#ec4899" },
-                  { x: 0, y: 140, z: 0, icon: "🌐", label: "Network", color: "#3b82f6" },
-                ].map((node, i) => (
-                  <motion.div
-                    key={`node-${i}`}
-                    className="absolute flex flex-col items-center pointer-events-none"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ 
-                      scale: [0, 1, 0],
-                      opacity: [0, 1, 0],
-                      rotateY: [0, 360],
-                    }}
-                    transition={{ 
-                      scale: { duration: 5, repeat: Infinity, delay: i * 0.4 },
-                      opacity: { duration: 5, repeat: Infinity, delay: i * 0.4 },
-                      rotateY: { duration: 10, repeat: Infinity }
-                    }}
-                    style={{
-                      transform: `translate3d(${node.x}px, ${node.y}px, ${node.z}px)`,
-                      transformStyle: 'preserve-3d'
-                    }}
-                  >
-                    <motion.div
-                      className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full bg-black/80 backdrop-blur-xl border-2 flex items-center justify-center shadow-2xl"
-                      animate={{
-                        borderColor: [node.color, '#ffffff', node.color],
-                        boxShadow: [
-                          `0 0 15px ${node.color}60`,
-                          `0 0 25px ${node.color}80`,
-                          `0 0 15px ${node.color}60`
-                        ]
-                      }}
-                      transition={{ duration: 3, repeat: Infinity, delay: i * 0.3 }}
-                    >
-                      <span className="text-sm sm:text-base lg:text-lg">{node.icon}</span>
-                    </motion.div>
-                    <motion.div
-                      className="mt-1 px-2 py-0.5 bg-black/70 backdrop-blur-sm rounded text-xs text-white font-mono border border-white/10"
-                      animate={{ opacity: [0.6, 1, 0.6] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-                    >
-                      {node.label}
-                    </motion.div>
-                  </motion.div>
-                ))}
-
-                {/* Enhanced Connecting Energy Lines with Tech Patterns */}
-                <svg 
-                  className="absolute inset-0 w-full h-full pointer-events-none" 
-                  viewBox="0 0 400 400"
-                  style={{ transformStyle: 'preserve-3d' }}
-                >
-                  {/* Main Tech Network Lines */}
-                  {[
-                    { path: "M200,50 Q200,125 200,200 Q200,275 200,350", label: "Data Flow" },
-                    { path: "M50,200 Q125,200 200,200 Q275,200 350,200", label: "API Calls" },
-                    { path: "M100,100 Q150,150 200,200 Q250,250 300,300", label: "Microservices" },
-                    { path: "M300,100 Q250,150 200,200 Q150,250 100,300", label: "Load Balancer" },
-                  ].map((line, i) => (
-                    <g key={`tech-line-${i}`}>
-                      <motion.path
-                        d={line.path}
-                        stroke="url(#techGradient)"
-                        strokeWidth="3"
-                        fill="none"
-                        strokeDasharray="10,5"
-                        initial={{ pathLength: 0, opacity: 0 }}
-                        animate={{ 
-                          pathLength: [0, 1, 0],
-                          opacity: [0, 0.9, 0],
-                          strokeDashoffset: [0, -15]
-                        }}
-                        transition={{ 
-                          duration: 4,
-                          repeat: Infinity,
-                          delay: i * 0.8
-                        }}
-                        filter="drop-shadow(0 0 3px currentColor)"
-                      />
-                      {/* Tech Labels on Lines */}
-                      <motion.text
-                        x="200"
-                        y={50 + i * 20}
-                        fill="#22d3ee"
-                        fontSize="10"
-                        fontFamily="monospace"
-                        textAnchor="middle"
-                        animate={{
-                          opacity: [0, 1, 0],
-                          fill: ['#22d3ee', '#8b5cf6', '#10b981', '#22d3ee']
-                        }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          delay: i * 0.8 + 1
-                        }}
-                      >
-                        {line.label}
-                      </motion.text>
-                    </g>
-                  ))}
-
-                  {/* Circuit-like Connection Patterns */}
-                  {[
-                    "M200,200 L250,150 L280,150 L280,120 L320,120",
-                    "M200,200 L150,150 L120,150 L120,120 L80,120",
-                    "M200,200 L250,250 L280,250 L280,280 L320,280",
-                    "M200,200 L150,250 L120,250 L120,280 L80,280",
-                  ].map((path, i) => (
-                    <motion.path
-                      key={`circuit-${i}`}
-                      d={path}
-                      stroke="url(#circuitGradient)"
-                      strokeWidth="2"
-                      fill="none"
-                      strokeDasharray="4,4"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{ 
-                        pathLength: [0, 1, 0],
-                        opacity: [0, 0.7, 0],
-                        strokeDashoffset: [0, -8]
-                      }}
-                      transition={{ 
-                        duration: 3,
-                        repeat: Infinity,
-                        delay: i * 0.5 + 3
-                      }}
-                    />
-                  ))}
-
-                  {/* Enhanced Expanding Tech Rings */}
-                  {[100, 140, 180].map((radius, i) => (
-                    <motion.circle
-                      key={`tech-ring-${i}`}
-                      cx="200"
-                      cy="200"
-                      r={radius}
-                      stroke="url(#techRingGradient)"
-                      strokeWidth="2"
-                      fill="none"
-                      strokeDasharray="12,8"
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ 
-                        scale: [0.8, 1.3, 0.8],
-                        opacity: [0, 0.6, 0],
-                        strokeDashoffset: [0, -20]
-                      }}
-                      transition={{ 
-                        duration: 6,
-                        repeat: Infinity,
-                        delay: i * 1.5
-                      }}
-                      filter="drop-shadow(0 0 5px currentColor)"
-                    />
-                  ))}
-
-                  <defs>
-                    <linearGradient id="techGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#22d3ee" />
-                      <stop offset="25%" stopColor="#3b82f6" />
-                      <stop offset="50%" stopColor="#8b5cf6" />
-                      <stop offset="75%" stopColor="#10b981" />
-                      <stop offset="100%" stopColor="#22d3ee" />
-                    </linearGradient>
-                    <linearGradient id="circuitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#f59e0b" />
-                      <stop offset="50%" stopColor="#ec4899" />
-                      <stop offset="100%" stopColor="#f59e0b" />
-                    </linearGradient>
-                    <linearGradient id="techRingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#8b5cf6" />
-                      <stop offset="33%" stopColor="#22d3ee" />
-                      <stop offset="66%" stopColor="#10b981" />
-                      <stop offset="100%" stopColor="#8b5cf6" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-
-                {/* Enhanced Floating Tech Particles */}
-                {[...Array(24)].map((_, i) => (
-                  <motion.div
-                    key={`tech-particle-${i}`}
-                    className="absolute w-1.5 h-1.5 rounded-full pointer-events-none"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{
-                      scale: [0, 1, 0],
-                      opacity: [0, 0.8, 0],
-                      x: [
-                        Math.cos(i * 15 * Math.PI / 180) * 180,
-                        Math.cos(i * 15 * Math.PI / 180) * 220,
-                        Math.cos(i * 15 * Math.PI / 180) * 180
-                      ],
-                      y: [
-                        Math.sin(i * 15 * Math.PI / 180) * 180,
-                        Math.sin(i * 15 * Math.PI / 180) * 220,
-                        Math.sin(i * 15 * Math.PI / 180) * 180
-                      ],
-                      background: [
-                        '#22d3ee',
-                        '#8b5cf6',
-                        '#10b981',
-                        '#f59e0b',
-                        '#ec4899',
-                        '#22d3ee'
-                      ]
-                    }}
-                    transition={{
-                      duration: 6 + (i % 4),
-                      repeat: Infinity,
-                      delay: i * 0.15
-                    }}
-                    style={{
-                      left: '50%',
-                      top: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      filter: 'drop-shadow(0 0 3px currentColor)'
-                    }}
-                  />
-                ))}
-
-                {/* Tech Performance Indicators */}
-                {[
-                  { label: "99.9%", desc: "Uptime", pos: { x: -160, y: -100 } },
-                  { label: "<100ms", desc: "Response", pos: { x: 160, y: -100 } },
-                  { label: "24/7", desc: "Support", pos: { x: -160, y: 100 } },
-                  { label: "SSL", desc: "Secure", pos: { x: 160, y: 100 } },
-                ].map((stat, i) => (
-                  <motion.div
-                    key={`stat-${i}`}
-                    className="absolute flex flex-col items-center pointer-events-none"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{
-                      scale: [0, 1, 0],
-                      opacity: [0, 0.9, 0],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      delay: i * 0.8 + 4
-                    }}
-                    style={{
-                      left: `calc(50% + ${stat.pos.x}px)`,
-                      top: `calc(50% + ${stat.pos.y}px)`,
-                    }}
-                  >
-                    <motion.div
-                      className="px-3 py-1.5 bg-black/80 backdrop-blur-xl border border-cyan-400/50 rounded-lg shadow-xl"
-                      animate={{
-                        borderColor: ['#22d3ee80', '#8b5cf680', '#10b98180', '#22d3ee80'],
-                        boxShadow: [
-                          '0 0 15px #22d3ee40',
-                          '0 0 20px #8b5cf640',
-                          '0 0 15px #10b98140',
-                          '0 0 15px #22d3ee40'
-                        ]
-                      }}
-                      transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
-                    >
-                      <div className="text-cyan-400 font-bold text-sm sm:text-base">{stat.label}</div>
-                      <div className="text-white/70 text-xs font-mono">{stat.desc}</div>
-                    </motion.div>
-                  </motion.div>
-                ))}
-
-                {/* Enhanced Data Flow Streams */}
-                {[...Array(20)].map((_, i) => (
-                  <motion.div
-                    key={`data-stream-${i}`}
-                    className="absolute w-px h-20 bg-gradient-to-b from-transparent via-cyan-400 to-transparent pointer-events-none"
+                    className="absolute top-6 right-6"
                     initial={{ opacity: 0, scale: 0 }}
-                    animate={{
-                      opacity: [0, 1, 0],
-                      scale: [0, 1, 0],
-                      y: [-300, 300],
-                    }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      delay: i * 0.25
-                    }}
-                    style={{
-                      left: `${50 + Math.cos(i * 18 * Math.PI / 180) * 35}%`,
-                      top: `${50 + Math.sin(i * 18 * Math.PI / 180) * 35}%`,
-                      transform: `rotate(${i * 18}deg)`,
-                      filter: 'drop-shadow(0 0 2px currentColor)'
-                    }}
-                  />
-                ))}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 3, duration: 0.5 }}
+                  >
+                    <div className="bg-white/90 backdrop-blur-sm rounded-xl p-3 border border-gray-200/50 shadow-lg">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span className="text-sm font-medium text-gray-700">All Systems Online</span>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Minimal Performance Badge - Top Left */}
+                  <motion.div
+                    className="absolute top-6 left-6"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 3.5, duration: 0.5 }}
+                  >
+                    <div className="bg-white/90 backdrop-blur-sm rounded-xl p-3 border border-gray-200/50 shadow-lg">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-gray-800">99.9%</div>
+                        <div className="text-xs text-gray-600">Uptime</div>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </main>
       
-      {/* Enhanced Styles for 3D Wireframe Constellation */}
+      {/* Enhanced Styles */}
       <style jsx global>{`
         .font-space-grotesk {
           font-family: 'Space Grotesk', system-ui, sans-serif;
@@ -957,431 +893,6 @@ const HomeSection = () => {
         
         .font-inter {
           font-family: 'Inter', system-ui, sans-serif;
-        }
-
-        /* 3D Perspective and Transform Utilities */
-        .perspective-1200 {
-          perspective: 1200px;
-        }
-
-        .transform-style-3d {
-          transform-style: preserve-3d;
-        }
-
-        .backface-hidden {
-          backface-visibility: hidden;
-        }
-
-        /* Tech-Enhanced Animation Keyframes */
-        @keyframes gridPulse {
-          0%, 100% {
-            opacity: 0.1;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.3;
-            transform: scale(1.02);
-          }
-        }
-
-        @keyframes binaryFlow {
-          0% {
-            transform: translateY(-400px) rotate(-90deg);
-            opacity: 0;
-          }
-          50% {
-            opacity: 0.6;
-          }
-          100% {
-            transform: translateY(400px) rotate(-90deg);
-            opacity: 0;
-          }
-        }
-
-        @keyframes techNodePulse {
-          0%, 100% {
-            transform: scale(1);
-            box-shadow: 0 0 15px currentColor;
-          }
-          50% {
-            transform: scale(1.1);
-            box-shadow: 0 0 25px currentColor, 0 0 35px currentColor;
-          }
-        }
-
-        @keyframes circuitFlow {
-          0% {
-            stroke-dashoffset: 0;
-            opacity: 0;
-          }
-          50% {
-            opacity: 0.8;
-          }
-          100% {
-            stroke-dashoffset: -20;
-            opacity: 0;
-          }
-        }
-
-        @keyframes techIndicatorGlow {
-          0%, 100% {
-            background: rgba(34, 211, 238, 0.1);
-            border-color: rgba(34, 211, 238, 0.5);
-            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
-          }
-          33% {
-            background: rgba(139, 92, 246, 0.1);
-            border-color: rgba(139, 92, 246, 0.5);
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
-          }
-          66% {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: rgba(16, 185, 129, 0.5);
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
-          }
-        }
-
-        @keyframes performanceCounter {
-          0% {
-            transform: scale(0.9);
-            opacity: 0.7;
-          }
-          50% {
-            transform: scale(1.05);
-            opacity: 1;
-          }
-          100% {
-            transform: scale(0.9);
-            opacity: 0.7;
-          }
-        }
-
-        @keyframes synthaxHighlight {
-          0%, 100% {
-            color: currentColor;
-            text-shadow: 0 0 5px currentColor;
-          }
-          50% {
-            color: #ffffff;
-            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
-          }
-        }
-
-        @keyframes techParticleOrbit {
-          0% {
-            transform: rotate(0deg) translateX(180px) rotate(0deg) scale(1);
-          }
-          50% {
-            transform: rotate(180deg) translateX(220px) rotate(-180deg) scale(1.2);
-          }
-          100% {
-            transform: rotate(360deg) translateX(180px) rotate(-360deg) scale(1);
-          }
-        }
-        @keyframes wireframePulse {
-          0%, 100% {
-            opacity: 0.3;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.05);
-          }
-        }
-
-        @keyframes energyFlow {
-          0% {
-            stroke-dashoffset: 0;
-            opacity: 0;
-          }
-          50% {
-            opacity: 1;
-          }
-          100% {
-            stroke-dashoffset: -20;
-            opacity: 0;
-          }
-        }
-
-        @keyframes coreGlow {
-          0%, 100% {
-            box-shadow: 
-              0 0 20px #22d3ee,
-              0 0 40px #3b82f6,
-              0 0 60px #22d3ee,
-              inset 0 0 20px #22d3ee;
-          }
-          25% {
-            box-shadow: 
-              0 0 30px #8b5cf6,
-              0 0 60px #ec4899,
-              0 0 90px #8b5cf6,
-              inset 0 0 30px #8b5cf6;
-          }
-          50% {
-            box-shadow: 
-              0 0 25px #10b981,
-              0 0 50px #f59e0b,
-              0 0 75px #10b981,
-              inset 0 0 25px #10b981;
-          }
-          75% {
-            box-shadow: 
-              0 0 35px #f59e0b,
-              0 0 70px #22d3ee,
-              0 0 105px #f59e0b,
-              inset 0 0 35px #f59e0b;
-          }
-        }
-
-        @keyframes orbitalRotation {
-          0% {
-            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-          }
-          100% {
-            transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
-          }
-        }
-
-        @keyframes symmetricFloat {
-          0%, 100% {
-            transform: translateY(0px) rotateX(0deg);
-          }
-          50% {
-            transform: translateY(-15px) rotateX(10deg);
-          }
-        }
-
-        @keyframes particleOrbit {
-          0% {
-            transform: rotate(0deg) translateX(150px) rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg) translateX(150px) rotate(-360deg);
-          }
-        }
-
-        @keyframes dataStreamFlow {
-          0% {
-            transform: translateY(-200px) scaleY(0);
-            opacity: 0;
-          }
-          50% {
-            transform: translateY(0px) scaleY(1);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(200px) scaleY(0);
-            opacity: 0;
-          }
-        }
-
-        @keyframes ringExpansion {
-          0% {
-            transform: scale(0.5) rotateZ(0deg);
-            opacity: 0.8;
-          }
-          50% {
-            transform: scale(1) rotateZ(180deg);
-            opacity: 0.4;
-          }
-          100% {
-            transform: scale(1.5) rotateZ(360deg);
-            opacity: 0;
-          }
-        }
-
-        /* Holographic Effect Animations */
-        @keyframes holographicShift {
-          0%, 100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-
-        @keyframes energyBeam {
-          0% {
-            transform: translateX(-100%) skewX(-15deg);
-            opacity: 0;
-          }
-          50% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateX(100%) skewX(-15deg);
-            opacity: 0;
-          }
-        }
-
-        /* Tech Element Styles */
-        .tech-node {
-          animation: techNodePulse 3s ease-in-out infinite;
-        }
-
-        .binary-stream {
-          animation: binaryFlow 6s linear infinite;
-        }
-
-        .circuit-line {
-          animation: circuitFlow 3s ease-in-out infinite;
-        }
-
-        .tech-indicator {
-          animation: techIndicatorGlow 4s ease-in-out infinite;
-        }
-
-        .performance-stat {
-          animation: performanceCounter 2s ease-in-out infinite;
-        }
-
-        .syntax-element {
-          animation: synthaxHighlight 3s ease-in-out infinite;
-        }
-
-        .tech-particle {
-          animation: techParticleOrbit 8s linear infinite;
-        }
-
-        /* Enhanced Glow Effects for Tech Elements */
-        .tech-glow-cyan {
-          filter: drop-shadow(0 0 8px #22d3ee) drop-shadow(0 0 16px #22d3ee40);
-        }
-
-        .tech-glow-purple {
-          filter: drop-shadow(0 0 8px #8b5cf6) drop-shadow(0 0 16px #8b5cf640);
-        }
-
-        .tech-glow-green {
-          filter: drop-shadow(0 0 8px #10b981) drop-shadow(0 0 16px #10b98140);
-        }
-
-        .tech-glow-orange {
-          filter: drop-shadow(0 0 8px #f59e0b) drop-shadow(0 0 16px #f59e0b40);
-        }
-
-        /* Holographic Tech Card Effects */
-        .tech-card {
-          background: linear-gradient(
-            135deg,
-            rgba(0,0,0,0.8) 0%,
-            rgba(34,211,238,0.1) 25%,
-            rgba(139,92,246,0.1) 50%,
-            rgba(16,185,129,0.1) 75%,
-            rgba(0,0,0,0.8) 100%
-          );
-          backdrop-filter: blur(20px);
-          border: 1px solid rgba(255,255,255,0.1);
-          box-shadow: 
-            0 8px 32px rgba(0,0,0,0.3),
-            inset 0 1px 0 rgba(255,255,255,0.1);
-        }
-
-        .tech-card:hover {
-          transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
-          box-shadow: 
-            0 12px 40px rgba(0,0,0,0.4),
-            0 0 20px rgba(34,211,238,0.3),
-            inset 0 1px 0 rgba(255,255,255,0.2);
-        }
-        .wireframe-line {
-          transform-origin: center;
-          animation: wireframePulse 3s ease-in-out infinite;
-        }
-
-        .energy-core {
-          animation: coreGlow 4s ease-in-out infinite;
-        }
-
-        .orbital-ring {
-          animation: orbitalRotation 20s linear infinite;
-        }
-
-        .symmetric-particle {
-          animation: particleOrbit 8s linear infinite;
-        }
-
-        .data-stream {
-          animation: dataStreamFlow 4s ease-in-out infinite;
-        }
-
-        .expanding-ring {
-          animation: ringExpansion 6s ease-out infinite;
-        }
-
-        /* Gradient Backgrounds for Wireframes */
-        .gradient-wireframe {
-          background: linear-gradient(
-            45deg,
-            #22d3ee 0%,
-            #3b82f6 25%,
-            #8b5cf6 50%,
-            #ec4899 75%,
-            #22d3ee 100%
-          );
-          background-size: 400% 400%;
-          animation: holographicShift 8s ease-in-out infinite;
-        }
-
-        /* Performance Optimizations */
-        .gpu-accelerated {
-          transform: translateZ(0);
-          will-change: transform, opacity;
-          backface-visibility: hidden;
-        }
-
-        /* Mobile Optimizations for Wireframe */
-        @media (max-width: 768px) {
-          .perspective-1200 {
-            perspective: 800px;
-          }
-          
-          .wireframe-line {
-            animation-duration: 4s;
-          }
-          
-          .orbital-ring {
-            animation-duration: 25s;
-          }
-          
-          .symmetric-particle {
-            animation-duration: 10s;
-          }
-        }
-
-        /* Enhanced Scrollbar for 3D Experience */
-        ::-webkit-scrollbar {
-          width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-          background: linear-gradient(45deg, rgba(0,0,0,0.05), rgba(59,130,246,0.05));
-          border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-          background: linear-gradient(45deg, #22d3ee, #8b5cf6);
-          border-radius: 4px;
-          box-shadow: 0 0 10px rgba(34,211,238,0.3);
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(45deg, #0891b2, #7c3aed);
-          box-shadow: 0 0 15px rgba(34,211,238,0.5);
-        }
-
-        /* Accessibility and Reduced Motion */
-        @media (prefers-reduced-motion: reduce) {
-          .wireframe-line,
-          .energy-core,
-          .orbital-ring,
-          .symmetric-particle,
-          .data-stream,
-          .expanding-ring {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-          }
         }
       `}</style>
     </div>
