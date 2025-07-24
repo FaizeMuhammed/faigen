@@ -133,30 +133,43 @@ const FullPageTechBackground = ({
   };
 
   // Enhanced drawing functions with more vibrant colors and glow effects
+  // Enhanced drawing functions with more vibrant colors and glow effects
   const drawNeural = (ctx, time, mouseX, mouseY, centerX, centerY, maxRadius) => {
-    const nodes = complexity * 8;
+    // Responsive node count based on screen size
+    const isMobile = windowSize.width < 768;
+    const baseNodes = isMobile ? complexity * 4 : complexity * 8;
+    const connectionDistance = isMobile ? 80 : 120;
+    const maxLayers = isMobile ? 3 : 4;
+    
     const nodePositions = [];
 
-    // Generate nodes
-    for (let i = 0; i < nodes; i++) {
-      const angle = (i / nodes) * Math.PI * 2;
-      const layer = Math.floor(i / (nodes / 4)) + 1;
-      const radius = (maxRadius / 4) * layer + Math.sin(time * 0.002 + i) * 20;
+    // Generate nodes with better mobile distribution
+    for (let i = 0; i < baseNodes; i++) {
+      const angle = (i / baseNodes) * Math.PI * 2;
+      const layer = Math.floor(i / (baseNodes / maxLayers)) + 1;
+      const layerRadius = isMobile ? 
+        (maxRadius / maxLayers) * layer * 0.7 : 
+        (maxRadius / 4) * layer;
+      const radius = layerRadius + Math.sin(time * 0.002 + i) * (isMobile ? 10 : 20);
       const x = centerX + Math.cos(angle + time * 0.001) * radius;
       const y = centerY + Math.sin(angle + time * 0.001) * radius;
       
       nodePositions.push({ x, y, layer });
     }
 
-    // Draw connections with glow
+    // Draw connections with glow - fewer connections on mobile
     ctx.shadowColor = formations[currentFormation].color[0];
-    ctx.shadowBlur = 5;
-    ctx.strokeStyle = formations[currentFormation].color[0] + Math.floor(opacity * 180).toString(16).padStart(2, '0');
-    ctx.lineWidth = 1.5;
+    ctx.shadowBlur = isMobile ? 3 : 5;
+    ctx.strokeStyle = formations[currentFormation].color[0] + Math.floor(opacity * (isMobile ? 140 : 180)).toString(16).padStart(2, '0');
+    ctx.lineWidth = isMobile ? 1 : 1.5;
+    
     for (let i = 0; i < nodePositions.length; i++) {
       for (let j = i + 1; j < nodePositions.length; j++) {
         const dist = Math.hypot(nodePositions[i].x - nodePositions[j].x, nodePositions[i].y - nodePositions[j].y);
-        if (dist < 120) {
+        if (dist < connectionDistance) {
+          // Skip some connections on mobile for better performance
+          if (isMobile && Math.random() > 0.6) continue;
+          
           ctx.beginPath();
           ctx.moveTo(nodePositions[i].x, nodePositions[i].y);
           ctx.lineTo(nodePositions[j].x, nodePositions[j].y);
@@ -165,19 +178,20 @@ const FullPageTechBackground = ({
       }
     }
 
-    // Draw nodes with glow
-    ctx.shadowBlur = 10;
+    // Draw nodes with glow - smaller on mobile
+    ctx.shadowBlur = isMobile ? 6 : 10;
     nodePositions.forEach((node, i) => {
       const pulse = Math.sin(time * 0.005 + i * 0.1) * 0.5 + 0.5;
+      const nodeSize = isMobile ? 2 + pulse * 1.5 : 3 + pulse * 2;
+      
       ctx.fillStyle = formations[currentFormation].color[1];
       ctx.shadowColor = formations[currentFormation].color[1];
       ctx.beginPath();
-      ctx.arc(node.x, node.y, 3 + pulse * 2, 0, Math.PI * 2);
+      ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2);
       ctx.fill();
     });
     ctx.shadowBlur = 0;
   };
-
   const drawFlow = (ctx, time, mouseX, mouseY, centerX, centerY, maxRadius) => {
     const streams = complexity;
     ctx.shadowBlur = 8;
