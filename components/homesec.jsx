@@ -698,15 +698,22 @@ const HomeSection = () => {
 
       {/* Top Left Logo */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="fixed top-4 left-4 md:top-6 md:left-6 z-50"
-      >
-        <div className="bg-white/95 backdrop-blur-sm rounded-xl md:rounded-2xl border border-gray-200 shadow-lg p-2 md:p-3 hover:scale-105 transition-transform duration-200">
-          <div className="h-10 md:h-14 lg:h-16 w-10 md:w-14 lg:w-16 bg-black rounded-lg flex items-center justify-center text-white font-bold text-lg">F</div>
-        </div>
-      </motion.div>
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.4 }}
+  className="fixed top-4 left-4 md:top-6 md:left-6 z-50"
+>
+  <div className="bg-white/95 backdrop-blur-sm rounded-xl md:rounded-2xl border border-gray-200 shadow-lg p-2 md:p-3 hover:scale-105 transition-transform duration-200">
+    <div className="h-10 md:h-14 lg:h-16 w-10 md:w-14 lg:w-16 rounded-lg flex items-center justify-center overflow-hidden">
+      <img
+        src="/ChatGPT_Image_Apr_4__2025__10_40_51_PM-removebg-preview.png"
+        alt="Logo"
+        className="h-full w-full object-contain"
+      />
+    </div>
+  </div>
+</motion.div>
+
 
       {/* Corner Navigation Menu */}
       <div className="fixed top-6 right-20 z-50">
