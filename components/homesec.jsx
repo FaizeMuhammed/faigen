@@ -2,272 +2,282 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Star, Bot, Layout, MessageSquare, Sparkles, Download, ChevronDown, MousePointer2, Smartphone, CheckCircle2 } from "lucide-react";
+import { Bot, ShoppingCart, Check, Clock, Zap } from "lucide-react";
 
-export default function Home() {
+// --- Original Brand Icons ---
+const WhatsAppIcon = ({ className }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.305-.885-.653-1.48-1.46-1.653-1.758-.173-.298-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.397-.272.322-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+  </svg>
+);
+
+const InstagramIcon = ({ className }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+  </svg>
+);
+
+export default function HeroSection() {
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
   };
 
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+  const float1 = {
+    initial: { y: 0, rotate: -3 },
+    animate: { y: [-5, 5, -5], rotate: [-3, -4, -3], transition: { duration: 6, repeat: Infinity, ease: "easeInOut" } }
+  };
+
+  const float2 = {
+    initial: { y: 0, rotate: 3 },
+    animate: { y: [5, -5, 5], rotate: [3, 2, 3], transition: { duration: 7, repeat: Infinity, ease: "easeInOut" } }
   };
 
   return (
-    <div className="relative min-h-screen text-[#1A1A1A] font-sans selection:bg-[#3B453A] selection:text-white bg-white">
+    // Outer wrapping container adds padding around the massive framed canvas
+    <div className="w-full min-h-screen bg-white flex flex-col font-sans text-[#1A1A1A] selection:bg-blue-500 selection:text-white">
       
-      {/* --- Pure White Navbar --- */}
-      <header className="relative w-full bg-white z-50 pt-6 pb-4 px-6 md:px-12">
+      {/* --- Pure White Navbar (Outside the inner canvas) --- */}
+      <header className="relative w-full z-50 pt-8 pb-4 px-6 md:px-12 bg-white">
         <nav className="max-w-[1400px] mx-auto flex items-center justify-between">
+          
+          {/* Logo Section */}
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center overflow-hidden bg-white border border-gray-100 shadow-sm p-1">
+            <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
               <img
                 src="/ChatGPT_Image_Apr_4__2025__10_40_51_PM-removebg-preview.png"
                 alt="Faigen Logo"
                 className="h-full w-full object-contain"
                 onError={(e) => {
                   e.target.style.display = 'none';
-                  e.target.parentNode.innerHTML = '<div class="bg-black w-full h-full rounded-lg flex items-center justify-center text-white font-bold">F</div>';
+                  e.target.parentNode.innerHTML = '<span class="font-bold text-xl">F</span>';
                 }}
               />
             </div>
             <span className="font-bold text-[1.15rem] tracking-tight text-[#1A1A1A]">Faigen</span>
           </div>
 
-          <div className="hidden md:flex items-center space-x-10 text-[14px] font-medium text-[#4A4A4A]">
-            <a href="#home" className="text-black font-semibold">Home</a>
-            <a href="#services" className="hover:text-black transition-colors">Services</a>
-            <a href="#ai" className="hover:text-black transition-colors">AI Bots</a>
-            <a href="#about" className="hover:text-black transition-colors">About</a>
-            <a href="#contact" className="hover:text-black transition-colors">Contact</a>
+          <div className="hidden md:flex items-center space-x-10 text-[14px] font-medium text-gray-600">
+            <a href="#features" className="hover:text-black transition-colors">Features</a>
+            <a href="#solutions" className="hover:text-black transition-colors">Solutions</a>
+            <a href="#resources" className="hover:text-black transition-colors">Resources</a>
+            <a href="#pricing" className="hover:text-black transition-colors">Pricing</a>
           </div>
 
-          <div className="flex items-center gap-6">
-            <button className="hidden md:block text-[14px] font-medium text-[#4A4A4A] hover:text-black transition-colors">
-              Join Waiting List
+          <div className="flex items-center gap-5">
+            <button className="hidden md:block text-[14px] font-medium text-gray-600 hover:text-black transition-colors">
+              Sign in
             </button>
-            <button className="bg-[#1C2022] text-white px-6 py-2.5 rounded-full text-[14px] font-medium hover:bg-black transition-all">
-              Get App
+            <button className="bg-white border border-gray-200 text-[#1A1A1A] px-5 py-2 rounded-[0.8rem] text-[14px] font-semibold hover:border-gray-300 shadow-sm transition-all">
+              Get demo
             </button>
           </div>
         </nav>
       </header>
 
-      {/* --- Top Hero Content with "Smoky/Cloudy" Background --- */}
-      <main className="relative z-10 w-full pt-16 md:pt-20 pb-16 bg-[#FDFDFD]">
-        <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
-          <div className="absolute top-[5%] left-[10%] w-[50vw] h-[40vw] bg-[#E8EAE9] blur-[100px] rounded-[100%] opacity-60 mix-blend-multiply rotate-12"></div>
-          <div className="absolute top-[20%] right-[5%] w-[45vw] h-[35vw] bg-[#EBECEB] blur-[120px] rounded-[100%] opacity-70 mix-blend-multiply -rotate-12"></div>
-          <div className="absolute bottom-[10%] left-[30%] w-[60vw] h-[40vw] bg-[#E4E6E5] blur-[120px] rounded-[100%] opacity-50 mix-blend-multiply"></div>
-          <div className="absolute inset-0 opacity-[0.2] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}></div>
-        </div>
+      {/* --- Massive Framed Canvas (The entire app sits in here) --- */}
+      <div className="w-full flex-1 px-3 md:px-6 pb-6 pt-2">
+        <div className="relative w-full h-full min-h-[85vh] max-w-[1600px] mx-auto rounded-[2.5rem] md:rounded-[3rem] border border-gray-200/80 bg-[#FAFAFA] overflow-hidden flex flex-col items-center justify-center shadow-sm">
+          
+          {/* Highly Visible Dotted Background */}
+          <div 
+            className="absolute inset-0 opacity-[0.5] pointer-events-none z-0" 
+            style={{ backgroundImage: "radial-gradient(#9CA3AF 1.5px, transparent 1.5px)", backgroundSize: "24px 24px" }}
+          ></div>
+          
+          {/* Center Glowing Orb (Fades dots in the center for text readability) */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[#FAFAFA] blur-[100px] rounded-full pointer-events-none z-0"></div>
 
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="flex items-center gap-2 text-[#4A4A4C] font-medium text-sm mb-6">
-            <Star className="w-4 h-4 fill-current text-[#1A1A1A]" />
-            <span>Loved By 100+ Kerala Businesses</span>
-          </motion.div>
-
-          <div className="relative w-full">
-            <motion.div className="w-full lg:w-[85%] space-y-8" variants={staggerContainer} initial="hidden" animate="visible">
-              <motion.h1 variants={fadeUp} className="text-[3rem] sm:text-[4.2rem] lg:text-[5.5rem] xl:text-[6rem] leading-[1.05] font-normal tracking-[-0.02em] text-[#29302B] uppercase">
-                WE BUILD WEBSITES <br className="hidden md:block"/>
-                <span className="flex items-center flex-wrap gap-y-2 mt-1 md:mt-3">
-                  THAT 
-                  <span className="text-[#29302B]/40 blur-[5px] select-none hover:blur-none transition-all duration-500 cursor-default mx-3 md:mx-5">SELL</span> 
-                  <span className="inline-flex items-center justify-center w-20 h-12 sm:w-28 sm:h-[4rem] lg:w-36 lg:h-[4.5rem] border-[3px] border-[#29302B] rounded-[2rem] mr-3 md:mr-5 text-[#29302B] align-middle bg-transparent shadow-sm">
-                    <Bot className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 fill-current opacity-80" />
-                  </span>
-                  & BOTS
-                </span>
-                THAT NEVER SLEEP
-              </motion.h1>
-
-              <motion.p variants={fadeUp} className="max-w-md text-[1rem] sm:text-[1.05rem] text-[#3A3A3A] leading-relaxed font-medium pt-2">
-                Stop wasting hours manually replying to messages. We build beautiful websites for your brand and smart AI agents that take orders at 3 AM.
-              </motion.p>
-
-              <motion.div variants={fadeUp} className="pt-2 pb-12 lg:pb-0">
-                <button className="bg-[#0A0A0A] text-white px-8 py-3.5 rounded-full font-medium text-[14px] shadow-xl hover:-translate-y-0.5 transition-all duration-300">
-                  Automate My Business!
-                </button>
-              </motion.div>
+          {/* --- Centered Hero Content --- */}
+          <main className="relative z-10 flex-1 flex flex-col items-center justify-center w-full px-4 pt-16 pb-32 max-w-[1200px]">
+            
+            {/* Real Logo inside the center icon block */}
+            <motion.div 
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="w-16 h-16 bg-white/90 backdrop-blur-md rounded-2xl shadow-[0_15px_30px_-5px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center p-2 mb-10 overflow-hidden"
+            >
+              <img
+                src="/ChatGPT_Image_Apr_4__2025__10_40_51_PM-removebg-preview.png"
+                alt="Faigen Logo"
+                className="h-full w-full object-contain"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.parentNode.innerHTML = '<span class="font-bold text-2xl text-[#2563EB]">F</span>';
+                }}
+              />
             </motion.div>
 
-            {/* Right Column Icons */}
-            <motion.div className="flex gap-4 sm:gap-6 lg:absolute lg:right-0 lg:bottom-4" variants={staggerContainer} initial="hidden" animate="visible">
-              {[
-                { icon: Layout, label: "Web Apps", bg: "from-[#217899] to-[#0A3D54]" },       
-                { icon: MessageSquare, label: "WhatsApp", bg: "from-[#91238C] to-[#450A43]" }, 
-                { icon: Sparkles, label: "AI Agents", bg: "from-[#C77200] to-[#703B00]" },     
-                { icon: Smartphone, label: "Auto-DM", bg: "from-[#17856D] to-[#094235]" },     
-              ].map((tool, i) => (
-                <motion.div key={i} variants={fadeUp} className="flex flex-col items-center gap-2 group cursor-pointer" whileHover={{ y: -4 }}>
-                  <div className={`w-[3.5rem] h-[3.5rem] sm:w-[4rem] sm:h-[4rem] rounded-[1rem] bg-gradient-to-b ${tool.bg} shadow-md flex items-center justify-center text-white relative overflow-hidden ring-1 ring-white/20`}>
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <tool.icon className="w-6 h-6 sm:w-7 sm:h-7 relative z-10 drop-shadow-md text-white/90" strokeWidth={1.5} />
-                  </div>
-                  <span className="text-[11px] font-semibold text-[#1A1A1A]">{tool.label}</span>
-                </motion.div>
-              ))}
+            {/* Massive Typography */}
+            <motion.h1 
+              initial="hidden" animate="visible" variants={fadeUp}
+              className="text-[3.2rem] sm:text-[4.5rem] lg:text-[5.5rem] leading-[1.05] font-medium tracking-tight text-[#1A1A1A] text-center"
+            >
+              Build websites that sell, <br />
+              <span className="text-[#8C8C8C]">and bots that never sleep</span>
+            </motion.h1>
+
+            <motion.p 
+              initial="hidden" animate="visible" variants={fadeUp}
+              className="text-[1.1rem] text-gray-700 font-medium mt-6 mb-10 text-center max-w-lg"
+            >
+              Efficiently manage your digital presence and automate sales 24/7 to boost productivity.
+            </motion.p>
+
+            <motion.div initial="hidden" animate="visible" variants={fadeUp}>
+              <button className="bg-[#2563EB] text-white px-7 py-3.5 rounded-[0.85rem] font-semibold text-[15px] shadow-[0_10px_25px_-5px_rgba(37,99,235,0.4)] hover:-translate-y-0.5 hover:shadow-[0_15px_25px_-5px_rgba(37,99,235,0.5)] transition-all">
+                Get free demo
+              </button>
             </motion.div>
-          </div>
-        </div>
-      </main>
 
-      {/* --- Second Section: Pure White Background --- */}
-      <section className="relative w-full pt-16 md:pt-24 pb-32 bg-white">
-        
-        <div className="relative z-20 max-w-[850px] mx-auto px-4 sm:px-6">
-          <motion.div 
-            initial={{ y: 80, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, type: "spring", stiffness: 45 }}
-            className="bg-white rounded-[1.5rem] border border-gray-100 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.08)] p-6 sm:p-8 relative"
-          >
-            {/* Card Header */}
-            <div className="flex items-center justify-between bg-white border border-gray-100 p-3 rounded-2xl mb-8 shadow-sm">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-[#25D366] rounded-xl flex items-center justify-center shadow-inner text-white">
-                  <MessageSquare size={24} fill="currentColor" />
+            {/* ========================================= */}
+            {/* FLOATING WIDGETS */}
+            {/* ========================================= */}
+
+            {/* 1. Top Left: Sticky Note & Checkmark */}
+            <motion.div variants={float1} initial="initial" animate="animate" className="hidden lg:block absolute top-[10%] left-[2%] z-30">
+              <div className="relative">
+                <div className="bg-[#FEF08A] p-5 pt-7 rounded-sm shadow-md w-52 border border-yellow-200/50">
+                  <div className="w-2.5 h-2.5 bg-red-600 rounded-full absolute top-2 left-1/2 -translate-x-1/2 shadow-sm border border-red-800"></div>
+                  <p className="font-[400] font-serif italic text-[15px] leading-snug text-gray-800 font-medium">
+                    Manually replying to DMs takes too much time. Let Faigen AI accomplish more tasks with ease.
+                  </p>
                 </div>
-                <div>
-                  <p className="text-[11px] text-gray-500 font-medium">Faigen AI Bot</p>
-                  <h3 className="text-[15px] font-semibold text-gray-900">WhatsApp Order Automation</h3>
-                </div>
-              </div>
-              <ChevronDown size={20} className="text-gray-400 mr-2" />
-            </div>
-
-            {/* Sub Header */}
-            <div className="flex justify-between items-center pb-4 mb-4">
-              <h2 className="text-[1.35rem] font-medium tracking-tight text-gray-900">Live AI Conversation</h2>
-              <div className="flex items-center gap-2">
-                 <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-                </span>
-                <span className="text-[12px] font-semibold text-gray-600">Bot Active</span>
-              </div>
-            </div>
-
-            {/* --- WhatsApp Authentic Chat Interface --- */}
-            <div className="relative w-full h-[280px] rounded-[1rem] border border-gray-200 mb-10 overflow-hidden bg-[#EFEAE2] shadow-inner flex flex-col">
-              <div 
-                className="absolute inset-0 opacity-[0.06] mix-blend-multiply z-0 pointer-events-none" 
-                style={{ backgroundImage: "url('https://i.pinimg.com/736x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg')", backgroundSize: "300px" }}
-              ></div>
-
-              {/* Chat Content */}
-              <div className="relative z-10 p-5 flex flex-col gap-4 overflow-y-auto h-full scrollbar-hide">
-                <div className="flex justify-center w-full">
-                  <span className="bg-white/80 backdrop-blur-sm text-gray-600 text-[10px] font-medium px-3 py-1 rounded-lg shadow-sm">
-                    Today, 3:10 AM
-                  </span>
-                </div>
-
-                {/* Customer Message */}
-                <div className="bg-[#D9FDD3] text-gray-800 text-[13.5px] p-3 rounded-2xl rounded-tr-sm max-w-[85%] shadow-sm w-fit self-end relative pb-5">
-                  Namaskaram, do you have the floral dress available? Need it urgently for a wedding tomorrow! 😭
-                  <div className="absolute bottom-1 right-2 flex items-center gap-1">
-                    <span className="text-[9px] text-gray-500">3:12 AM</span>
-                    <CheckCircle2 size={10} className="text-blue-500 fill-current" />
-                  </div>
-                </div>
-
-                {/* AI Bot Message */}
-                <div className="bg-white text-gray-800 text-[13.5px] p-3 rounded-2xl rounded-tl-sm max-w-[85%] shadow-sm w-fit relative pb-6">
-                  <p className="mb-2">Namaskaram! Yes, we have exactly 2 left in size M. ✨</p>
-                  <p>I have reserved one for you. Click below to pay and we will dispatch it by 9 AM.</p>
-                  <div className="absolute bottom-1 right-2">
-                    <span className="text-[9px] text-gray-400">3:12 AM</span>
-                  </div>
-                </div>
-
-                {/* Interactive Action inside chat */}
-                <div className="bg-white border border-gray-100 text-gray-800 text-[13px] p-3 rounded-xl max-w-[85%] shadow-md w-fit flex items-center gap-3 cursor-pointer hover:bg-gray-50 transition-colors">
-                  <div className="w-8 h-8 bg-[#25D366]/10 rounded-full flex items-center justify-center text-[#25D366]">
-                    <Smartphone size={16} />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">Pay ₹1,299</p>
-                    <p className="text-[10px] text-gray-500">Secure Razorpay Link</p>
+                <div className="absolute -bottom-6 -left-6 bg-white/70 backdrop-blur-md p-3.5 rounded-[1.2rem] shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] border border-white">
+                  <div className="bg-[#2563EB] text-white p-2.5 rounded-xl">
+                    <Check size={24} strokeWidth={3} />
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Bottom Grid Section */}
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-[1.15rem] font-medium tracking-tight text-gray-900">Recent AI Orders</h3>
-                <span className="text-[11px] font-medium text-gray-500 flex items-center gap-2">
-                  Processing.. (14%) <span className="w-3.5 h-3.5 border-2 border-gray-200 border-t-gray-600 rounded-full animate-spin"></span>
-                </span>
-              </div>
-              
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="space-y-2 cursor-pointer">
-                  <div className="aspect-square rounded-2xl bg-cover bg-center shadow-sm border border-gray-100" style={{backgroundImage: "url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=500&auto=format&fit=crop')"}}></div>
-                  <div className="text-center">
-                    <p className="text-[11px] font-bold text-gray-900">Salad_Bowl.jpg</p>
-                    <p className="text-[10px] text-gray-500">Order • ₹450</p>
-                  </div>
-                </div>
-
-                <div className="space-y-2 cursor-pointer relative">
-                  <div className="aspect-square rounded-2xl bg-cover bg-center shadow-sm border border-gray-100" style={{backgroundImage: "url('https://images.unsplash.com/photo-1550639525-c97d455acf70?q=80&w=500&auto=format&fit=crop')"}}></div>
-                  <div className="text-center">
-                    <p className="text-[11px] font-bold text-gray-900">Floral_Dress.jpg</p>
-                    <p className="text-[10px] text-gray-500">Order • ₹1299</p>
-                  </div>
-                </div>
-
-                <div className="space-y-2 cursor-pointer">
-                  <div className="aspect-square rounded-2xl bg-cover bg-center relative shadow-sm border border-gray-100" style={{backgroundImage: "url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=500&auto=format&fit=crop')"}}>
-                    <div className="absolute bottom-2 right-2 w-4 h-4 border-2 border-white/80 border-t-white rounded-full animate-spin"></div>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-[11px] font-bold text-gray-900">Sneakers.jpg</p>
-                    <p className="text-[10px] text-gray-500">Syncing • ₹3999</p>
-                  </div>
+            {/* 2. Top Right: Reminders Folder (Redesigned with Real Image Background) */}
+            <motion.div variants={float2} initial="initial" animate="animate" className="hidden lg:block absolute top-[5%] right-[2%] z-30">
+              <div className="relative">
+                {/* Floating Clock Icon */}
+                <div className="absolute -left-10 top-8 bg-white/90 backdrop-blur-md p-3 rounded-[1rem] shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] border border-white z-40">
+                  <Clock size={22} className="text-[#1A1A1A]" strokeWidth={2.5} />
                 </div>
                 
-                <div className="space-y-2">
-                  <div className="aspect-square border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center text-gray-500 hover:bg-gray-50 hover:border-gray-400 transition-colors cursor-pointer bg-white">
-                    <span className="text-[11px] font-medium text-center px-4">Upload<br/>Catalog</span>
+                {/* Folder Design */}
+                <div className="flex flex-col drop-shadow-[0_15px_30px_rgba(0,0,0,0.1)]">
+                  {/* Tab */}
+                  <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
+                    <span className="text-[13px] font-bold text-gray-900">AI Agents</span>
+                  </div>
+                  {/* Body with Image Background */}
+                  <div 
+                    className="rounded-b-[1.2rem] rounded-tr-[1.2rem] p-5 pt-6 relative z-20 -mt-[1px] w-64 border border-gray-100 bg-cover bg-center overflow-hidden"
+                    style={{ backgroundImage: "url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=500&auto=format&fit=crop')" }}
+                  >
+                    {/* Dark Glassmorphism Overlay for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
+                    
+                    {/* Content inside the image card */}
+                    <div className="relative z-10">
+                      <div className="flex justify-end mb-1">
+                        <p className="text-[10px] text-white/70 font-bold uppercase tracking-widest">Activity</p>
+                      </div>
+                      <p className="text-[15px] font-bold text-white mb-1">Customer Query</p>
+                      <p className="text-[12px] text-white/80 font-medium mb-4">Handling product inquiry</p>
+                      <div className="bg-white/20 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg inline-flex items-center gap-1.5">
+                        <Clock size={12} /> 13:00 - 13:45
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Overlapping Floating Corner Image with Cursor */}
-            <div className="absolute -bottom-10 right-4 sm:right-16 z-30 animate-bounce" style={{ animationDuration: '4s' }}>
-              <div 
-                className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-cover bg-center border-4 border-white shadow-xl rotate-6" 
-                style={{backgroundImage: "url('https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?q=80&w=500&auto=format&fit=crop')"}}
-              ></div>
-              <MousePointer2 size={24} className="absolute -bottom-4 -right-2 text-[#1A1A1A] fill-white -rotate-12" />
-              <div className="absolute -bottom-8 -right-8 bg-[#1A1A1A] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-md">
-                Processing Order...
+            {/* 3. Bottom Left: Tasks Folder */}
+            <motion.div variants={float2} initial="initial" animate="animate" className="hidden lg:block absolute bottom-[-5%] left-[2%] z-30">
+              {/* Folder Design */}
+              <div className="flex flex-col drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
+                {/* Tab */}
+                <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
+                  <span className="text-[13px] font-bold text-gray-900">Today's tasks</span>
+                </div>
+                {/* Body */}
+                <div className="bg-white rounded-b-[1.2rem] rounded-tr-[1.2rem] p-6 relative z-20 -mt-[1px] w-72 border border-gray-50 space-y-6">
+                  
+                  {/* Task 1 */}
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <div className="flex gap-2.5 items-center">
+                        <div className="w-5 h-5 rounded-md bg-[#D9FDD3] text-[#25D366] flex items-center justify-center">
+                          <WhatsAppIcon className="w-3 h-3" />
+                        </div>
+                        <span className="text-[12px] font-bold text-gray-800">WhatsApp Bot Setup</span>
+                      </div>
+                      {/* Fake Avatars */}
+                      <div className="flex -space-x-2">
+                        <div className="w-5 h-5 rounded-full bg-blue-200 border border-white z-10 text-[8px] flex items-center justify-center font-bold text-blue-700">A</div>
+                        <div className="w-5 h-5 rounded-full bg-pink-200 border border-white z-0 text-[8px] flex items-center justify-center font-bold text-pink-700">M</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] text-gray-400 font-medium w-8">Sep 10</span>
+                      <div className="h-1.5 flex-1 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-[#25D366] rounded-full w-[60%]"></div>
+                      </div>
+                      <span className="text-[10px] text-gray-500 font-bold">60%</span>
+                    </div>
+                  </div>
+
+                  {/* Task 2 */}
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <div className="flex gap-2.5 items-center">
+                        <div className="w-5 h-5 rounded-md bg-pink-100 text-[#E1306C] flex items-center justify-center">
+                          <InstagramIcon className="w-3 h-3" />
+                        </div>
+                        <span className="text-[12px] font-bold text-gray-800">Landing Page Design</span>
+                      </div>
+                      <div className="flex -space-x-2">
+                        <div className="w-5 h-5 rounded-full bg-purple-200 border border-white z-10 text-[8px] flex items-center justify-center font-bold text-purple-700">J</div>
+                        <div className="w-5 h-5 rounded-full bg-orange-200 border border-white z-0 text-[8px] flex items-center justify-center font-bold text-orange-700">D</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] text-gray-400 font-medium w-8">Sep 18</span>
+                      <div className="h-1.5 flex-1 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-[#E1306C] rounded-full w-[100%]"></div>
+                      </div>
+                      <span className="text-[10px] text-gray-500 font-bold">112%</span>
+                    </div>
+                  </div>
+
+                </div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Left side floating cursor */}
-            <div className="absolute -bottom-6 left-12 flex items-center gap-1 animate-bounce" style={{ animationDuration: '3s' }}>
-              <MousePointer2 size={16} className="text-emerald-500 fill-emerald-500 -rotate-12" />
-              <div className="bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md">
-                Store Owner
+            {/* 4. Bottom Right: Integrations Folder */}
+            <motion.div variants={float1} initial="initial" animate="animate" className="hidden lg:block absolute bottom-[0%] right-[5%] z-30">
+              {/* Folder Design */}
+              <div className="flex flex-col drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
+                {/* Tab */}
+                <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
+                  <span className="text-[13px] font-bold text-gray-900">100+ Integrations</span>
+                </div>
+                {/* Body */}
+                <div className="bg-white rounded-b-[1.2rem] rounded-tr-[1.2rem] p-6 relative z-20 -mt-[1px] w-auto border border-gray-50 flex gap-3">
+                  <div className="w-14 h-14 bg-white rounded-2xl shadow-[0_5px_15px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center text-[#25D366]">
+                    <WhatsAppIcon className="w-7 h-7" />
+                  </div>
+                  <div className="w-14 h-14 bg-white rounded-2xl shadow-[0_5px_15px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center text-[#E1306C]">
+                    <InstagramIcon className="w-7 h-7" />
+                  </div>
+                  <div className="w-14 h-14 bg-white rounded-2xl shadow-[0_5px_15px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center text-[#2563EB]">
+                    <ShoppingCart size={24} fill="currentColor" />
+                  </div>
+                </div>
               </div>
-            </div>
+            </motion.div>
 
-          </motion.div>
+          </main>
         </div>
-      </section>
-
+      </div>
     </div>
   );
 }
