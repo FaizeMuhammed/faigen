@@ -34,14 +34,12 @@ export default function HeroSection() {
   };
 
   return (
-    // Outer wrapping container adds padding around the massive framed canvas
     <div className="w-full min-h-screen bg-white flex flex-col font-sans text-[#1A1A1A] selection:bg-blue-500 selection:text-white">
       
-      {/* --- Pure White Navbar (Outside the inner canvas) --- */}
+      {/* --- Pure White Navbar --- */}
       <header className="relative w-full z-50 pt-8 pb-4 px-6 md:px-12 bg-white">
         <nav className="max-w-[1400px] mx-auto flex items-center justify-between">
           
-          {/* Logo Section */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
               <img
@@ -75,23 +73,20 @@ export default function HeroSection() {
         </nav>
       </header>
 
-      {/* --- Massive Framed Canvas (The entire app sits in here) --- */}
+      {/* --- Massive Framed Canvas --- */}
       <div className="w-full flex-1 px-3 md:px-6 pb-6 pt-2">
         <div className="relative w-full h-full min-h-[85vh] max-w-[1600px] mx-auto rounded-[2.5rem] md:rounded-[3rem] border border-gray-200/80 bg-[#FAFAFA] overflow-hidden flex flex-col items-center justify-center shadow-sm">
           
-          {/* Highly Visible Dotted Background */}
           <div 
             className="absolute inset-0 opacity-[0.5] pointer-events-none z-0" 
             style={{ backgroundImage: "radial-gradient(#9CA3AF 1.5px, transparent 1.5px)", backgroundSize: "24px 24px" }}
           ></div>
           
-          {/* Center Glowing Orb (Fades dots in the center for text readability) */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[#FAFAFA] blur-[100px] rounded-full pointer-events-none z-0"></div>
 
           {/* --- Centered Hero Content --- */}
           <main className="relative z-10 flex-1 flex flex-col items-center justify-center w-full px-4 pt-16 pb-32 max-w-[1200px]">
             
-            {/* Real Logo inside the center icon block */}
             <motion.div 
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -109,20 +104,21 @@ export default function HeroSection() {
               />
             </motion.div>
 
-            {/* Massive Typography */}
+            {/* ✅ UPDATED HEADLINE */}
             <motion.h1 
               initial="hidden" animate="visible" variants={fadeUp}
               className="text-[3.2rem] sm:text-[4.5rem] lg:text-[5.5rem] leading-[1.05] font-medium tracking-tight text-[#1A1A1A] text-center"
             >
-              Build websites that sell, <br />
-              <span className="text-[#8C8C8C]">and bots that never sleep</span>
+              Your customers never sleep. <br />
+              <span className="text-[#8C8C8C]">Neither does our AI.</span>
             </motion.h1>
 
+            {/* ✅ UPDATED SUBTEXT */}
             <motion.p 
               initial="hidden" animate="visible" variants={fadeUp}
               className="text-[1.1rem] text-gray-700 font-medium mt-6 mb-10 text-center max-w-lg"
             >
-              Efficiently manage your digital presence and automate sales 24/7 to boost productivity.
+              Faigen builds websites and AI-powered agents that reply, sell, and take orders on WhatsApp and Instagram — automatically.
             </motion.p>
 
             <motion.div initial="hidden" animate="visible" variants={fadeUp}>
@@ -131,11 +127,9 @@ export default function HeroSection() {
               </button>
             </motion.div>
 
-            {/* ========================================= */}
             {/* FLOATING WIDGETS */}
-            {/* ========================================= */}
 
-            {/* 1. Top Left: Sticky Note & Checkmark */}
+            {/* 1. Top Left: Sticky Note */}
             <motion.div variants={float1} initial="initial" animate="animate" className="hidden lg:block absolute top-[10%] left-[2%] z-30">
               <div className="relative">
                 <div className="bg-[#FEF08A] p-5 pt-7 rounded-sm shadow-md w-52 border border-yellow-200/50">
@@ -152,29 +146,22 @@ export default function HeroSection() {
               </div>
             </motion.div>
 
-            {/* 2. Top Right: Reminders Folder (Redesigned with Real Image Background) */}
+            {/* 2. Top Right: AI Agents Folder */}
             <motion.div variants={float2} initial="initial" animate="animate" className="hidden lg:block absolute top-[5%] right-[2%] z-30">
               <div className="relative">
-                {/* Floating Clock Icon */}
                 <div className="absolute -left-10 top-8 bg-white/90 backdrop-blur-md p-3 rounded-[1rem] shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] border border-white z-40">
                   <Clock size={22} className="text-[#1A1A1A]" strokeWidth={2.5} />
                 </div>
                 
-                {/* Folder Design */}
                 <div className="flex flex-col drop-shadow-[0_15px_30px_rgba(0,0,0,0.1)]">
-                  {/* Tab */}
                   <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
                     <span className="text-[13px] font-bold text-gray-900">AI Agents</span>
                   </div>
-                  {/* Body with Image Background */}
                   <div 
                     className="rounded-b-[1.2rem] rounded-tr-[1.2rem] p-5 pt-6 relative z-20 -mt-[1px] w-64 border border-gray-100 bg-cover bg-center overflow-hidden"
                     style={{ backgroundImage: "url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=500&auto=format&fit=crop')" }}
                   >
-                    {/* Dark Glassmorphism Overlay for text readability */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
-                    
-                    {/* Content inside the image card */}
                     <div className="relative z-10">
                       <div className="flex justify-end mb-1">
                         <p className="text-[10px] text-white/70 font-bold uppercase tracking-widest">Activity</p>
@@ -192,16 +179,12 @@ export default function HeroSection() {
 
             {/* 3. Bottom Left: Tasks Folder */}
             <motion.div variants={float2} initial="initial" animate="animate" className="hidden lg:block absolute bottom-[-5%] left-[2%] z-30">
-              {/* Folder Design */}
               <div className="flex flex-col drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-                {/* Tab */}
                 <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
                   <span className="text-[13px] font-bold text-gray-900">Today's tasks</span>
                 </div>
-                {/* Body */}
                 <div className="bg-white rounded-b-[1.2rem] rounded-tr-[1.2rem] p-6 relative z-20 -mt-[1px] w-72 border border-gray-50 space-y-6">
                   
-                  {/* Task 1 */}
                   <div>
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex gap-2.5 items-center">
@@ -210,7 +193,6 @@ export default function HeroSection() {
                         </div>
                         <span className="text-[12px] font-bold text-gray-800">WhatsApp Bot Setup</span>
                       </div>
-                      {/* Fake Avatars */}
                       <div className="flex -space-x-2">
                         <div className="w-5 h-5 rounded-full bg-blue-200 border border-white z-10 text-[8px] flex items-center justify-center font-bold text-blue-700">A</div>
                         <div className="w-5 h-5 rounded-full bg-pink-200 border border-white z-0 text-[8px] flex items-center justify-center font-bold text-pink-700">M</div>
@@ -225,7 +207,6 @@ export default function HeroSection() {
                     </div>
                   </div>
 
-                  {/* Task 2 */}
                   <div>
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex gap-2.5 items-center">
@@ -254,13 +235,10 @@ export default function HeroSection() {
 
             {/* 4. Bottom Right: Integrations Folder */}
             <motion.div variants={float1} initial="initial" animate="animate" className="hidden lg:block absolute bottom-[0%] right-[5%] z-30">
-              {/* Folder Design */}
               <div className="flex flex-col drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-                {/* Tab */}
                 <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
                   <span className="text-[13px] font-bold text-gray-900">100+ Integrations</span>
                 </div>
-                {/* Body */}
                 <div className="bg-white rounded-b-[1.2rem] rounded-tr-[1.2rem] p-6 relative z-20 -mt-[1px] w-auto border border-gray-50 flex gap-3">
                   <div className="w-14 h-14 bg-white rounded-2xl shadow-[0_5px_15px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center text-[#25D366]">
                     <WhatsAppIcon className="w-7 h-7" />
