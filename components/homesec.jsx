@@ -68,7 +68,6 @@ export default function HeroSection() {
           </div>
 
           <div className="flex items-center gap-5">
-           
             <button 
               onClick={() => setShowPopup(true)}
               className="bg-white border border-gray-200 text-[#1A1A1A] px-5 py-2 rounded-[0.8rem] text-[14px] font-semibold hover:border-gray-300 shadow-sm transition-all"
@@ -79,9 +78,12 @@ export default function HeroSection() {
         </nav>
       </header>
 
-      {/* --- Massive Framed Canvas --- */}
+      {/* --- Framed Canvas --- */}
       <div className="w-full flex-1 px-3 md:px-6 pb-6 pt-2">
-        <div className="relative w-full h-full min-h-[85vh] max-w-[1600px] mx-auto rounded-[2.5rem] md:rounded-[3rem] border border-gray-200/80 bg-[#FAFAFA] overflow-hidden flex flex-col items-center justify-center shadow-sm">
+        <div
+          className="relative w-full max-w-[1600px] mx-auto rounded-[2.5rem] md:rounded-[3rem] border border-gray-200/80 bg-[#FAFAFA] overflow-hidden flex flex-col items-center justify-center shadow-sm"
+          style={{ height: 'calc(100vh - 88px)' }}
+        >
           
           <div 
             className="absolute inset-0 opacity-[0.5] pointer-events-none z-0" 
@@ -90,13 +92,146 @@ export default function HeroSection() {
           
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[#FAFAFA] blur-[100px] rounded-full pointer-events-none z-0"></div>
 
-          <main className="relative z-10 flex-1 flex flex-col items-center justify-center w-full px-4 pt-16 pb-32 max-w-[1200px]">
+          {/* --- Top Left: Sticky Note --- */}
+          <motion.div
+            variants={float1} initial="initial" animate="animate"
+            className="hidden lg:block absolute top-[4%] left-[2%] z-30"
+          >
+            <div className="relative">
+              <div className="bg-[#FEF08A] p-5 pt-7 rounded-sm shadow-md w-52 border border-yellow-200/50">
+                <div className="w-2.5 h-2.5 bg-red-600 rounded-full absolute top-2 left-1/2 -translate-x-1/2 shadow-sm border border-red-800"></div>
+                <p className="font-[400] font-serif italic text-[15px] leading-snug text-gray-800">
+                  Manually replying to DMs takes too much time. Let Faigen AI accomplish more tasks with ease.
+                </p>
+              </div>
+              <div className="absolute -bottom-6 -left-6 bg-white/70 backdrop-blur-md p-3.5 rounded-[1.2rem] shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] border border-white">
+                <div className="bg-[#2563EB] text-white p-2.5 rounded-xl">
+                  <Check size={24} strokeWidth={3} />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* --- Top Right: AI Agents Folder --- */}
+          <motion.div
+            variants={float2} initial="initial" animate="animate"
+            className="hidden lg:block absolute top-[2%] right-[2%] z-30"
+          >
+            <div className="relative">
+              <div className="absolute -left-10 top-8 bg-white/90 backdrop-blur-md p-3 rounded-[1rem] shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] border border-white z-40">
+                <Clock size={22} className="text-[#1A1A1A]" strokeWidth={2.5} />
+              </div>
+              <div className="flex flex-col drop-shadow-[0_15px_30px_rgba(0,0,0,0.1)]">
+                <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
+                  <span className="text-[13px] font-bold text-gray-900">AI Agents</span>
+                </div>
+                <div 
+                  className="rounded-b-[1.2rem] rounded-tr-[1.2rem] p-5 pt-6 relative z-20 -mt-[1px] w-64 border border-gray-100 bg-cover bg-center overflow-hidden"
+                  style={{ backgroundImage: "url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=500&auto=format&fit=crop')" }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
+                  <div className="relative z-10">
+                    <div className="flex justify-end mb-1">
+                      <p className="text-[10px] text-white/70 font-bold uppercase tracking-widest">Activity</p>
+                    </div>
+                    <p className="text-[15px] font-bold text-white mb-1">Customer Query</p>
+                    <p className="text-[12px] text-white/80 font-medium mb-4">Handling product inquiry</p>
+                    <div className="bg-white/20 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg inline-flex items-center gap-1.5">
+                      <Clock size={12} /> 13:00 - 13:45
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* --- Bottom Left: Tasks Folder --- */}
+          <motion.div
+            variants={float2} initial="initial" animate="animate"
+            className="hidden lg:block absolute bottom-[4%] left-[2%] z-30"
+          >
+            <div className="flex flex-col drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
+              <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
+                <span className="text-[13px] font-bold text-gray-900">Today's tasks</span>
+              </div>
+              <div className="bg-white rounded-b-[1.2rem] rounded-tr-[1.2rem] p-6 relative z-20 -mt-[1px] w-72 border border-gray-50 space-y-6">
+                <div>
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="flex gap-2.5 items-center">
+                      <div className="w-5 h-5 rounded-md bg-[#D9FDD3] text-[#25D366] flex items-center justify-center">
+                        <WhatsAppIcon className="w-3 h-3" />
+                      </div>
+                      <span className="text-[12px] font-bold text-gray-800">WhatsApp Bot Setup</span>
+                    </div>
+                    <div className="flex -space-x-2">
+                      <div className="w-5 h-5 rounded-full bg-blue-200 border border-white z-10 text-[8px] flex items-center justify-center font-bold text-blue-700">A</div>
+                      <div className="w-5 h-5 rounded-full bg-pink-200 border border-white z-0 text-[8px] flex items-center justify-center font-bold text-pink-700">M</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] text-gray-400 font-medium w-8">Sep 10</span>
+                    <div className="h-1.5 flex-1 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#25D366] rounded-full w-[60%]"></div>
+                    </div>
+                    <span className="text-[10px] text-gray-500 font-bold">60%</span>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="flex gap-2.5 items-center">
+                      <div className="w-5 h-5 rounded-md bg-pink-100 text-[#E1306C] flex items-center justify-center">
+                        <InstagramIcon className="w-3 h-3" />
+                      </div>
+                      <span className="text-[12px] font-bold text-gray-800">Landing Page Design</span>
+                    </div>
+                    <div className="flex -space-x-2">
+                      <div className="w-5 h-5 rounded-full bg-purple-200 border border-white z-10 text-[8px] flex items-center justify-center font-bold text-purple-700">J</div>
+                      <div className="w-5 h-5 rounded-full bg-orange-200 border border-white z-0 text-[8px] flex items-center justify-center font-bold text-orange-700">D</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] text-gray-400 font-medium w-8">Sep 18</span>
+                    <div className="h-1.5 flex-1 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#E1306C] rounded-full w-[100%]"></div>
+                    </div>
+                    <span className="text-[10px] text-gray-500 font-bold">112%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* --- Bottom Right: Integrations Folder --- */}
+          <motion.div
+            variants={float1} initial="initial" animate="animate"
+            className="hidden lg:block absolute bottom-[4%] right-[5%] z-30"
+          >
+            <div className="flex flex-col drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
+              <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
+                <span className="text-[13px] font-bold text-gray-900">100+ Integrations</span>
+              </div>
+              <div className="bg-white rounded-b-[1.2rem] rounded-tr-[1.2rem] p-6 relative z-20 -mt-[1px] w-auto border border-gray-50 flex gap-3">
+                <div className="w-14 h-14 bg-white rounded-2xl shadow-[0_5px_15px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center text-[#25D366]">
+                  <WhatsAppIcon className="w-7 h-7" />
+                </div>
+                <div className="w-14 h-14 bg-white rounded-2xl shadow-[0_5px_15px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center text-[#E1306C]">
+                  <InstagramIcon className="w-7 h-7" />
+                </div>
+                <div className="w-14 h-14 bg-white rounded-2xl shadow-[0_5px_15px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center text-[#2563EB]">
+                  <ShoppingCart size={24} fill="currentColor" />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* --- Centre Content --- */}
+          <main className="relative z-10 flex flex-col items-center justify-center w-full px-4 pt-10 pb-20 max-w-[1200px]">
             
             <motion.div 
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="w-16 h-16 bg-white/90 backdrop-blur-md rounded-2xl shadow-[0_15px_30px_-5px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center p-2 mb-10 overflow-hidden"
+              className="w-16 h-16 bg-white/90 backdrop-blur-md rounded-2xl shadow-[0_15px_30px_-5px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center p-2 mb-7 overflow-hidden"
             >
               <img
                 src="/icon.png"
@@ -111,7 +246,7 @@ export default function HeroSection() {
 
             <motion.h1 
               initial="hidden" animate="visible" variants={fadeUp}
-              className="text-[3.2rem] sm:text-[4.5rem] lg:text-[5.5rem] leading-[1.05] font-medium tracking-tight text-[#1A1A1A] text-center"
+              className="text-[2.8rem] sm:text-[3.8rem] lg:text-[4.5rem] leading-[1.05] font-medium tracking-tight text-[#1A1A1A] text-center"
             >
               Who's keeping leads warm <br />
               <span className="text-[#8C8C8C]">while sales is busy?</span>
@@ -119,7 +254,7 @@ export default function HeroSection() {
 
             <motion.p 
               initial="hidden" animate="visible" variants={fadeUp}
-              className="text-[1.1rem] text-gray-700 font-medium mt-6 mb-10 text-center max-w-lg"
+              className="text-[1.1rem] text-gray-700 font-medium mt-4 mb-8 text-center max-w-lg"
             >
               Faigen builds websites and AI-powered agents that reply, sell, and take orders on WhatsApp and Instagram — automatically.
             </motion.p>
@@ -133,218 +268,91 @@ export default function HeroSection() {
               </button>
             </motion.div>
 
-            {/* 1. Top Left: Sticky Note */}
-            <motion.div variants={float1} initial="initial" animate="animate" className="hidden lg:block absolute top-[10%] left-[2%] z-30">
-              <div className="relative">
-                <div className="bg-[#FEF08A] p-5 pt-7 rounded-sm shadow-md w-52 border border-yellow-200/50">
-                  <div className="w-2.5 h-2.5 bg-red-600 rounded-full absolute top-2 left-1/2 -translate-x-1/2 shadow-sm border border-red-800"></div>
-                  <p className="font-[400] font-serif italic text-[15px] leading-snug text-gray-800 font-medium">
-                    Manually replying to DMs takes too much time. Let Faigen AI accomplish more tasks with ease.
-                  </p>
-                </div>
-                <div className="absolute -bottom-6 -left-6 bg-white/70 backdrop-blur-md p-3.5 rounded-[1.2rem] shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] border border-white">
-                  <div className="bg-[#2563EB] text-white p-2.5 rounded-xl">
-                    <Check size={24} strokeWidth={3} />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* 2. Top Right: AI Agents Folder */}
-            <motion.div variants={float2} initial="initial" animate="animate" className="hidden lg:block absolute top-[5%] right-[2%] z-30">
-              <div className="relative">
-                <div className="absolute -left-10 top-8 bg-white/90 backdrop-blur-md p-3 rounded-[1rem] shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] border border-white z-40">
-                  <Clock size={22} className="text-[#1A1A1A]" strokeWidth={2.5} />
-                </div>
-                <div className="flex flex-col drop-shadow-[0_15px_30px_rgba(0,0,0,0.1)]">
-                  <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
-                    <span className="text-[13px] font-bold text-gray-900">AI Agents</span>
-                  </div>
-                  <div 
-                    className="rounded-b-[1.2rem] rounded-tr-[1.2rem] p-5 pt-6 relative z-20 -mt-[1px] w-64 border border-gray-100 bg-cover bg-center overflow-hidden"
-                    style={{ backgroundImage: "url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=500&auto=format&fit=crop')" }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
-                    <div className="relative z-10">
-                      <div className="flex justify-end mb-1">
-                        <p className="text-[10px] text-white/70 font-bold uppercase tracking-widest">Activity</p>
-                      </div>
-                      <p className="text-[15px] font-bold text-white mb-1">Customer Query</p>
-                      <p className="text-[12px] text-white/80 font-medium mb-4">Handling product inquiry</p>
-                      <div className="bg-white/20 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg inline-flex items-center gap-1.5">
-                        <Clock size={12} /> 13:00 - 13:45
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* 3. Bottom Left: Tasks Folder */}
-            <motion.div variants={float2} initial="initial" animate="animate" className="hidden lg:block absolute bottom-[-5%] left-[2%] z-30">
-              <div className="flex flex-col drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-                <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
-                  <span className="text-[13px] font-bold text-gray-900">Today's tasks</span>
-                </div>
-                <div className="bg-white rounded-b-[1.2rem] rounded-tr-[1.2rem] p-6 relative z-20 -mt-[1px] w-72 border border-gray-50 space-y-6">
-                  <div>
-                    <div className="flex justify-between items-start mb-2">
-                      <div className="flex gap-2.5 items-center">
-                        <div className="w-5 h-5 rounded-md bg-[#D9FDD3] text-[#25D366] flex items-center justify-center">
-                          <WhatsAppIcon className="w-3 h-3" />
-                        </div>
-                        <span className="text-[12px] font-bold text-gray-800">WhatsApp Bot Setup</span>
-                      </div>
-                      <div className="flex -space-x-2">
-                        <div className="w-5 h-5 rounded-full bg-blue-200 border border-white z-10 text-[8px] flex items-center justify-center font-bold text-blue-700">A</div>
-                        <div className="w-5 h-5 rounded-full bg-pink-200 border border-white z-0 text-[8px] flex items-center justify-center font-bold text-pink-700">M</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] text-gray-400 font-medium w-8">Sep 10</span>
-                      <div className="h-1.5 flex-1 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-[#25D366] rounded-full w-[60%]"></div>
-                      </div>
-                      <span className="text-[10px] text-gray-500 font-bold">60%</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between items-start mb-2">
-                      <div className="flex gap-2.5 items-center">
-                        <div className="w-5 h-5 rounded-md bg-pink-100 text-[#E1306C] flex items-center justify-center">
-                          <InstagramIcon className="w-3 h-3" />
-                        </div>
-                        <span className="text-[12px] font-bold text-gray-800">Landing Page Design</span>
-                      </div>
-                      <div className="flex -space-x-2">
-                        <div className="w-5 h-5 rounded-full bg-purple-200 border border-white z-10 text-[8px] flex items-center justify-center font-bold text-purple-700">J</div>
-                        <div className="w-5 h-5 rounded-full bg-orange-200 border border-white z-0 text-[8px] flex items-center justify-center font-bold text-orange-700">D</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] text-gray-400 font-medium w-8">Sep 18</span>
-                      <div className="h-1.5 flex-1 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-[#E1306C] rounded-full w-[100%]"></div>
-                      </div>
-                      <span className="text-[10px] text-gray-500 font-bold">112%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* 4. Bottom Right: Integrations Folder */}
-            <motion.div variants={float1} initial="initial" animate="animate" className="hidden lg:block absolute bottom-[0%] right-[5%] z-30">
-              <div className="flex flex-col drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-                <div className="bg-white rounded-t-[1rem] px-5 py-2.5 w-max relative z-10">
-                  <span className="text-[13px] font-bold text-gray-900">100+ Integrations</span>
-                </div>
-                <div className="bg-white rounded-b-[1.2rem] rounded-tr-[1.2rem] p-6 relative z-20 -mt-[1px] w-auto border border-gray-50 flex gap-3">
-                  <div className="w-14 h-14 bg-white rounded-2xl shadow-[0_5px_15px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center text-[#25D366]">
-                    <WhatsAppIcon className="w-7 h-7" />
-                  </div>
-                  <div className="w-14 h-14 bg-white rounded-2xl shadow-[0_5px_15px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center text-[#E1306C]">
-                    <InstagramIcon className="w-7 h-7" />
-                  </div>
-                  <div className="w-14 h-14 bg-white rounded-2xl shadow-[0_5px_15px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center text-[#2563EB]">
-                    <ShoppingCart size={24} fill="currentColor" />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
           </main>
         </div>
       </div>
 
-{/* --- MINIMALIST POPUP --- */}
-<AnimatePresence>
-  {showPopup && (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
-      {/* Backdrop: Ultra-minimal white blur */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={() => setShowPopup(false)}
-        className="absolute inset-0 bg-white/80"
-      />
-      
-      {/* Modal Card: Standard Modern Floating Canvas */}
-      <motion.div 
-        initial={{ opacity: 0, y: 15, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 15, scale: 0.98 }}
-        transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-        className="relative w-full max-w-[480px] bg-white rounded-[2rem] border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.05)] p-10 flex flex-col items-center"
-      >
-        
-        {/* --- Minimal AI Status Visualizer --- */}
-        <div className="relative mb-10">
-          <div className="w-20 h-20 bg-[#F8FAFC] rounded-full flex items-center justify-center border border-gray-100">
-             <Bot size={32} className="text-[#2563EB]" strokeWidth={1.5} />
-          </div>
-          {/* Subtle Ring Animation */}
-          <motion.div 
-            animate={{ scale: [1, 1.4], opacity: [0.5, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
-            className="absolute inset-0 bg-[#2563EB]/10 rounded-full"
-          />
-          <div className="absolute -bottom-1 -right-1 bg-white p-1 rounded-full border border-gray-100 shadow-sm">
-             <div className="w-2.5 h-2.5 bg-green-500 rounded-full" />
-          </div>
-        </div>
+      {/* --- MINIMALIST POPUP --- */}
+      <AnimatePresence>
+        {showPopup && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowPopup(false)}
+              className="absolute inset-0 bg-white/80"
+            />
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 15, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 15, scale: 0.98 }}
+              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+              className="relative w-full max-w-[480px] bg-white rounded-[2rem] border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.05)] p-10 flex flex-col items-center"
+            >
+              
+              <div className="relative mb-10">
+                <div className="w-20 h-20 bg-[#F8FAFC] rounded-full flex items-center justify-center border border-gray-100">
+                   <Bot size={32} className="text-[#2563EB]" strokeWidth={1.5} />
+                </div>
+                <motion.div 
+                  animate={{ scale: [1, 1.4], opacity: [0.5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+                  className="absolute inset-0 bg-[#2563EB]/10 rounded-full"
+                />
+                <div className="absolute -bottom-1 -right-1 bg-white p-1 rounded-full border border-gray-100 shadow-sm">
+                   <div className="w-2.5 h-2.5 bg-green-500 rounded-full" />
+                </div>
+              </div>
 
-        {/* --- Content --- */}
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-semibold text-gray-900 tracking-tight mb-2">
-            Request a Demo
-          </h2>
-          <p className="text-gray-500 text-[15px] font-medium leading-relaxed">
-            Ready to automate your Malayalam & English sales.
-          </p>
-        </div>
+              <div className="text-center mb-8">
+                <h2 className="text-2xl font-semibold text-gray-900 tracking-tight mb-2">
+                  Request a Demo
+                </h2>
+                <p className="text-gray-500 text-[15px] font-medium leading-relaxed">
+                  Ready to automate your Malayalam & English sales.
+                </p>
+              </div>
 
-        {/* --- Email Action: Simplified --- */}
-        <div className="w-full bg-[#F8FAFC] border border-gray-100 p-4 rounded-2xl flex items-center justify-between group transition-colors hover:bg-gray-100/50">
-          <div className="flex flex-col items-start px-2">
-            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Reach out</span>
-            <span className="text-[16px] font-semibold text-gray-800 tracking-tight">info@faigen.in</span>
-          </div>
-          <button 
-            onClick={handleCopy}
-            className={`p-3 rounded-xl transition-all ${copied ? 'bg-green-600 text-white' : 'bg-white text-gray-400 shadow-sm border border-gray-100 hover:text-black'}`}
-          >
-            {copied ? <Check size={18} strokeWidth={3} /> : <Copy size={18} />}
-          </button>
-        </div>
+              <div className="w-full bg-[#F8FAFC] border border-gray-100 p-4 rounded-2xl flex items-center justify-between group transition-colors hover:bg-gray-100/50">
+                <div className="flex flex-col items-start px-2">
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Reach out</span>
+                  <span className="text-[16px] font-semibold text-gray-800 tracking-tight">info@faigen.in</span>
+                </div>
+                <button 
+                  onClick={handleCopy}
+                  className={`p-3 rounded-xl transition-all ${copied ? 'bg-green-600 text-white' : 'bg-white text-gray-400 shadow-sm border border-gray-100 hover:text-black'}`}
+                >
+                  {copied ? <Check size={18} strokeWidth={3} /> : <Copy size={18} />}
+                </button>
+              </div>
 
-        {/* --- Feedback & Close --- */}
-        <div className="h-4 mt-4 text-center">
-            <AnimatePresence>
-                {copied && (
+              <div className="h-4 mt-4 text-center">
+                <AnimatePresence>
+                  {copied && (
                     <motion.p 
-                        initial={{ opacity: 0, y: 5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0 }}
-                        className="text-green-600 text-[11px] font-bold uppercase tracking-widest"
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="text-green-600 text-[11px] font-bold uppercase tracking-widest"
                     >
-                        Address Copied
+                      Address Copied
                     </motion.p>
-                )}
-            </AnimatePresence>
-        </div>
+                  )}
+                </AnimatePresence>
+              </div>
 
-        <button 
-          onClick={() => setShowPopup(false)}
-          className="mt-10 text-gray-400 hover:text-gray-600 text-[13px] font-medium transition-colors"
-        >
-          Close
-        </button>
-      </motion.div>
-    </div>
-  )}
-</AnimatePresence>
+              <button 
+                onClick={() => setShowPopup(false)}
+                className="mt-10 text-gray-400 hover:text-gray-600 text-[13px] font-medium transition-colors"
+              >
+                Close
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
