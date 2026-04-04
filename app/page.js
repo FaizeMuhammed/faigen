@@ -13,10 +13,10 @@ export default function Home() {
       <HeroSection />
       <DashboardSection />
       <FeatureSection />
-      <UseCasesSection/>
+      {/* <UseCasesSection/> */}
       <BentoGrid />
       <FAQSection/>
-      <JoinLeadersSection/>
+      {/* <JoinLeadersSection/> */}
       <FooterSection />
     </main>
   );

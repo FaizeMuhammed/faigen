@@ -61,9 +61,9 @@ export default function HeroSection() {
           </div>
 
           <div className="hidden md:flex items-center space-x-10 text-[14px] font-medium text-gray-600">
-            <a href="#features" className="hover:text-black transition-colors">Features</a>
+            <a href="/features" className="hover:text-black transition-colors">Features</a>
             <a href="#solutions" className="hover:text-black transition-colors">Solutions</a>
-            <a href="#resources" className="hover:text-black transition-colors">Resources</a>
+            <a href="#resources" className="hover:text-black transition-colors">Use Cases</a>
             <a href="#pricing" className="hover:text-black transition-colors">Pricing</a>
           </div>
 
