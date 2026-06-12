@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Faigen",
-  description: "  software development company",
+  title: "faigen",
+  description: "The Ultimate AI-Powered WhatsApp Commerce Platform for Businesses of All Sizes",
 };
 
 export default function RootLayout({ children }) {

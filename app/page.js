@@ -16,7 +16,7 @@ export default function Home() {
       {/* <UseCasesSection/> */}
       <BentoGrid />
       <FAQSection/>
-      {/* <JoinLeadersSection/> */}
+      <JoinLeadersSection/>
       <FooterSection />
     </main>
   );
