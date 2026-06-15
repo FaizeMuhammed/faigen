@@ -2,7 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Menu, X, Mail, Phone, ShieldCheck, CheckCircle2, ArrowRight, Check, Copy } from "lucide-react";
+import { 
+  Play, Menu, X, Mail, Phone, ShieldCheck, 
+  CheckCircle2, ArrowRight, Check, Copy, Bot, ShoppingBag, Calendar
+} from "lucide-react";
 import Link from 'next/link'
 
 /* ── META / WHATSAPP SVG ICONS ───────────────────────────────── */
@@ -29,16 +32,9 @@ const trustBadges = [
     border: 'border-[#c5d8f8]',
     textColor: 'text-[#1a56db]'
   }
-  // {
-  //   icon: <WhatsAppIcon size={15} className="text-[#25D366]" />,
-  //   text: 'Official WhatsApp Business API',
-  //   bg: '',
-  //   border: 'border-[#c8e6c9]',
-  //   textColor: 'text-[#2e7d32]'
-  // }
 ]
 
-/* ── DYNAMIC SLIDES (Text + Image Posters) ────────────────────── */
+/* ── DYNAMIC SLIDES (Text Content) ───────────────────────────── */
 
 const slides = [
   {
@@ -50,30 +46,70 @@ const slides = [
     ),
     subtitle: "Turn conversations into conversions. Deploy interactive agents that check stock, process orders, and handle support instantly.",
     tags: ["Interactive Buttons", "Automated Routing", "Order Tracking"],
-    image: "/poster1.png" // <-- ADD YOUR IMAGE PATH HERE
+  },
+  {
+    title: (
+      <>
+        Broadcast <br className="hidden lg:block" />
+        <span className="text-[#2563EB]">marketing campaigns.</span>
+      </>
+    ),
+    subtitle: "Launch targeted promotions and notify thousands of customers simultaneously with rich media and interactive links.",
+    tags: ["Bulk Messaging",  "Delivery Analytics"],
+  },
+  {
+    title: (
+      <>
+        Speak <br className="hidden lg:block" />
+        <span className="text-[#2563EB]">your local language.</span>
+      </>
+    ),
+    subtitle: "Deliver personalized experiences with an AI that fluently understands Malayalam, Manglish, and English automatically.",
+    tags: ["Auto-Detection", "Malayalam & Manglish", "Natural NLP"],
   }
-  // {
-  //   title: (
-  //     <>
-  //       Broadcast <br className="hidden lg:block" />
-  //       <span className="text-[#2563EB]">marketing campaigns.</span>
-  //     </>
-  //   ),
-  //   subtitle: "Launch targeted promotions and notify thousands of customers simultaneously with rich media and interactive links.",
-  //   tags: ["Bulk Messaging", "Rich Media Support", "Delivery Analytics"],
-  //   image: "/poster1.png" // <-- ADD YOUR IMAGE PATH HERE
-  // },
-  // {
-  //   title: (
-  //     <>
-  //       Enterprise <br className="hidden lg:block" />
-  //       <span className="text-[#2563EB]">data security.</span>
-  //     </>
-  //   ),
-  //   subtitle: "Deliver secure OTPs and transactional updates directly to your users with bank-grade end-to-end encryption.",
-  //   tags: ["Instant OTP Routing", "End-to-End Encryption", "Audit Logs"],
-  //   image: "/poster1.png" // <-- ADD YOUR IMAGE PATH HERE
-  // }
+]
+
+/* ── CHAT SCENARIOS (For Right Panel) ────────────────────────── */
+
+const chatScenarios = [
+  {
+    id: 'ecommerce',
+    icon: <ShoppingBag size={20} className="text-[#2563EB]" />,
+    title: "Auto Order Taking",
+    userMsg: "I want to order 2 Premium Coir Mats. Deliver to Ernakulam.",
+    botMsg: (
+      <>
+        <span className="font-bold">Order confirmed! 🎉</span><br/>
+        2× Premium Coir Mat — ₹1,200<br/>
+        Delivery to Ernakulam in 2-3 days.
+      </>
+    )
+  },
+  {
+    id: 'booking',
+    icon: <Calendar size={20} className="text-[#2563EB]" />,
+    title: "Appointment Booking",
+    userMsg: "Can I book a consultation for tomorrow at 10 AM?",
+    botMsg: (
+      <>
+        <span className="font-bold">Slot Available ✅</span><br/>
+        I've reserved 10:00 AM tomorrow for you.<br/>
+        Reply 'Confirm' to finalize.
+      </>
+    )
+  },
+  {
+    id: 'support',
+    icon: <Bot size={20} className="text-[#2563EB]" />,
+    title: "Instant 24/7 Support",
+    userMsg: "What are your shop timings today?",
+    botMsg: (
+      <>
+        <span className="font-bold">We're open! 🏪</span><br/>
+        Our Aluva branch is open from 9 AM to 8 PM today. How can we help you?
+      </>
+    )
+  }
 ]
 
 /* ── MAIN COMPONENT ──────────────────────────────────────────── */
@@ -82,14 +118,27 @@ export default function FaigenHero() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [popupOpen, setPopupOpen] = useState(false)
   const [copied, setCopied] = useState(false)
+  
+  // Left side slider state
   const [activeSlide, setActiveSlide] = useState(0)
+  
+  // Right side chat scenario state
+  const [activeChat, setActiveChat] = useState(0)
 
-  // Auto-slide logic
+  // Auto-slide logic for left text
   useEffect(() => {
-    const timer = setInterval(() => {
+    const slideTimer = setInterval(() => {
       setActiveSlide(prev => (prev + 1) % slides.length)
     }, 6000)
-    return () => clearInterval(timer)
+    return () => clearInterval(slideTimer)
+  }, [])
+
+  // Auto-slide logic for right chat bubbles
+  useEffect(() => {
+    const chatTimer = setInterval(() => {
+      setActiveChat(prev => (prev + 1) % chatScenarios.length)
+    }, 4500)
+    return () => clearInterval(chatTimer)
   }, [])
 
   const handleCopy = () => {
@@ -98,8 +147,14 @@ export default function FaigenHero() {
     setTimeout(() => setCopied(false), 2000)
   }
 
+  // Animation variants
+  const fadeUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  }
+
   return (
-    <section className="w-full min-h-screen bg-white font-sans text-[#1A1A1A] border border-gray-200 flex flex-col overflow-hidden relative">
+    <section className="w-full min-h-screen bg-white font-sans text-[#1A1A1A] border-b border-gray-200 flex flex-col overflow-hidden relative">
 
       {/* ── POPUP MODAL ── */}
       <AnimatePresence>
@@ -161,7 +216,7 @@ export default function FaigenHero() {
         <nav className="hidden lg:flex items-center gap-8 text-[15px] font-semibold text-gray-500">
           <a href="#" className="text-[#1A1A1A]">Platform</a>
           <button onClick={() => setPopupOpen(true)} className="hover:text-[#1A1A1A] transition-colors">API Pricing</button>
-          <button onClick={() => setPopupOpen(true)} className="hover:text-[#1A1A1A] transition-colors">Use Cases</button>
+          <a href="/use-cases" className="hover:text-[#1A1A1A] transition-colors">Use Cases</a>
         </nav>
 
         <div className="hidden lg:flex items-center gap-5">
@@ -184,7 +239,7 @@ export default function FaigenHero() {
           >
             <a href="#" onClick={() => setMenuOpen(false)} className="text-[16px] font-bold text-[#1A1A1A] py-4 border-b border-gray-100">Platform</a>
             <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }} className="text-[16px] font-bold text-[#1A1A1A] py-4 border-b border-gray-100 text-left">API Pricing</button>
-            <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }} className="text-[16px] font-bold text-[#1A1A1A] py-4 border-b border-gray-100 text-left">Use Cases</button>
+            <button href="/use-case" className="text-[16px] font-bold text-[#1A1A1A] py-4 border-b border-gray-100 text-left">Use Cases</button>
             <div className="mt-6 flex flex-col gap-3">
               <Link href="/login" className="text-center bg-gray-50 border border-gray-200 text-[#1A1A1A] py-3.5 rounded-lg text-[15px] font-bold">Sign in</Link>
               <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }} className="bg-[#2563EB] text-white py-3.5 rounded-lg text-[15px] font-bold shadow-sm">Request Access</button>
@@ -205,9 +260,7 @@ export default function FaigenHero() {
               {badge.text}
             </div>
           ))}
-
           <div className="hidden sm:block w-px h-4 bg-gray-200 mx-2" />
-
           <a
             href="https://www.facebook.com/business/partner-directory"
             target="_blank"
@@ -222,11 +275,10 @@ export default function FaigenHero() {
       </div>
 
       {/* ── MAIN CONTENT ── */}
-      <div className="max-w-[1500px] mx-auto w-full flex flex-col lg:flex-row flex-1 border-x border-gray-100 bg-white">
+      <div className="max-w-[1500px] mx-auto w-full flex flex-col lg:flex-row flex-1 bg-white">
 
-        {/* LEFT PANEL */}
-        <main className="w-full lg:w-[55%] lg:border-r border-gray-100 relative flex flex-col items-start justify-center pt-12 lg:pt-0 pb-16 lg:pb-0 px-6 md:px-12 xl:px-16 text-left">
-
+        {/* LEFT PANEL - SLIDING TEXT */}
+        <main className="w-full lg:w-[50%] xl:w-[55%] relative flex flex-col items-start justify-center pt-12 lg:pt-0 pb-16 lg:pb-0 px-6 md:px-12 xl:px-16 text-left border-r border-gray-100">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={`text-${activeSlide}`}
@@ -236,8 +288,6 @@ export default function FaigenHero() {
               transition={{ duration: 0.3 }}
               className="w-full relative z-10"
             >
-            
-
               <h1 className="text-[2.8rem] md:text-[4.2rem] lg:text-[4.5rem] font-medium leading-[1.05] tracking-tight text-[#1A1A1A] max-w-[800px] mb-6">
                 {slides[activeSlide].title}
               </h1>
@@ -263,7 +313,7 @@ export default function FaigenHero() {
                 ))}
               </div>
 
-              <p className="mt-10 text-[11px] text-gray-400 flex items-center gap-1.5">
+              <p className="mt-10 text-[11px] text-gray-400 flex items-center gap-1.5 font-medium uppercase tracking-wider">
                 <WhatsAppIcon size={12} className="text-[#25D366]" />
                 Built on WhatsApp Business Platform by Meta
               </p>
@@ -283,24 +333,98 @@ export default function FaigenHero() {
           </div>
         </main>
 
-        {/* ── RIGHT PANEL - IMAGE POSTER SLIDER ── */}
-        <div className="w-full rounded-3xl m-2 lg:w-[45%] relative flex flex-col bg-[#fbfbfb] min-h-[450px] lg:min-h-[700px] border-t lg:border-t-0 border-gray-100 overflow-hidden">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={`poster-${activeSlide}`}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="absolute inset-0 w-full h-full"
+        {/* ── RIGHT PANEL - USE CASE BENTO GRID ── */}
+        <div className="w-full lg:w-[50%] xl:w-[45%] p-4 lg:p-8 bg-[#fbfbfb] flex flex-col justify-center gap-4 min-h-[500px] lg:min-h-0 relative z-0">
+          
+          {/* Card 1: Live Chat Simulation (Dynamic) */}
+          <motion.div 
+            initial="hidden" animate="visible" variants={fadeUp}
+            className="w-full bg-white rounded-3xl border border-gray-100 p-6 lg:p-8 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.05)] flex flex-col relative overflow-hidden h-[300px]"
+          >
+            {/* Background Image & Overlay */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-60" 
+              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop')" }} 
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-white via-white/70 to-transparent z-0" />
+            <div className="absolute top-2 right-2 p-6 opacity-[0.12] text-[#25D366] z-0">
+              <WhatsAppIcon size={120} />
+            </div>
+            
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={chatScenarios[activeChat].id}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.3 }}
+                className="relative z-10 flex flex-col h-full"
+              >
+                <h3 className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2 mb-auto">
+                  {chatScenarios[activeChat].icon} 
+                  {chatScenarios[activeChat].title}
+                </h3>
+
+                {/* Chat Bubbles */}
+                <div className="flex flex-col gap-3 mt-4">
+                  <div className="bg-white/95 backdrop-blur-md text-[#334155] text-[13.5px] font-medium p-4 rounded-2xl rounded-tl-sm shadow-sm self-start max-w-[85%] leading-relaxed border border-gray-100">
+                    {chatScenarios[activeChat].userMsg}
+                  </div>
+                  <div className="bg-[#EFF6FF]/95 backdrop-blur-md text-[#1D4ED8] text-[13.5px] font-medium p-4 rounded-2xl rounded-tr-sm shadow-sm self-end max-w-[85%] leading-relaxed border border-[#DBEAFE]">
+                    {chatScenarios[activeChat].botMsg}
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Bottom Row */}
+          <div className="flex flex-col sm:flex-row gap-4 h-full sm:h-[220px]">
+            
+            {/* Card 2: Language Support */}
+            <motion.div 
+              initial="hidden" animate="visible" variants={fadeUp} transition={{ delay: 0.1 }}
+              className="flex-1 bg-white rounded-3xl border border-gray-100 p-6 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.05)] flex flex-col justify-center relative overflow-hidden group"
             >
-              <img
-                src={slides[activeSlide].image}
-                alt="Scenario Poster"
-                className="w-full h-full object-cover"
-              />
+              {/* Blue Ambient Blurs */}
+              <div className="absolute -top-10 -left-10 w-32 h-32 bg-[#DBEAFE] blur-[50px] rounded-full z-0 opacity-80" />
+              <div className="absolute bottom-0 right-0 w-32 h-32 bg-[#EFF6FF] blur-[50px] rounded-full z-0 opacity-80" />
+              
+              <div className="absolute -right-4 -bottom-6 text-[100px] font-black text-gray-50 leading-none select-none pointer-events-none tracking-tighter transition-transform duration-500 group-hover:scale-110 z-0">
+                അ
+              </div>
+              
+              <div className="relative z-10">
+                <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3 block">Speaks Native</span>
+                <h4 className="text-[1.35rem] font-bold text-[#1A1A1A] mb-4 leading-tight tracking-tight">
+                  Malayalam,<br/>Manglish & English.
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2.5 py-1 bg-white/80 backdrop-blur-sm text-[#2563EB] border border-blue-100 rounded-md text-[10px] font-bold uppercase tracking-wider shadow-sm">Auto-Detect</span>
+                </div>
+              </div>
             </motion.div>
-          </AnimatePresence>
+
+            {/* Card 3: 24/7 Agent */}
+            <motion.div 
+              initial="hidden" animate="visible" variants={fadeUp} transition={{ delay: 0.2 }}
+              className="flex-1 bg-white border border-gray-100 rounded-3xl p-6 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.05)] flex flex-col justify-center items-center text-center relative overflow-hidden"
+            >
+              {/* Cool Blue Ambient Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#EFF6FF] to-white z-0" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-[#DBEAFE] blur-[50px] rounded-full z-0 opacity-60" />
+
+              <div className="relative z-10 flex flex-col items-center">
+                <div className="text-[#2563EB] flex items-center justify-center mb-4 relative">
+                  <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-[#25D366] rounded-full animate-pulse shadow-[0_0_8px_rgba(37,211,102,0.6)]" />
+                  <Bot size={44} strokeWidth={1.5} />
+                </div>
+                <span className="text-[2.5rem] font-bold text-[#1A1A1A] leading-none mb-1 tracking-tight">24/7</span>
+                <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest mt-1">Always Online</span>
+              </div>
+            </motion.div>
+
+          </div>
         </div>
 
       </div>
