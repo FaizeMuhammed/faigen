@@ -76,7 +76,7 @@ export default function FooterSection() {
           <div className="col-span-1 md:col-span-2 flex flex-col items-start gap-4">
             <div className="flex items-center gap-3">
               <div className="w-18 h-18 flex items-center justify-center overflow-hidden">
-                <img src="/logo.png" alt="Faigen Logo" className="h-full w-full object-contain" />
+                <img src="/logonew.jpg" alt="Faigen Logo" className="h-full w-full object-contain" />
               </div>
              
             </div>

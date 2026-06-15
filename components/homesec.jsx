@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Menu, X, Mail, Send, Check, Copy, MessageCircle, Phone, Video, MoreVertical, ShieldCheck, CheckCheck, CheckCircle2, ArrowRight, BadgeCheck } from "lucide-react";
+import { Play, Menu, X, Mail, Phone, ShieldCheck, CheckCircle2, ArrowRight, Check, Copy } from "lucide-react";
 import Link from 'next/link'
 
 /* ── META / WHATSAPP SVG ICONS ───────────────────────────────── */
@@ -22,26 +22,23 @@ const MetaIcon = ({ size = 18, className = '' }) => (
 /* ── TRUST BAR DATA ──────────────────────────────────────────── */
 
 const trustBadges = [
-
   {
     icon: <MetaIcon size={15} className="text-[#0467DF]" />,
     text: 'Meta Verified Tech Provider',
     bg: '',
     border: 'border-[#c5d8f8]',
     textColor: 'text-[#1a56db]'
-  },
-  {
-    icon: <WhatsAppIcon size={15} className="text-[#25D366]" />,
-    text: 'Official WhatsApp Business API',
-    bg: '',
-    border: 'border-[#c8e6c9]',
-    textColor: 'text-[#2e7d32]'
   }
-  
-
+  // {
+  //   icon: <WhatsAppIcon size={15} className="text-[#25D366]" />,
+  //   text: 'Official WhatsApp Business API',
+  //   bg: '',
+  //   border: 'border-[#c8e6c9]',
+  //   textColor: 'text-[#2e7d32]'
+  // }
 ]
 
-/* ── SLIDES ──────────────────────────────────────────────────── */
+/* ── DYNAMIC SLIDES (Text + Image Posters) ────────────────────── */
 
 const slides = [
   {
@@ -53,94 +50,30 @@ const slides = [
     ),
     subtitle: "Turn conversations into conversions. Deploy interactive agents that check stock, process orders, and handle support instantly.",
     tags: ["Interactive Buttons", "Automated Routing", "Order Tracking"],
-    chat: (
-      <div className="flex flex-col gap-4 w-full">
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="self-end max-w-[85%] lg:max-w-[75%]">
-          <div className="bg-[#EFF6FF] text-[#1A1A1A] px-4 py-3 rounded-2xl rounded-tr-sm border border-[#BFDBFE] shadow-[0_2px_10px_rgba(0,0,0,0.02)] text-[14px] md:text-[15px] leading-relaxed">
-            Hey, do you have the Premium Coir Mats in stock?
-            <div className="flex items-center justify-end gap-1 mt-1.5">
-              <span className="text-[11px] text-gray-500">10:41 AM</span>
-              <CheckCheck size={16} className="text-[#2563EB]" />
-            </div>
-          </div>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="self-start max-w-[90%] lg:max-w-[80%]">
-          <div className="bg-white border border-gray-200 text-[#1A1A1A] rounded-2xl rounded-tl-sm shadow-[0_8px_30px_rgba(0,0,0,0.04)] text-[14px] md:text-[15px] overflow-hidden">
-            <div className="px-4 pt-3 pb-3">
-              <span className="font-bold block mb-1">📦 Stock Update</span>
-              Yes! We have 12 units ready to ship from the Kerala factory. Would you like to view the catalog or speak to sales?
-              <div className="flex justify-end mt-1.5"><span className="text-[11px] text-gray-400">10:41 AM</span></div>
-            </div>
-            <div className="border-t border-gray-100 flex flex-col bg-gray-50/50">
-              <button className="py-3 text-[#2563EB] font-bold text-[14px] hover:bg-blue-50/50 border-b border-gray-100 transition-colors">View Catalog</button>
-              <button className="py-3 text-[#2563EB] font-bold text-[14px] hover:bg-blue-50/50 transition-colors">Speak to Sales</button>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    )
-  },
-  {
-    title: (
-      <>
-        Broadcast <br className="hidden lg:block" />
-        <span className="text-[#2563EB]">marketing campaigns.</span>
-      </>
-    ),
-    subtitle: "Launch targeted promotions and notify thousands of customers simultaneously with rich media and interactive links.",
-    tags: ["Bulk Messaging", "Rich Media Support", "Delivery Analytics"],
-    chat: (
-      <div className="flex flex-col gap-4 w-full">
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="self-start max-w-[90%] lg:max-w-[80%]">
-          <div className="bg-white border border-gray-200 text-[#1A1A1A] rounded-2xl rounded-tl-sm shadow-[0_8px_30px_rgba(0,0,0,0.04)] text-[14px] md:text-[15px] overflow-hidden">
-            <div className="w-full h-32 md:h-40 bg-gradient-to-br from-blue-50 to-indigo-50 border-b border-gray-100 flex items-center justify-center">
-              <span className="text-[28px] font-black text-[#2563EB] tracking-widest border-4 border-[#2563EB] px-6 py-2 bg-white/50 backdrop-blur-sm">SALE</span>
-            </div>
-            <div className="px-4 pt-3 pb-3">
-              <span className="font-bold block mb-1">🎉 Flash Sale Alert!</span>
-              Get 20% off all Premium Inventories this weekend only. Use code <b className="text-[#2563EB]">FAIGEN20</b> at checkout.
-              <div className="flex justify-end mt-1.5"><span className="text-[11px] text-gray-400">11:00 AM</span></div>
-            </div>
-            <div className="border-t border-gray-100 flex flex-col bg-gray-50/50">
-              <button className="py-3 text-[#2563EB] font-bold text-[14px] hover:bg-blue-50/50 border-b border-gray-100 transition-colors">Shop Now</button>
-              <button className="py-3 text-[#2563EB] font-bold text-[14px] hover:bg-blue-50/50 transition-colors">Unsubscribe</button>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    )
-  },
-  {
-    title: (
-      <>
-        Enterprise <br className="hidden lg:block" />
-        <span className="text-[#2563EB]">data security.</span>
-      </>
-    ),
-    subtitle: "Deliver secure OTPs and transactional updates directly to your users with bank-grade end-to-end encryption.",
-    tags: ["Instant OTP Routing", "End-to-End Encryption", "Audit Logs"],
-    chat: (
-      <div className="flex flex-col gap-4 w-full">
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="self-end max-w-[85%] lg:max-w-[75%]">
-          <div className="bg-[#EFF6FF] text-[#1A1A1A] px-4 py-3 rounded-2xl rounded-tr-sm border border-[#BFDBFE] shadow-[0_2px_10px_rgba(0,0,0,0.02)] text-[14px] md:text-[15px] leading-relaxed">
-            I am trying to login to my dashboard.
-            <div className="flex items-center justify-end gap-1 mt-1.5">
-              <span className="text-[11px] text-gray-500">10:41 AM</span>
-              <CheckCheck size={16} className="text-[#2563EB]" />
-            </div>
-          </div>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="self-start max-w-[90%] lg:max-w-[80%]">
-          <div className="bg-white border border-gray-200 text-[#1A1A1A] px-5 py-4 rounded-2xl rounded-tl-sm shadow-[0_8px_30px_rgba(0,0,0,0.04)] text-[14px] md:text-[15px] leading-relaxed">
-            <span className="font-bold flex items-center gap-2 mb-2"><ShieldCheck size={18} className="text-[#2563EB]" /> Login Verification</span>
-            Your secure OTP is <span className="font-black text-[24px] tracking-widest text-[#2563EB] block my-2">748291</span>
-            <span className="text-gray-500 text-[13px] block">Valid for 10 minutes. Do not share this code.</span>
-            <div className="flex justify-end mt-1.5"><span className="text-[11px] text-gray-400">10:41 AM</span></div>
-          </div>
-        </motion.div>
-      </div>
-    )
+    image: "/poster1.png" // <-- ADD YOUR IMAGE PATH HERE
   }
+  // {
+  //   title: (
+  //     <>
+  //       Broadcast <br className="hidden lg:block" />
+  //       <span className="text-[#2563EB]">marketing campaigns.</span>
+  //     </>
+  //   ),
+  //   subtitle: "Launch targeted promotions and notify thousands of customers simultaneously with rich media and interactive links.",
+  //   tags: ["Bulk Messaging", "Rich Media Support", "Delivery Analytics"],
+  //   image: "/poster1.png" // <-- ADD YOUR IMAGE PATH HERE
+  // },
+  // {
+  //   title: (
+  //     <>
+  //       Enterprise <br className="hidden lg:block" />
+  //       <span className="text-[#2563EB]">data security.</span>
+  //     </>
+  //   ),
+  //   subtitle: "Deliver secure OTPs and transactional updates directly to your users with bank-grade end-to-end encryption.",
+  //   tags: ["Instant OTP Routing", "End-to-End Encryption", "Audit Logs"],
+  //   image: "/poster1.png" // <-- ADD YOUR IMAGE PATH HERE
+  // }
 ]
 
 /* ── MAIN COMPONENT ──────────────────────────────────────────── */
@@ -151,6 +84,7 @@ export default function FaigenHero() {
   const [copied, setCopied] = useState(false)
   const [activeSlide, setActiveSlide] = useState(0)
 
+  // Auto-slide logic
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveSlide(prev => (prev + 1) % slides.length)
@@ -259,7 +193,7 @@ export default function FaigenHero() {
         )}
       </AnimatePresence>
 
-      {/* ── TRUST BAR ── (below header, above hero content) */}
+      {/* ── TRUST BAR ── */}
       <div className="w-full border-b border-gray-100 bg-[#fafafa] py-2.5 px-6 overflow-x-auto">
         <div className="max-w-[1500px] mx-auto flex items-center justify-center gap-3 sm:gap-6 flex-nowrap">
           {trustBadges.map((badge, i) => (
@@ -272,10 +206,8 @@ export default function FaigenHero() {
             </div>
           ))}
 
-          {/* Divider */}
           <div className="hidden sm:block w-px h-4 bg-gray-200 mx-2" />
 
-          {/* Meta Partner Directory link */}
           <a
             href="https://www.facebook.com/business/partner-directory"
             target="_blank"
@@ -304,11 +236,7 @@ export default function FaigenHero() {
               transition={{ duration: 0.3 }}
               className="w-full relative z-10"
             >
-              {/* Active pill */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-200 text-gray-700 text-[11px] font-bold tracking-widest uppercase mb-8 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse" />
-                Unified AI Engine
-              </div>
+            
 
               <h1 className="text-[2.8rem] md:text-[4.2rem] lg:text-[4.5rem] font-medium leading-[1.05] tracking-tight text-[#1A1A1A] max-w-[800px] mb-6">
                 {slides[activeSlide].title}
@@ -335,7 +263,6 @@ export default function FaigenHero() {
                 ))}
               </div>
 
-              {/* WhatsApp + Meta attribution (required by brand guidelines) */}
               <p className="mt-10 text-[11px] text-gray-400 flex items-center gap-1.5">
                 <WhatsAppIcon size={12} className="text-[#25D366]" />
                 Built on WhatsApp Business Platform by Meta
@@ -356,78 +283,27 @@ export default function FaigenHero() {
           </div>
         </main>
 
-        {/* RIGHT PANEL - CHAT UI */}
-        <div className="w-full lg:w-[45%] relative flex flex-col bg-[#F8FAFC] min-h-[550px] lg:min-h-[700px] border-t lg:border-t-0 border-gray-100">
-
-          <div
-            className="absolute inset-0 opacity-[0.4] z-0 pointer-events-none"
-            style={{ backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)', backgroundSize: '24px 24px' }}
-          />
-
-          {/* Chat header with WhatsApp green tick */}
-          <div className="bg-white/90 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex items-center justify-between z-20 shadow-sm">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#25D366] flex items-center justify-center">
-                <WhatsAppIcon size={18} className="text-white" />
-              </div>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1.5">
-                  <span className="font-bold text-[16px] text-[#1A1A1A]">Faigen Official</span>
-                  <ShieldCheck size={16} className="text-[#2563EB]" strokeWidth={2.5} />
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[12px] font-medium text-gray-500">Verified AI Agent</span>
-                  <span className="w-1 h-1 rounded-full bg-gray-300" />
-                  <span className="text-[11px] text-[#25D366] font-medium">Online</span>
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center gap-5 text-gray-400">
-              <Video size={18} strokeWidth={2} />
-              <Phone size={18} strokeWidth={2} />
-              <MoreVertical size={18} strokeWidth={2} />
-            </div>
-          </div>
-
-          {/* Chat body */}
-          <div className="flex-1 p-6 md:p-8 flex flex-col justify-end overflow-hidden relative z-10">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={`chat-${activeSlide}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="w-full"
-              >
-                {slides[activeSlide].chat}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Input bar */}
-          <div className="bg-white/90 backdrop-blur-md border-t border-gray-200 px-4 md:px-6 py-4 flex items-center gap-3 z-20">
-            <div className="w-10 h-10 rounded-full flex items-center justify-center text-gray-400 cursor-pointer">
-              <Plus size={24} className="rotate-45" strokeWidth={2} />
-            </div>
-            <div className="flex-1 bg-gray-50 border border-gray-200 rounded-full px-5 py-3 text-[14px] font-medium text-gray-400">
-              Type a message...
-            </div>
-            <div className="w-11 h-11 rounded-full bg-[#25D366] flex items-center justify-center text-white shrink-0 shadow-md cursor-pointer hover:bg-[#1fba59] transition-colors">
-              <Send size={16} className="ml-0.5" strokeWidth={2.5} />
-            </div>
-          </div>
-
+        {/* ── RIGHT PANEL - IMAGE POSTER SLIDER ── */}
+        <div className="w-full rounded-3xl m-2 lg:w-[45%] relative flex flex-col bg-[#fbfbfb] min-h-[450px] lg:min-h-[700px] border-t lg:border-t-0 border-gray-100 overflow-hidden">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={`poster-${activeSlide}`}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="absolute inset-0 w-full h-full"
+            >
+              <img
+                src={slides[activeSlide].image}
+                alt="Scenario Poster"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          </AnimatePresence>
         </div>
+
       </div>
     </section>
-  )
-}
-
-function Plus({ size, className, strokeWidth }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth || "2"} strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M12 5v14M5 12h14" />
-    </svg>
   )
 }
