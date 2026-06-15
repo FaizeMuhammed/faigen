@@ -3,18 +3,19 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  Bot, MonitorSmartphone, MoreVertical,
-  Globe, Megaphone, ShoppingBag,
-  CheckCheck, Zap, Users, TrendingUp
+  MessageCircle, CheckCircle2, ShoppingBag,
+  Send, Bot, Megaphone, Package, Zap, Globe
 } from "lucide-react";
 
-const WhatsAppIcon = ({ size = 18, className = '' }) => (
+// ── WhatsApp Icon ─────────────────────────────────────────────
+const WhatsAppIcon = ({ size = 20, className = '' }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
 )
 
-const InstagramIcon = ({ size = 18, className = '' }) => (
+// ── Instagram Icon ────────────────────────────────────────────
+const InstagramIcon = ({ size = 20, className = '' }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
   </svg>
@@ -39,12 +40,12 @@ export default function BentoGrid() {
 
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
   }
 
   return (
-    <section className="w-full bg-white px-4 md:px-8 py-20 font-sans text-[#1A1A1A]">
-      <div className="max-w-[1600px] mx-auto bg-[#0B0E14] rounded-[2rem] md:rounded-[3rem] p-6 md:p-12 shadow-2xl overflow-hidden">
+    <section className="w-full  px-4 md:px-8 py-20 font-sans text-white selection:bg-[#2997FF] selection:text-white">
+      <div className="max-w-[1600px] mx-auto bg-[#0B0E14] border border-white/5 rounded-[2rem] p-6 md:p-12 shadow-2xl overflow-hidden">
 
         {/* Headline */}
         <motion.div
@@ -68,9 +69,9 @@ export default function BentoGrid() {
         >
 
           {/* Card 1: Orders on autopilot */}
-          <motion.div variants={cardVariants} className="bg-[#151921] rounded-2xl md:rounded-[1.5rem] p-6 flex flex-col justify-end min-h-[350px] md:min-h-[400px] relative overflow-hidden group hover:bg-[#1A1E28] transition-colors border border-white/5">
+          <motion.div variants={cardVariants} className="bg-[#151921] rounded-2xl md:rounded-[1.5rem] p-6 flex flex-col justify-end min-h-[350px] md:min-h-[400px] relative overflow-hidden border border-white/5 group hover:bg-[#1A1E28] transition-colors">
             <div
-              className="absolute inset-0 bg-cover bg-center"
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
               style={{ backgroundImage: "url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=500&auto=format&fit=crop')" }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-[#151921] via-[#151921]/60 to-transparent" />
@@ -99,9 +100,9 @@ export default function BentoGrid() {
           </motion.div>
 
           {/* Card 2: Speaks Malayalam */}
-          <motion.div variants={cardVariants} className="bg-[#151921] rounded-2xl md:rounded-[1.5rem] p-6 flex flex-col justify-end min-h-[350px] md:min-h-[400px] relative overflow-hidden group hover:bg-[#1A1E28] transition-colors border border-white/5">
+          <motion.div variants={cardVariants} className="bg-[#151921] rounded-2xl md:rounded-[1.5rem] p-6 flex flex-col justify-end min-h-[350px] md:min-h-[400px] relative overflow-hidden border border-white/5 group hover:bg-[#1A1E28] transition-colors">
             <div
-              className="absolute inset-0 bg-cover bg-center"
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
               style={{ backgroundImage: "url('https://images.unsplash.com/photo-1596526131083-e8c633c948d2?q=80&w=500&auto=format&fit=crop')" }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-[#151921] via-[#151921]/60 to-transparent" />
@@ -127,9 +128,9 @@ export default function BentoGrid() {
           </motion.div>
 
           {/* Card 3: 24/7 no staff needed */}
-          <motion.div variants={cardVariants} className="bg-[#151921] rounded-2xl md:rounded-[1.5rem] p-6 flex flex-col justify-end min-h-[350px] md:min-h-[400px] relative overflow-hidden group hover:bg-[#1A1E28] transition-colors border border-white/5">
+          <motion.div variants={cardVariants} className="bg-[#151921] rounded-2xl md:rounded-[1.5rem] p-6 flex flex-col justify-end min-h-[350px] md:min-h-[400px] relative overflow-hidden border border-white/5 group hover:bg-[#1A1E28] transition-colors">
             <div
-              className="absolute inset-0 bg-cover bg-center"
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
               style={{ backgroundImage: "url('https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?q=80&w=500&auto=format&fit=crop')" }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-[#151921] via-[#151921]/60 to-transparent" />
@@ -138,14 +139,14 @@ export default function BentoGrid() {
             {/* Activity ring */}
             <div className="relative z-10 p-3 bg-white/10 backdrop-blur-md rounded-xl border border-white/10 w-[90%] md:w-4/5 mx-auto mb-6 shadow-lg">
               <div className="flex justify-between items-center text-white/70 text-[10px] font-bold tracking-widest mb-2">
-                AGENT STATUS <span className="text-[#25D366]">● LIVE</span>
+                AGENT STATUS <span className="text-[#25D366] flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" /> LIVE</span>
               </div>
               <div className="w-16 h-16 mx-auto relative flex items-center justify-center my-1">
                 <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
                   <path className="text-gray-200/20" stroke="currentColor" strokeWidth="3" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"/>
                   <path className="text-[#25D366]" stroke="currentColor" strokeWidth="3" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" strokeDasharray="100, 100" strokeLinecap="round" fill="none"/>
                 </svg>
-                <div className="absolute w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white backdrop-blur-sm">
+                <div className="absolute w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white backdrop-blur-sm border border-white/20">
                   <Bot size={20} />
                 </div>
               </div>
@@ -160,9 +161,9 @@ export default function BentoGrid() {
           </motion.div>
 
           {/* Card 4: Broadcast Campaigns — wide */}
-          <motion.div variants={cardVariants} className="md:col-span-2 bg-[#151921] rounded-2xl md:rounded-[1.5rem] p-6 flex flex-col justify-end min-h-[300px] md:min-h-[350px] relative overflow-hidden group hover:bg-[#1A1E28] transition-colors border border-white/5">
+          <motion.div variants={cardVariants} className="md:col-span-2 bg-[#151921] rounded-2xl md:rounded-[1.5rem] p-6 flex flex-col justify-end min-h-[300px] md:min-h-[350px] relative overflow-hidden border border-white/5 group hover:bg-[#1A1E28] transition-colors">
             <div
-              className="absolute inset-0 bg-cover bg-center"
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
               style={{ backgroundImage: "url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1500&auto=format&fit=crop')" }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-[#151921] via-[#151921]/80 to-[#151921]/20" />
@@ -203,9 +204,9 @@ export default function BentoGrid() {
           </motion.div>
 
           {/* Card 5: Kerala focus */}
-          <motion.div variants={cardVariants} className="md:col-span-1 bg-[#151921] rounded-2xl md:rounded-[1.5rem] p-6 flex flex-col justify-end min-h-[300px] md:min-h-[350px] relative overflow-hidden group hover:bg-[#1A1E28] transition-colors border border-white/5">
+          <motion.div variants={cardVariants} className="md:col-span-1 bg-[#151921] rounded-2xl md:rounded-[1.5rem] p-6 flex flex-col justify-end min-h-[300px] md:min-h-[350px] relative overflow-hidden border border-white/5 group hover:bg-[#1A1E28] transition-colors">
             <div
-              className="absolute inset-0 bg-cover bg-center"
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
               style={{ backgroundImage: "url('https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=1000&auto=format&fit=crop')" }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-[#151921] via-[#151921]/90 to-[#151921]/30" />

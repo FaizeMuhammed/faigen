@@ -44,46 +44,46 @@ function ContactModal({ onClose }) {
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.15 }} 
-        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm px-4"
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }} 
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/20 backdrop-blur-md px-4"
         onClick={(e) => e.target === e.currentTarget && onClose()}
       >
         <motion.div
-          initial={{ scale: 0.96, y: 10, opacity: 0 }} 
+          initial={{ scale: 0.95, y: 20, opacity: 0 }} 
           animate={{ scale: 1, y: 0, opacity: 1 }} 
-          exit={{ scale: 0.96, y: 10, opacity: 0 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
+          exit={{ scale: 0.95, y: 20, opacity: 0 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white rounded-[4px] shadow-[0_16px_40px_rgba(0,0,0,0.12)] border border-[#eeeeee] w-full max-w-[400px] overflow-hidden relative"
+          className="bg-white rounded-[32px] shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-[#E5E5EA] w-full max-w-[420px] overflow-hidden relative"
         >
-          <div className="p-6 sm:p-8">
-            <div className="flex justify-between items-start mb-5">
-              <div className="w-10 h-10 rounded-[2px] bg-[#e8f0fe] flex items-center justify-center text-[#387ed1] border border-[#d2e3fc]">
-                <ShieldCheck size={20} strokeWidth={1.5} />
+          <div className="p-8">
+            <div className="flex justify-between items-start mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-[#F5F5F7] flex items-center justify-center text-[#1D1D1F] border border-[#E5E5EA]">
+                <ShieldCheck size={24} strokeWidth={1.5} />
               </div>
-              <button onClick={onClose} className="text-[#9e9e9e] hover:text-[#424242] transition-colors bg-[#fbfbfb] border border-[#eeeeee] w-8 h-8 flex items-center justify-center rounded-[2px]">
+              <button onClick={onClose} className="text-[#86868B] hover:text-[#1D1D1F] transition-colors bg-[#F5F5F7] border border-[#E5E5EA] w-8 h-8 flex items-center justify-center rounded-full">
                 <X size={16} strokeWidth={2} />
               </button>
             </div>
 
-            <h3 className="text-[18px] font-medium text-[#424242] tracking-tight mb-2">Contact our team</h3>
-            <p className="text-[13px] text-[#9e9e9e] leading-relaxed mb-6">
+            <h3 className="text-[20px] font-semibold text-[#1D1D1F] tracking-tight mb-2">Contact our team</h3>
+            <p className="text-[14px] text-[#86868B] leading-relaxed mb-8">
               Have a specific question not covered in the FAQ? Reach out to our deployment team for dedicated support.
             </p>
 
-            <div className="space-y-3 mb-2">
-              <div className="bg-[#fbfbfb] border border-[#eeeeee] rounded-[2px] p-3 flex items-center justify-between group hover:border-[#387ed1] transition-all cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <Mail size={16} className="text-[#9e9e9e] group-hover:text-[#387ed1]" />
-                  <a href="mailto:info@faigen.in" className="text-[13px] font-medium text-[#424242]">info@faigen.in</a>
+            <div className="space-y-4 mb-2">
+              <div className="bg-[#F5F5F7] border border-[#E5E5EA] rounded-2xl p-4 flex items-center justify-between group hover:border-[#D2D2D7] hover:bg-[#EAEAEB] transition-all cursor-pointer">
+                <div className="flex items-center gap-4">
+                  <Mail size={18} className="text-[#86868B] group-hover:text-[#1D1D1F] transition-colors" />
+                  <a href="mailto:info@faigen.in" className="text-[14px] font-medium text-[#1D1D1F]">info@faigen.in</a>
                 </div>
-                <button onClick={handleCopy} className="text-[#387ed1] hover:text-[#2d65a8] transition-colors">
+                <button onClick={handleCopy} className="text-[#86868B] hover:text-[#0066CC] transition-colors p-2 bg-white shadow-sm rounded-xl border border-[#E5E5EA]">
                   {copied ? <Check size={16} strokeWidth={3} /> : <Copy size={16} />}
                 </button>
               </div>
-              <a href="tel:+919876543210" className="flex items-center gap-3 p-3 rounded-[2px] border border-[#eeeeee] hover:border-[#387ed1] hover:bg-[#fbfbfb] transition-all group">
-                <Phone size={16} className="text-[#9e9e9e] group-hover:text-[#387ed1]" />
-                <span className="text-[13px] font-medium text-[#424242]">+91 98765 43210</span>
+              <a href="tel:+919876543210" className="flex items-center gap-4 p-4 rounded-2xl border border-[#E5E5EA] hover:border-[#D2D2D7] bg-[#F5F5F7] hover:bg-[#EAEAEB] transition-all group">
+                <Phone size={18} className="text-[#86868B] group-hover:text-[#1D1D1F] transition-colors" />
+                <span className="text-[14px] font-medium text-[#1D1D1F]">+91 98765 43210</span>
               </a>
             </div>
           </div>
@@ -98,32 +98,31 @@ function ContactModal({ onClose }) {
 const FAQItem = ({ faq, isOpen, onToggle }) => {
   return (
     <div 
-      className={`w-full overflow-hidden transition-colors duration-200 rounded-[4px] cursor-pointer border ${
+      className={`w-full overflow-hidden transition-all duration-300 rounded-[24px] cursor-pointer border ${
         isOpen 
-          ? "bg-white border-[#387ed1] shadow-[0_4px_20px_rgba(0,0,0,0.04)] z-10 relative" 
-          : "bg-[#fbfbfb] border-[#eeeeee] hover:bg-white relative"
+          ? "bg-white border-[#E5E5EA] shadow-[0_8px_30px_rgb(0,0,0,0.04)] z-10 relative scale-[1.02] md:scale-[1.01]" 
+          : "bg-transparent border-[#E5E5EA] hover:bg-[#F5F5F7] relative"
       }`}
       onClick={onToggle}
     >
-      <div className="flex justify-between items-center p-5 md:p-6">
-        <h4 className={`text-[15px] md:text-[16px] font-medium pr-4 transition-colors ${isOpen ? "text-[#1A1A1A]" : "text-[#424242]"}`}>
+      <div className="flex justify-between items-center p-6 md:p-8">
+        <h4 className={`text-[16px] md:text-[18px] font-semibold tracking-tight pr-6 transition-colors ${isOpen ? "text-[#1D1D1F]" : "text-[#86868B]"}`}>
           {faq.question}
         </h4>
-        <div className={`flex-shrink-0 w-8 h-8 rounded-[2px] flex items-center justify-center transition-colors duration-200 ${isOpen ? "bg-[#e8f0fe] text-[#387ed1] border border-[#d2e3fc]" : "bg-white border border-[#eeeeee] text-[#9e9e9e]"}`}>
-          {isOpen ? <X size={16} strokeWidth={2} /> : <Plus size={16} strokeWidth={2} />}
+        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? "bg-[#1D1D1F] text-white shadow-md rotate-180" : "bg-white border border-[#E5E5EA] text-[#86868B]"}`}>
+          {isOpen ? <X size={18} strokeWidth={2.5} /> : <Plus size={18} strokeWidth={2} />}
         </div>
       </div>
       
-      {/* Added initial={false} to fix page-restore bugs, and simplified transition for speed */}
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }} // Snappy, clean easeOut avoids lag
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} 
           >
-            <div className="px-5 md:px-6 pb-6 text-[14px] text-[#666666] leading-relaxed">
+            <div className="px-6 md:px-8 pb-8 text-[15px] font-medium text-[#86868B] leading-relaxed">
               {faq.answer}
             </div>
           </motion.div>
@@ -149,44 +148,48 @@ export default function FAQSection() {
   };
 
   return (
-    <section className="relative w-full py-24 md:py-32 font-sans text-[#1A1A1A] overflow-hidden">
+    <section className="relative w-full py-24 md:py-32 font-sans text-[#1D1D1F] bg-[#FBFBFD] overflow-hidden selection:bg-[#0066CC] selection:text-white">
       
-      {/* Main Container aligned with previous sections */}
+      {/* Background Ambient Glow */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-[#0066CC] opacity-[0.04] blur-[150px] rounded-full pointer-events-none z-0" />
+
+      {/* Main Container */}
       <div className="max-w-[1500px] mx-auto px-6 md:px-12 xl:px-16 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           
           {/* Left Column: Heading & CTA */}
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}
             className="lg:col-span-5 lg:sticky lg:top-32"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[2px] bg-white border border-[#eeeeee] text-[#424242] text-[11px] font-bold tracking-widest uppercase shadow-sm mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#387ed1]"></span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E5E5EA] text-[#86868B] text-[11px] font-bold tracking-widest uppercase shadow-[0_2px_8px_rgba(0,0,0,0.02)] mb-8">
+              <span className="w-2 h-2 rounded-full bg-[#0066CC] animate-pulse"></span>
               Support & Queries
             </div>
 
-            <h2 className="text-[3.2rem] md:text-[4.2rem] font-medium leading-[1.05] tracking-tight text-[#1A1A1A] mb-6">
-              Frequently <br />
-              asked <br />
+            <h2 className="text-[3.2rem] md:text-[4.5rem] font-semibold leading-[1.02] tracking-tighter text-[#1D1D1F] mb-6">
+              Frequently <br className="hidden lg:block" />
+              asked <br className="hidden lg:block" />
               questions.
             </h2>
-            <p className="text-[#666666] text-[15px] mb-10 max-w-[380px] leading-relaxed">
+            <p className="text-[#86868B] text-[16px] md:text-[18px] font-medium mb-12 max-w-[420px] leading-relaxed tracking-tight">
               Find answers to frequently asked questions about our AI agents, integrations, and deployment timelines.
             </p>
             
-            {/* Contact Button opens the popup */}
+            {/* Contact Button */}
             <button 
               onClick={() => setPopupOpen(true)}
-              className="bg-white border border-[#e0e0e0] hover:border-[#387ed1] hover:text-[#387ed1] text-[#424242] px-8 py-3.5 rounded-[2px] text-[14px] font-medium shadow-sm transition-all flex items-center gap-2"
+              className="bg-[#1D1D1F] border border-transparent hover:bg-black text-white px-8 py-4 rounded-full text-[15px] font-semibold shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition-all duration-300 flex items-center gap-2 group"
             >
               Contact our team
+              <Mail size={16} className="text-[#86868B] group-hover:text-white transition-colors" />
             </button>
           </motion.div>
 
-          {/* Right Column: Flat Accordion */}
+          {/* Right Column: Premium Accordion */}
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}
-            className="lg:col-span-7 flex flex-col gap-3 relative"
+            className="lg:col-span-7 flex flex-col gap-4 relative"
           >
             {faqs.map((faq) => (
               <FAQItem 

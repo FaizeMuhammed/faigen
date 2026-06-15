@@ -25,9 +25,10 @@ const MetaIcon = ({ size = 16, className = '' }) => (
 
 // ── Scroll Word Reveal ────────────────────────────────────────
 const ScrollWord = ({ word, progress, range }) => {
-  const color = useTransform(progress, range, ["#e0e0e0", "#1A1A1A"])
+  // Starts as a light gray (D2D2D7) and transitions to deep gray (1D1D1F)
+  const color = useTransform(progress, range, ["#D2D2D7", "#1D1D1F"])
   return (
-    <motion.span style={{ color }} className="inline-block mr-[0.28em] mb-2">
+    <motion.span style={{ color }} className="inline-block mr-[0.28em] mb-2 transition-colors duration-150">
       {word}
     </motion.span>
   )
@@ -49,42 +50,39 @@ export default function FeatureSection() {
   })
 
   return (
-    <section className="w-full bg-white pt-16 pb-20 font-sans text-[#1A1A1A] overflow-hidden">
-      <div className="max-w-[1500px] mx-auto border-x border-[#eeeeee] relative bg-white">
+    <section className="w-full bg-[#FBFBFD] pt-16 pb-20 font-sans text-[#1D1D1F] overflow-hidden">
+      <div className="max-w-[1500px] mx-auto border-x border-[#E5E5EA] relative bg-[#FBFBFD]">
 
         {/* ── Scroll Reveal Headline ───────────────────────────── */}
-        <div className="px-6 md:px-12 xl:px-16 py-24 relative bg-white">
-          <div className="absolute top-0 left-[-50vw] right-[-50vw] h-[1px] bg-[#eeeeee]" />
-          <div className="absolute bottom-0 left-[-50vw] right-[-50vw] h-[1px] bg-[#eeeeee]" />
+        <div className="px-6 md:px-12 xl:px-16 py-28 relative">
+          <div className="absolute top-0 left-[-50vw] right-[-50vw] h-[1px] bg-[#E5E5EA]" />
+          <div className="absolute bottom-0 left-[-50vw] right-[-50vw] h-[1px] bg-[#E5E5EA]" />
 
-          <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-20">
+          <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-20">
 
-            {/* Left Badge */}
+            {/* Left Badge Cluster */}
             <motion.div
               initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-50px" }} variants={fadeUp}
               className="flex-shrink-0 pt-4 flex flex-col gap-3"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[2px] bg-[#fbfbfb] border border-[#eeeeee] text-[#424242] text-[11px] font-bold tracking-widest uppercase shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse" />
-                For Kerala Businesses
-              </div>
+              
 
               {/* Meta Verified Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[2px] bg-[#e8f0fe] border border-[#c5d8f8] text-[#1a56db] text-[11px] font-bold shadow-sm">
-                <MetaIcon size={12} className="text-[#0467DF]" />
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E5E5EA] text-[#1D1D1F] text-[12px] font-semibold shadow-[0_2px_10px_rgb(0,0,0,0.02)]">
+                <MetaIcon size={14} className="text-[#0066CC]" />
                 Meta Verified Tech Provider
-                <BadgeCheck size={12} className="text-[#0467DF]" />
+                <BadgeCheck size={14} className="text-[#0066CC]" />
               </div>
 
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[2px] bg-[#e8f5e9] border border-[#c8e6c9] text-[#2e7d32] text-[11px] font-bold shadow-sm">
-                <WhatsAppIcon size={12} className="text-[#25D366]" />
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#E8F5E9] border border-[#C8E6C9] text-[#2E7D32] text-[12px] font-semibold shadow-[0_2px_10px_rgb(0,0,0,0.02)]">
+                <WhatsAppIcon size={14} className="text-[#25D366]" />
                 Official WhatsApp Partner
               </div>
             </motion.div>
 
             {/* Scroll Reveal Text */}
             <div className="max-w-[1100px] relative z-10">
-              <h2 ref={textRef} className="text-[2.6rem] md:text-[3.8rem] lg:text-[4.2rem] leading-[1.05] font-medium tracking-tight bg-white">
+              <h2 ref={textRef} className="text-[2.6rem] md:text-[3.8rem] lg:text-[4.2rem] leading-[1.05] font-semibold tracking-tighter">
                 {words.map((word, i) => {
                   const start = i / words.length
                   const end = start + (1 / words.length)
@@ -96,8 +94,8 @@ export default function FeatureSection() {
         </div>
 
         {/* ── Feature 1: AI WhatsApp & Instagram Agent ─────────── */}
-        <div className="px-6 md:px-12 xl:px-16 py-24 bg-white relative">
-          <div className="absolute bottom-0 left-[-50vw] right-[-50vw] h-[1px] bg-[#eeeeee]" />
+        <div className="px-6 md:px-12 xl:px-16 py-28 relative">
+          <div className="absolute bottom-0 left-[-50vw] right-[-50vw] h-[1px] bg-[#E5E5EA]" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 items-center relative z-10">
 
@@ -106,28 +104,31 @@ export default function FeatureSection() {
               initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-50px" }} variants={fadeUp}
               className="col-span-1 lg:col-span-5 pr-0 lg:pr-8"
             >
-              <div className="flex items-center gap-3 text-[14.5px] font-bold text-[#666666] mb-6">
+              <div className="flex items-center gap-3 text-[14px] font-semibold text-[#86868B] tracking-tight mb-6">
                 <WhatsAppIcon size={18} className="text-[#25D366]" />
                 WhatsApp & Instagram AI Agent
               </div>
 
-              <h3 className="text-[2.4rem] md:text-[3.2rem] leading-[1.05] font-medium tracking-tight text-[#1A1A1A] mb-6">
-                Your business takes orders <span className="text-[#2563EB]">even while you sleep.</span>
+              <h3 className="text-[2.4rem] md:text-[3.2rem] leading-[1.05] font-semibold tracking-tighter text-[#1D1D1F] mb-6">
+                Your business takes orders <span className="text-[#0066CC]">even while you sleep.</span>
               </h3>
 
-              <p className="text-[#666666] text-[15px] leading-relaxed mb-8">
+              <p className="text-[#86868B] text-[16px] leading-relaxed mb-8 font-medium">
                 Upload your product catalog and Agentified's AI instantly handles customer queries, takes orders, shares prices and sends payment links — all inside WhatsApp. Speaks fluent Malayalam, Manglish and English. Works 24/7 without a day off.
               </p>
 
               {/* Proof points */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-4">
                 {[
-                  { icon: <CheckCheck size={15} className="text-[#25D366]" />, text: 'Responds in seconds — even at midnight' },
-                  { icon: <Package size={15} className="text-[#2563EB]" />, text: 'Takes orders directly in the chat' },
-                  { icon: <TrendingUp size={15} className="text-[#f57c00]" />, text: 'Converts 3x more leads than forms' },
+                  { icon: <CheckCheck size={18} className="text-[#25D366]" />, text: 'Responds in seconds — even at midnight' },
+                  { icon: <Package size={18} className="text-[#0066CC]" />, text: 'Takes orders directly in the chat' },
+                  { icon: <TrendingUp size={18} className="text-[#FF9500]" />, text: 'Converts 3x more leads than forms' },
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 text-[14px] text-[#424242] font-medium">
-                    {item.icon} {item.text}
+                  <div key={i} className="flex items-center gap-3 text-[15px] text-[#424245] font-semibold tracking-tight">
+                    <div className="p-1.5 bg-white rounded-full shadow-sm border border-[#E5E5EA]">
+                      {item.icon}
+                    </div>
+                    {item.text}
                   </div>
                 ))}
               </div>
@@ -138,45 +139,48 @@ export default function FeatureSection() {
               initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-50px" }} variants={fadeUp}
               className="col-span-1 lg:col-span-7 relative flex justify-end"
             >
-              <div className="flex gap-4 w-full md:w-[90%] h-[400px] md:h-[500px]">
+              <div className="flex gap-4 w-full md:w-[90%] h-[400px] md:h-[520px]">
                 <div
-                  className="w-1/2 h-full rounded-[4px] bg-cover bg-center border border-[#eeeeee]"
+                  className="w-1/2 h-full rounded-[32px] bg-cover bg-center border border-[#E5E5EA] shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
                   style={{ backgroundImage: "url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1000&auto=format&fit=crop')" }}
                 />
                 <div
-                  className="w-1/2 h-full rounded-[4px] bg-cover bg-center border border-[#eeeeee] opacity-90"
+                  className="w-1/2 h-full rounded-[32px] bg-cover bg-center border border-[#E5E5EA] opacity-90 shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
                   style={{ backgroundImage: "url('https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=1000&auto=format&fit=crop')" }}
                 />
               </div>
 
-              {/* Floating UI Card */}
-              <div className="absolute top-1/2 left-[5%] md:left-[15%] lg:left-[-10%] -translate-y-1/2 w-[90%] md:w-[80%] max-w-[420px] bg-white border border-[#eeeeee] p-6 md:p-8 rounded-[4px] shadow-[0_16px_40px_rgba(0,0,0,0.06)]">
+              {/* Floating UI Card - Glassmorphism style */}
+              <div className="absolute top-1/2 left-[5%] md:left-[15%] lg:left-[-10%] -translate-y-1/2 w-[90%] md:w-[80%] max-w-[420px] bg-white/90 backdrop-blur-2xl border border-white p-6 md:p-8 rounded-[32px] shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
 
                 {/* Header */}
-                <div className="flex items-center gap-4 mb-6 bg-[#fbfbfb] border border-[#eeeeee] p-3 rounded-[2px]">
-                  <div className="w-10 h-10 bg-[#e8f5e9] rounded-[2px] flex items-center justify-center border border-[#c8e6c9]">
-                    <WhatsAppIcon size={20} className="text-[#25D366]" />
+                <div className="flex items-center gap-4 mb-6 bg-white border border-[#E5E5EA] p-3 rounded-2xl shadow-sm">
+                  <div className="w-12 h-12 bg-[#F5F5F7] rounded-xl flex items-center justify-center border border-[#E5E5EA]">
+                    <WhatsAppIcon size={24} className="text-[#25D366]" />
                   </div>
                   <div>
-                    <p className="text-[11px] text-[#9e9e9e] font-medium tracking-wide uppercase">Agentified AI</p>
-                    <p className="text-[14px] font-bold text-[#424242]">Upload Product Catalog</p>
+                    <p className="text-[11px] text-[#86868B] font-semibold tracking-wider uppercase">Agentified AI</p>
+                    <p className="text-[15px] font-semibold text-[#1D1D1F]">Upload Product Catalog</p>
                   </div>
                 </div>
 
-                <div className="w-full border border-dashed border-[#cccccc] bg-[#fbfbfb] rounded-[2px] py-10 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-white hover:border-[#25D366] transition-all group">
-                  <UploadCloud className="text-[#9e9e9e] group-hover:text-[#25D366] transition-colors mb-1" size={24} strokeWidth={1.5} />
-                  <p className="text-[13px] font-bold text-[#424242]">Drop your Excel / PDF / Image</p>
-                  <p className="text-[12px] text-[#9e9e9e]">Agent trains itself instantly</p>
+                {/* Upload Zone */}
+                <div className="w-full border-2 border-dashed border-[#D2D2D7] bg-[#F5F5F7] rounded-3xl py-10 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-white hover:border-[#0066CC] transition-all group">
+                  <div className="p-3 bg-white rounded-full shadow-sm border border-[#E5E5EA] mb-2 group-hover:scale-110 transition-transform">
+                    <UploadCloud className="text-[#86868B] group-hover:text-[#0066CC] transition-colors" size={24} strokeWidth={2} />
+                  </div>
+                  <p className="text-[14px] font-semibold text-[#1D1D1F]">Drop your Excel / PDF / Image</p>
+                  <p className="text-[13px] font-medium text-[#86868B]">Agent trains itself instantly</p>
                 </div>
 
                 {/* Meta trust footer */}
-                <div className="mt-4 flex items-center justify-between pt-3 border-t border-[#eeeeee]">
-                  <div className="flex items-center gap-1.5 text-[11px] text-[#9e9e9e]">
-                    <MetaIcon size={11} className="text-[#0467DF]" />
-                    Built on WhatsApp Business Platform
+                <div className="mt-6 flex items-center justify-between pt-4 border-t border-[#E5E5EA]">
+                  <div className="flex items-center gap-1.5 text-[11px] font-medium text-[#86868B]">
+                    <MetaIcon size={12} className="text-[#0066CC]" />
+                    Built on WhatsApp Platform
                   </div>
-                  <div className="flex items-center gap-1 text-[10px] text-[#25D366] font-semibold">
-                    <ShieldCheck size={11} /> Secure
+                  <div className="flex items-center gap-1 text-[11px] text-[#25D366] font-bold tracking-wide uppercase">
+                    <ShieldCheck size={14} /> Secure
                   </div>
                 </div>
               </div>
@@ -185,8 +189,8 @@ export default function FeatureSection() {
         </div>
 
         {/* ── Feature 2: Broadcast Campaigns ───────────────────── */}
-        <div className="px-6 md:px-12 xl:px-16 py-24 bg-white relative">
-          <div className="absolute bottom-0 left-[-50vw] right-[-50vw] h-[1px] bg-[#eeeeee]" />
+        <div className="px-6 md:px-12 xl:px-16 py-28 relative">
+          <div className="absolute bottom-0 left-[-50vw] right-[-50vw] h-[1px] bg-[#E5E5EA]" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 items-center relative z-10">
 
@@ -195,40 +199,45 @@ export default function FeatureSection() {
               initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-50px" }} variants={fadeUp}
               className="col-span-1 lg:col-span-5 pr-0 lg:pr-8"
             >
-              <div className="flex items-center gap-3 text-[14.5px] font-bold text-[#666666] mb-6">
-                <Megaphone size={18} className="text-[#7c3aed]" strokeWidth={2.5} />
+              <div className="flex items-center gap-3 text-[14px] font-semibold text-[#86868B] tracking-tight mb-6">
+                <Megaphone size={18} className="text-[#5E5CE6]" strokeWidth={2} />
                 WhatsApp Broadcast Campaigns
               </div>
 
-              <h3 className="text-[2.4rem] md:text-[3.2rem] leading-[1.05] font-medium tracking-tight text-[#1A1A1A] mb-6">
-                Reach all your customers <span className="text-[#7c3aed]">in one click.</span>
+              <h3 className="text-[2.4rem] md:text-[3.2rem] leading-[1.05] font-semibold tracking-tighter text-[#1D1D1F] mb-6">
+                Reach all your customers <span className="text-[#5E5CE6]">in one click.</span>
               </h3>
 
-              <p className="text-[#666666] text-[15px] leading-relaxed mb-8">
+              <p className="text-[#86868B] text-[16px] leading-relaxed mb-8 font-medium">
                 Send promotions, festival offers, and order updates to hundreds of customers simultaneously on WhatsApp. With pre-approved templates and a simple dashboard, your next campaign is just a few clicks away.
               </p>
 
               {/* Proof points */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-4">
                 {[
-                  { icon: <Zap size={15} className="text-[#7c3aed]" />, text: 'Send to 1000 contacts in minutes' },
-                  { icon: <CheckCheck size={15} className="text-[#25D366]" />, text: 'WhatsApp blue tick delivery reports' },
-                  { icon: <TrendingUp size={15} className="text-[#f57c00]" />, text: '5× higher open rate than SMS or email' },
+                  { icon: <Zap size={18} className="text-[#5E5CE6]" />, text: 'Send to 1000 contacts in minutes' },
+                  { icon: <CheckCheck size={18} className="text-[#25D366]" />, text: 'WhatsApp blue tick delivery reports' },
+                  { icon: <TrendingUp size={18} className="text-[#FF9500]" />, text: '5× higher open rate than SMS or email' },
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 text-[14px] text-[#424242] font-medium">
-                    {item.icon} {item.text}
+                  <div key={i} className="flex items-center gap-3 text-[15px] text-[#424245] font-semibold tracking-tight">
+                    <div className="p-1.5 bg-white rounded-full shadow-sm border border-[#E5E5EA]">
+                      {item.icon}
+                    </div>
+                    {item.text}
                   </div>
                 ))}
               </div>
 
               {/* Meta verified badge */}
-              <div className="mt-8 inline-flex items-center gap-2.5 px-4 py-2.5 bg-[#f3f0ff] border border-[#ddd6fe] rounded-[4px]">
-                <MetaIcon size={14} className="text-[#0467DF]" />
-                <div>
-                  <p className="text-[11px] font-bold text-[#6d28d9]">Meta Verified Tech Provider</p>
-                  <p className="text-[10px] text-[#9e9e9e]">Approved to send on WhatsApp Business API</p>
+              <div className="mt-10 inline-flex items-center gap-4 p-4 bg-white border border-[#E5E5EA] rounded-[24px] shadow-sm">
+                <div className="p-2 bg-[#F5F5F7] rounded-full">
+                  <MetaIcon size={18} className="text-[#0066CC]" />
                 </div>
-                <BadgeCheck size={16} className="text-[#0467DF] ml-1" />
+                <div>
+                  <p className="text-[13px] font-bold text-[#1D1D1F]">Meta Verified Tech Provider</p>
+                  <p className="text-[12px] font-medium text-[#86868B]">Approved to send on WhatsApp Business API</p>
+                </div>
+                <BadgeCheck size={20} className="text-[#0066CC] ml-2" />
               </div>
             </motion.div>
 
@@ -238,27 +247,30 @@ export default function FeatureSection() {
               className="col-span-1 lg:col-span-7 relative flex justify-end"
             >
               <div
-                className="w-full md:w-[90%] h-[400px] md:h-[500px] rounded-[4px] bg-cover bg-center border border-[#eeeeee] relative overflow-hidden"
+                className="w-full md:w-[90%] h-[400px] md:h-[520px] rounded-[32px] bg-cover bg-center border border-[#E5E5EA] shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden"
                 style={{ backgroundImage: "url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1500&auto=format&fit=crop')" }}
               >
                 {/* Campaign Stats Card */}
-                <div className="absolute bottom-6 right-6 bg-white border border-[#eeeeee] p-5 rounded-[4px] shadow-[0_8px_30px_rgba(0,0,0,0.06)] w-[240px]">
-                  <div className="flex items-center gap-2.5 mb-4 border-b border-[#eeeeee] pb-3">
-                    <Megaphone size={15} className="text-[#7c3aed]" strokeWidth={2} />
-                    <span className="text-[12px] font-bold text-[#424242] tracking-wide uppercase">Last Campaign</span>
+                <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-2xl border border-white p-6 rounded-[28px] shadow-[0_20px_50px_rgba(0,0,0,0.08)] w-[260px]">
+                  <div className="flex items-center gap-3 mb-5 border-b border-[#E5E5EA] pb-4">
+                    <div className="p-1.5 bg-[#F5F5F7] rounded-lg">
+                      <Megaphone size={16} className="text-[#5E5CE6]" strokeWidth={2} />
+                    </div>
+                    <span className="text-[12px] font-bold text-[#1D1D1F] tracking-wider uppercase">Last Campaign</span>
                   </div>
-                  <div className="flex flex-col gap-2.5">
+                  
+                  <div className="flex flex-col gap-4">
                     {[
-                      { label: 'Sent', value: '1,240', color: 'bg-[#e8f5e9]', bar: 'bg-[#25D366]', w: 'w-full' },
-                      { label: 'Delivered', value: '1,198', color: 'bg-[#e8f0fe]', bar: 'bg-[#2563EB]', w: 'w-[95%]' },
-                      { label: 'Read', value: '876', color: 'bg-[#f3f0ff]', bar: 'bg-[#7c3aed]', w: 'w-[70%]' },
+                      { label: 'Sent', value: '1,240', color: 'bg-[#F5F5F7]', bar: 'bg-[#25D366]', w: 'w-full' },
+                      { label: 'Delivered', value: '1,198', color: 'bg-[#F5F5F7]', bar: 'bg-[#0066CC]', w: 'w-[95%]' },
+                      { label: 'Read', value: '876', color: 'bg-[#F5F5F7]', bar: 'bg-[#5E5CE6]', w: 'w-[70%]' },
                     ].map(item => (
                       <div key={item.label}>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-[11px] text-[#9e9e9e] font-medium">{item.label}</span>
-                          <span className="text-[11px] font-bold text-[#424242]">{item.value}</span>
+                        <div className="flex justify-between mb-2">
+                          <span className="text-[12px] text-[#86868B] font-medium">{item.label}</span>
+                          <span className="text-[12px] font-bold text-[#1D1D1F]">{item.value}</span>
                         </div>
-                        <div className="h-1.5 bg-[#f5f5f5] rounded-full overflow-hidden">
+                        <div className="h-2 bg-[#F5F5F7] rounded-full overflow-hidden shadow-inner">
                           <div className={`h-full rounded-full ${item.bar} ${item.w}`} />
                         </div>
                       </div>
