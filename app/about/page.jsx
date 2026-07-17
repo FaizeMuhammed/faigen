@@ -99,10 +99,7 @@ export default function AboutPage() {
           <button onClick={() => setPopupOpen(true)} className="font-semibold text-gray-500 hover:text-black transition-colors">Pricing</button>
           <span className="font-semibold text-black border-b-2 border-[#2563EB] pb-1 cursor-default">About</span>
         </nav>
-        <div className="hidden lg:flex items-center gap-3">
-          <button onClick={() => setPopupOpen(true)} className="text-gray-600 text-[14px] font-semibold px-4 py-2.5 hover:text-black transition-colors">Sign in</button>
-          <button onClick={() => setPopupOpen(true)} className="bg-[#1A1A1A] text-white px-5 py-2.5 text-[14px] font-semibold hover:bg-gray-800 transition-colors rounded-lg">Try it for free</button>
-        </div>
+        
         <button className="lg:hidden p-2 text-gray-700" onClick={() => setMenuOpen(v => !v)} aria-label="Menu">
           {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>

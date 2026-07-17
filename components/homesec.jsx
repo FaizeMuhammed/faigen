@@ -187,10 +187,7 @@ export default function FaigenHero() {
                       {copied ? <Check size={16} strokeWidth={3} /> : <Copy size={16} />}
                     </button>
                   </div>
-                  <a href="tel:+919876543210" className="flex items-center gap-4 p-4 rounded-2xl border border-[#E5E5EA] hover:border-[#D2D2D7] bg-[#F5F5F7] hover:bg-[#EAEAEB] transition-all group">
-                    <Phone size={18} className="text-[#86868B] group-hover:text-[#1D1D1F] transition-colors" />
-                    <span className="text-[15px] font-medium text-[#1D1D1F]">+91 98765 43210</span>
-                  </a>
+                 
                 </div>
               </div>
             </motion.div>
@@ -202,7 +199,7 @@ export default function FaigenHero() {
       <header className="relative flex justify-between items-center px-6 md:px-10 py-5 w-full z-50 bg-[#FBFBFD]/80 backdrop-blur-2xl border-b border-[#E5E5EA] max-w-[1500px] mx-auto">
         <div className="flex items-center gap-3 cursor-pointer">
           {/* Logo should be dark/colored for light theme */}
-          <img src="/logonew.png" alt="Faigen Logo" className="h-9 md:h-8 w-auto object-contain" />
+          <img src="/logonew.png" alt="Faigen Logo" className="h-14 md:h-12 w-auto object-contain" />
         </div>
 
         <nav className="hidden lg:flex items-center gap-10 text-[14px] font-medium text-[#86868B]">
@@ -212,7 +209,7 @@ export default function FaigenHero() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-6">
-          <Link href="/login" className="text-[#86868B] text-[14px] font-medium hover:text-[#1D1D1F] transition-colors">Sign in</Link>
+          
           <button onClick={() => setPopupOpen(true)} className="bg-[#1D1D1F] text-white px-5 py-2 text-[14px] font-semibold rounded-full hover:bg-black transition-colors">
             Request Access
           </button>
@@ -234,10 +231,7 @@ export default function FaigenHero() {
             <a href="#" onClick={() => setMenuOpen(false)} className="text-[16px] font-medium text-[#1D1D1F] py-5 border-b border-[#F5F5F7]">Platform</a>
             <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }} className="text-[16px] font-medium text-[#1D1D1F] py-5 border-b border-[#F5F5F7] text-left">API Pricing</button>
             <button href="/use-case" className="text-[16px] font-medium text-[#1D1D1F] py-5 border-b border-[#F5F5F7] text-left">Use Cases</button>
-            <div className="mt-8 flex flex-col gap-4">
-              <Link href="/login" className="text-center bg-[#F5F5F7] border border-[#E5E5EA] text-[#1D1D1F] py-3.5 rounded-full text-[15px] font-medium">Sign in</Link>
-              <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }} className="bg-[#1D1D1F] text-white py-3.5 rounded-full text-[15px] font-semibold">Request Access</button>
-            </div>
+           
           </motion.div>
         )}
       </AnimatePresence>
@@ -255,7 +249,7 @@ export default function FaigenHero() {
             </div>
           ))}
           <div className="hidden sm:block w-px h-4 bg-[#E5E5EA] mx-2" />
-          <a
+          {/* <a
             href="https://www.facebook.com/business/partner-directory"
             target="_blank"
             rel="noopener noreferrer"
@@ -264,7 +258,7 @@ export default function FaigenHero() {
             <MetaIcon size={12} />
             View in Meta Partner Directory
             <ArrowRight size={12} />
-          </a>
+          </a> */}
         </div>
       </div>
 

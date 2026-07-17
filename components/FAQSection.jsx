@@ -81,10 +81,7 @@ function ContactModal({ onClose }) {
                   {copied ? <Check size={16} strokeWidth={3} /> : <Copy size={16} />}
                 </button>
               </div>
-              <a href="tel:+919876543210" className="flex items-center gap-4 p-4 rounded-2xl border border-[#E5E5EA] hover:border-[#D2D2D7] bg-[#F5F5F7] hover:bg-[#EAEAEB] transition-all group">
-                <Phone size={18} className="text-[#86868B] group-hover:text-[#1D1D1F] transition-colors" />
-                <span className="text-[14px] font-medium text-[#1D1D1F]">+91 98765 43210</span>
-              </a>
+             
             </div>
           </div>
         </motion.div>
