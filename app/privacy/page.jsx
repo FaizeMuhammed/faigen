@@ -40,7 +40,7 @@ export default function PrivacyPolicy() {
           <Link href="/" className="flex items-center gap-2 group">
             <ArrowLeft size={18} className="text-gray-400 group-hover:text-[#2563EB] transition-colors" />
             <img
-              src="/logo.png"
+              src="/logonew.png"
               alt="Faigen"
               style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
               onError={e => {

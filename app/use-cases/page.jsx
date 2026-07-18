@@ -113,11 +113,13 @@ export default function UseCasesPage() {
       {/* ── HEADER ── */}
       <header className="sticky top-0 z-50 bg-[#FBFBFD]/80 backdrop-blur-xl border-b border-[#E5E5EA]">
         <div className="max-w-[1500px] mx-auto px-6 py-5 flex justify-between items-center">
-          <Link href="/"><img src="/logonew.png" alt="Logo" className="h-8 w-auto" /></Link>
+          <Link href="/"><img src="/logonew.png" alt="Logo" className="h-8 md:h-14  w-auto" /></Link>
           <nav className="hidden lg:flex gap-8 text-[14px] font-semibold text-[#86868B]">
             <Link href="/" className="hover:text-[#1D1D1F]">Home</Link>
             <button onClick={() => setPopupOpen(true)}>API Pricing</button>
             <span className="text-[#1D1D1F]">Use Cases</span>
+             <Link href="/contact" className="hover:text-[#1D1D1F] transition-colors">Contact Us</Link>
+              <Link href="/about" className="hover:text-[#1D1D1F] transition-colors">About Us</Link>
           </nav>
           <button onClick={() => setPopupOpen(true)} className="bg-[#1D1D1F] text-white px-6 py-2.5 rounded-full text-[14px] font-semibold hover:bg-black transition-colors">Request Access</button>
         </div>
@@ -125,9 +127,7 @@ export default function UseCasesPage() {
 
       <main className="py-20">
         <section className="text-center px-6 mb-20">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E5E5EA] text-[#86868B] text-[11px] font-bold tracking-widest uppercase shadow-[0_2px_8px_rgba(0,0,0,0.02)] mb-6">
-            <Sparkles size={12} className="text-[#0066CC]" /> Solutions
-          </span>
+          
           <h1 className="text-[3.5rem] md:text-[5rem] font-semibold tracking-tighter text-[#1D1D1F] mb-6">Tailored for <span className="text-[#0066CC]">every</span> business.</h1>
           <p className="text-[#86868B] text-[18px] max-w-xl mx-auto font-medium">From taking food orders to booking clinic appointments, see how Faigen AI acts as your ultimate digital employee.</p>
         </section>

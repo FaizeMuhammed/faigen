@@ -166,7 +166,7 @@ export default function FaigenHero() {
             >
               <div className="p-8">
                 <div className="flex justify-between items-start mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-[#F5F5F7] flex items-center justify-center text-[#1D1D1F] border border-[#E5E5EA]">
+                  <div className="w-12 h-12 rounded-2xl  flex items-center justify-center text-[#1D1D1F] ">
                     <ShieldCheck size={24} strokeWidth={1.5} />
                   </div>
                   <button onClick={() => setPopupOpen(false)} className="text-[#86868B] hover:text-[#1D1D1F] bg-[#F5F5F7] border border-[#E5E5EA] w-8 h-8 flex items-center justify-center rounded-full transition-colors">
@@ -199,13 +199,15 @@ export default function FaigenHero() {
       <header className="relative flex justify-between items-center px-6 md:px-10 py-5 w-full z-50 bg-[#FBFBFD]/80 backdrop-blur-2xl border-b border-[#E5E5EA] max-w-[1500px] mx-auto">
         <div className="flex items-center gap-3 cursor-pointer">
           {/* Logo should be dark/colored for light theme */}
-          <img src="/logonew.png" alt="Faigen Logo" className="h-14 md:h-12 w-auto object-contain" />
+          <img src="/logonew.png" alt="Faigen Logo" className="h-8 md:h-14 w-auto object-contain" />
         </div>
 
         <nav className="hidden lg:flex items-center gap-10 text-[14px] font-medium text-[#86868B]">
-          <a href="#" className="hover:text-[#1D1D1F] transition-colors">Platform</a>
+          
           <button onClick={() => setPopupOpen(true)} className="hover:text-[#1D1D1F] transition-colors">API Pricing</button>
           <a href="/use-cases" className="hover:text-[#1D1D1F] transition-colors">Use Cases</a>
+           <a href="/about" className="hover:text-[#1D1D1F] transition-colors">About Us</a>
+           <a href="/contact" className="hover:text-[#1D1D1F] transition-colors">Contact Us</a>
         </nav>
 
         <div className="hidden lg:flex items-center gap-6">
@@ -228,7 +230,7 @@ export default function FaigenHero() {
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="lg:hidden absolute top-[70px] left-0 right-0 bg-white/95 backdrop-blur-3xl border-b border-[#E5E5EA] px-6 pb-8 flex flex-col z-40"
           >
-            <a href="#" onClick={() => setMenuOpen(false)} className="text-[16px] font-medium text-[#1D1D1F] py-5 border-b border-[#F5F5F7]">Platform</a>
+           
             <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }} className="text-[16px] font-medium text-[#1D1D1F] py-5 border-b border-[#F5F5F7] text-left">API Pricing</button>
             <button href="/use-case" className="text-[16px] font-medium text-[#1D1D1F] py-5 border-b border-[#F5F5F7] text-left">Use Cases</button>
            
@@ -301,10 +303,7 @@ export default function FaigenHero() {
                 ))}
               </div>
 
-              <p className="mt-12 text-[12px] text-[#86868B] flex items-center gap-2 font-medium tracking-wide">
-                <WhatsAppIcon size={14} className="text-[#25D366]" />
-                Built on WhatsApp Business Platform by Meta
-              </p>
+              
 
             </motion.div>
           </AnimatePresence>
