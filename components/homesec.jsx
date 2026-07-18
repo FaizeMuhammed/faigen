@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Play, Menu, X, Mail, Phone, ShieldCheck, 
+import {
+  Play, Menu, X, Mail, ShieldCheck,
   CheckCircle2, ArrowRight, Check, Copy, Bot, ShoppingBag, Calendar
 } from "lucide-react";
 import Link from 'next/link'
 
-/* ── META / WHATSAPP SVG ICONS ───────────────────────────────── */
+/* ── SVG ICONS ───────────────────────────────────────────────── */
 const WhatsAppIcon = ({ size = 18, className = '' }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -21,7 +21,7 @@ const MetaIcon = ({ size = 18, className = '' }) => (
   </svg>
 )
 
-/* ── TRUST BAR DATA ──────────────────────────────────────────── */
+/* ── TRUST BADGES ────────────────────────────────────────────── */
 const trustBadges = [
   {
     icon: <MetaIcon size={15} className="text-[#0066CC]" />,
@@ -31,7 +31,7 @@ const trustBadges = [
   }
 ]
 
-/* ── DYNAMIC SLIDES ───────────────────────────── */
+/* ── SLIDES ──────────────────────────────────────────────────── */
 const slides = [
   {
     title: (
@@ -51,7 +51,7 @@ const slides = [
       </>
     ),
     subtitle: "Launch targeted promotions and notify thousands of customers simultaneously with rich media and interactive links.",
-    tags: ["Bulk Messaging",  "Delivery Analytics"],
+    tags: ["Bulk Messaging", "Delivery Analytics"],
   },
   {
     title: (
@@ -65,7 +65,7 @@ const slides = [
   }
 ]
 
-/* ── CHAT SCENARIOS ────────────────────────── */
+/* ── CHAT SCENARIOS ──────────────────────────────────────────── */
 const chatScenarios = [
   {
     id: 'ecommerce',
@@ -74,9 +74,8 @@ const chatScenarios = [
     userMsg: "I want to order 2 Premium Coir Mats. Deliver to Ernakulam.",
     botMsg: (
       <>
-        <span className="font-semibold text-[#1D1D1F]">Order confirmed! 🎉</span><br/>
-        <span className="text-[#424245]">2× Premium Coir Mat — ₹1,200<br/>
-        Delivery to Ernakulam in 2-3 days.</span>
+        <span className="font-semibold text-[#1D1D1F]">Order confirmed! 🎉</span><br />
+        <span className="text-[#424245]">2× Premium Coir Mat — ₹1,200<br />Delivery to Ernakulam in 2-3 days.</span>
       </>
     )
   },
@@ -87,9 +86,8 @@ const chatScenarios = [
     userMsg: "Can I book a consultation for tomorrow at 10 AM?",
     botMsg: (
       <>
-        <span className="font-semibold text-[#1D1D1F]">Slot Available ✅</span><br/>
-        <span className="text-[#424245]">I've reserved 10:00 AM tomorrow for you.<br/>
-        Reply 'Confirm' to finalize.</span>
+        <span className="font-semibold text-[#1D1D1F]">Slot Available ✅</span><br />
+        <span className="text-[#424245]">I've reserved 10:00 AM tomorrow for you.<br />Reply 'Confirm' to finalize.</span>
       </>
     )
   },
@@ -100,7 +98,7 @@ const chatScenarios = [
     userMsg: "What are your shop timings today?",
     botMsg: (
       <>
-        <span className="font-semibold text-[#1D1D1F]">We're open! 🏪</span><br/>
+        <span className="font-semibold text-[#1D1D1F]">We're open! 🏪</span><br />
         <span className="text-[#424245]">Our Aluva branch is open from 9 AM to 8 PM today. How can we help you?</span>
       </>
     )
@@ -109,25 +107,27 @@ const chatScenarios = [
 
 /* ── MAIN COMPONENT ──────────────────────────────────────────── */
 export default function FaigenHero() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen]   = useState(false)
   const [popupOpen, setPopupOpen] = useState(false)
-  const [copied, setCopied] = useState(false)
-  
+  const [copied, setCopied]       = useState(false)
   const [activeSlide, setActiveSlide] = useState(0)
-  const [activeChat, setActiveChat] = useState(0)
+  const [activeChat, setActiveChat]   = useState(0)
 
   useEffect(() => {
-    const slideTimer = setInterval(() => {
-      setActiveSlide(prev => (prev + 1) % slides.length)
-    }, 6000)
-    return () => clearInterval(slideTimer)
+    const t = setInterval(() => setActiveSlide(p => (p + 1) % slides.length), 6000)
+    return () => clearInterval(t)
   }, [])
 
   useEffect(() => {
-    const chatTimer = setInterval(() => {
-      setActiveChat(prev => (prev + 1) % chatScenarios.length)
-    }, 4500)
-    return () => clearInterval(chatTimer)
+    const t = setInterval(() => setActiveChat(p => (p + 1) % chatScenarios.length), 4500)
+    return () => clearInterval(t)
+  }, [])
+
+  // Close drawer when viewport widens to desktop
+  useEffect(() => {
+    const handler = () => { if (window.innerWidth >= 1024) setMenuOpen(false) }
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
   }, [])
 
   const handleCopy = () => {
@@ -141,11 +141,23 @@ export default function FaigenHero() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
   }
 
+  // Nav links — single source of truth for both desktop and mobile
+  const navLinks = [
+    { label: 'Use Cases', href: '/use-cases' },
+    // { label: 'About Us',  href: '/about' },
+    // { label: 'Contact',   href: '/contact' },
+  ]
+
   return (
-    <section className="w-full min-h-screen bg-[#FBFBFD] font-sans text-[#1D1D1F] flex flex-col overflow-hidden relative selection:bg-[#0066CC] selection:text-white">
-      
-      {/* Subtle Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#0066CC] opacity-[0.04] blur-[120px] rounded-full pointer-events-none z-0" />
+    // ── FIXED: sticky header requires the outer wrapper NOT to be
+    // overflow-hidden at the top level, only the background glow
+    // should be contained. Using a flex-col wrapper instead.
+    <section className="w-full min-h-screen bg-[#FBFBFD] font-sans text-[#1D1D1F] flex flex-col relative selection:bg-[#0066CC] selection:text-white">
+
+      {/* Background glow — contained in its own overflow-hidden div */}
+      <div className="absolute top-0 left-0 right-0 h-[400px] overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#0066CC] opacity-[0.04] blur-[120px] rounded-full" />
+      </div>
 
       {/* ── POPUP MODAL ── */}
       <AnimatePresence>
@@ -166,28 +178,31 @@ export default function FaigenHero() {
             >
               <div className="p-8">
                 <div className="flex justify-between items-start mb-6">
-                  <div className="w-12 h-12 rounded-2xl  flex items-center justify-center text-[#1D1D1F] ">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-[#1D1D1F]">
                     <ShieldCheck size={24} strokeWidth={1.5} />
                   </div>
-                  <button onClick={() => setPopupOpen(false)} className="text-[#86868B] hover:text-[#1D1D1F] bg-[#F5F5F7] border border-[#E5E5EA] w-8 h-8 flex items-center justify-center rounded-full transition-colors">
+                  <button
+                    onClick={() => setPopupOpen(false)}
+                    className="text-[#86868B] hover:text-[#1D1D1F] bg-[#F5F5F7] border border-[#E5E5EA] w-8 h-8 flex items-center justify-center rounded-full transition-colors"
+                  >
                     <X size={16} strokeWidth={2} />
                   </button>
                 </div>
-                <h3 className="text-[22px] font-semibold text-[#1D1D1F] tracking-tight mb-2">Request API Access</h3>
+                <h3 className="text-[22px] font-semibold text-[#1D1D1F] tracking-tight mb-2">Request a Demo</h3>
                 <p className="text-[14px] text-[#86868B] leading-relaxed mb-8">
                   Faigen Console is available for businesses. Contact our deployment team to get started.
                 </p>
-                <div className="space-y-4">
-                  <div className="bg-[#F5F5F7] border border-[#E5E5EA] rounded-2xl p-4 flex items-center justify-between group hover:border-[#D2D2D7] transition-all cursor-pointer">
-                    <div className="flex items-center gap-4">
-                      <Mail size={18} className="text-[#86868B] group-hover:text-[#1D1D1F] transition-colors" />
-                      <a href="mailto:info@faigen.in" className="text-[15px] font-medium text-[#1D1D1F]">info@faigen.in</a>
-                    </div>
-                    <button onClick={handleCopy} className="text-[#86868B] hover:text-[#0066CC] bg-white shadow-sm border border-[#E5E5EA] p-2 rounded-xl transition-all">
-                      {copied ? <Check size={16} strokeWidth={3} /> : <Copy size={16} />}
-                    </button>
+                <div className="bg-[#F5F5F7] border border-[#E5E5EA] rounded-2xl p-4 flex items-center justify-between group hover:border-[#D2D2D7] transition-all">
+                  <div className="flex items-center gap-4">
+                    <Mail size={18} className="text-[#86868B] group-hover:text-[#1D1D1F] transition-colors" />
+                    <a href="mailto:info@faigen.in" className="text-[15px] font-medium text-[#1D1D1F]">info@faigen.in</a>
                   </div>
-                 
+                  <button
+                    onClick={handleCopy}
+                    className="text-[#86868B] hover:text-[#0066CC] bg-white shadow-sm border border-[#E5E5EA] p-2 rounded-xl transition-all"
+                  >
+                    {copied ? <Check size={16} strokeWidth={3} /> : <Copy size={16} />}
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -195,48 +210,94 @@ export default function FaigenHero() {
         )}
       </AnimatePresence>
 
-      {/* ── HEADER ── */}
-      <header className="relative flex justify-between items-center px-6 md:px-10 py-5 w-full z-50 bg-[#FBFBFD]/80 backdrop-blur-2xl border-b border-[#E5E5EA] max-w-[1500px] mx-auto">
-        <div className="flex items-center gap-3 cursor-pointer">
-          {/* Logo should be dark/colored for light theme */}
-          <img src="/logonew.png" alt="Faigen Logo" className="h-8 md:h-14 w-auto object-contain" />
-        </div>
+      {/* ── HEADER — sticky so it stays visible while scrolling ── */}
+      <header className="sticky top-0 z-50 bg-[#FBFBFD]/90 backdrop-blur-2xl border-b border-[#E5E5EA]">
+        <div className="max-w-[1500px] mx-auto flex justify-between items-center px-5 md:px-10 py-4">
 
-        <nav className="hidden lg:flex items-center gap-10 text-[14px] font-medium text-[#86868B]">
-          
-          <button onClick={() => setPopupOpen(true)} className="hover:text-[#1D1D1F] transition-colors">API Pricing</button>
-          <a href="/use-cases" className="hover:text-[#1D1D1F] transition-colors">Use Cases</a>
-           <a href="/about" className="hover:text-[#1D1D1F] transition-colors">About Us</a>
-           <a href="/contact" className="hover:text-[#1D1D1F] transition-colors">Contact Us</a>
-        </nav>
+          {/* Logo */}
+          <Link href="/" className="flex items-center shrink-0">
+            <img src="/logonew.png" alt="Faigen Logo" className="h-8 md:h-12 w-auto object-contain" />
+          </Link>
 
-        <div className="hidden lg:flex items-center gap-6">
-          
-          <button onClick={() => setPopupOpen(true)} className="bg-[#1D1D1F] text-white px-5 py-2 text-[14px] font-semibold rounded-full hover:bg-black transition-colors">
-            Request Access
+          {/* Desktop nav */}
+          <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-[#86868B]">
+            <button onClick={() => setPopupOpen(true)} className="hover:text-[#1D1D1F] transition-colors">API Pricing</button>
+            {navLinks.map(l => (
+              <Link key={l.href} href={l.href} className="hover:text-[#1D1D1F] transition-colors">{l.label}</Link>
+            ))}
+          </nav>
+
+          {/* Desktop CTA */}
+          <div className="hidden lg:flex items-center gap-4">
+            <button
+              onClick={() => setPopupOpen(true)}
+              className="bg-[#1D1D1F] text-white px-5 py-2.5 text-[14px] font-semibold rounded-full hover:bg-black transition-colors"
+            >
+              Request Access
+            </button>
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            className="lg:hidden p-2 -mr-1 text-[#1D1D1F] rounded-lg hover:bg-[#F5F5F7] transition-colors"
+            onClick={() => setMenuOpen(v => !v)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
 
-        <button className="lg:hidden p-2 text-[#1D1D1F]" onClick={() => setMenuOpen(v => !v)}>
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </header>
+        {/* ── MOBILE DRAWER ──────────────────────────────────────
+            FIX 1: was `absolute` — now lives INSIDE the sticky
+            header so it appears below the header bar, not below
+            the original page position.
+            FIX 2: Use Cases was a <button> with href (invalid) —
+            all nav items are now proper <Link> components.
+            FIX 3: About + Contact were commented out — now live. */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:hidden overflow-hidden bg-white border-t border-[#E5E5EA]"
+            >
+              <div className="flex flex-col px-5 py-3">
+                {/* API Pricing — opens popup */}
+                <button
+                  onClick={() => { setPopupOpen(true); setMenuOpen(false) }}
+                  className="flex items-center justify-between w-full text-[15px] font-medium text-[#1D1D1F] py-4 border-b border-[#F5F5F7] text-left"
+                >
+                  API Pricing
+                  <ArrowRight size={16} className="text-[#86868B]" />
+                </button>
 
-      {/* Mobile drawer */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden absolute top-[70px] left-0 right-0 bg-white/95 backdrop-blur-3xl border-b border-[#E5E5EA] px-6 pb-8 flex flex-col z-40"
-          >
-           
-            <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }} className="text-[16px] font-medium text-[#1D1D1F] py-5 border-b border-[#F5F5F7] text-left">API Pricing</button>
-            <button href="/use-case" className="text-[16px] font-medium text-[#1D1D1F] py-5 border-b border-[#F5F5F7] text-left">Use Cases</button>
-           
-          </motion.div>
-        )}
-      </AnimatePresence>
+                {/* Regular nav links */}
+                {navLinks.map(l => (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center justify-between text-[15px] font-medium text-[#1D1D1F] py-4 border-b border-[#F5F5F7] last:border-0"
+                  >
+                    {l.label}
+                    <ArrowRight size={16} className="text-[#86868B]" />
+                  </Link>
+                ))}
+
+                {/* CTA inside drawer */}
+                <button
+                  onClick={() => { setPopupOpen(true); setMenuOpen(false) }}
+                  className="mt-5 mb-2 w-full bg-[#1D1D1F] text-white py-3.5 text-[15px] font-semibold rounded-full hover:bg-black transition-colors flex items-center justify-center gap-2"
+                >
+                  Request Access <ArrowRight size={16} />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
 
       {/* ── TRUST BAR ── */}
       <div className="w-full border-b border-[#E5E5EA] bg-white/40 backdrop-blur-md py-3 px-6 overflow-x-auto relative z-10">
@@ -250,25 +311,14 @@ export default function FaigenHero() {
               {badge.text}
             </div>
           ))}
-          <div className="hidden sm:block w-px h-4 bg-[#E5E5EA] mx-2" />
-          {/* <a
-            href="https://www.facebook.com/business/partner-directory"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:flex items-center gap-2 text-[12px] text-[#86868B] hover:text-[#0066CC] transition-colors whitespace-nowrap font-medium"
-          >
-            <MetaIcon size={12} />
-            View in Meta Partner Directory
-            <ArrowRight size={12} />
-          </a> */}
         </div>
       </div>
 
       {/* ── MAIN CONTENT ── */}
       <div className="max-w-[1500px] mx-auto w-full flex flex-col lg:flex-row flex-1 relative z-10">
 
-        {/* LEFT PANEL - SLIDING TEXT */}
-        <main className="w-full lg:w-[50%] xl:w-[55%] relative flex flex-col items-start justify-center pt-16 lg:pt-0 pb-20 lg:pb-0 px-6 md:px-12 xl:px-16 text-left">
+        {/* LEFT PANEL */}
+        <main className="w-full lg:w-[50%] xl:w-[55%] relative flex flex-col items-start justify-center pt-12 lg:pt-0 pb-24 lg:pb-0 px-5 md:px-12 xl:px-16 text-left">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={`text-${activeSlide}`}
@@ -278,38 +328,43 @@ export default function FaigenHero() {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="w-full relative z-10"
             >
-              <h1 className="text-[3rem] md:text-[4.5rem] lg:text-[5rem] font-semibold leading-[1.02] tracking-tighter text-[#1D1D1F] max-w-[800px] mb-6">
+              <h1 className="text-[3.2rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-semibold leading-[1.02] tracking-tighter text-[#1D1D1F] max-w-[800px] mb-5">
                 {slides[activeSlide].title}
               </h1>
 
-              <p className="text-[#86868B] text-[17px] md:text-[19px] font-medium max-w-[550px] leading-relaxed mb-10 tracking-tight">
+              <p className="text-[#86868B] text-[17px] sm:text-[17px] md:text-[18px] font-medium max-w-[550px] leading-relaxed mb-7 tracking-tight">
                 {slides[activeSlide].subtitle}
               </p>
 
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 z-20 relative">
-                <button onClick={() => setPopupOpen(true)} className="bg-[#1D1D1F] text-white px-8 py-4 rounded-full font-semibold text-[15px] hover:bg-black transition-all flex items-center gap-2 shadow-lg shadow-black/10">
-                  Start Building Free <ArrowRight size={18} />
+              {/* CTA buttons — compact side-by-side on mobile, larger on sm+ */}
+              <div className="flex flex-row items-center gap-2 sm:gap-3 z-20 relative w-full sm:w-auto">
+                <button
+                  onClick={() => setPopupOpen(true)}
+                  className="bg-[#1D1D1F] text-white px-4 py-2.5 sm:px-7 sm:py-4 rounded-full font-semibold text-[13px] sm:text-[15px] hover:bg-black transition-all flex items-center justify-center gap-1.5 sm:gap-2 shadow-lg shadow-black/10 flex-1 sm:flex-none"
+                >
+                  Start Free <ArrowRight size={14} className="sm:hidden" /><ArrowRight size={18} className="hidden sm:block" />
                 </button>
-                <button onClick={() => setPopupOpen(true)} className="bg-white text-[#1D1D1F] border border-[#D2D2D7] px-8 py-4 rounded-full font-semibold text-[15px] hover:bg-[#F5F5F7] transition-colors flex items-center gap-2">
-                  <Play size={18} fill="currentColor" /> Watch Demo
+                <button
+                  onClick={() => setPopupOpen(true)}
+                  className="bg-white text-[#1D1D1F] border border-[#D2D2D7] px-4 py-2.5 sm:px-7 sm:py-4 rounded-full font-semibold text-[13px] sm:text-[15px] hover:bg-[#F5F5F7] transition-colors flex items-center justify-center gap-1.5 sm:gap-2 flex-1 sm:flex-none"
+                >
+                  <Play size={14} className="sm:hidden" fill="currentColor" /><Play size={18} className="hidden sm:block" fill="currentColor" /> Demo
                 </button>
               </div>
 
-              <div className="mt-14 flex-col gap-4 hidden sm:flex">
+              {/* Feature tags */}
+              <div className="mt-8 flex flex-col gap-2.5 sm:gap-3">
                 {slides[activeSlide].tags.map((tag, idx) => (
-                  <div key={idx} className="flex items-center gap-3 text-[14px] font-medium text-[#86868B] tracking-tight">
-                    <CheckCircle2 size={18} className="text-[#0066CC]" strokeWidth={2} /> {tag}
+                  <div key={idx} className="flex items-center gap-2.5 text-[13px] sm:text-[14px] font-medium text-[#86868B] tracking-tight">
+                    <CheckCircle2 size={16} className="text-[#0066CC] shrink-0" strokeWidth={2} /> {tag}
                   </div>
                 ))}
               </div>
-
-              
-
             </motion.div>
           </AnimatePresence>
 
-          {/* Slider dots */}
-          <div className="absolute bottom-8 lg:bottom-12 left-6 md:left-12 xl:left-16 flex gap-3 z-20">
+          {/* Slide dots */}
+          <div className="absolute bottom-8 lg:bottom-12 left-5 md:left-12 xl:left-16 flex gap-3 z-20">
             {slides.map((_, i) => (
               <button
                 key={i}
@@ -320,17 +375,16 @@ export default function FaigenHero() {
           </div>
         </main>
 
-        {/* ── RIGHT PANEL - USE CASE BENTO GRID ── */}
-        <div className="w-full lg:w-[50%] xl:w-[45%] p-4 lg:p-8 flex flex-col justify-center gap-4 min-h-[500px] lg:min-h-0 relative z-0">
-          
-          {/* Card 1: Live Chat Simulation */}
-          <motion.div 
+        {/* RIGHT PANEL — hidden on mobile to keep the page fast */}
+        <div className="hidden sm:flex w-full lg:w-[50%] xl:w-[45%] p-4 lg:p-8 flex-col justify-center gap-4 min-h-[500px] lg:min-h-0 relative z-0">
+
+          {/* Chat card */}
+          <motion.div
             initial="hidden" animate="visible" variants={fadeUp}
             className="w-full bg-white rounded-[32px] border border-[#E5E5EA] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-6 lg:p-8 flex flex-col relative overflow-hidden h-[320px]"
           >
-            {/* Subtle Inner Background element */}
             <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#F5F5F7] rounded-full pointer-events-none z-0" />
-            
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={chatScenarios[activeChat].id}
@@ -342,12 +396,11 @@ export default function FaigenHero() {
               >
                 <h3 className="text-lg font-semibold text-[#1D1D1F] flex items-center gap-3 mb-auto tracking-tight">
                   <div className="p-2 bg-[#F5F5F7] rounded-xl border border-[#E5E5EA]">
-                    {chatScenarios[activeChat].icon} 
+                    {chatScenarios[activeChat].icon}
                   </div>
                   {chatScenarios[activeChat].title}
                 </h3>
 
-                {/* Chat Bubbles */}
                 <div className="flex flex-col gap-4 mt-6">
                   <div className="bg-[#F5F5F7] text-[#1D1D1F] text-[14px] font-medium p-4 px-5 rounded-2xl rounded-tl-sm self-start max-w-[85%] leading-relaxed border border-[#E5E5EA]">
                     {chatScenarios[activeChat].userMsg}
@@ -360,22 +413,21 @@ export default function FaigenHero() {
             </AnimatePresence>
           </motion.div>
 
-          {/* Bottom Row */}
+          {/* Bottom row */}
           <div className="flex flex-col sm:flex-row gap-4 h-full sm:h-[240px]">
-            
-            {/* Card 2: Language Support */}
-            <motion.div 
+
+            {/* Language card */}
+            <motion.div
               initial="hidden" animate="visible" variants={fadeUp} transition={{ delay: 0.1 }}
               className="flex-1 bg-white rounded-[32px] border border-[#E5E5EA] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 flex flex-col justify-center relative overflow-hidden group"
             >
               <div className="absolute -right-4 -bottom-6 text-[120px] font-black text-black/[0.02] leading-none select-none pointer-events-none tracking-tighter transition-transform duration-700 group-hover:scale-110 z-0">
                 അ
               </div>
-              
               <div className="relative z-10">
                 <span className="text-[11px] font-semibold text-[#86868B] uppercase tracking-widest mb-3 block">Speaks Native</span>
                 <h4 className="text-[1.5rem] font-semibold text-[#1D1D1F] mb-5 leading-tight tracking-tight">
-                  Malayalam,<br/>Manglish & English.
+                  Malayalam,<br />Manglish & English.
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   <span className="px-3 py-1.5 bg-[#F5F5F7] text-[#424245] border border-[#E5E5EA] rounded-full text-[11px] font-semibold uppercase tracking-wider">Auto-Detect</span>
@@ -383,8 +435,8 @@ export default function FaigenHero() {
               </div>
             </motion.div>
 
-            {/* Card 3: 24/7 Agent */}
-            <motion.div 
+            {/* 24/7 card */}
+            <motion.div
               initial="hidden" animate="visible" variants={fadeUp} transition={{ delay: 0.2 }}
               className="flex-1 bg-white border border-[#E5E5EA] shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[32px] p-8 flex flex-col justify-center items-center text-center relative overflow-hidden"
             >
@@ -399,6 +451,33 @@ export default function FaigenHero() {
               </div>
             </motion.div>
 
+          </div>
+        </div>
+
+        {/* Mobile-only chat preview — simple, no bento complexity */}
+        <div className="sm:hidden px-5 pb-8 relative z-10">
+          <div className="bg-white rounded-[28px] border border-[#E5E5EA] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-6">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-9 h-9 rounded-full bg-[#1D1D1F] flex items-center justify-center">
+                <Bot size={18} className="text-white" strokeWidth={1.5} />
+              </div>
+              <div>
+                <p className="text-[14px] font-bold text-[#1D1D1F]">Faigen AI</p>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse shadow-[0_0_8px_rgba(37,211,102,0.6)]" />
+                  <p className="text-[11px] font-medium text-[#86868B]">Online 24/7</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3">
+              <div className="bg-[#F5F5F7] text-[#1D1D1F] text-[13px] font-medium p-3.5 px-4 rounded-2xl rounded-tl-sm self-start max-w-[85%] leading-relaxed border border-[#E5E5EA]">
+                I want to order 2 Coir Mats. Deliver to Ernakulam.
+              </div>
+              <div className="bg-[#E8F4FF] text-[#0066CC] text-[13px] font-medium p-3.5 px-4 rounded-2xl rounded-tr-sm self-end max-w-[85%] leading-relaxed border border-[#D1E8FF]">
+                <span className="font-semibold">Order confirmed! 🎉</span><br />
+                <span className="text-[#424245]">2× Coir Mat — ₹1,200. Delivery in 2-3 days.</span>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -2,14 +2,13 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  ShoppingBag, Stethoscope, Utensils, Building2, 
-  ArrowRight, CheckCircle2, Bot, Sparkles, MessageSquare, Zap,
-  BarChart3, ShieldCheck, X, Mail, Phone, Copy, Check, Menu
+import {
+  ShoppingBag, Stethoscope, Utensils, Building2,
+  ArrowRight, CheckCircle2, Bot, MessageSquare, Zap,
+  BarChart3, ShieldCheck, X, Copy, Check, Menu
 } from "lucide-react";
 import Link from 'next/link';
 
-/* ── CONSTANTS ───────────────────────────────────────────── */
 const industries = [
   {
     id: 'retail',
@@ -71,15 +70,16 @@ const industries = [
 
 const extraFeatures = [
   { title: "Broadcast Campaigns", desc: "Send templates to thousands in one click.", icon: <Zap />, iconColor: "text-[#7c3aed]" },
-  { title: "Omnichannel Inbox", desc: "Monitor WhatsApp & IG chats in one place.", icon: <MessageSquare />, iconColor: "text-[#2563EB]" },
-  { title: "Custom AI Training", desc: "Train on your business data and PDFs.", icon: <Bot />, iconColor: "text-[#d97706]" },
-  { title: "Analytics & Insights", desc: "Track read rates and order volume.", icon: <BarChart3 />, iconColor: "text-[#059669]" }
+  { title: "Omnichannel Inbox",   desc: "Monitor WhatsApp & IG chats in one place.", icon: <MessageSquare />, iconColor: "text-[#2563EB]" },
+  { title: "Custom AI Training",  desc: "Train on your business data and PDFs.", icon: <Bot />, iconColor: "text-[#d97706]" },
+  { title: "Analytics & Insights",desc: "Track read rates and order volume.", icon: <BarChart3 />, iconColor: "text-[#059669]" }
 ];
 
 export default function UseCasesPage() {
   const [activeTab, setActiveTab] = useState(industries[0]);
   const [popupOpen, setPopupOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [menuOpen, setMenuOpen]   = useState(false);
+  const [copied, setCopied]       = useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText("info@faigen.in");
@@ -87,23 +87,45 @@ export default function UseCasesPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const navLinks = [
+    { label: 'Home', href: '/' },
+    { label: 'Use Cases', href: '/use-cases', active: true },
+  ];
+
   return (
     <div className="min-h-screen bg-[#FBFBFD] text-[#1D1D1F] font-sans selection:bg-[#0066CC] selection:text-white">
-      
+
       {/* ── MODAL ── */}
       <AnimatePresence>
         {popupOpen && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center bg-black/20 backdrop-blur-md px-4" onClick={() => setPopupOpen(false)}>
-            <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }} className="bg-white rounded-[32px] border border-[#E5E5EA] w-full max-w-[420px] p-8 shadow-2xl" onClick={e => e.stopPropagation()}>
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/20 backdrop-blur-md px-4"
+            onClick={() => setPopupOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.95, y: 20, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              onClick={e => e.stopPropagation()}
+              className="bg-white rounded-[28px] border border-[#E5E5EA] w-full max-w-[420px] p-8 shadow-2xl"
+            >
               <div className="flex justify-between items-start mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-[#F5F5F7] flex items-center justify-center border border-[#E5E5EA] text-[#1D1D1F]"><ShieldCheck size={24} strokeWidth={1.5} /></div>
-                <button onClick={() => setPopupOpen(false)} className="text-[#86868B] hover:text-[#1D1D1F] bg-[#F5F5F7] w-8 h-8 rounded-full flex items-center justify-center"><X size={16} /></button>
+                <div className="w-12 h-12 rounded-2xl bg-[#F5F5F7] flex items-center justify-center border border-[#E5E5EA] text-[#1D1D1F]">
+                  <ShieldCheck size={24} strokeWidth={1.5} />
+                </div>
+                <button onClick={() => setPopupOpen(false)} className="text-[#86868B] hover:text-[#1D1D1F] bg-[#F5F5F7] border border-[#E5E5EA] w-8 h-8 rounded-full flex items-center justify-center">
+                  <X size={16} />
+                </button>
               </div>
-              <h3 className="text-[20px] font-semibold text-[#1D1D1F] mb-2">Request API Access</h3>
-              <p className="text-[#86868B] text-[14px] mb-8">Faigen Console is for businesses. Contact our team to get started.</p>
+              <h3 className="text-[20px] font-semibold text-[#1D1D1F] mb-2">Request a Demo</h3>
+              <p className="text-[14px] text-[#86868B] mb-8">Faigen Console is for businesses. Contact our team to get started.</p>
               <div className="bg-[#F5F5F7] border border-[#E5E5EA] rounded-2xl p-4 flex items-center justify-between">
                 <span className="text-[14px] font-medium text-[#1D1D1F]">info@faigen.in</span>
-                <button onClick={handleCopy} className="p-2 bg-white rounded-xl border border-[#E5E5EA] text-[#86868B]">{copied ? <Check size={16} /> : <Copy size={16} />}</button>
+                <button onClick={handleCopy} className="p-2 bg-white rounded-xl border border-[#E5E5EA] text-[#86868B]">
+                  {copied ? <Check size={16} strokeWidth={3} /> : <Copy size={16} />}
+                </button>
               </div>
             </motion.div>
           </motion.div>
@@ -111,88 +133,211 @@ export default function UseCasesPage() {
       </AnimatePresence>
 
       {/* ── HEADER ── */}
-      <header className="sticky top-0 z-50 bg-[#FBFBFD]/80 backdrop-blur-xl border-b border-[#E5E5EA]">
-        <div className="max-w-[1500px] mx-auto px-6 py-5 flex justify-between items-center">
-          <Link href="/"><img src="/logonew.png" alt="Logo" className="h-8 md:h-14  w-auto" /></Link>
+      <header className="sticky top-0 z-50 bg-[#FBFBFD]/90 backdrop-blur-2xl border-b border-[#E5E5EA]">
+        <div className="max-w-[1500px] mx-auto px-5 md:px-10 py-4 flex justify-between items-center">
+          <Link href="/">
+            <img src="/logonew.png" alt="Logo" className="h-8 md:h-12 w-auto" />
+          </Link>
+
+          {/* Desktop nav */}
           <nav className="hidden lg:flex gap-8 text-[14px] font-semibold text-[#86868B]">
-            <Link href="/" className="hover:text-[#1D1D1F]">Home</Link>
-            <button onClick={() => setPopupOpen(true)}>API Pricing</button>
+            <Link href="/" className="hover:text-[#1D1D1F] transition-colors">Home</Link>
+            <button onClick={() => setPopupOpen(true)} className="hover:text-[#1D1D1F] transition-colors">API Pricing</button>
             <span className="text-[#1D1D1F]">Use Cases</span>
-             <Link href="/contact" className="hover:text-[#1D1D1F] transition-colors">Contact Us</Link>
-              <Link href="/about" className="hover:text-[#1D1D1F] transition-colors">About Us</Link>
           </nav>
-          <button onClick={() => setPopupOpen(true)} className="bg-[#1D1D1F] text-white px-6 py-2.5 rounded-full text-[14px] font-semibold hover:bg-black transition-colors">Request Access</button>
+
+          <div className="hidden lg:block">
+            <button
+              onClick={() => setPopupOpen(true)}
+              className="bg-[#1D1D1F] text-white px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-black transition-colors"
+            >
+              Request Access
+            </button>
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            className="lg:hidden p-2 -mr-1 text-[#1D1D1F] rounded-lg hover:bg-[#F5F5F7] transition-colors"
+            onClick={() => setMenuOpen(v => !v)}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
+
+        {/* Mobile drawer — inside sticky header */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:hidden overflow-hidden bg-white border-t border-[#E5E5EA]"
+            >
+              <div className="flex flex-col px-5 py-3">
+                <Link href="/" onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-between text-[15px] font-medium text-[#1D1D1F] py-4 border-b border-[#F5F5F7]">
+                  Home <ArrowRight size={16} className="text-[#86868B]" />
+                </Link>
+                <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }}
+                  className="flex items-center justify-between text-[15px] font-medium text-[#1D1D1F] py-4 border-b border-[#F5F5F7] text-left">
+                  API Pricing <ArrowRight size={16} className="text-[#86868B]" />
+                </button>
+                <span className="flex items-center justify-between text-[15px] font-bold text-[#1D1D1F] py-4 border-b border-[#F5F5F7]">
+                  Use Cases <span className="w-2 h-2 rounded-full bg-[#0066CC]" />
+                </span>
+                <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }}
+                  className="mt-4 mb-2 w-full bg-[#1D1D1F] text-white py-3.5 text-[15px] font-semibold rounded-full flex items-center justify-center gap-2">
+                  Request Access <ArrowRight size={16} />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
-      <main className="py-20">
-        <section className="text-center px-6 mb-20">
-          
-          <h1 className="text-[3.5rem] md:text-[5rem] font-semibold tracking-tighter text-[#1D1D1F] mb-6">Tailored for <span className="text-[#0066CC]">every</span> business.</h1>
-          <p className="text-[#86868B] text-[18px] max-w-xl mx-auto font-medium">From taking food orders to booking clinic appointments, see how Faigen AI acts as your ultimate digital employee.</p>
+      <main>
+
+        {/* ── HERO ── */}
+        <section className="text-center px-5 pt-14 pb-10 md:pt-20 md:pb-16">
+          <h1 className="text-[2.8rem] sm:text-[3.5rem] md:text-[5rem] font-semibold tracking-tighter text-[#1D1D1F] mb-4 md:mb-6 leading-[1.02]">
+            Tailored for <span className="text-[#0066CC]">every</span> business.
+          </h1>
+          <p className="text-[#86868B] text-[16px] md:text-[18px] max-w-xl mx-auto font-medium leading-relaxed">
+            From taking food orders to booking clinic appointments, see how Faigen AI acts as your ultimate digital employee.
+          </p>
         </section>
 
-        <section className="max-w-[1400px] mx-auto px-6">
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
+        {/* ── INDUSTRY TABS + CONTENT ── */}
+        <section className="max-w-[1400px] mx-auto px-4 md:px-6 pb-16 md:pb-24">
+
+          {/* Tab pills — horizontal scroll on mobile */}
+          <div className="flex gap-2 md:gap-3 mb-8 md:mb-12 overflow-x-auto pb-2 no-scrollbar justify-start md:justify-center">
             {industries.map((ind) => (
-              <button key={ind.id} onClick={() => setActiveTab(ind)} className={`flex items-center gap-3 px-6 py-4 rounded-full text-[14px] font-semibold transition-all ${activeTab.id === ind.id ? 'bg-[#1D1D1F] text-white shadow-xl' : 'bg-white border border-[#E5E5EA] text-[#86868B] hover:border-[#D2D2D7]'}`}>
-                {React.cloneElement(ind.icon, { size: 18 })} {ind.name}
+              <button
+                key={ind.id}
+                onClick={() => setActiveTab(ind)}
+                className={`flex items-center gap-2 md:gap-3 px-4 py-3 md:px-6 md:py-4 rounded-full text-[13px] md:text-[14px] font-semibold transition-all whitespace-nowrap shrink-0 ${
+                  activeTab.id === ind.id
+                    ? 'bg-[#1D1D1F] text-white shadow-xl'
+                    : 'bg-white border border-[#E5E5EA] text-[#86868B] hover:border-[#D2D2D7]'
+                }`}
+              >
+                {React.cloneElement(ind.icon, { size: 16 })}
+                {/* Shorten label on mobile */}
+                <span className="sm:hidden">
+                  {ind.id === 'retail' ? 'Retail' : ind.id === 'healthcare' ? 'Clinics' : ind.id === 'restaurants' ? 'Restaurants' : 'Real Estate'}
+                </span>
+                <span className="hidden sm:inline">{ind.name}</span>
               </button>
             ))}
           </div>
 
-          <div className="bg-white border border-[#E5E5EA] rounded-[40px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col lg:flex-row overflow-hidden min-h-[600px]">
-            <div className="w-full lg:w-1/2 p-12 lg:p-16 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-[#E5E5EA]">
-              <div className="text-[#0066CC] mb-6">{React.cloneElement(activeTab.icon, { size: 48, strokeWidth: 1.5 })}</div>
-              <h2 className="text-[2.5rem] font-semibold tracking-tighter text-[#1D1D1F] mb-6">{activeTab.title}</h2>
-              <p className="text-[#86868B] text-[17px] font-medium mb-10 leading-relaxed">{activeTab.description}</p>
-              <div className="space-y-4">
-                {activeTab.features.map((f, i) => (
-                  <div key={i} className="flex items-center gap-3 font-semibold text-[#1D1D1F]">
-                    <CheckCircle2 size={20} className="text-[#0066CC]" /> {f}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="w-full lg:w-1/2 bg-[#F5F5F7] p-12 flex items-center justify-center">
-              <div className="w-full max-w-[360px] bg-white rounded-[32px] p-6 shadow-2xl border border-[#E5E5EA]">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#1D1D1F] text-white flex items-center justify-center"><Bot size={20} /></div>
-                  <div><p className="text-[14px] font-bold">Faigen AI</p><p className="text-[12px] text-[#86868B]">Online</p></div>
+          {/* Main content card */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-white border border-[#E5E5EA] rounded-[28px] md:rounded-[40px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col lg:flex-row overflow-hidden"
+            >
+              {/* Left — info */}
+              <div className="w-full lg:w-1/2 p-7 sm:p-10 md:p-12 lg:p-16 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-[#E5E5EA]">
+                <div className="text-[#0066CC] mb-4 md:mb-6">
+                  {React.cloneElement(activeTab.icon, { size: 36, strokeWidth: 1.5 })}
                 </div>
-                <div className="space-y-4">
-                  {activeTab.chat.map((msg, i) => (
-                    <div key={i} className={`p-4 rounded-2xl text-[14px] max-w-[85%] ${msg.sender === 'bot' ? 'bg-[#E8F4FF] text-[#0066CC] rounded-tr-sm self-end ml-auto' : 'bg-[#F5F5F7] text-[#1D1D1F] rounded-tl-sm'}`}>
-                      {msg.text}
+                <h2 className="text-[1.8rem] sm:text-[2rem] md:text-[2.5rem] font-semibold tracking-tighter text-[#1D1D1F] mb-4 md:mb-6 leading-[1.05]">
+                  {activeTab.title}
+                </h2>
+                <p className="text-[#86868B] text-[15px] md:text-[17px] font-medium mb-7 md:mb-10 leading-relaxed">
+                  {activeTab.description}
+                </p>
+                <div className="space-y-3 md:space-y-4">
+                  {activeTab.features.map((f, i) => (
+                    <div key={i} className="flex items-center gap-3 font-semibold text-[#1D1D1F] text-[14px] md:text-[15px]">
+                      <CheckCircle2 size={18} className="text-[#0066CC] shrink-0" /> {f}
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
-          </div>
+
+              {/* Right — chat */}
+              <div className="w-full lg:w-1/2 bg-[#F5F5F7] p-6 sm:p-8 md:p-12 flex items-center justify-center">
+                <div className="w-full max-w-[360px] bg-white rounded-[24px] md:rounded-[32px] p-5 md:p-6 shadow-2xl border border-[#E5E5EA]">
+                  <div className="flex items-center gap-3 mb-5 md:mb-6">
+                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-[#1D1D1F] text-white flex items-center justify-center shrink-0">
+                      <Bot size={18} />
+                    </div>
+                    <div>
+                      <p className="text-[13px] md:text-[14px] font-bold">Faigen AI</p>
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" />
+                        <p className="text-[11px] md:text-[12px] text-[#86868B]">Online</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-3 md:space-y-4">
+                    {activeTab.chat.map((msg, i) => (
+                      <div
+                        key={i}
+                        className={`p-3 md:p-4 rounded-2xl text-[13px] md:text-[14px] max-w-[85%] leading-relaxed ${
+                          msg.sender === 'bot'
+                            ? 'bg-[#E8F4FF] text-[#0066CC] rounded-tr-sm self-end ml-auto'
+                            : 'bg-[#F5F5F7] text-[#1D1D1F] rounded-tl-sm'
+                        }`}
+                      >
+                        {msg.text}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </section>
 
-        <section className="max-w-[1400px] mx-auto px-6 mt-32">
-          <h3 className="text-[2.5rem] font-bold text-[#1D1D1F] text-center mb-16">More than just chat.</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* ── MORE FEATURES ── */}
+        <section className="max-w-[1400px] mx-auto px-4 md:px-6 pb-16 md:pb-24">
+          <h3 className="text-[2rem] sm:text-[2.5rem] font-bold text-[#1D1D1F] text-center mb-10 md:mb-16 tracking-tight">
+            More than just chat.
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {extraFeatures.map((f, i) => (
-              <div key={i} className="bg-white border border-[#E5E5EA] rounded-[32px] p-8 shadow-sm hover:shadow-lg transition-all">
-                <div className={`mb-6 ${f.iconColor}`}>{React.cloneElement(f.icon, { size: 32 })}</div>
-                <h4 className="text-[18px] font-bold mb-2">{f.title}</h4>
-                <p className="text-[#86868B] text-[14px] font-medium">{f.desc}</p>
+              <div
+                key={i}
+                className="bg-white border border-[#E5E5EA] rounded-[24px] md:rounded-[32px] p-6 md:p-8 shadow-sm hover:shadow-lg transition-all"
+              >
+                <div className={`mb-4 md:mb-6 ${f.iconColor}`}>
+                  {React.cloneElement(f.icon, { size: 26 })}
+                </div>
+                <h4 className="text-[15px] md:text-[18px] font-bold mb-1.5 md:mb-2">{f.title}</h4>
+                <p className="text-[#86868B] text-[13px] md:text-[14px] font-medium leading-snug">{f.desc}</p>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="max-w-[1400px] mx-auto px-6 mt-32">
-          <div className="bg-[#1D1D1F] rounded-[40px] p-16 md:p-24 text-center text-white relative overflow-hidden">
-            <h2 className="text-[3.5rem] font-semibold tracking-tighter mb-6">Ready to <span className="text-[#0066CC]">automate?</span></h2>
-            <p className="text-[#86868B] text-[18px] mb-10 max-w-lg mx-auto">Join 50+ Kerala businesses using Faigen's platform to scale operations.</p>
-            <button onClick={() => setPopupOpen(true)} className="bg-white text-black px-10 py-4 rounded-full font-bold">Request API Access</button>
+        {/* ── CTA ── */}
+        <section className="max-w-[1400px] mx-auto px-4 md:px-6 pb-16 md:pb-24">
+          <div className="bg-[#1D1D1F] rounded-[28px] md:rounded-[40px] p-10 sm:p-14 md:p-24 text-center text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#0066CC] blur-[120px] rounded-full opacity-20 pointer-events-none" />
+            <h2 className="text-[2.2rem] sm:text-[3rem] md:text-[3.5rem] font-semibold tracking-tighter mb-4 md:mb-6 leading-[1.05] relative z-10">
+              Ready to <span className="text-[#0066CC]">automate?</span>
+            </h2>
+            <p className="text-[#86868B] text-[15px] md:text-[18px] mb-8 md:mb-10 max-w-lg mx-auto leading-relaxed relative z-10">
+              Join 50+ Kerala businesses using Faigen's platform to scale operations.
+            </p>
+            <button
+              onClick={() => setPopupOpen(true)}
+              className="relative z-10 bg-white text-black px-8 md:px-10 py-3.5 md:py-4 rounded-full font-bold text-[14px] md:text-[15px] hover:bg-[#F5F5F7] transition-colors"
+            >
+              Request Access
+            </button>
           </div>
         </section>
+
       </main>
     </div>
   );
