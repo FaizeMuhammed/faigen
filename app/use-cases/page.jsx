@@ -142,7 +142,7 @@ export default function UseCasesPage() {
           {/* Desktop nav */}
           <nav className="hidden lg:flex gap-8 text-[14px] font-semibold text-[#86868B]">
             <Link href="/" className="hover:text-[#1D1D1F] transition-colors">Home</Link>
-            <button onClick={() => setPopupOpen(true)} className="hover:text-[#1D1D1F] transition-colors">API Pricing</button>
+            <Link href="/pricing" className="hover:text-[#1D1D1F] transition-colors">Pricing</Link>
             <span className="text-[#1D1D1F]">Use Cases</span>
           </nav>
 
@@ -179,10 +179,10 @@ export default function UseCasesPage() {
                   className="flex items-center justify-between text-[15px] font-medium text-[#1D1D1F] py-4 border-b border-[#F5F5F7]">
                   Home <ArrowRight size={16} className="text-[#86868B]" />
                 </Link>
-                <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }}
-                  className="flex items-center justify-between text-[15px] font-medium text-[#1D1D1F] py-4 border-b border-[#F5F5F7] text-left">
-                  API Pricing <ArrowRight size={16} className="text-[#86868B]" />
-                </button>
+                <Link href="/pricing" onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-between text-[15px] font-medium text-[#1D1D1F] py-4 border-b border-[#F5F5F7]">
+                  Pricing <ArrowRight size={16} className="text-[#86868B]" />
+                </Link>
                 <span className="flex items-center justify-between text-[15px] font-bold text-[#1D1D1F] py-4 border-b border-[#F5F5F7]">
                   Use Cases <span className="w-2 h-2 rounded-full bg-[#0066CC]" />
                 </span>

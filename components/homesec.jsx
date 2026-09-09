@@ -95,6 +95,7 @@ export default function FaigenHero() {
   }
 
   const navLinks = [
+    { label: 'Pricing', href: '/pricing' },
     { label: 'Use Cases', href: '/use-cases' },
     // { label: 'About Us',  href: '/about' },
     // { label: 'Contact',   href: '/contact' },
@@ -153,7 +154,6 @@ export default function FaigenHero() {
             <img src="/logonew.png" alt="Faigen Logo" className="h-8 md:h-12 w-auto object-contain" />
           </Link>
           <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-[#86868B]">
-            <button onClick={() => setPopupOpen(true)} className="hover:text-[#1D1D1F] transition-colors">API Pricing</button>
             {navLinks.map(l => (
               <Link key={l.href} href={l.href} className="hover:text-[#1D1D1F] transition-colors">{l.label}</Link>
             ))}
@@ -182,10 +182,6 @@ export default function FaigenHero() {
               exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               className="lg:hidden overflow-hidden bg-white border-t border-[#E5E5EA]">
               <div className="flex flex-col px-5 py-3">
-                <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }}
-                  className="flex items-center justify-between w-full text-[15px] font-medium text-[#1D1D1F] py-4 border-b border-[#F5F5F7] text-left">
-                  API Pricing <ArrowRight size={16} className="text-[#86868B]" />
-                </button>
                 {navLinks.map(l => (
                   <Link key={l.href} href={l.href} onClick={() => setMenuOpen(false)}
                     className="flex items-center justify-between text-[15px] font-medium text-[#1D1D1F] py-4 border-b border-[#F5F5F7] last:border-0">
