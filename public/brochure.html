@@ -1,0 +1,411 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><script>if(window.self!==window.top){document.documentElement.classList.add('embedded');}</script>
+</head><body><title>Faigen Brochure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#FBFBFD; --card:#FFFFFF; --ink:#1D1D1F; --muted:#5F5F66; --faint:#86868B;
+    --line:#E5E5EA; --blue:#0066CC; --blue-2:#3399FF; --blue-soft:#E8F4FF; --blue-line:#D1E8FF;
+    --wa-head:#075E54; --wa-wall:#E5DDD5; --wa-out:#DCF8C6; --wa-tick:#53BDEB;
+    --ok:#2E7D32; --ok-bg:#E8F5E9; --warn:#E65100; --warn-bg:#FFF3E0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:"Geist","Noto Sans Malayalam",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+  button{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+  .wrap{max-width:1160px;margin:0 auto;padding:40px 32px 72px;}
+
+  /* header + hero */
+  .top{display:flex;justify-content:space-between;align-items:center;padding-bottom:28px;border-bottom:1px solid var(--line);}
+  .top img{height:46px;width:auto;display:block;}
+  .top span{font-size:13px;color:var(--faint);font-weight:500;}
+  .hero{padding:56px 0 48px;max-width:860px;}
+  .eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);background:var(--blue-soft);padding:6px 12px;border-radius:99px;margin-bottom:18px;}
+  h1{font-size:clamp(36px,5.4vw,60px);line-height:1.04;letter-spacing:-.03em;font-weight:700;margin:0 0 20px;text-wrap:balance;}
+  .grad{background:linear-gradient(90deg,var(--blue),var(--blue-2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .lede{font-size:18px;color:var(--muted);max-width:620px;margin:0 0 26px;}
+  .jump{display:flex;flex-wrap:wrap;gap:10px;}
+  .jump a{font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:9px 18px;}
+  .jump a:hover{border-color:var(--blue);color:var(--blue);}
+
+  /* spreads */
+  .spread{padding:64px 0;border-top:1px solid var(--line);}
+  .spread-head{max-width:700px;margin-bottom:34px;}
+  h2{font-size:clamp(28px,3.6vw,42px);line-height:1.1;letter-spacing:-.025em;font-weight:700;margin:0 0 14px;text-wrap:balance;}
+  .spread-head p{font-size:17px;color:var(--muted);margin:0;}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:44px;align-items:start;}
+  @media (max-width:940px){.grid{grid-template-columns:1fr;}}
+
+  /* flow rail */
+  .rail-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
+  .rail-hint{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--blue);}
+  .rail-hint svg{width:16px;height:16px;stroke:var(--blue);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+  .play{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 13px;cursor:pointer;}
+  .play svg{width:12px;height:12px;fill:var(--blue);}
+  .flow-step{display:flex;gap:13px;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:15px 16px;cursor:pointer;transition:border-color .2s,background .2s;}
+  .flow-step .n{width:28px;height:28px;border-radius:50%;background:var(--line);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:none;}
+  .flow-step b{display:block;font-size:15.5px;font-weight:650;margin-bottom:2px;color:var(--ink);}
+  .flow-step span.d{font-size:13.5px;color:var(--muted);line-height:1.45;}
+  .flow-step.active{border-color:var(--blue);background:var(--blue-soft);}
+  .flow-step.active .n{background:var(--blue);color:#fff;}
+  .flow-arrow{display:flex;justify-content:center;height:22px;}
+  .flow-arrow svg{width:18px;height:22px;stroke:#B9C4D4;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* chat card */
+  .stack{display:flex;flex-direction:column;gap:16px;min-width:0;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  .chips .lbl{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-right:2px;}
+  .chip{font-size:13px;font-weight:600;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:7px 15px;cursor:pointer;}
+  .chip.on{color:#fff;background:var(--blue);border-color:var(--blue);}
+  .chat{border-radius:22px;overflow:hidden;background:var(--card);border:1px solid var(--line);box-shadow:0 18px 40px -22px rgba(0,40,100,.25);}
+  .chat-head{background:var(--wa-head);padding:14px 18px;display:flex;align-items:center;gap:12px;color:#fff;}
+  .av{width:38px;height:38px;border-radius:50%;background:#0B7A6B;display:flex;align-items:center;justify-content:center;font-weight:700;position:relative;flex:none;}
+  .av i{position:absolute;right:-3px;bottom:-3px;width:16px;height:16px;border-radius:50%;background:#25D366;border:2px solid var(--wa-head);display:flex;align-items:center;justify-content:center;}
+  .av i svg{width:8px;height:8px;fill:#fff;}
+  .chat-head b{display:block;font-size:15px;font-weight:600;}
+  .chat-head small{font-size:12px;color:#CFEFE5;}
+  .chat-body{background:var(--wa-wall);padding:18px;display:flex;flex-direction:column;gap:9px;min-height:430px;}
+  .b{max-width:82%;padding:9px 13px;border-radius:9px;font-size:14.5px;line-height:1.5;box-shadow:0 1px 1px rgba(0,0,0,.09);color:#111B21;}
+  .b.in{align-self:flex-start;background:#fff;border-top-left-radius:2px;}
+  .b.out{align-self:flex-end;background:var(--wa-out);border-top-right-radius:2px;}
+  .b .meta{display:flex;justify-content:flex-end;align-items:center;gap:4px;font-size:10.5px;color:#667781;margin-top:3px;}
+  .b .meta svg{width:14px;height:10px;stroke:var(--wa-tick);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+  div.pane{display:flex;flex-direction:column;gap:9px;}
+  div.pane .b{margin-top:0!important;}
+  .ftag{align-self:center;display:inline-flex;align-items:center;gap:7px;background:var(--blue);color:#fff;font-size:12.5px;font-weight:650;padding:6px 13px;border-radius:99px;box-shadow:0 6px 14px -6px rgba(0,102,204,.6);}
+  .ftag svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+  .chat[data-lang="en"] .t:not([data-l="en"]),.chat[data-lang="ml"] .t:not([data-l="ml"]),.chat[data-lang="mg"] .t:not([data-l="mg"]){display:none;}
+  [data-from],[data-only]{animation:pop .35s ease both;}
+  @keyframes pop{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  @media (prefers-reduced-motion:reduce){[data-from],[data-only]{animation:none;}}
+  [hidden]{display:none!important;}
+
+  /* dashboard-style cards */
+  .dcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 14px 34px -24px rgba(0,40,100,.3);font-family:"Inter","Geist",sans-serif;}
+  .dcard h4{margin:0 0 3px;font-size:15px;font-weight:700;color:#424242;}
+  .dcard .sub{font-size:12.5px;color:#9E9E9E;margin:0 0 14px;}
+  .pillx{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:99px;}
+  .pillx.warn{background:var(--warn-bg);color:var(--warn);} .pillx.ok{background:var(--ok-bg);color:var(--ok);} .pillx.bl{background:var(--blue-soft);color:var(--blue);} .pillx.gr{background:#F5F5F5;color:#757575;}
+  .row{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:8px 0;border-top:1px solid #EEE;color:#666;}
+  .row b{color:#424242;font-weight:600;text-align:right;}
+  .opt{display:flex;gap:11px;align-items:flex-start;padding:12px;border:1.5px solid #EEE;border-radius:14px;margin-bottom:9px;}
+  .opt.sel{border-color:var(--blue);background:var(--blue-soft);}
+  .opt .dot{width:16px;height:16px;border-radius:50%;border:1.5px solid #9E9E9E;flex:none;margin-top:2px;display:flex;align-items:center;justify-content:center;}
+  .opt.sel .dot{border-color:var(--blue);} .opt.sel .dot::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--blue);}
+  .opt b{font-size:13.5px;color:#424242;display:block;} .opt small{font-size:12px;color:#9E9E9E;line-height:1.4;}
+  .opt .r{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--ok);white-space:nowrap;}
+  .aud{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .aud .opt{margin:0;} @media (max-width:560px){.aud{grid-template-columns:1fr;}}
+  .bar{height:9px;border-radius:99px;background:#EEF0F3;overflow:hidden;margin:6px 0 13px;}
+  .bar i{display:block;height:100%;border-radius:99px;background:var(--blue);}
+  .stat-l{display:flex;justify-content:space-between;font-size:13px;color:#666;font-weight:600;} .stat-l b{color:#424242;}
+  .wallet{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:11px 14px;border-radius:12px;background:var(--ok-bg);border:1px solid #C8E6C9;font-size:13px;font-weight:700;color:var(--ok);}
+  .go{margin-top:12px;display:flex;justify-content:center;gap:7px;align-items:center;background:#424242;color:#fff;border-radius:12px;padding:12px;font-size:13.5px;font-weight:700;}
+
+  /* use cases + customise */
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+  .uses{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;align-items:center;}
+  .uses .lbl{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
+  .use{font-size:12.5px;font-weight:600;color:var(--blue);background:var(--blue-soft);border:1px solid var(--blue-line);padding:4px 11px;border-radius:99px;}
+  .uc-note{font-size:15px;color:var(--muted);margin:14px 0 0;max-width:46ch;}
+  .seg{display:flex;flex-direction:column;gap:7px;}
+  .seg .chips{gap:7px;}
+  .ctrl h5{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
+  .more{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px;}
+  @media (max-width:980px){.more{grid-template-columns:1fr 1fr;}} @media (max-width:560px){.more{grid-template-columns:1fr;}}
+  .mc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;}
+  .mc .ic{width:34px;height:34px;border-radius:10px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .mc .ic svg{width:17px;height:17px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .mc b{display:block;font-size:15px;font-weight:650;margin-bottom:4px;} .mc span{font-size:13.5px;color:var(--muted);line-height:1.5;}
+
+  /* compare */
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px;}
+  @media (max-width:560px){.cmp{grid-template-columns:1fr;}}
+  .cmp div{border-radius:16px;padding:16px;font-size:13.5px;line-height:1.55;}
+  .cmp .bot{background:#F5F5F7;color:var(--muted);} .cmp .agent{background:var(--blue-soft);border:1px solid var(--blue-line);color:#0B3A6B;}
+  .cmp b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;}
+
+
+  /* embedded inside the faigen.in site shell */
+  html.embedded .top span{display:none;}
+  html.embedded .wrap{padding-top:28px;}
+  /* footer */
+  .cta{margin-top:56px;background:var(--ink);color:#fff;border-radius:26px;padding:38px 40px;display:flex;flex-wrap:wrap;gap:22px;justify-content:space-between;align-items:center;}
+  .cta h3{margin:0 0 6px;font-size:26px;letter-spacing:-.02em;font-weight:650;} .cta p{margin:0;color:#B9B9C0;font-size:15px;}
+  .cta .ct{font-size:15px;line-height:1.9;text-align:right;} .cta .ct b{font-weight:600;}
+  .fine{margin-top:22px;font-size:12px;color:var(--faint);text-align:center;}
+  @media print{.rail-top,.chips.noprint,.tabs{display:none!important;} .spread{break-inside:avoid;} [data-from],[data-only]{animation:none;}}
+</style>
+
+<div class="wrap">
+  <div class="top"><img src="/logonew.png" alt="Faigen"><span>faigen.in</span></div>
+
+  <section class="hero">
+    <span class="eyebrow">WhatsApp AI agent</span>
+    <h1>Always on. <span class="grad">An agent, not a bot.</span></h1>
+    <p class="lede">Faigen answers your customers, takes their orders and reaches your whole list on WhatsApp — day and night, in the language they write in.</p>
+    <div class="jump"><a href="#agent">24/7 AI agent</a><a href="#broadcast">Broadcast</a><a href="#custom">Use cases &amp; customising</a></div>
+  </section>
+
+  <!-- ═══ 1 · 24/7 agent ═══ -->
+  <section class="spread" id="agent" data-g="order">
+    <div class="spread-head">
+      <span class="eyebrow">24/7 · Orders · Every language your customers use</span>
+      <h2>It doesn't send menus. It holds a conversation — and takes the order.</h2>
+      <p>Customers write the way they talk: Malayalam script, Manglish or English. The agent understands, checks your catalogue, collects the details and confirms the order. No "press 1 for…". No waiting until morning.</p>
+    </div>
+    <div class="grid">
+      <div class="stack">
+        <div class="chips noprint" role="group" aria-label="Customer language"><span class="lbl">Customer writes in</span>
+          <button class="chip on" data-lang="ml">മലയാളം</button><button class="chip" data-lang="mg">Manglish</button><button class="chip" data-lang="en">English</button>
+        </div>
+        <div class="chat" data-lang="ml" id="orderChat">
+          <div class="chat-head"><div class="av">S<i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></i></div><div><b>Sunrise Boutique</b><small>online · replies in seconds</small></div></div>
+          <div class="chat-body">
+            <div class="ftag" data-only="1"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg>Asks in her own language</div>
+            <div class="b in" data-from="1"><span class="t" data-l="ml">ഈ ഡ്രസ്സ് M സൈസിൽ ഉണ്ടോ? 🌸</span><span class="t" data-l="mg">Ee dress M size il undo? 🌸</span><span class="t" data-l="en">Hi, is the floral dress available in size M?</span></div>
+            <div class="b out" data-from="1"><span class="t" data-l="ml">ഉണ്ട്! M സൈസിൽ 3 എണ്ണം ബാക്കിയുണ്ട് — ₹1,499. ഓർഡർ ചെയ്യട്ടെ? 😊</span><span class="t" data-l="mg">Undu! M size il 3 ennam baakiyund — ₹1,499. Order cheyyatte? 😊</span><span class="t" data-l="en">Yes! 3 left in size M — ₹1,499. Want to order? 😊</span></div>
+            <div class="ftag" data-only="2"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg>Takes the order, no form</div>
+            <div class="b in" data-from="2"><span class="t" data-l="ml">ഓർഡർ ചെയ്തോളൂ</span><span class="t" data-l="mg">Order cheythoolu</span><span class="t" data-l="en">Yes please, order one</span></div>
+            <div class="b out" data-from="2"><span class="t" data-l="ml">ശരി! നിങ്ങളുടെ പേരും ഡെലിവറി വിലാസവും അയയ്ക്കാമോ? 📍</span><span class="t" data-l="mg">Sheri! Ningalude peru um delivery address um ayakkamo? 📍</span><span class="t" data-l="en">Great! Please share your name and delivery address 📍</span></div>
+            <div class="ftag" data-only="3"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg>Confirms and thanks her</div>
+            <div class="b in" data-from="3"><span class="t" data-l="ml">ദേവിക എസ്, 14 ടെമ്പിൾ റോഡ്, കൊച്ചി 682011</span><span class="t" data-l="mg">Devika S, 14 Temple Road, Kochi 682011</span><span class="t" data-l="en">Devika S, 14 Temple Road, Kochi 682011</span></div>
+            <div class="b out" data-from="3"><span class="t" data-l="ml">✅ ഓർഡർ ഉറപ്പിച്ചു! നന്ദി ദേവിക! 2 മണിക്കൂറിനുള്ളിൽ ഞങ്ങൾ ബന്ധപ്പെടും. 😊</span><span class="t" data-l="mg">✅ Order confirmed! Nanni Devika! 2 manikkoorinullil njangal contact cheyyum. 😊</span><span class="t" data-l="en">✅ Order confirmed! Thank you Devika! We'll contact you within 2 hours. 😊</span><div class="meta">10:16 AM <svg viewBox="0 0 16 11"><path d="M1 5.5L4.5 9L10.5 1"/><path d="M5.5 5.5L9 9L15 1"/></svg></div></div>
+          </div>
+        </div>
+        <div class="dcard" data-from="4">
+          <h4>New order <span class="pillx warn" style="margin-left:6px;">Pending</span></h4>
+          <p class="sub">Saved to your dashboard → Orders, the moment it's confirmed.</p>
+          <div class="row"><span>Customer</span><b>Devika S.</b></div>
+          <div class="row"><span>Item</span><b>Floral dress · M × 1</b></div>
+          <div class="row"><span>Total</span><b>₹1,499</b></div>
+          <div class="row"><span>Deliver to</span><b>14 Temple Road, Kochi 682011</b></div>
+          <div class="row"><span>Channel</span><b><span class="pillx ok">WhatsApp</span></b></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="rail-top"><span class="rail-hint"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Click a step</span><button class="play noprint" data-play><svg viewBox="0 0 12 12"><path d="M2 1l9 5-9 5z"/></svg><span>Play</span></button></div>
+        <button class="flow-step active" data-step="1"><span class="n">1</span><span><b>She asks</b><span class="d">Free text, any phrasing, in Malayalam, Manglish or English.</span></span></button>
+        <div class="flow-arrow"><svg viewBox="0 0 18 22"><path d="M9 2v16M3 13l6 6 6-6"/></svg></div>
+        <button class="flow-step" data-step="2"><span class="n">2</span><span><b>It takes the order</b><span class="d">Checks stock and price from your catalogue, then asks for what it needs.</span></span></button>
+        <div class="flow-arrow"><svg viewBox="0 0 18 22"><path d="M9 2v16M3 13l6 6 6-6"/></svg></div>
+        <button class="flow-step" data-step="3"><span class="n">3</span><span><b>It confirms</b><span class="d">Your own confirmation message goes out — instantly, at any hour.</span></span></button>
+        <div class="flow-arrow"><svg viewBox="0 0 18 22"><path d="M9 2v16M3 13l6 6 6-6"/></svg></div>
+        <button class="flow-step" data-step="4"><span class="n">4</span><span><b>You see it</b><span class="d">The order appears in your dashboard. You can step into the chat any time.</span></span></button>
+        <div class="cmp">
+          <div class="bot"><b>A typical bot</b>Menus and fixed buttons. Breaks when someone types something unexpected.</div>
+          <div class="agent"><b>A Faigen agent</b>Understands what was asked, remembers the chat, answers in the customer's language.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 2 · Broadcast ═══ -->
+  <section class="spread" id="broadcast" data-g="bc">
+    <div class="spread-head">
+      <span class="eyebrow">Broadcast · Bulk messaging</span>
+      <h2>Message your whole list in one go — and see who read it.</h2>
+      <p>Launch an offer, a festival wish or a restock alert to every customer at once. Pick a template, choose who gets it, check the cost, send now or schedule — then watch delivery and read numbers come in.</p>
+    </div>
+    <div class="grid">
+      <div class="stack">
+        <div class="dcard" data-only="1">
+          <h4>1. Select message template</h4><p class="sub">Only WhatsApp-approved templates can be sent. Cost per message shows up front.</p>
+          <div class="opt sel"><i class="dot"></i><div><b>onam_sale_2026</b><small>🎉 Onam Sale is Live! Flat 20% off on everything, this week only…</small><div style="margin-top:6px;"><span class="pillx bl">English</span></div></div><span class="r">₹0.87 / msg</span></div>
+          <div class="opt"><i class="dot"></i><div><b>onam_sale_2026_ml</b><small>ഓണം സെയിൽ തുടങ്ങി! എല്ലാറ്റിനും 20% ഇളവ്, ഈ ആഴ്ച മാത്രം…</small><div style="margin-top:6px;"><span class="pillx bl">Malayalam</span></div></div><span class="r">₹0.87 / msg</span></div>
+          <div class="opt"><i class="dot"></i><div><b>new_arrivals</b><small>New styles just dropped — check them out before they sell out…</small><div style="margin-top:6px;"><span class="pillx gr">Image header</span></div></div><span class="r">₹0.87 / msg</span></div>
+        </div>
+        <div class="dcard" data-only="2" hidden>
+          <h4>2. Choose your audience</h4><p class="sub">Who should receive this?</p>
+          <div class="aud">
+            <div class="opt sel"><i class="dot"></i><div><b>Entire database</b><small>Every contact you've chatted with</small></div></div>
+            <div class="opt"><i class="dot"></i><div><b>Handpick contacts</b><small>Search and tick the people you want</small></div></div>
+            <div class="opt"><i class="dot"></i><div><b>Import Excel / CSV</b><small>Upload a list of numbers</small></div></div>
+            <div class="opt"><i class="dot"></i><div><b>Paste numbers</b><small>Type or paste them in</small></div></div>
+            <div class="opt" style="grid-column:1/-1;"><i class="dot"></i><div><b>Active recently</b><small>Only people who messaged in the last N days</small></div></div>
+          </div>
+        </div>
+        <div class="dcard" data-only="3" hidden>
+          <h4>3. Review &amp; launch</h4><p class="sub">Name it, send now or schedule. The total is checked against your wallet before you can launch.</p>
+          <div class="row"><span>Campaign</span><b>Onam Sale — All Customers</b></div>
+          <div class="row"><span>When</span><b>Schedule · 27 Sep, 10:00 AM</b></div>
+          <div class="row"><span>Recipients</span><b>1,248</b></div>
+          <div class="row"><span>Cost per message</span><b>₹0.87</b></div>
+          <div class="row"><span>Total</span><b>₹1,085.76</b></div>
+          <div class="wallet"><span>Wallet balance</span><span>₹4,120 · enough</span></div>
+          <div class="go">Launch to 1,248 recipients →</div>
+        </div>
+        <div class="dcard" data-only="4" hidden>
+          <h4>4. Track it live</h4><p class="sub">Campaign history shows every send — sent, delivered and read.</p>
+          <div class="stat-l"><span>Sent</span><b>248 / 248</b></div><div class="bar"><i style="width:100%"></i></div>
+          <div class="stat-l"><span>Delivered</span><b>240</b></div><div class="bar"><i style="width:97%"></i></div>
+          <div class="stat-l"><span>Read</span><b>189</b></div><div class="bar" style="margin-bottom:0"><i style="width:76%"></i></div>
+        </div>
+        <div class="chat">
+          <div class="chat-head"><div class="av">S<i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></i></div><div><b>Sunrise Boutique</b><small>What each customer receives</small></div></div>
+          <div class="chat-body" style="min-height:0;">
+            <div class="b out" style="max-width:92%;"><b>🎉 Onam Sale is Live!</b><br>Flat 20% off on everything, this week only. Reply "SALE" and we'll help you pick something lovely.<div class="meta">10:02 AM <svg viewBox="0 0 16 11"><path d="M1 5.5L4.5 9L10.5 1"/><path d="M5.5 5.5L9 9L15 1"/></svg></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="rail-top"><span class="rail-hint"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Click a step</span><button class="play noprint" data-play><svg viewBox="0 0 12 12"><path d="M2 1l9 5-9 5z"/></svg><span>Play</span></button></div>
+        <button class="flow-step active" data-step="1"><span class="n">1</span><span><b>Pick a template</b><span class="d">Write once in English or Malayalam. WhatsApp approves it, then it's reusable.</span></span></button>
+        <div class="flow-arrow"><svg viewBox="0 0 18 22"><path d="M9 2v16M3 13l6 6 6-6"/></svg></div>
+        <button class="flow-step" data-step="2"><span class="n">2</span><span><b>Choose who gets it</b><span class="d">Everyone, a hand-picked group, an Excel list, or only recent chatters.</span></span></button>
+        <div class="flow-arrow"><svg viewBox="0 0 18 22"><path d="M9 2v16M3 13l6 6 6-6"/></svg></div>
+        <button class="flow-step" data-step="3"><span class="n">3</span><span><b>Check cost &amp; launch</b><span class="d">See the exact total before sending. Send now or schedule for later.</span></span></button>
+        <div class="flow-arrow"><svg viewBox="0 0 18 22"><path d="M9 2v16M3 13l6 6 6-6"/></svg></div>
+        <button class="flow-step" data-step="4"><span class="n">4</span><span><b>Watch it land</b><span class="d">Sent, delivered and read — tracked per campaign. Customers who reply go straight to your AI agent.</span></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 3 · Use cases + customise ═══ -->
+  <section class="spread" id="custom" data-g="uc">
+    <div class="spread-head">
+      <span class="eyebrow">Use cases · Make it yours</span>
+      <h2>One agent. Your business, your rules, your voice.</h2>
+      <p>The same agent works for a boutique, a restaurant, a service business or a clinic — because you teach it. Tell it what you sell, how to talk, what never to say, and when to hand over to you.</p>
+    </div>
+
+    <div class="grid">
+      <div class="stack">
+        <div class="tabs" role="group" aria-label="Use cases">
+          <button class="chip on" data-tab="1">Shops &amp; boutiques</button><button class="chip" data-tab="2">Restaurants &amp; food</button><button class="chip" data-tab="3">Services &amp; agencies</button><button class="chip" data-tab="4">Clinics &amp; offices</button>
+        </div>
+        <div class="chat">
+          <div class="chat-head"><div class="av">F<i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></i></div><div><b>Your business</b><small>online</small></div></div>
+          <div class="chat-body" style="min-height:230px;">
+            <div data-tabpane="1" class="pane"><div class="b in">Do you have coir mats in stock?</div><div class="b out" style="margin-top:9px;">Yes! 45 in stock. ₹600 each. Want to order? 😊</div></div>
+            <div data-tabpane="2" class="pane" hidden><div class="b in">2 veg biryani parcel venam</div><div class="b out" style="margin-top:9px;">2 Veg Biryani — ₹180 each, ₹360 total. Delivery address ayakkamo? 📍</div></div>
+            <div data-tabpane="3" class="pane" hidden><div class="b in">What services do you offer?</div><div class="b out" style="margin-top:9px;">Here's what we do 👇 Tap any service to see details and open its page.<div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;"><span class="use" style="background:#fff;">KYC Services ›</span><span class="use" style="background:#fff;">Account opening ›</span></div></div></div>
+            <div data-tabpane="4" class="pane" hidden><div class="b in">Is the doctor available on Sunday?</div><div class="b out" style="margin-top:9px;">We're open 9am to 6pm, Monday to Saturday. Closed on Sundays — we'll reply first thing Monday 😊</div></div>
+          </div>
+        </div>
+        <div class="uses"><span class="lbl">Uses</span>
+          <span class="use pane" data-tabpane="1">Product catalogue</span><span class="use pane" data-tabpane="1" >Orders</span><span class="use pane" data-tabpane="1">Out-of-stock replies</span>
+          <span class="use pane" data-tabpane="2" hidden>Menu as products</span><span class="use pane" data-tabpane="2" hidden>Orders</span><span class="use pane" data-tabpane="2" hidden>Business hours</span>
+          <span class="use pane" data-tabpane="3" hidden>Services list with links</span><span class="use pane" data-tabpane="3" hidden>FAQs</span>
+          <span class="use pane" data-tabpane="4" hidden>Business hours</span><span class="use pane" data-tabpane="4" hidden>After-hours message</span><span class="use pane" data-tabpane="4" hidden>Hand-over to a person</span>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="ctrl"><h5>Try it: change how it talks</h5>
+          <div class="seg">
+            <div class="chips" id="toneChips" role="group" aria-label="Tone"><span class="lbl">Tone</span><button class="chip on" data-tone="f">Friendly</button><button class="chip" data-tone="o">Formal</button><button class="chip" data-tone="c">Casual</button></div>
+            <div class="chips" id="langChips" role="group" aria-label="Language"><span class="lbl">Language</span><button class="chip on" data-cl="auto">Auto-detect</button><button class="chip" data-cl="ml">Malayalam only</button><button class="chip" data-cl="en">English only</button></div>
+          </div>
+        </div>
+        <div class="chat">
+          <div class="chat-body" style="min-height:0;">
+            <div class="b in">Kozhikode ku delivery undo?</div>
+            <div class="b out" id="custReply">Undu! 😊 Kozhikode ku 2–3 divasathinullil ethum. Order cheyyatte?</div>
+          </div>
+        </div>
+        <p class="uc-note">Same question, same agent — only the settings changed. Auto-detect mirrors however the customer writes.</p>
+      </div>
+    </div>
+
+    <div class="more">
+      <div class="mc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H8l-4 4z"/></svg></div><b>Core instructions &amp; greeting</b><span>Tell the agent who it is and how to welcome people.</span></div>
+      <div class="mc"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg></div><b>FAQs</b><span>Your real answers — prices, policies, timings.</span></div>
+      <div class="mc"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><b>Business hours</b><span>A custom message when you're closed.</span></div>
+      <div class="mc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></div><b>Rules &amp; restrictions</b><span>"Always mention the warranty." "Never discuss competitors."</span></div>
+      <div class="mc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><b>Keyword auto-replies</b><span>"Complaint" or "human" → your fixed reply, instantly.</span></div>
+      <div class="mc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div><b>Services list</b><span>Tap-to-open services, each with its own link.</span></div>
+      <div class="mc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div><b>Order &amp; stock messages</b><span>Write your own confirmation and out-of-stock reply.</span></div>
+      <div class="mc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM21 20v-2a4 4 0 0 0-3-3.9"/></svg></div><b>Step in any time</b><span>Take over a chat from the Live Inbox — your name shows on your replies.</span></div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <div><h3>See it running on your own number.</h3><p>Try the live demo on WhatsApp, or talk to us about your business.</p></div>
+    <div class="ct"><b>faigen.in</b><br>info@faigen.in<br>+91 96338 20462</div>
+  </div>
+  <p class="fine">Conversations, order details, costs and campaign numbers shown here are illustrative examples, not real customer data.</p>
+</div>
+
+<script>
+(function(){
+  /* ── step flows (order, bc) ── */
+  function inList(v,n){return (v||'').split(',').indexOf(String(n))!==-1;}
+  function wireFlow(sec){
+    var steps=[].slice.call(sec.querySelectorAll('.flow-step'));
+    var play=sec.querySelector('[data-play]');
+    var timer=null, cur=1;
+    function go(n){
+      cur=n;
+      steps.forEach(function(b){b.classList.toggle('active',+b.dataset.step===n);});
+      [].forEach.call(sec.querySelectorAll('[data-from]'),function(el){el.hidden=!(n>=+el.dataset.from);});
+      [].forEach.call(sec.querySelectorAll('[data-only]'),function(el){el.hidden=!inList(el.dataset.only,n);});
+    }
+    function stop(){ if(timer){clearInterval(timer);timer=null;} if(play){play.querySelector('span').textContent='Play';} }
+    steps.forEach(function(b){b.addEventListener('click',function(){stop();go(+b.dataset.step);});});
+    if(play){play.addEventListener('click',function(){
+      if(timer){stop();return;}
+      play.querySelector('span').textContent='Pause';
+      if(cur>=steps.length) go(1);
+      timer=setInterval(function(){ if(cur>=steps.length){stop();return;} go(cur+1); },2600);
+    });}
+    go(1);
+  }
+  [].forEach.call(document.querySelectorAll('[data-g="order"],[data-g="bc"]'),wireFlow);
+
+  /* ── customer language (order chat) ── */
+  var chat=document.getElementById('orderChat');
+  [].forEach.call(document.querySelectorAll('[data-lang]'),function(b){
+    if(!b.classList.contains('chip')) return;
+    b.addEventListener('click',function(){
+      chat.dataset.lang=b.dataset.lang;
+      [].forEach.call(document.querySelectorAll('.chip[data-lang]'),function(x){x.classList.toggle('on',x===b);});
+    });
+  });
+
+  /* ── use-case tabs ── */
+  var tabs=[].slice.call(document.querySelectorAll('[data-tab]'));
+  function showTab(n){
+    tabs.forEach(function(t){t.classList.toggle('on',t.dataset.tab===String(n));});
+    [].forEach.call(document.querySelectorAll('[data-tabpane]'),function(p){p.hidden=p.dataset.tabpane!==String(n);});
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){showTab(t.dataset.tab);});});
+  showTab(1);
+
+  /* ── tone × language sample ── */
+  var R={
+    auto:{f:"Undu! 😊 Kozhikode ku 2–3 divasathinullil ethum. Order cheyyatte?",o:"Athe, Kozhikode ku delivery undu. 2–3 working days edukkum. Order nalkano?",c:"Undu, 2–3 divasam. Order cheyyatte?"},
+    ml:{f:"ഉണ്ട്! 😊 കോഴിക്കോട്ടേക്ക് 2–3 ദിവസത്തിനുള്ളിൽ എത്തും. ഓർഡർ ചെയ്യട്ടെ?",o:"അതെ, കോഴിക്കോട്ടേക്ക് ഡെലിവറി ലഭ്യമാണ്. 2–3 പ്രവൃത്തി ദിവസങ്ങൾ എടുക്കും. ഓർഡർ നൽകണോ?",c:"ഉണ്ട്, 2–3 ദിവസം. ഓർഡർ ചെയ്യട്ടെ?"},
+    en:{f:"Yes, we do! 😊 Delivery to Kozhikode takes 2–3 days. Shall I place the order for you?",o:"Yes, we deliver to Kozhikode. Delivery takes 2–3 working days. Would you like to place an order?",c:"Yep, we deliver there — 2–3 days. Want to order?"}
+  };
+  var tone='f', lang='auto', out=document.getElementById('custReply');
+  function upd(){out.textContent=R[lang][tone];}
+  [].forEach.call(document.querySelectorAll('[data-tone]'),function(b){b.addEventListener('click',function(){
+    tone=b.dataset.tone;[].forEach.call(document.querySelectorAll('[data-tone]'),function(x){x.classList.toggle('on',x===b);});upd();});});
+  [].forEach.call(document.querySelectorAll('[data-cl]'),function(b){b.addEventListener('click',function(){
+    lang=b.dataset.cl;[].forEach.call(document.querySelectorAll('[data-cl]'),function(x){x.classList.toggle('on',x===b);});upd();});});
+})();
+</script>
+<script>
+(function(){
+  if (window.self === window.top) return;
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    var t = id && document.getElementById(id);
+    if (!t) return;
+    e.preventDefault();
+    try {
+      var top = window.frameElement.getBoundingClientRect().top + window.parent.scrollY + t.getBoundingClientRect().top - 96;
+      window.parent.scrollTo({ top: top, behavior: 'smooth' });
+    } catch (err) { t.scrollIntoView({ behavior: 'smooth' }); }
+  });
+})();
+</script>
+</body></html>

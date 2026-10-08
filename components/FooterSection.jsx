@@ -35,6 +35,8 @@ export default function FooterSection() {
         { label: "Our Portfolio", href: null },
         { label: "Pricing",       href: null },
         { label: "About Us",      href: null },
+        { label: "Brochure",       href: "/brochure" },
+        { label: "Dashboard Guide", href: "/guide" },
         { label: "Privacy Policy", href: "/privacy" },
         { label: "Terms",          href: "/terms" },
       ]

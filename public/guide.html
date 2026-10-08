@@ -1,0 +1,809 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>Faigen Dashboard Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F9FC;
+    --bg-raised:#FFFFFF;
+    --ink:#1B2430;
+    --ink-muted:#6B7280;
+    --ink-faint:#9CA3AF;
+    --line:rgba(27,36,48,0.09);
+    --accent-text:#2D65A8;
+    --accent-fill:#387ED1;
+    --accent-soft:#EEF4FF;
+    --shadow:0 1px 2px rgba(27,36,48,0.05);
+
+    /* Fixed app-screen tokens — literal reproduction of the real Faigen
+       dashboard's own light UI. These never change with page theme. */
+    --app-bg:#F4F5F7;
+    --app-card:#FFFFFF;
+    --app-border:#EEEEEE;
+    --app-ink:#424242;
+    --app-muted:#9E9E9E;
+    --app-muted2:#666666;
+    --app-blue:#387ED1;
+    --app-blue-hover:#316BB3;
+    --app-blue-tint:#EEF4FF;
+    --app-blue-tint-border:#D2E3FC;
+    --app-purple:#7C3AED;
+    --app-teal:#0D9488;
+    --app-green:#4CAF50;
+    --app-green-bg:#E8F5E9;
+    --app-green-border:#C8E6C9;
+    --app-green-dark:#2E7D32;
+    --app-orange:#F57C00;
+    --app-orange-bg:#FFF3E0;
+    --app-red:#EB5F5F;
+    --app-red-bg:#FFEBEE;
+    --app-wa-bg:#E8F5E9;
+    --app-wa-text:#2E7D32;
+    --app-ig-bg:#FCE4EC;
+    --app-ig-text:#C2185B;
+    --app-chip-bg:#F5F5F5;
+    --app-chip-text:#757575;
+    --app-stat-bg:#FBFBFB;
+    --app-manual-bg:#FFF8E1;
+    --app-manual-border:#FFE0B2;
+    --app-dark:#424242;
+  }
+  
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  .wrap{max-width:1220px;margin:0 auto;padding:56px 32px 80px;}
+
+  /* ── Hero ───────────────────────────────────────────────────────── */
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:36px;}
+  .brand img{height:36px;width:auto;display:block;}
+  .eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent-text);background:var(--accent-soft);padding:6px 13px;border-radius:99px;margin-bottom:18px;}
+  h1{font-size:clamp(30px,3.8vw,42px);line-height:1.12;letter-spacing:-0.02em;font-weight:800;margin:0 0 16px;text-wrap:balance;max-width:22ch;}
+  .lede{font-size:16.5px;line-height:1.65;color:var(--ink-muted);max-width:60ch;margin:0 0 30px;}
+
+  .quicknav{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:56px;}
+  .quicknav a{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--ink);background:var(--bg-raised);border:1px solid var(--line);border-radius:99px;padding:9px 16px;text-decoration:none;box-shadow:var(--shadow);}
+  .quicknav a svg{width:14px;height:14px;stroke:var(--accent-text);flex:none;}
+
+  /* ── Screen rows ────────────────────────────────────────────────── */
+  .screen-row{display:grid;grid-template-columns:minmax(0,680px) 1fr;gap:52px;padding:56px 0;border-top:1px solid var(--line);align-items:start;}
+  .screen-row:first-of-type{border-top:none;padding-top:0;}
+  @media (max-width:980px){.screen-row{grid-template-columns:1fr;gap:30px;}}
+
+  .mockup-scroll{overflow-x:auto;padding:2px;}
+  .screen-copy .tag{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-text);margin-bottom:10px;}
+  .screen-copy .tag .dot{width:5px;height:5px;border-radius:50%;background:var(--accent-fill);}
+  .screen-copy h2{font-size:23px;font-weight:800;letter-spacing:-0.01em;margin:0 0 12px;line-height:1.25;}
+  .screen-copy p{font-size:14.5px;line-height:1.65;color:var(--ink-muted);margin:0 0 14px;max-width:52ch;}
+  .screen-copy p b{color:var(--ink);font-weight:700;}
+  .why-box{background:var(--bg-raised);border:1px solid var(--line);border-radius:14px;padding:15px 18px;margin-top:6px;box-shadow:var(--shadow);max-width:52ch;}
+  .why-box .lbl{font-size:10.5px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px;}
+  .why-box p{font-size:13px;line-height:1.6;color:var(--ink);margin:0;max-width:none;}
+  .why-box + .why-box{margin-top:10px;}
+
+  .mini-steps{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center;}
+  .mini-step-btn{display:flex;align-items:center;gap:7px;font-family:inherit;font-size:12px;font-weight:700;color:var(--ink-muted);background:var(--bg-raised);border:1px solid var(--line);border-radius:99px;padding:7px 13px 7px 8px;cursor:pointer;box-shadow:var(--shadow);}
+  .mini-step-btn .num{width:18px;height:18px;border-radius:50%;background:var(--line);color:var(--ink-muted);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex:none;}
+  .mini-step-btn.active{color:var(--ink);border-color:var(--accent-fill);}
+  .mini-step-btn.active .num{background:var(--accent-fill);color:#fff;}
+
+  /* ── Browser-window device frame ────────────────────────────────── */
+  .browser-frame{width:680px;min-width:560px;border-radius:16px;overflow:hidden;background:#E7E9EE;box-shadow:0 24px 48px -18px rgba(27,36,48,0.22),0 8px 18px -10px rgba(27,36,48,0.16);}
+  .browser-topbar{height:38px;background:#E7E9EE;display:flex;align-items:center;gap:14px;padding:0 14px;flex:none;}
+  .b-dots{display:flex;gap:6px;flex:none;}
+  .b-dots span{width:10px;height:10px;border-radius:50%;display:block;}
+  .b-dots span:nth-child(1){background:#FF5F57;}
+  .b-dots span:nth-child(2){background:#FEBC2E;}
+  .b-dots span:nth-child(3){background:#28C840;}
+  .b-url{flex:1;height:24px;background:#FFFFFF;border-radius:7px;display:flex;align-items:center;gap:6px;padding:0 10px;font-family:"Inter",sans-serif;font-size:11px;color:#8A8F98;}
+  .b-url svg{width:11px;height:11px;stroke:#8A8F98;flex:none;}
+
+  .app-viewport{position:relative;background:var(--app-bg);padding:14px;display:flex;gap:12px;height:432px;font-family:"Inter",sans-serif;}
+
+  /* ── "Click here" tutorial callouts ────────────────────────────── */
+  .callout{position:absolute;inset:0;pointer-events:none;z-index:60;font-family:"Manrope",sans-serif;}
+  .callout path{fill:none;stroke:var(--accent-fill);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:1 7;}
+  .callout .lbl{position:absolute;background:var(--accent-fill);color:#fff;font-size:10.5px;font-weight:800;padding:5px 11px;border-radius:7px;white-space:nowrap;box-shadow:0 4px 10px rgba(56,126,209,0.38);}
+  .callout .dot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--accent-fill);box-shadow:0 0 0 2px #fff;}
+  .callout .dot::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--accent-fill);animation:calloutPing 1.8s ease-out infinite;}
+  @keyframes calloutPing{0%{transform:scale(0.55);opacity:0.9;}100%{transform:scale(2.1);opacity:0;}}
+  @media (prefers-reduced-motion: reduce){.callout .dot::after{animation:none;opacity:0.5;}}
+
+  .step-hint{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--accent-text);margin-left:2px;}
+  .step-hint svg{width:15px;height:15px;stroke:var(--accent-fill);flex:none;}
+
+  .app-rail{width:60px;flex:none;background:var(--app-card);border-radius:18px;display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,0.03);}
+  .app-rail .logo-mark{width:26px;height:26px;border-radius:8px;margin-bottom:6px;flex:none;object-fit:contain;}
+  .app-rail .rail-icon{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .app-rail .rail-icon svg{width:17px;height:17px;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none;}
+  .app-rail .rail-icon.active{background:var(--app-blue-tint);}
+  .app-rail .rail-icon.active svg{stroke:var(--app-blue);}
+  .app-rail .rail-icon:not(.active) svg{stroke:#BBBEC4;}
+  .app-rail .rail-sep{width:28px;height:1px;background:var(--app-border);margin:4px 0;flex:none;}
+
+  .app-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;}
+  .app-header{flex:none;height:42px;background:#FBFBFB;border-radius:999px;display:flex;align-items:center;padding:0 6px;gap:4px;box-shadow:0 4px 20px rgba(0,0,0,0.03);}
+  .app-tab{display:flex;align-items:center;gap:6px;height:32px;padding:0 13px;border-radius:999px;font-size:11px;font-weight:700;color:var(--app-muted);flex:none;}
+  .app-tab svg{width:13px;height:13px;stroke-width:2;fill:none;}
+  .app-tab.active{background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+  .app-header .spacer{flex:1;}
+  .app-wallet{display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:800;color:var(--app-green-dark);background:var(--app-green-bg);border-radius:999px;padding:6px 11px;margin-right:4px;flex:none;}
+  .app-wallet svg{width:12px;height:12px;stroke:var(--app-green-dark);flex:none;}
+
+  .app-content{flex:1;min-height:0;background:var(--app-card);border:1px solid var(--app-border);border-radius:20px;box-shadow:0 4px 20px rgba(0,0,0,0.03);overflow-y:auto;padding:18px 20px;}
+  .app-content::-webkit-scrollbar{width:0;}
+  .app-content.flush{padding:0;display:flex;}
+  .app-content h3.c-title{font-size:15px;font-weight:800;color:var(--app-ink);margin:0 0 3px;}
+  .app-content .c-sub{font-size:11.5px;color:var(--app-muted);margin:0 0 16px;}
+
+  /* status pulse */
+  .pulse-badge{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;color:var(--app-green-dark);background:var(--app-green-bg);border:1px solid var(--app-green-border);border-radius:999px;padding:5px 11px;}
+  .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--app-green);position:relative;flex:none;}
+  .pulse-dot::after{content:"";position:absolute;inset:-3px;border-radius:50%;background:var(--app-green);opacity:0.35;}
+
+  /* stat grid */
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 16px;}
+  .stat-tile{background:var(--app-stat-bg);border-radius:14px;padding:12px 13px;}
+  .stat-tile .ic{width:26px;height:26px;border-radius:8px;background:var(--app-blue-tint);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+  .stat-tile .ic svg{width:13px;height:13px;stroke:var(--app-blue);stroke-width:2;fill:none;}
+  .stat-tile .n{font-size:22px;font-weight:300;color:var(--app-ink);}
+  .stat-tile .l{font-size:9.5px;color:var(--app-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-top:1px;}
+
+  .mini-table{width:100%;border-collapse:collapse;}
+  .mini-table th{text-align:left;font-size:9px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--app-muted);padding:0 0 7px;}
+  .mini-table td{font-size:11px;color:var(--app-ink);padding:8px 0;border-top:1px solid var(--app-border);}
+  .two-col-tables{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .tbl-head{font-size:10px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--app-muted2);margin-bottom:9px;}
+
+  .pill-status{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:800;letter-spacing:0.03em;text-transform:uppercase;padding:3px 9px;border-radius:999px;}
+  .pill-status.approved{background:var(--app-green-bg);color:var(--app-green-dark);}
+  .pill-status.pending{background:var(--app-orange-bg);color:var(--app-orange);}
+  .pill-status.rejected{background:var(--app-red-bg);color:#C62828;}
+  .pill-status.draft{background:var(--app-chip-bg);color:var(--app-chip-text);}
+  .pill-cat{display:inline-flex;font-size:9px;font-weight:800;letter-spacing:0.03em;text-transform:uppercase;padding:3px 9px;border-radius:999px;}
+  .pill-cat.marketing{background:#FCE4EC;color:#C2185B;}
+  .pill-cat.utility{background:var(--app-blue-tint);color:var(--app-blue);}
+  .pill-plat.wa{background:var(--app-wa-bg);color:var(--app-wa-text);}
+  .pill-plat{display:inline-flex;align-items:center;font-size:9px;font-weight:800;padding:2px 7px;border-radius:5px;}
+  .filter-row{display:flex;gap:8px;margin:0 0 16px;flex-wrap:wrap;}
+  .filter-pill{display:inline-flex;align-items:center;font-size:9.5px;font-weight:800;letter-spacing:0.03em;text-transform:uppercase;padding:5px 12px;border-radius:999px;background:var(--app-chip-bg);color:var(--app-chip-text);}
+  .filter-pill.on{background:var(--app-blue-tint);color:var(--app-blue);border:1px solid var(--app-blue-tint-border);}
+
+  /* Live inbox */
+  .inbox-shell{display:flex;height:100%;width:100%;}
+  .inbox-list{width:150px;flex:none;border-right:1px solid var(--app-border);padding:4px 10px 4px 0;overflow-y:auto;}
+  .inbox-row{display:flex;gap:8px;align-items:center;padding:8px 6px;border-radius:10px;}
+  .inbox-row.active{background:var(--app-blue-tint);}
+  .inbox-avatar{width:26px;height:26px;border-radius:50%;background:var(--app-chip-bg);flex:none;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800;color:var(--app-muted2);}
+  .inbox-row .txt{min-width:0;}
+  .inbox-row .nm{font-size:10.5px;font-weight:700;color:var(--app-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .inbox-row .sn{font-size:9px;color:var(--app-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .thread-pane{flex:1;min-width:0;display:flex;flex-direction:column;padding:14px 16px;}
+  .thread-head{font-size:12px;font-weight:800;color:var(--app-ink);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--app-border);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .lang-tag{font-size:9px;font-weight:800;letter-spacing:0.03em;text-transform:uppercase;color:var(--app-blue);background:var(--app-blue-tint);padding:3px 8px;border-radius:999px;flex:none;}
+  .thread-body{flex:1;display:flex;flex-direction:column;gap:9px;overflow-y:auto;}
+  .date-pill{align-self:center;font-size:9px;font-weight:700;color:var(--app-muted);background:var(--app-chip-bg);border-radius:999px;padding:3px 10px;margin:2px 0 5px;}
+  .bub{max-width:76%;padding:9px 13px;font-size:11.5px;line-height:1.45;}
+  .bub.customer{align-self:flex-end;background:var(--app-blue-tint);border:1px solid var(--app-blue-tint-border);border-radius:18px 18px 4px 18px;color:var(--app-ink);}
+  .bub-meta{display:flex;align-items:center;gap:4px;justify-content:flex-end;margin-top:4px;font-size:8.5px;color:var(--app-muted);}
+  .bub-meta svg{width:12px;height:8px;stroke:var(--app-blue);}
+  .bub-row{display:flex;gap:7px;align-self:flex-start;max-width:80%;}
+  .bub-ai-avatar{width:20px;height:20px;border-radius:50%;background:var(--app-blue-tint);color:var(--app-blue);font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px;}
+  .bub.ai{background:#fff;border:1px solid var(--app-border);border-radius:18px 18px 18px 4px;color:var(--app-ink);}
+  .bub.manual{background:var(--app-manual-bg);border:1px solid var(--app-manual-border);border-radius:18px 18px 18px 4px;color:var(--app-ink);}
+  .agent-lbl{font-size:8.5px;font-weight:800;color:var(--app-orange);margin-bottom:3px;}
+
+  /* Templates */
+  .tpl-card{display:flex;gap:12px;padding:13px;border:1px solid var(--app-border);border-radius:14px;margin-bottom:10px;}
+  .tpl-thumb{width:44px;height:44px;border-radius:9px;background:var(--app-chip-bg);flex:none;display:flex;align-items:center;justify-content:center;}
+  .tpl-thumb svg{width:18px;height:18px;stroke:var(--app-muted);stroke-width:1.8;fill:none;}
+  .tpl-body{flex:1;min-width:0;}
+  .tpl-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px;}
+  .tpl-name{font-size:12px;font-weight:800;color:var(--app-ink);}
+  .tpl-badges{display:flex;gap:5px;margin-bottom:6px;}
+  .tpl-preview{font-size:10.5px;color:var(--app-muted);line-height:1.5;}
+  .new-tpl-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border-radius:12px;border:1.5px dashed var(--app-border);color:var(--app-muted2);font-size:11.5px;font-weight:700;font-family:inherit;background:none;margin-top:2px;}
+  .new-tpl-btn svg{width:13px;height:13px;stroke:currentColor;}
+
+  /* Broadcast */
+  .bc-grid{display:grid;grid-template-columns:1fr 200px;gap:16px;height:100%;}
+  .bc-form{overflow-y:auto;padding-right:2px;}
+  .bc-side{background:var(--app-stat-bg);border-radius:14px;padding:14px;height:fit-content;position:sticky;top:0;}
+  .radio-card{display:flex;gap:10px;padding:11px;border:1.5px solid var(--app-border);border-radius:13px;margin-bottom:9px;align-items:flex-start;}
+  .radio-card.selected{border-color:var(--app-blue);background:var(--app-blue-tint);}
+  .radio-dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--app-muted);flex:none;margin-top:1px;display:flex;align-items:center;justify-content:center;}
+  .radio-card.selected .radio-dot{border-color:var(--app-blue);}
+  .radio-dot .fill{width:8px;height:8px;border-radius:50%;background:var(--app-blue);}
+  .rc-body{flex:1;min-width:0;}
+  .rc-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .rc-name{font-size:11.5px;font-weight:800;color:var(--app-ink);}
+  .rc-desc{font-size:10px;color:var(--app-muted);margin-top:2px;line-height:1.4;}
+  .rc-cost{font-size:10px;font-weight:800;color:var(--app-green-dark);}
+  .rc-lang{font-size:9px;font-weight:700;color:var(--app-blue);margin-top:4px;}
+  .aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .aud-card{padding:13px;border:1.5px solid var(--app-border);border-radius:13px;}
+  .aud-card.selected{border-color:var(--app-blue);background:var(--app-blue-tint);}
+  .aud-card .ic{width:26px;height:26px;border-radius:8px;background:#fff;border:1px solid var(--app-border);display:flex;align-items:center;justify-content:center;margin-bottom:8px;}
+  .aud-card.selected .ic{background:var(--app-blue);border-color:var(--app-blue);}
+  .aud-card .ic svg{width:13px;height:13px;stroke:var(--app-muted2);stroke-width:2;}
+  .aud-card.selected .ic svg{stroke:#fff;}
+  .aud-card .t{font-size:11px;font-weight:800;color:var(--app-ink);margin-bottom:2px;}
+  .aud-card .s{font-size:9.5px;color:var(--app-muted);line-height:1.4;}
+  .field-lbl{font-size:9.5px;font-weight:800;color:var(--app-muted2);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;}
+  .field-input{width:100%;padding:9px 11px;border-radius:10px;border:1px solid var(--app-border);background:var(--app-stat-bg);font-size:11px;color:var(--app-ink);font-family:inherit;margin-bottom:12px;}
+  .sched-row{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:var(--app-ink);margin-bottom:12px;}
+  .sched-row .cb{width:15px;height:15px;border-radius:4px;border:1.5px solid var(--app-blue);background:var(--app-blue);display:flex;align-items:center;justify-content:center;flex:none;}
+  .sched-row .cb svg{width:10px;height:10px;stroke:#fff;stroke-width:3;}
+  .sum-row{display:flex;justify-content:space-between;font-size:10.5px;color:var(--app-muted2);padding:6px 0;border-top:1px solid var(--app-border);}
+  .sum-row b{color:var(--app-ink);font-weight:700;}
+  .sum-row:first-of-type{border-top:none;}
+  .wallet-box{margin-top:8px;padding:10px 12px;border-radius:11px;background:var(--app-green-bg);border:1px solid var(--app-green-border);display:flex;justify-content:space-between;align-items:center;}
+  .wallet-box .l{font-size:9.5px;font-weight:700;color:var(--app-green-dark);}
+  .wallet-box .n{font-size:12px;font-weight:800;color:var(--app-green-dark);}
+  .launch-btn{width:100%;margin-top:12px;padding:12px;border-radius:12px;background:var(--app-dark);color:#fff;font-size:11.5px;font-weight:800;font-family:inherit;border:none;display:flex;align-items:center;justify-content:center;gap:6px;}
+  .launch-btn svg{width:13px;height:13px;stroke:#fff;stroke-width:2.4;}
+
+  .bc-success{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 30px;width:100%;}
+  .succ-badge{width:60px;height:60px;border-radius:50%;background:var(--app-green-bg);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+  .succ-badge svg{width:26px;height:26px;stroke:var(--app-green);stroke-width:2.4;}
+  .succ-title{font-size:16px;font-weight:800;color:var(--app-ink);margin-bottom:8px;}
+  .succ-body{font-size:11.5px;color:var(--app-muted2);line-height:1.55;margin-bottom:18px;max-width:34ch;}
+  .succ-body b{color:var(--app-ink);}
+  .succ-link{font-size:11px;font-weight:800;color:var(--app-blue);display:inline-flex;align-items:center;gap:5px;}
+  .succ-link svg{width:12px;height:12px;stroke:var(--app-blue);}
+
+  .screen-caption{font-size:11px;font-weight:700;color:var(--ink-faint);margin-top:14px;text-align:center;}
+
+  /* ── Everything else grid ──────────────────────────────────────── */
+  .rest-wrap{padding:56px 0;border-top:1px solid var(--line);}
+  .rest-head{margin-bottom:26px;}
+  .rest-head .tag{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-text);margin-bottom:10px;}
+  .rest-head .tag .dot{width:5px;height:5px;border-radius:50%;background:var(--accent-fill);}
+  .rest-head h2{font-size:23px;font-weight:800;margin:0 0 10px;letter-spacing:-0.01em;}
+  .rest-head p{font-size:14.5px;line-height:1.65;color:var(--ink-muted);margin:0;max-width:60ch;}
+  .console-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (max-width:840px){.console-groups{grid-template-columns:1fr;}}
+  .console-group{background:var(--bg-raised);border:1px solid var(--line);border-radius:18px;padding:22px 22px 8px;box-shadow:var(--shadow);}
+  .console-group .ch{display:flex;align-items:center;gap:9px;margin-bottom:16px;}
+  .console-group .ch .icwrap{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .console-group .ch .icwrap svg{width:15px;height:15px;stroke-width:2;fill:none;}
+  .console-group .ch b{font-size:13.5px;font-weight:800;}
+  .rest-item{display:flex;gap:11px;padding:12px 0;border-top:1px solid var(--line);}
+  .rest-item:first-of-type{border-top:none;}
+  .rest-item .ic{width:26px;height:26px;border-radius:8px;background:var(--bg);flex:none;display:flex;align-items:center;justify-content:center;}
+  .rest-item .ic svg{width:13px;height:13px;stroke:var(--ink-muted);stroke-width:2;fill:none;}
+  .rest-item b{font-size:12.5px;font-weight:700;display:block;margin-bottom:2px;}
+  .rest-item span{font-size:12px;color:var(--ink-muted);line-height:1.5;}
+
+  /* ── Recap ──────────────────────────────────────────────────────── */
+  .recap{background:var(--bg-raised);border:1px solid var(--line);border-radius:18px;padding:30px 32px;margin-top:56px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  @media (max-width:900px){.recap{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.recap{grid-template-columns:1fr;}}
+  .recap-item .lbl{font-size:10.5px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-text);margin-bottom:7px;}
+  .recap-item p{font-size:12.5px;line-height:1.55;color:var(--ink-muted);margin:0;}
+  .recap-item p b{color:var(--ink);font-weight:700;}
+
+  .footnote{max-width:760px;margin:48px auto 0;text-align:center;font-size:11.5px;color:var(--ink-faint);line-height:1.65;padding-top:22px;border-top:1px solid var(--line);}
+  .footnote b{color:var(--ink-muted);}
+
+  /* embedded inside the faigen.in site shell */
+  html.embedded .top span{display:none;}
+  html.embedded .wrap{padding-top:28px;}
+</style>
+
+<div class="wrap">
+
+  <div class="brand"><img id="brandLogo" src="/logonew.png" alt="Faigen"></div>
+
+  <span class="eyebrow">Dashboard guide</span>
+  <h1>Everything your dashboard can do.</h1>
+  <p class="lede">One walkthrough of your actual dashboard — Live Inbox, Templates, Broadcasts and the rest — shown exactly as you'll see it. Every screen below is click-through: use the numbered steps and follow the arrows.</p>
+
+  <nav class="quicknav">
+    <a href="#screen-dashboard"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Dashboard</a>
+    <a href="#screen-inbox"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Live Inbox</a>
+    <a href="#screen-templates"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Templates</a>
+    <a href="#screen-broadcast"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6h4l6 4V5L7 9H3Z"/><path d="M16 8a4 4 0 0 1 0 8"/></svg>Broadcast</a>
+    <a href="#screen-rest"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Everything else</a>
+  </nav>
+
+  <!-- ═══ 1. Dashboard ═══ -->
+  <section class="screen-row" id="screen-dashboard">
+    <div class="mockup-scroll">
+      <div class="mini-steps">
+        <button class="mini-step-btn active" data-group="dashboard" data-step="1"><span class="num">1</span>Status</button>
+        <button class="mini-step-btn" data-group="dashboard" data-step="2"><span class="num">2</span>Orders</button>
+        <button class="mini-step-btn" data-group="dashboard" data-step="3"><span class="num">3</span>Chats</button>
+        <span class="step-hint"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Click through the numbers</span>
+      </div>
+      <div class="browser-frame">
+        <div class="browser-topbar"><div class="b-dots"><span></span><span></span><span></span></div>
+          <div class="b-url"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="9" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>app.faigen.in/company/dashboard</div>
+        </div>
+        <div class="app-viewport">
+          <div class="app-rail">
+            <img class="logo-mark" id="railLogo1" src="/logonew.png" alt="">
+            <div class="rail-icon active"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v9l9 5 9-5V8"/></svg></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+            <div class="rail-sep"></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7.7 7.3 10.5 16M16.3 7.3 13.5 16M8 6h8"/></svg></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9M4.6 15a1.7 1.7 0 0 1-.3 1.9M19.4 9a1.7 1.7 0 0 1 .3-1.9M4.6 9a1.7 1.7 0 0 0-.3-1.9M12 3v2M12 19v2"/></svg></div>
+          </div>
+          <div class="app-main">
+            <div class="app-header">
+              <div class="app-tab active"><svg viewBox="0 0 24 24" stroke="#387ED1"><path d="M13 4v5c0 1 1 2 2 2h5"/><path d="M20 11V6.5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h6"/></svg>Agent Console</div>
+              <div class="app-tab"><svg viewBox="0 0 24 24" stroke="#7C3AED"><path d="M3 9v6h4l6 4V5L7 9H3Z"/></svg>Campaign Console</div>
+              <div class="app-tab"><svg viewBox="0 0 24 24" stroke="#0D9488"><polyline points="7 8 3 12 7 16"/><polyline points="17 8 21 12 17 16"/></svg>Developer</div>
+              <div class="spacer"></div>
+            </div>
+            <div class="app-content">
+              <h3 class="c-title">Good morning, Sunrise Boutique</h3>
+              <div class="c-sub" style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+                <span class="pulse-badge"><span class="pulse-dot"></span>Agents Operational</span>
+              </div>
+              <div class="stat-grid">
+                <div class="stat-tile"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8l9 5 9-5Z"/></svg></div><div class="n">128</div><div class="l">Total Orders</div></div>
+                <div class="stat-tile"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div class="n">6</div><div class="l">Pending</div></div>
+                <div class="stat-tile"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="n">34</div><div class="l">Active Threads</div></div>
+                <div class="stat-tile"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></div><div class="n">52</div><div class="l">Catalog</div></div>
+              </div>
+              <div class="two-col-tables">
+                <div><div class="tbl-head">Recent Orders</div>
+                  <table class="mini-table"><tr><td>Priya M.</td><td style="text-align:right;">₹2,450</td></tr><tr><td>Arjun K.</td><td style="text-align:right;">₹890</td></tr><tr><td>Fathima S.</td><td style="text-align:right;">₹3,120</td></tr></table>
+                </div>
+                <div><div class="tbl-head">Recent Conversations</div>
+                  <table class="mini-table"><tr><td>Priya M.</td><td style="text-align:right;color:var(--app-muted);">2m ago</td></tr><tr><td>Rohan D.</td><td style="text-align:right;color:var(--app-muted);">14m ago</td></tr><tr><td>Sneha R.</td><td style="text-align:right;color:var(--app-muted);">41m ago</td></tr></table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout" data-group="dashboard" data-step="1">
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 458,104 Q 340,95 210,122"/></svg>
+            <div class="lbl" style="top:82px;left:460px;">Live = your AI is on</div>
+            <div class="dot" style="top:123px;left:195px;"></div>
+          </div>
+          <div class="callout" data-group="dashboard" data-step="2" hidden>
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 458,104 Q 300,220 140,308"/></svg>
+            <div class="lbl" style="top:82px;left:460px;">New orders land here</div>
+            <div class="dot" style="top:308px;left:125px;"></div>
+          </div>
+          <div class="callout" data-group="dashboard" data-step="3" hidden>
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 458,104 Q 440,200 415,308"/></svg>
+            <div class="lbl" style="top:82px;left:460px;">Live chat activity</div>
+            <div class="dot" style="top:308px;left:405px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-caption">Agent Console → Dashboard</div>
+    </div>
+    <div class="screen-copy">
+      <div class="tag"><span class="dot"></span>Home base</div>
+      <h2>Everything at a glance the moment you log in.</h2>
+      <p>The green <b>Agents Operational</b> badge means your AI is live and answering right now. Below it, four numbers tell you the shape of your day — orders coming in, how many still need attention, how many chats are active, and how big your product catalog is.</p>
+      <p>Recent Orders and Recent Conversations underneath let you jump straight into anything that just happened, without digging through menus.</p>
+      <div class="why-box"><div class="lbl">Three consoles, one login</div><p>The tabs at the top — <b>Agent Console</b>, <b>Campaign Console</b>, <b>Developer</b> — group your tools by what they're for. Day-to-day work (chats, orders, your AI) lives in Agent Console; broadcasts and templates live in Campaign Console.</p></div>
+    </div>
+  </section>
+
+  <!-- ═══ 2. Live Inbox ═══ -->
+  <section class="screen-row" id="screen-inbox">
+    <div class="mockup-scroll">
+      <div class="mini-steps">
+        <button class="mini-step-btn active" data-group="inbox" data-step="1"><span class="num">1</span>Chats</button>
+        <button class="mini-step-btn" data-group="inbox" data-step="2"><span class="num">2</span>AI replies</button>
+        <button class="mini-step-btn" data-group="inbox" data-step="3"><span class="num">3</span>You reply</button>
+        <button class="mini-step-btn" data-group="inbox" data-step="4"><span class="num">4</span>Malayalam too</button>
+        <span class="step-hint"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Click through the numbers</span>
+      </div>
+      <div class="browser-frame">
+        <div class="browser-topbar"><div class="b-dots"><span></span><span></span><span></span></div>
+          <div class="b-url"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="9" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>app.faigen.in/company/inbox</div>
+        </div>
+        <div class="app-viewport">
+          <div class="app-rail">
+            <img class="logo-mark" id="railLogo2" src="/logonew.png" alt="">
+            <div class="rail-icon"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></div>
+            <div class="rail-icon active"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v9l9 5 9-5V8"/></svg></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+            <div class="rail-sep"></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7.7 7.3 10.5 16M16.3 7.3 13.5 16M8 6h8"/></svg></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9M4.6 15a1.7 1.7 0 0 1-.3 1.9M19.4 9a1.7 1.7 0 0 1 .3-1.9M4.6 9a1.7 1.7 0 0 0-.3-1.9M12 3v2M12 19v2"/></svg></div>
+          </div>
+          <div class="app-main">
+            <div class="app-header">
+              <div class="app-tab active"><svg viewBox="0 0 24 24" stroke="#387ED1"><path d="M13 4v5c0 1 1 2 2 2h5"/><path d="M20 11V6.5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h6"/></svg>Agent Console</div>
+              <div class="app-tab"><svg viewBox="0 0 24 24" stroke="#7C3AED"><path d="M3 9v6h4l6 4V5L7 9H3Z"/></svg>Campaign Console</div>
+              <div class="app-tab"><svg viewBox="0 0 24 24" stroke="#0D9488"><polyline points="7 8 3 12 7 16"/><polyline points="17 8 21 12 17 16"/></svg>Developer</div>
+              <div class="spacer"></div>
+            </div>
+            <div class="app-content flush">
+              <div class="inbox-shell">
+                <div class="inbox-list">
+                  <div class="inbox-row active"><div class="inbox-avatar">PM</div><div class="txt"><div class="nm">Priya M.</div><div class="sn">Is it available in—</div></div></div>
+                  <div class="inbox-row"><div class="inbox-avatar">RD</div><div class="txt"><div class="nm">Rohan D.</div><div class="sn">Thank you!</div></div></div>
+                  <div class="inbox-row"><div class="inbox-avatar">SR</div><div class="txt"><div class="nm">Sneha R.</div><div class="sn">When will it ship</div></div></div>
+                </div>
+
+                <div class="content-variant" data-group="inbox" data-step="1,2,3" style="flex:1;min-width:0;display:flex;">
+                  <div class="thread-pane">
+                    <div class="thread-head"><span>Priya M. · +91 98•••••210</span><span class="lang-tag">English</span></div>
+                    <div class="thread-body">
+                      <div class="date-pill">Today</div>
+                      <div class="bub customer">Hi, is the floral dress available in size M?<div class="bub-meta">10:14 AM<svg viewBox="0 0 16 11" fill="none"><path d="M1 5.5L4.5 9L10.5 1" stroke-width="1.5" stroke-linecap="round"/><path d="M5.5 5.5L9 9L15 1" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+                      <div class="bub-row"><div class="bub-ai-avatar">AI</div><div class="bub ai">Yes! 3 left in size M — ₹1,499. Want me to hold one? 😊</div></div>
+                      <div class="bub-row"><div class="bub-ai-avatar" style="background:var(--app-orange-bg);color:var(--app-orange);">RS</div><div><div class="agent-lbl">Rahul (you)</div><div class="bub manual">Jumping in — I can also do free hemming if you'd like!</div></div></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="content-variant" data-group="inbox" data-step="4" style="flex:1;min-width:0;display:flex;" hidden>
+                  <div class="thread-pane">
+                    <div class="thread-head"><span>Devika S. · +91 94•••••782</span><span class="lang-tag">Malayalam</span></div>
+                    <div class="thread-body">
+                      <div class="date-pill">Today</div>
+                      <div class="bub customer">ഈ ഡ്രസ്സ് M സൈസിൽ ഉണ്ടോ? 🌸<div class="bub-meta">10:14 AM<svg viewBox="0 0 16 11" fill="none"><path d="M1 5.5L4.5 9L10.5 1" stroke-width="1.5" stroke-linecap="round"/><path d="M5.5 5.5L9 9L15 1" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+                      <div class="bub-row"><div class="bub-ai-avatar">AI</div><div class="bub ai">ഉണ്ട്! M സൈസിൽ 3 എണ്ണം ബാക്കിയുണ്ട് — ₹1,499. ഒന്ന് മാറ്റിവെക്കട്ടെ? 😊</div></div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="callout" data-group="inbox" data-step="1">
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 458,104 Q 300,95 130,90"/></svg>
+            <div class="lbl" style="top:82px;left:460px;">All your chats, in one place</div>
+            <div class="dot" style="top:85px;left:115px;"></div>
+          </div>
+          <div class="callout" data-group="inbox" data-step="2" hidden>
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 468,172 Q 410,200 335,230"/></svg>
+            <div class="lbl" style="top:150px;left:470px;">Your AI replies instantly</div>
+            <div class="dot" style="top:233px;left:325px;"></div>
+          </div>
+          <div class="callout" data-group="inbox" data-step="3" hidden>
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 468,172 Q 420,230 340,285"/></svg>
+            <div class="lbl" style="top:150px;left:470px;">Your team, jumping in</div>
+            <div class="dot" style="top:288px;left:330px;"></div>
+          </div>
+          <div class="callout" data-group="inbox" data-step="4" hidden>
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 468,172 Q 410,200 335,230"/></svg>
+            <div class="lbl" style="top:150px;left:470px;">Replies in Malayalam too</div>
+            <div class="dot" style="top:233px;left:325px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-caption">Agent Console → Live Inbox</div>
+    </div>
+    <div class="screen-copy">
+      <div class="tag"><span class="dot"></span>Where conversations happen</div>
+      <h2>Every chat, and who's actually replying.</h2>
+      <p>The left panel lists every customer conversation. Open one and you'll see three kinds of bubbles: the customer's own messages (blue, right), your <b>AI</b> replying automatically (white, left, tagged "AI"), and — whenever you or your team step in — a peach bubble labelled with that person's name.</p>
+      <p>That labelling matters: your team always knows whether the AI or a real person sent the last reply, and so, implicitly, does the tone of the conversation.</p>
+      <div class="why-box"><div class="lbl">Jumping in</div><p>You can take over any conversation at any moment — just start typing. The AI won't reply on top of you; your message is what the customer sees next.</p></div>
+      <div class="why-box"><div class="lbl">Malayalam, out of the box</div><p>Step 4 shows the same AI, same accuracy — just replying to a customer who wrote in Malayalam. It reads and answers in whichever language the customer uses; nobody has to set anything.</p></div>
+    </div>
+  </section>
+
+  <!-- ═══ 3. Templates ═══ -->
+  <section class="screen-row" id="screen-templates">
+    <div class="mockup-scroll">
+      <div class="mini-steps">
+        <button class="mini-step-btn active" data-group="templates" data-step="1"><span class="num">1</span>Browse</button>
+        <button class="mini-step-btn" data-group="templates" data-step="2"><span class="num">2</span>Status</button>
+        <button class="mini-step-btn" data-group="templates" data-step="3"><span class="num">3</span>Languages</button>
+        <span class="step-hint"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Click through the numbers</span>
+      </div>
+      <div class="browser-frame">
+        <div class="browser-topbar"><div class="b-dots"><span></span><span></span><span></span></div>
+          <div class="b-url"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="9" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>app.faigen.in/company/templates</div>
+        </div>
+        <div class="app-viewport">
+          <div class="app-rail">
+            <img class="logo-mark" id="railLogo3" src="/logonew.png" alt="">
+            <div class="rail-icon"><svg viewBox="0 0 24 24" stroke="#BBBEC4"><path d="M13 4v5c0 1 1 2 2 2h5"/><path d="M20 11V6.5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h6"/></svg></div>
+            <div class="rail-sep"></div>
+            <div class="rail-icon active" style="background:#F1E9FE;"><svg viewBox="0 0 24 24" stroke="#7C3AED"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24" stroke="#BBBEC4"><path d="M3 9v6h4l6 4V5L7 9H3Z"/></svg></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24" stroke="#BBBEC4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <div class="rail-sep"></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24" stroke="#BBBEC4"><circle cx="8" cy="15" r="4"/><path d="M10.5 12.5 20 3M20 3h-4M20 3v4"/></svg></div>
+          </div>
+          <div class="app-main">
+            <div class="app-header">
+              <div class="app-tab"><svg viewBox="0 0 24 24" stroke="#387ED1"><path d="M13 4v5c0 1 1 2 2 2h5"/><path d="M20 11V6.5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h6"/></svg>Agent Console</div>
+              <div class="app-tab active"><svg viewBox="0 0 24 24" stroke="#7C3AED"><path d="M3 9v6h4l6 4V5L7 9H3Z"/></svg>Campaign Console</div>
+              <div class="app-tab"><svg viewBox="0 0 24 24" stroke="#0D9488"><polyline points="7 8 3 12 7 16"/><polyline points="17 8 21 12 17 16"/></svg>Developer</div>
+              <div class="spacer"></div>
+            </div>
+            <div class="app-content">
+              <h3 class="c-title">Message Templates</h3>
+              <div class="c-sub">Pre-approved by WhatsApp — required before any broadcast can go out.</div>
+              <div class="filter-row">
+                <span class="filter-pill">All</span>
+                <span class="filter-pill">English</span>
+                <span class="filter-pill on">Malayalam</span>
+              </div>
+              <div class="tpl-card">
+                <div class="tpl-thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+                <div class="tpl-body"><div class="tpl-top"><span class="tpl-name">onam_sale_2026</span><span class="pill-status approved">Approved</span></div>
+                  <div class="tpl-badges"><span class="pill-cat marketing">Marketing</span><span class="pill-cat utility" style="background:var(--app-chip-bg);color:var(--app-chip-text);">English</span></div>
+                  <div class="tpl-preview">🎉 Onam Sale is Live! Flat 20% off on everything, this week only...</div>
+                </div>
+              </div>
+              <div class="tpl-card">
+                <div class="tpl-thumb"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v9l9 5 9-5V8"/></svg></div>
+                <div class="tpl-body"><div class="tpl-top"><span class="tpl-name">order_shipped</span><span class="pill-status pending">Pending review</span></div>
+                  <div class="tpl-badges"><span class="pill-cat utility">Utility</span><span class="pill-cat utility" style="background:var(--app-blue-tint);color:var(--app-blue);">Malayalam</span></div>
+                  <div class="tpl-preview">നിങ്ങളുടെ ഓർഡർ #{{1}} അയച്ചു, {{2}}-ന് എത്തും...</div>
+                </div>
+              </div>
+              <div class="tpl-card" style="opacity:0.7;">
+                <div class="tpl-thumb"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8l9 5 9-5Z"/></svg></div>
+                <div class="tpl-body"><div class="tpl-top"><span class="tpl-name">flash_offer_draft</span><span class="pill-status draft">Draft</span></div>
+                  <div class="tpl-preview">Not submitted to WhatsApp yet.</div>
+                </div>
+              </div>
+              <button class="new-tpl-btn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>New Template</button>
+            </div>
+          </div>
+
+          <div class="callout" data-group="templates" data-step="1">
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 458,104 Q 340,150 205,188"/></svg>
+            <div class="lbl" style="top:82px;left:460px;">Browse your approved messages</div>
+            <div class="dot" style="top:191px;left:195px;"></div>
+          </div>
+          <div class="callout" data-group="templates" data-step="2" hidden>
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 458,104 Q 520,150 558,192"/></svg>
+            <div class="lbl" style="top:82px;left:460px;">Approved = ready to send</div>
+            <div class="dot" style="top:195px;left:555px;"></div>
+          </div>
+          <div class="callout" data-group="templates" data-step="3" hidden>
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 458,104 Q 380,118 288,142"/></svg>
+            <div class="lbl" style="top:82px;left:460px;">Now supports Malayalam</div>
+            <div class="dot" style="top:145px;left:278px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-caption">Campaign Console → Templates</div>
+    </div>
+    <div class="screen-copy">
+      <div class="tag"><span class="dot"></span>Before you can broadcast</div>
+      <h2>WhatsApp has to approve your message first.</h2>
+      <p>A template is any message you plan to send to more than one person at once — it has to be submitted to WhatsApp and approved before it can go out. That's a WhatsApp rule, not a Faigen one; it exists to stop spam.</p>
+      <p>Each one shows a status: <b>Draft</b> (not submitted yet), <b>Pending review</b> (with WhatsApp, usually a few hours to a day), <b>Approved</b> (ready to use), or occasionally <b>Rejected</b> (needs a small wording change and a resubmit).</p>
+      <div class="why-box"><div class="lbl">Marketing vs Utility</div><p>Marketing templates (sales, offers) cost a little more per message than Utility templates (order updates, receipts) — that's also set by WhatsApp, and you'll see the cost on each one before you send.</p></div>
+      <div class="why-box"><div class="lbl">Write it once, in Malayalam</div><p>A template can be created in Malayalam just like English — filter by language to find the right one fast. The customer sees exactly the language it was written in.</p></div>
+    </div>
+  </section>
+
+  <!-- ═══ 4. Broadcast ═══ -->
+  <section class="screen-row" id="screen-broadcast">
+    <div class="mockup-scroll">
+      <div class="mini-steps">
+        <button class="mini-step-btn active" data-group="broadcast" data-step="1"><span class="num">1</span>Template</button>
+        <button class="mini-step-btn" data-group="broadcast" data-step="2"><span class="num">2</span>Audience</button>
+        <button class="mini-step-btn" data-group="broadcast" data-step="3"><span class="num">3</span>Review &amp; Launch</button>
+        <button class="mini-step-btn" data-group="broadcast" data-step="4"><span class="num">4</span>Sent</button>
+        <span class="step-hint"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Click through — it's the real flow</span>
+      </div>
+      <div class="browser-frame">
+        <div class="browser-topbar"><div class="b-dots"><span></span><span></span><span></span></div>
+          <div class="b-url"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="9" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>app.faigen.in/company/broadcast</div>
+        </div>
+        <div class="app-viewport">
+          <div class="app-rail">
+            <img class="logo-mark" id="railLogo4" src="/logonew.png" alt="">
+            <div class="rail-icon"><svg viewBox="0 0 24 24" stroke="#BBBEC4"><path d="M13 4v5c0 1 1 2 2 2h5"/><path d="M20 11V6.5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h6"/></svg></div>
+            <div class="rail-sep"></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24" stroke="#BBBEC4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <div class="rail-icon active" style="background:#F1E9FE;"><svg viewBox="0 0 24 24" stroke="#7C3AED"><path d="M3 9v6h4l6 4V5L7 9H3Z"/><path d="M16 8a4 4 0 0 1 0 8"/></svg></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24" stroke="#BBBEC4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <div class="rail-sep"></div>
+            <div class="rail-icon"><svg viewBox="0 0 24 24" stroke="#BBBEC4"><circle cx="8" cy="15" r="4"/><path d="M10.5 12.5 20 3M20 3h-4M20 3v4"/></svg></div>
+          </div>
+          <div class="app-main">
+            <div class="app-header">
+              <div class="app-tab"><svg viewBox="0 0 24 24" stroke="#387ED1"><path d="M13 4v5c0 1 1 2 2 2h5"/><path d="M20 11V6.5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h6"/></svg>Agent Console</div>
+              <div class="app-tab active"><svg viewBox="0 0 24 24" stroke="#7C3AED"><path d="M3 9v6h4l6 4V5L7 9H3Z"/></svg>Campaign Console</div>
+              <div class="app-tab"><svg viewBox="0 0 24 24" stroke="#0D9488"><polyline points="7 8 3 12 7 16"/><polyline points="17 8 21 12 17 16"/></svg>Developer</div>
+              <div class="spacer"></div>
+              <div class="app-wallet"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h13a1 1 0 0 1 1 1v3"/><path d="M3 7v10a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1h-4a2 2 0 0 0 0 4h4"/></svg>₹4,120</div>
+            </div>
+
+            <!-- Step 1 -->
+            <div class="app-content content-variant" data-group="broadcast" data-step="1">
+              <h3 class="c-title">1. Select Message Template</h3>
+              <div class="c-sub">Only approved templates can be sent.</div>
+              <div class="radio-card selected"><div class="radio-dot"><div class="fill"></div></div>
+                <div class="rc-body"><div class="rc-top"><span class="rc-name">onam_sale_2026</span><span class="rc-cost">₹0.87 / message</span></div><div class="rc-desc">🎉 Onam Sale is Live! Flat 20% off on everything, this week only...</div></div>
+              </div>
+              <div class="radio-card"><div class="radio-dot"></div>
+                <div class="rc-body"><div class="rc-top"><span class="rc-name">order_shipped</span><span class="rc-cost">₹0.35 / message</span></div><div class="rc-desc">Your order #{{1}} has shipped and should arrive by {{2}}...</div><div class="rc-lang">Language: Malayalam</div></div>
+              </div>
+              <div class="radio-card"><div class="radio-dot"></div>
+                <div class="rc-body"><div class="rc-top"><span class="rc-name">new_arrivals</span><span class="rc-cost">₹0.87 / message</span></div><div class="rc-desc">New styles just dropped — check them out before they sell out...</div></div>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="app-content content-variant" data-group="broadcast" data-step="2" hidden>
+              <h3 class="c-title">2. Target Audience</h3>
+              <div class="c-sub">Who should receive this?</div>
+              <div class="aud-grid">
+                <div class="aud-card selected"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/></svg></div><div class="t">Entire Database</div><div class="s">1,248 contacts</div></div>
+                <div class="aud-card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M17 9l2 2 3-4"/></svg></div><div class="t">Handpick Contacts</div><div class="s">Search &amp; select</div></div>
+                <div class="aud-card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M4 21h16"/></svg></div><div class="t">Import Excel/CSV</div><div class="s">Upload a list</div></div>
+                <div class="aud-card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h2M7 13h6"/></svg></div><div class="t">Manual Input</div><div class="s">Paste numbers</div></div>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="app-content content-variant" data-group="broadcast" data-step="3" hidden>
+              <div class="bc-grid">
+                <div class="bc-form">
+                  <h3 class="c-title">3. Review &amp; Launch</h3>
+                  <div class="c-sub">Name it and choose when it sends.</div>
+                  <div class="field-lbl">Campaign Name</div>
+                  <div class="field-input">Onam Sale — All Customers</div>
+                  <div class="sched-row"><div class="cb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>Schedule for later</div>
+                  <div class="field-lbl">Send at</div>
+                  <div class="field-input">27 Sep 2026, 10:00 AM</div>
+                </div>
+                <div class="bc-side">
+                  <div class="sum-row"><span>Template</span><b>onam_sale_2026</b></div>
+                  <div class="sum-row"><span>Recipients</span><b>1,248</b></div>
+                  <div class="sum-row"><span>Cost / msg</span><b>₹0.87</b></div>
+                  <div class="sum-row"><span>Total Cost</span><b>₹1,085.76</b></div>
+                  <div class="wallet-box"><span class="l">Wallet Balance</span><span class="n">₹4,120</span></div>
+                  <button class="launch-btn">Launch to 1,248 recipients<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="app-content flush content-variant" data-group="broadcast" data-step="4" hidden>
+              <div class="bc-success">
+                <div class="succ-badge"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
+                <div class="succ-title">Broadcast Successfully Started!</div>
+                <div class="succ-body">Sending <b>onam_sale_2026</b> to <b>1,248 recipients</b>. Delivery and read status will update live.</div>
+                <span class="succ-link">View in Campaign History<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="callout" data-group="broadcast" data-step="1">
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 458,104 Q 340,110 218,142"/></svg>
+            <div class="lbl" style="top:82px;left:460px;">Click a template</div>
+            <div class="dot" style="top:143px;left:205px;"></div>
+          </div>
+          <div class="callout" data-group="broadcast" data-step="2" hidden>
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 458,104 Q 300,110 158,148"/></svg>
+            <div class="lbl" style="top:82px;left:460px;">Choose your audience</div>
+            <div class="dot" style="top:150px;left:145px;"></div>
+          </div>
+          <div class="callout" data-group="broadcast" data-step="3" hidden>
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 268,270 Q 400,255 538,272"/></svg>
+            <div class="lbl" style="top:262px;left:200px;">Click here to launch</div>
+            <div class="dot" style="top:271px;left:541px;"></div>
+          </div>
+          <div class="callout" data-group="broadcast" data-step="4" hidden>
+            <svg viewBox="0 0 680 432" style="position:absolute;top:0;left:0;width:680px;height:432px;overflow:visible;"><path d="M 468,292 Q 440,300 408,314"/></svg>
+            <div class="lbl" style="top:270px;left:470px;">Tracked automatically</div>
+            <div class="dot" style="top:313px;left:395px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-caption" data-group="broadcast" data-cap1="Campaign Console → Broadcast · Step 1 of 4" data-cap2="Campaign Console → Broadcast · Step 2 of 4" data-cap3="Campaign Console → Broadcast · Step 3 of 4" data-cap4="Campaign Console → Broadcast · Sent">Campaign Console → Broadcast · Step 1 of 4</div>
+    </div>
+
+    <div class="screen-copy">
+      <div class="tag"><span class="dot"></span>The main event</div>
+      <h2>Sending a broadcast, step by step.</h2>
+      <p class="copy-variant" data-group="broadcast" data-step="1">Pick any <b>approved</b> template — the cost per message is shown right on it, so there's no surprise later. Drafts and pending templates can't be selected yet.</p>
+      <p class="copy-variant" data-group="broadcast" data-step="2" hidden>Choose who gets it: your whole list, a hand-picked group, an uploaded spreadsheet, or numbers you paste in yourself. The recipient count updates as you choose.</p>
+      <p class="copy-variant" data-group="broadcast" data-step="3" hidden>Name the campaign so you can find it later, optionally schedule it for a specific time, and check the summary — <b>recipients × cost per message = total cost</b>, checked against your wallet balance before you're allowed to launch.</p>
+      <p class="copy-variant" data-group="broadcast" data-step="4" hidden>Sending isn't instant for the recipients — it queues and goes out in the background. From here you can watch it live in <b>Campaign History</b>: sent, delivered, and read counts, per message.</p>
+      <div class="why-box"><div class="lbl">Try the steps above</div><p>Click through <b>1 → 2 → 3 → 4</b> above the screen — it's the exact same four steps you'll click through for real, in whichever template language you picked.</p></div>
+    </div>
+  </section>
+
+  <!-- ═══ Everything else ═══ -->
+  <section class="rest-wrap" id="screen-rest">
+    <div class="rest-head">
+      <div class="tag"><span class="dot"></span>The rest of the toolkit</div>
+      <h2>Everything else, grouped the way it's grouped in your sidebar.</h2>
+      <p>These round out the dashboard — most clients only need to glance at these occasionally, once things are set up.</p>
+    </div>
+    <div class="console-groups">
+      <div class="console-group">
+        <div class="ch"><div class="icwrap" style="background:var(--app-blue-tint);"><svg viewBox="0 0 24 24" stroke="#387ED1"><path d="M13 4v5c0 1 1 2 2 2h5"/><path d="M20 11V6.5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h6"/></svg></div><b>Agent Console</b></div>
+        <div class="rest-item"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v9l9 5 9-5V8"/></svg></div><div><b>Orders</b><span>Every order your AI has taken, in one list.</span></div></div>
+        <div class="rest-item"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></div><div><b>Products</b><span>Your catalog — what the AI can recommend and quote.</span></div></div>
+        <div class="rest-item"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/></svg></div><div><b>AI Training</b><span>Teach your AI about your business — in English or Malayalam.</span></div></div>
+        <div class="rest-item"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9"/></svg></div><div><b>Settings</b><span>Your business profile, reply language, hours and preferences.</span></div></div>
+      </div>
+      <div class="console-group">
+        <div class="ch"><div class="icwrap" style="background:#F1E9FE;"><svg viewBox="0 0 24 24" stroke="#7C3AED"><path d="M3 9v6h4l6 4V5L7 9H3Z"/></svg></div><b>Campaign Console</b></div>
+        <div class="rest-item"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div><b>Campaign History</b><span>Every broadcast you've sent — delivered vs read, per message.</span></div></div>
+      </div>
+      <div class="console-group">
+        <div class="ch"><div class="icwrap" style="background:#E0F2F1;"><svg viewBox="0 0 24 24" stroke="#0D9488"><polyline points="7 8 3 12 7 16"/><polyline points="17 8 21 12 17 16"/></svg></div><b>Developer</b></div>
+        <div class="rest-item"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M10.5 12.5 20 3M20 3h-4M20 3v4"/></svg></div><div><b>API Keys</b><span>Connect Faigen to your own systems and tools.</span></div></div>
+        <div class="rest-item"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5v-17Z"/></svg></div><div><b>Documentation</b><span>Technical reference, for whoever handles integrations.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="recap">
+    <div class="recap-item"><div class="lbl">Always on</div><p><b>Dashboard &amp; Live Inbox</b> — see and join every conversation your AI is having.</p></div>
+    <div class="recap-item"><div class="lbl">Approved first</div><p><b>Templates</b> — WhatsApp has to sign off before any message goes to a list.</p></div>
+    <div class="recap-item"><div class="lbl">Four clicks</div><p><b>Broadcast</b> — template, audience, review, launch. Tracked from send to read.</p></div>
+    <div class="recap-item"><div class="lbl">English + Malayalam</div><p>Your AI reads and replies in whichever one your customer used — no setup needed.</p></div>
+  </div>
+
+  <div class="footnote">
+    Faigen — WhatsApp AI Agent Platform · faigen.in · info@faigen.in · +91 96338 20462. Figures and names shown throughout this guide (orders, contacts, wallet balance, costs per message) are illustrative sample data, not your live account.
+  </div>
+
+</div>
+
+<script>
+(function(){
+  function has(el, n){
+    return (el.dataset.step || '').split(',').indexOf(n) !== -1;
+  }
+  function wireGroup(name){
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.mini-step-btn[data-group="' + name + '"]'));
+    if (!btns.length) return;
+    var callouts = Array.prototype.slice.call(document.querySelectorAll('.callout[data-group="' + name + '"]'));
+    var contents = Array.prototype.slice.call(document.querySelectorAll('.content-variant[data-group="' + name + '"]'));
+    var copies = Array.prototype.slice.call(document.querySelectorAll('.copy-variant[data-group="' + name + '"]'));
+    var captionEl = document.querySelector('.screen-caption[data-group="' + name + '"]');
+
+    function goTo(n){
+      btns.forEach(function(b){ b.classList.toggle('active', b.dataset.step === n); });
+      callouts.forEach(function(c){ c.hidden = !has(c, n); });
+      contents.forEach(function(c){ c.hidden = !has(c, n); });
+      copies.forEach(function(c){ c.hidden = !has(c, n); });
+      if (captionEl) {
+        var t = captionEl.dataset['cap' + n];
+        if (t) captionEl.textContent = t;
+      }
+    }
+
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){ goTo(b.dataset.step); });
+    });
+  }
+
+  ['dashboard', 'inbox', 'templates', 'broadcast'].forEach(wireGroup);
+})();
+</script>
+
+<script>if(window.self!==window.top){document.documentElement.classList.add('embedded');}</script>
+<script>
+(function(){
+  if (window.self === window.top) return;
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    var t = id && document.getElementById(id);
+    if (!t) return;
+    e.preventDefault();
+    try {
+      var top = window.frameElement.getBoundingClientRect().top + window.parent.scrollY + t.getBoundingClientRect().top - 96;
+      window.parent.scrollTo({ top: top, behavior: 'smooth' });
+    } catch (err) { t.scrollIntoView({ behavior: 'smooth' }); }
+  });
+})();
+</script>
+</body></html>
