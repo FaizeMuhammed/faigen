@@ -82,7 +82,7 @@ export default function PrivacyPolicy() {
             initial="hidden" animate="visible" variants={fadeUp}
             className="text-gray-500 font-medium"
           >
-            Last updated: March 2026 · Kerala, India
+            Last updated: October 2026 · Kerala, India
           </motion.p>
         </div>
       </header>
@@ -133,6 +133,7 @@ export default function PrivacyPolicy() {
                   {[
                     { title: 'Personal Information', items: ['Name', 'Phone number', 'Email address'] },
                     { title: 'Communication Data', items: ['Messages sent via WhatsApp and Instagram to AI agents operated by Faigen', 'Customer queries, responses, and interaction logs'] },
+                    { title: 'Instagram Data (if you connect Instagram)', items: ['Collected only when a business connects its own Instagram account to Faigen', 'Instagram account ID, username, and account type', 'Comments on the business\'s posts and Reels, and the replies we post on its behalf', 'Direct messages sent to the connected business account', 'Post and Reel performance metrics (such as views, reach, and follower counts) for the connected account', 'Publicly available information about other business or creator accounts that the business chooses to track', 'An access token that lets us act for the connected account, stored encrypted'] },
                     { title: 'Transactional Information', items: ['Order details (product, quantity, delivery address)', 'Payment-related references (handled via third-party providers, if applicable)'] },
                     { title: 'Client Business Information', items: ['Business data provided by our clients for service delivery', 'Product/service catalogs, pricing, and operational workflows'] },
                     { title: 'Technical Data', items: ['IP address', 'Browser type and device information', 'Website usage and interaction analytics'] },
@@ -183,6 +184,17 @@ export default function PrivacyPolicy() {
                   All communications processed via these platforms are subject to their respective Terms of Service and
                   handled only for the purpose of delivering contracted services.
                   Faigen does not independently distribute or monetize message data.
+                </p>
+                <p className="mt-4">
+                  <span className="font-semibold text-gray-800">Instagram.</span> A business can connect its Instagram
+                  Business or Creator account to Faigen by signing in with Instagram and approving the permissions
+                  requested. With that approval, Faigen reads comments and direct messages on that account, sends
+                  automated direct replies and public replies to comments, and shows performance analytics to the
+                  business. We act only for the connected account, only within the permissions granted, and only to
+                  deliver the service the business has set up. Information about other accounts is limited to what is
+                  publicly available. We do not use Instagram data for advertising and do not sell or share it with
+                  data brokers. A business can disconnect its Instagram account at any time from the Faigen dashboard
+                  or through Instagram's settings, after which we stop accessing it.
                 </p>
               </section>
 
@@ -254,6 +266,8 @@ export default function PrivacyPolicy() {
                 </ul>
                 <p className="mt-4 text-gray-500">
                   Requests can be made via official communication channels provided by Faigen.
+                  To delete your data, including data connected to an Instagram account, follow the steps on our{' '}
+                  <Link href="/data-deletion" className="text-[#2563EB] font-semibold hover:underline">Data Deletion</Link> page.
                 </p>
               </section>
 
