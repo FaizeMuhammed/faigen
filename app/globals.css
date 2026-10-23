@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
+/* ───────────────────────────────────────────────────────────────
+   Faigen design system — light, calm, Apple-like.
+   One accent (blue), lots of white space, big type, soft cards.
+   ─────────────────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #ffffff;
+  --bg-alt: #f5f5f7;
+  --ink: #1d1d1f;
+  --muted: #6e6e73;
+  --faint: #86868b;
+  --line: #d2d2d7;
+  --line-soft: #e8e8ed;
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --accent-soft: #e8f2ff;
+  --dark: #000000;
+  --dark-alt: #111113;
+  --wa: #25d366;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-alt: var(--bg-alt);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-soft: var(--line-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-dark: var(--dark);
+  --color-dark-alt: var(--dark-alt);
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  --font-ml: var(--font-noto-ml), var(--font-inter), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--accent); color: #fff; }
+
+@layer components {
+/* Type scale */
+.display-xl { font-size: clamp(2.9rem, 8.2vw, 6.25rem); line-height: 1.02; letter-spacing: -0.045em; font-weight: 600; }
+.display-lg { font-size: clamp(2.4rem, 6vw, 4.5rem);   line-height: 1.05; letter-spacing: -0.04em;  font-weight: 600; }
+.display-md { font-size: clamp(1.9rem, 4vw, 3rem);     line-height: 1.1;  letter-spacing: -0.032em; font-weight: 600; }
+.lead       { font-size: clamp(1.15rem, 2.1vw, 1.5rem); line-height: 1.4; letter-spacing: -0.01em; color: var(--muted); font-weight: 400; }
+.eyebrow    { font-size: 0.8125rem; letter-spacing: 0.02em; font-weight: 600; color: var(--accent); }
+
+.font-ml { font-family: var(--font-ml); }
+
+.section { padding-block: clamp(5rem, 11vw, 9rem); }
+.container-x { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
+.container-wide { width: min(1280px, 100% - 2.5rem); margin-inline: auto; }
+
+.card { background: var(--bg-alt); border-radius: 28px; }
+.card-white { background: #fff; border-radius: 28px; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 12px 40px -12px rgba(0,0,0,.12); }
+
+}
+
+/* Gentle floating for decorative chips */
+@keyframes float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.float-slow { animation: float-y 7s ease-in-out infinite; }
+.float-slower { animation: float-y 9s ease-in-out infinite; animation-delay: -3s; }
+
+@keyframes blink-dot { 0%,80%,100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-2px); } }
+.typing-dot { animation: blink-dot 1.2s infinite; }
+.typing-dot:nth-child(2) { animation-delay: .15s; }
+.typing-dot:nth-child(3) { animation-delay: .3s; }
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track { animation: marquee 38s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .float-slow, .float-slower, .typing-dot, .marquee-track { animation: none !important; }
+  .flow-dot { display: none; }
 }

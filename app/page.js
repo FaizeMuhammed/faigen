@@ -1,25 +1,33 @@
-import HeroSection from "@/components/homesec";
-import DashboardSection from "@/components/DashboardSection";
-import FeatureSection from "@/components/features";
-import BentoGrid from "@/components/BentoGrid";
-import ServicesSection from "@/components/ServicesSection";
-import FooterSection from "@/components/FooterSection";
-import UseCasesSection from "@/components/UseCasesSection";
-import JoinLeadersSection from "@/components/JoinLeadersSection";
-import FAQSection from "@/components/FAQSection";
+import Nav from "@/components/site/Nav";
+import Footer from "@/components/site/Footer";
+import Hero from "@/components/site/home/Hero";
+import Statement from "@/components/site/home/Statement";
+import Showcase from "@/components/site/home/Showcase";
+import InstagramSuite from "@/components/site/home/InstagramSuite";
+import Bento from "@/components/site/home/Bento";
+import UseCases from "@/components/site/home/UseCases";
+import HowItWorks from "@/components/site/home/HowItWorks";
+import PricingTeaser from "@/components/site/home/PricingTeaser";
+import Faq from "@/components/site/home/Faq";
+import FinalCta from "@/components/site/home/FinalCta";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-[#1A1A1A] w-full relative overflow-hidden selection:bg-[#2563EB] selection:text-white">
-      <HeroSection />
-      <DashboardSection />
-      <FeatureSection />
-      {/* <UseCasesSection/> */}
-      <BentoGrid />
-      <ServicesSection />
-      <FAQSection/>
-      {/* <JoinLeadersSection/> */}
-      <FooterSection />
-    </main>
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <Statement />
+        <Showcase />
+        <InstagramSuite />
+        <Bento />
+        <UseCases />
+        <HowItWorks />
+        <PricingTeaser />
+        <Faq />
+        <FinalCta />
+      </main>
+      <Footer />
+    </>
   );
 }

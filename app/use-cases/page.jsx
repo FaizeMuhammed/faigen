@@ -1,344 +1,106 @@
-'use client'
+import { ShoppingBag, Stethoscope, UtensilsCrossed, Building2, GraduationCap, Scissors } from 'lucide-react'
+import Nav from '@/components/site/Nav'
+import Footer from '@/components/site/Footer'
+import PageHero from '@/components/site/PageHero'
+import FeatureRow from '@/components/site/FeatureRow'
+import Reveal from '@/components/site/Reveal'
+import FinalCta from '@/components/site/home/FinalCta'
+import { PillButton, TextLink } from '@/components/site/Buttons'
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ShoppingBag, Stethoscope, Utensils, Building2,
-  ArrowRight, CheckCircle2, Bot, MessageSquare, Zap,
-  BarChart3, ShieldCheck, X, Copy, Check, Menu
-} from "lucide-react";
-import Link from 'next/link';
+export const metadata = {
+  title: 'Use cases — Faigen',
+  description: 'How retail, clinics, restaurants and real estate businesses use Faigen to sell, book and support on WhatsApp.',
+}
 
-const industries = [
+function Chat({ title, lines }) {
+  return (
+    <div className="w-full max-w-[400px] overflow-hidden rounded-[22px] bg-[#efeae2] shadow-[0_30px_70px_-28px_rgba(0,0,0,.3)] ring-1 ring-black/5">
+      <div className="flex items-center gap-3 bg-[#f7f7f7] px-4 py-3">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-[13px] font-semibold text-white">F</span>
+        <div className="leading-tight"><p className="text-[14px] font-semibold text-ink">{title}</p><p className="text-[11px] text-muted">online</p></div>
+      </div>
+      <div className="space-y-2 p-4">
+        {lines.map(([who, text], i) => (
+          <p key={i} className={`w-fit max-w-[86%] rounded-2xl px-3.5 py-2 text-[14px] leading-snug text-ink shadow-sm ${who === 'me' ? 'ml-auto rounded-br-md bg-[#d9fdd3]' : 'rounded-bl-md bg-white'}`}>{text}</p>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+const CASES = [
   {
-    id: 'retail',
-    name: 'Retail & E-commerce',
-    icon: <ShoppingBag />,
-    title: "Turn chats into checkouts instantly.",
-    description: "Stop losing customers to slow replies. Faigen AI acts as your 24/7 digital salesman, showcasing catalogs and closing sales natively inside WhatsApp.",
-    features: ["Browse product catalogs in-chat", "Automated order confirmation", "Check inventory status", "Send shipping updates"],
-    chat: [
-      { sender: 'user', text: "Do you have the Premium Coir Mat in stock?" },
-      { sender: 'bot', text: "Yes, we have 45 in stock! Price: ₹600. Would you like to order?" },
-      { sender: 'user', text: "Yes, I'll take 2." },
-      { sender: 'bot', text: "Great! That's ₹1,200. I've generated your secure payment link below. 💳" }
-    ]
+    eyebrow: 'Retail & e-commerce', title: 'Turn chats into checkouts.',
+    text: 'Stop losing customers to slow replies. Faigen answers stock and price questions from your catalog and closes the order inside WhatsApp.',
+    points: ['Product, price and stock answers', 'Order collected in the chat', 'Broadcast offers on festival days'],
+    chat: ['Faigen Store', [['me', 'Do you have the Premium Coir Mat in stock?'], ['bot', 'Yes, we have 45 in stock! Price: ₹600. Would you like to order?'], ['me', '2, deliver to Ernakulam'], ['bot', 'Done ✅ 2 × Premium Coir Mat, ₹1,200. We’ll message you when it ships.']]],
   },
   {
-    id: 'healthcare',
-    name: 'Clinics & Hospitals',
-    icon: <Stethoscope />,
-    title: "Seamless patient booking & care.",
-    description: "Reduce front-desk workload by automating appointment scheduling, sending timely reminders, and answering common patient queries.",
-    features: ["24/7 Appointment scheduling", "Automated WhatsApp reminders", "Doctor availability & OPD", "Secure sharing of reports"],
-    chat: [
-      { sender: 'user', text: "Is Dr. Rajesh available tomorrow evening?" },
-      { sender: 'bot', text: "Dr. Rajesh is available tomorrow from 4:00 PM to 8:00 PM. Book a slot?" },
-      { sender: 'user', text: "Yes, 6 PM." },
-      { sender: 'bot', text: "Confirmed! Your appointment is scheduled for tomorrow at 6:00 PM. ✅" }
-    ]
+    eyebrow: 'Clinics & hospitals', title: 'Appointments without the phone tag.',
+    text: 'Reduce front-desk load. The agent shares doctor timings, books slots and answers the questions patients ask every day.',
+    points: ['Doctor availability and booking', 'Common patient questions answered', 'Staff can take over any chat'],
+    chat: ['City Clinic', [['me', 'Is Dr. Rajesh available tomorrow evening?'], ['bot', 'Dr. Rajesh is available tomorrow from 4:00 PM to 8:00 PM. Book a slot?'], ['me', '6 PM please'], ['bot', 'Confirmed! Your appointment is tomorrow at 6:00 PM. ✅']]],
   },
   {
-    id: 'restaurants',
-    name: 'Restaurants & Cafes',
-    icon: <Utensils />,
-    title: "Automate orders and reservations.",
-    description: "Let your AI handle hungry customers. From sharing menus to booking tables, Faigen AI keeps your restaurant running smoothly.",
-    features: ["Share digital menus", "Takeaway order processing", "Automated table reservations", "Broadcast festive offers"],
-    chat: [
-      { sender: 'user', text: "Can I get the menu and do you deliver?" },
-      { sender: 'bot', text: "Welcome! Yes, we deliver within 45 mins. Attached is our menu. What would you like?" },
-      { sender: 'user', text: "2 Chicken Biriyani." },
-      { sender: 'bot', text: "Perfect! Total is ₹680. Please share your location to proceed." }
-    ]
+    eyebrow: 'Restaurants & cafes', title: 'Orders and reservations, handled.',
+    text: 'Share the menu, take delivery orders and book tables while your team stays on the floor.',
+    points: ['Menu and delivery answers', 'Orders with totals', 'Table reservations'],
+    chat: ['Spice Route', [['me', 'Can I get the menu and do you deliver?'], ['bot', 'Welcome! Yes, we deliver within 45 mins. Attached is our menu. What would you like?'], ['me', '2 Chicken Biriyani'], ['bot', 'Perfect! Total is ₹680. Please share your location to proceed.']]],
   },
   {
-    id: 'realestate',
-    name: 'Real Estate',
-    icon: <Building2 />,
-    title: "Qualify leads while you sleep.",
-    description: "Engage property seekers instantly. The AI captures requirements, shares brochures, and schedules site visits.",
-    features: ["Automated lead qualification", "Instant brochure sharing", "Schedule site visits", "Follow-up campaigns"],
-    chat: [
-      { sender: 'user', text: "What's the price for the 3BHK villas?" },
-      { sender: 'bot', text: "Our 3BHK villas start at ₹85 Lakhs. Are you looking to move in immediately?" },
-      { sender: 'user', text: "Looking for next year." },
-      { sender: 'bot', text: "Understood. I've sent the project brochure. Would you like to schedule a site visit?" }
-    ]
-  }
-];
+    eyebrow: 'Real estate', title: 'Qualify leads while you sleep.',
+    text: 'Engage property seekers at once. The agent captures requirements, shares details and schedules site visits.',
+    points: ['Budget and timeline captured', 'Brochures and details shared', 'Site visits scheduled'],
+    chat: ['Skyline Homes', [['me', 'What’s the price for the 3BHK villas?'], ['bot', 'Our 3BHK villas start at ₹85 Lakhs. Are you looking to move in immediately?'], ['me', 'Looking for next year'], ['bot', 'Understood. I’ll share the brochure and we can plan a site visit when you’re ready.']]],
+  },
+]
 
-const extraFeatures = [
-  { title: "Broadcast Campaigns", desc: "Send templates to thousands in one click.", icon: <Zap />, iconColor: "text-[#7c3aed]" },
-  { title: "Omnichannel Inbox",   desc: "Monitor WhatsApp & IG chats in one place.", icon: <MessageSquare />, iconColor: "text-[#2563EB]" },
-  { title: "Custom AI Training",  desc: "Train on your business data and PDFs.", icon: <Bot />, iconColor: "text-[#d97706]" },
-  { title: "Analytics & Insights",desc: "Track read rates and order volume.", icon: <BarChart3 />, iconColor: "text-[#059669]" }
-];
+const MORE = [
+  { icon: GraduationCap, name: 'Education', text: 'Course questions, fees and admissions enquiries answered instantly.' },
+  { icon: Scissors, name: 'Salons & services', text: 'Bookings, price lists and reminders without a receptionist.' },
+  { icon: ShoppingBag, name: 'Anything else', text: 'If your customers message you, Faigen can be trained for it.' },
+]
 
 export default function UseCasesPage() {
-  const [activeTab, setActiveTab] = useState(industries[0]);
-  const [popupOpen, setPopupOpen] = useState(false);
-  const [menuOpen, setMenuOpen]   = useState(false);
-  const [copied, setCopied]       = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText("info@faigen.in");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const navLinks = [
-    { label: 'Home', href: '/' },
-    { label: 'Use Cases', href: '/use-cases', active: true },
-  ];
-
   return (
-    <div className="min-h-screen bg-[#FBFBFD] text-[#1D1D1F] font-sans selection:bg-[#0066CC] selection:text-white">
-
-      {/* ── MODAL ── */}
-      <AnimatePresence>
-        {popupOpen && (
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/20 backdrop-blur-md px-4"
-            onClick={() => setPopupOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, y: 20, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.95, y: 20, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              onClick={e => e.stopPropagation()}
-              className="bg-white rounded-[28px] border border-[#E5E5EA] w-full max-w-[420px] p-8 shadow-2xl"
-            >
-              <div className="flex justify-between items-start mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-[#F5F5F7] flex items-center justify-center border border-[#E5E5EA] text-[#1D1D1F]">
-                  <ShieldCheck size={24} strokeWidth={1.5} />
-                </div>
-                <button onClick={() => setPopupOpen(false)} className="text-[#86868B] hover:text-[#1D1D1F] bg-[#F5F5F7] border border-[#E5E5EA] w-8 h-8 rounded-full flex items-center justify-center">
-                  <X size={16} />
-                </button>
-              </div>
-              <h3 className="text-[20px] font-semibold text-[#1D1D1F] mb-2">Request a Demo</h3>
-              <p className="text-[14px] text-[#86868B] mb-8">Faigen Console is for businesses. Contact our team to get started.</p>
-              <div className="bg-[#F5F5F7] border border-[#E5E5EA] rounded-2xl p-4 flex items-center justify-between">
-                <span className="text-[14px] font-medium text-[#1D1D1F]">info@faigen.in</span>
-                <button onClick={handleCopy} className="p-2 bg-white rounded-xl border border-[#E5E5EA] text-[#86868B]">
-                  {copied ? <Check size={16} strokeWidth={3} /> : <Copy size={16} />}
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ── HEADER ── */}
-      <header className="sticky top-0 z-50 bg-[#FBFBFD]/90 backdrop-blur-2xl border-b border-[#E5E5EA]">
-        <div className="max-w-[1500px] mx-auto px-5 md:px-10 py-4 flex justify-between items-center">
-          <Link href="/">
-            <img src="/logonew.png" alt="Logo" className="h-8 md:h-12 w-auto" />
-          </Link>
-
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex gap-8 text-[14px] font-semibold text-[#86868B]">
-            <Link href="/" className="hover:text-[#1D1D1F] transition-colors">Home</Link>
-            <Link href="/pricing" className="hover:text-[#1D1D1F] transition-colors">Pricing</Link>
-            <span className="text-[#1D1D1F]">Use Cases</span>
-          </nav>
-
-          <div className="hidden lg:block">
-            <button
-              onClick={() => setPopupOpen(true)}
-              className="bg-[#1D1D1F] text-white px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-black transition-colors"
-            >
-              Request Access
-            </button>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            className="lg:hidden p-2 -mr-1 text-[#1D1D1F] rounded-lg hover:bg-[#F5F5F7] transition-colors"
-            onClick={() => setMenuOpen(v => !v)}
-          >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
-
-        {/* Mobile drawer — inside sticky header */}
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:hidden overflow-hidden bg-white border-t border-[#E5E5EA]"
-            >
-              <div className="flex flex-col px-5 py-3">
-                <Link href="/" onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-between text-[15px] font-medium text-[#1D1D1F] py-4 border-b border-[#F5F5F7]">
-                  Home <ArrowRight size={16} className="text-[#86868B]" />
-                </Link>
-                <Link href="/pricing" onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-between text-[15px] font-medium text-[#1D1D1F] py-4 border-b border-[#F5F5F7]">
-                  Pricing <ArrowRight size={16} className="text-[#86868B]" />
-                </Link>
-                <span className="flex items-center justify-between text-[15px] font-bold text-[#1D1D1F] py-4 border-b border-[#F5F5F7]">
-                  Use Cases <span className="w-2 h-2 rounded-full bg-[#0066CC]" />
-                </span>
-                <button onClick={() => { setPopupOpen(true); setMenuOpen(false) }}
-                  className="mt-4 mb-2 w-full bg-[#1D1D1F] text-white py-3.5 text-[15px] font-semibold rounded-full flex items-center justify-center gap-2">
-                  Request Access <ArrowRight size={16} />
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
-
+    <>
+      <Nav />
       <main>
+        <PageHero
+          eyebrow="Use cases"
+          title="Tailored for the way you work."
+          lead="Faigen is trained on your business, so the same agent can sell, book and support — whatever your day looks like."
+        >
+          <PillButton href="/try" arrow>Try the live demo</PillButton>
+          <TextLink href="/contact">Tell us about your business</TextLink>
+        </PageHero>
 
-        {/* ── HERO ── */}
-        <section className="text-center px-5 pt-14 pb-10 md:pt-20 md:pb-16">
-          <h1 className="text-[2.8rem] sm:text-[3.5rem] md:text-[5rem] font-semibold tracking-tighter text-[#1D1D1F] mb-4 md:mb-6 leading-[1.02]">
-            Tailored for <span className="text-[#0066CC]">every</span> business.
-          </h1>
-          <p className="text-[#86868B] text-[16px] md:text-[18px] max-w-xl mx-auto font-medium leading-relaxed">
-            From taking food orders to booking clinic appointments, see how Faigen AI acts as your ultimate digital employee.
-          </p>
+        <section className="bg-white section !pt-8 space-y-28 sm:space-y-40">
+          {CASES.map((c, i) => (
+            <FeatureRow key={c.eyebrow} reverse={i % 2 === 1} eyebrow={c.eyebrow} title={c.title} text={c.text} points={c.points} visual={<Chat title={c.chat[0]} lines={c.chat[1]} />} />
+          ))}
         </section>
 
-        {/* ── INDUSTRY TABS + CONTENT ── */}
-        <section className="max-w-[1400px] mx-auto px-4 md:px-6 pb-16 md:pb-24">
-
-          {/* Tab pills — horizontal scroll on mobile */}
-          <div className="flex gap-2 md:gap-3 mb-8 md:mb-12 overflow-x-auto pb-2 no-scrollbar justify-start md:justify-center">
-            {industries.map((ind) => (
-              <button
-                key={ind.id}
-                onClick={() => setActiveTab(ind)}
-                className={`flex items-center gap-2 md:gap-3 px-4 py-3 md:px-6 md:py-4 rounded-full text-[13px] md:text-[14px] font-semibold transition-all whitespace-nowrap shrink-0 ${
-                  activeTab.id === ind.id
-                    ? 'bg-[#1D1D1F] text-white shadow-xl'
-                    : 'bg-white border border-[#E5E5EA] text-[#86868B] hover:border-[#D2D2D7]'
-                }`}
-              >
-                {React.cloneElement(ind.icon, { size: 16 })}
-                {/* Shorten label on mobile */}
-                <span className="sm:hidden">
-                  {ind.id === 'retail' ? 'Retail' : ind.id === 'healthcare' ? 'Clinics' : ind.id === 'restaurants' ? 'Restaurants' : 'Real Estate'}
-                </span>
-                <span className="hidden sm:inline">{ind.name}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Main content card */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-white border border-[#E5E5EA] rounded-[28px] md:rounded-[40px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col lg:flex-row overflow-hidden"
-            >
-              {/* Left — info */}
-              <div className="w-full lg:w-1/2 p-7 sm:p-10 md:p-12 lg:p-16 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-[#E5E5EA]">
-                <div className="text-[#0066CC] mb-4 md:mb-6">
-                  {React.cloneElement(activeTab.icon, { size: 36, strokeWidth: 1.5 })}
-                </div>
-                <h2 className="text-[1.8rem] sm:text-[2rem] md:text-[2.5rem] font-semibold tracking-tighter text-[#1D1D1F] mb-4 md:mb-6 leading-[1.05]">
-                  {activeTab.title}
-                </h2>
-                <p className="text-[#86868B] text-[15px] md:text-[17px] font-medium mb-7 md:mb-10 leading-relaxed">
-                  {activeTab.description}
-                </p>
-                <div className="space-y-3 md:space-y-4">
-                  {activeTab.features.map((f, i) => (
-                    <div key={i} className="flex items-center gap-3 font-semibold text-[#1D1D1F] text-[14px] md:text-[15px]">
-                      <CheckCircle2 size={18} className="text-[#0066CC] shrink-0" /> {f}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right — chat */}
-              <div className="w-full lg:w-1/2 bg-[#F5F5F7] p-6 sm:p-8 md:p-12 flex items-center justify-center">
-                <div className="w-full max-w-[360px] bg-white rounded-[24px] md:rounded-[32px] p-5 md:p-6 shadow-2xl border border-[#E5E5EA]">
-                  <div className="flex items-center gap-3 mb-5 md:mb-6">
-                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-[#1D1D1F] text-white flex items-center justify-center shrink-0">
-                      <Bot size={18} />
-                    </div>
-                    <div>
-                      <p className="text-[13px] md:text-[14px] font-bold">Faigen AI</p>
-                      <div className="flex items-center gap-1.5">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" />
-                        <p className="text-[11px] md:text-[12px] text-[#86868B]">Online</p>
-                      </div>
-                    </div>
+        <section className="bg-alt section">
+          <div className="container-x">
+            <Reveal className="mx-auto max-w-3xl text-center"><p className="eyebrow">And more</p><h2 className="display-lg mt-3">Built for any business that gets messages.</h2></Reveal>
+            <div className="mt-14 grid gap-5 md:grid-cols-3">
+              {MORE.map((m, i) => (
+                <Reveal key={m.name} delay={i * 0.08}>
+                  <div className="card-white h-full p-7">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent"><m.icon size={20} /></span>
+                    <h3 className="mt-5 text-[19px] font-semibold tracking-[-0.02em] text-ink">{m.name}</h3>
+                    <p className="mt-2 text-[15px] leading-relaxed text-muted">{m.text}</p>
                   </div>
-                  <div className="space-y-3 md:space-y-4">
-                    {activeTab.chat.map((msg, i) => (
-                      <div
-                        key={i}
-                        className={`p-3 md:p-4 rounded-2xl text-[13px] md:text-[14px] max-w-[85%] leading-relaxed ${
-                          msg.sender === 'bot'
-                            ? 'bg-[#E8F4FF] text-[#0066CC] rounded-tr-sm self-end ml-auto'
-                            : 'bg-[#F5F5F7] text-[#1D1D1F] rounded-tl-sm'
-                        }`}
-                      >
-                        {msg.text}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </section>
-
-        {/* ── MORE FEATURES ── */}
-        <section className="max-w-[1400px] mx-auto px-4 md:px-6 pb-16 md:pb-24">
-          <h3 className="text-[2rem] sm:text-[2.5rem] font-bold text-[#1D1D1F] text-center mb-10 md:mb-16 tracking-tight">
-            More than just chat.
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {extraFeatures.map((f, i) => (
-              <div
-                key={i}
-                className="bg-white border border-[#E5E5EA] rounded-[24px] md:rounded-[32px] p-6 md:p-8 shadow-sm hover:shadow-lg transition-all"
-              >
-                <div className={`mb-4 md:mb-6 ${f.iconColor}`}>
-                  {React.cloneElement(f.icon, { size: 26 })}
-                </div>
-                <h4 className="text-[15px] md:text-[18px] font-bold mb-1.5 md:mb-2">{f.title}</h4>
-                <p className="text-[#86868B] text-[13px] md:text-[14px] font-medium leading-snug">{f.desc}</p>
-              </div>
-            ))}
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* ── CTA ── */}
-        <section className="max-w-[1400px] mx-auto px-4 md:px-6 pb-16 md:pb-24">
-          <div className="bg-[#1D1D1F] rounded-[28px] md:rounded-[40px] p-10 sm:p-14 md:p-24 text-center text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#0066CC] blur-[120px] rounded-full opacity-20 pointer-events-none" />
-            <h2 className="text-[2.2rem] sm:text-[3rem] md:text-[3.5rem] font-semibold tracking-tighter mb-4 md:mb-6 leading-[1.05] relative z-10">
-              Ready to <span className="text-[#0066CC]">automate?</span>
-            </h2>
-            <p className="text-[#86868B] text-[15px] md:text-[18px] mb-8 md:mb-10 max-w-lg mx-auto leading-relaxed relative z-10">
-              Join 50+ Kerala businesses using Faigen's platform to scale operations.
-            </p>
-            <button
-              onClick={() => setPopupOpen(true)}
-              className="relative z-10 bg-white text-black px-8 md:px-10 py-3.5 md:py-4 rounded-full font-bold text-[14px] md:text-[15px] hover:bg-[#F5F5F7] transition-colors"
-            >
-              Request Access
-            </button>
-          </div>
-        </section>
-
+        <FinalCta />
       </main>
-    </div>
-  );
+      <Footer />
+    </>
+  )
 }
