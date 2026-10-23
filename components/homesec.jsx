@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Play, Menu, X, Mail, ShieldCheck,
-  CheckCircle2, ArrowRight, Check, Copy, Bot, ShoppingBag, Calendar, Sparkles, Zap
+  CheckCircle2, ArrowRight, Check, Copy, Bot, ShoppingBag, Calendar, Sparkles, Zap,
+  MessageSquare, LayoutDashboard
 } from "lucide-react";
 import Link from 'next/link'
 
@@ -27,18 +28,33 @@ const trustBadges = [
 const slides = [
   {
     title: (<>AI agents that <br className="hidden lg:block" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0066CC] to-[#3399FF]">sell & support</span> 24/7.</>),
-    subtitle: "Turn conversations into conversions. Deploy interactive agents that check stock, process orders, and handle support instantly.",
-    tags: ["Interactive Buttons", "Automated Routing", "Order Tracking"],
+    subtitle: "Turn conversations into conversions on WhatsApp — orders, support and FAQs, handled instantly, day or night.",
+    tags: ["WhatsApp Agent", "Order Taking", "24/7 Support"],
   },
   {
-    title: (<>Broadcast <br className="hidden lg:block" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0066CC] to-[#3399FF]">marketing campaigns.</span></>),
-    subtitle: "Launch targeted promotions and notify thousands of customers simultaneously with rich media and interactive links.",
-    tags: ["Bulk Messaging", "Delivery Analytics"],
+    title: (<>The same AI, <br className="hidden lg:block" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0066CC] to-[#3399FF]">right on your website.</span></>),
+    subtitle: "One trained agent, answering questions the moment someone lands on your site — no app, no waiting.",
+    tags: ["Website Chat", "Instant Answers", "Zero Setup"],
   },
   {
-    title: (<>Speak <br className="hidden lg:block" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0066CC] to-[#3399FF]">your local language.</span></>),
-    subtitle: "Deliver personalized experiences with an AI that fluently understands Malayalam, Manglish, and English automatically.",
-    tags: ["Auto-Detection", "Malayalam & Manglish", "Natural NLP"],
+    title: (<>Never leave an <br className="hidden lg:block" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0066CC] to-[#3399FF]">email unanswered.</span></>),
+    subtitle: "Drafts replies, sorts your inbox, and follows up on quotes that went cold — automatically.",
+    tags: ["Inbox Automation", "Auto Follow-up", "Faster Replies"],
+  },
+  {
+    title: (<>Or something <br className="hidden lg:block" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0066CC] to-[#3399FF]">built just for you.</span></>),
+    subtitle: "Bespoke internal AI tools, scoped and built around exactly how your business actually runs.",
+    tags: ["Custom Builds", "Internal Tools", "Your Workflow"],
+  },
+  {
+    title: (<>Turn paperwork into <br className="hidden lg:block" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0066CC] to-[#3399FF]">data, instantly.</span></>),
+    subtitle: "Send a photo of an invoice or receipt — get structured data back, no manual entry.",
+    tags: ["Invoice OCR", "Auto Extraction", "No Data Entry"],
+  },
+  {
+    title: (<>AI that actually <br className="hidden lg:block" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0066CC] to-[#3399FF]">understands your business.</span></>),
+    subtitle: "Trained on your rules, your language, your customers — not a generic script pretending to help.",
+    tags: ["Custom Trained", "Real Understanding", "Not a Script"],
   }
 ]
 
@@ -60,15 +76,28 @@ const chatScenarios = [
   }
 ]
 
+const flowNodes = [
+  { icon: MessageSquare, label: "Message" },
+  { icon: Sparkles,      label: "AI understands" },
+  { icon: CheckCircle2,  label: "Resolved" },
+  { icon: LayoutDashboard, label: "Logged" },
+]
+
 export default function FaigenHero() {
   const [menuOpen, setMenuOpen]       = useState(false)
   const [popupOpen, setPopupOpen]     = useState(false)
   const [copied, setCopied]           = useState(false)
   const [activeSlide, setActiveSlide] = useState(0)
   const [activeChat, setActiveChat]   = useState(0)
+  const [activeNode, setActiveNode]   = useState(0)
 
   useEffect(() => {
     const t = setInterval(() => setActiveSlide(p => (p + 1) % slides.length), 6000)
+    return () => clearInterval(t)
+  }, [])
+
+  useEffect(() => {
+    const t = setInterval(() => setActiveNode(p => (p + 1) % flowNodes.length), 1400)
     return () => clearInterval(t)
   }, [])
 
@@ -293,8 +322,25 @@ export default function FaigenHero() {
         <div className="hidden sm:flex w-full lg:w-[50%] xl:w-[45%] p-4 lg:p-8 flex-col justify-center gap-4 min-h-[500px] lg:min-h-0 relative z-0">
           <motion.div initial="hidden" animate="visible" variants={fadeUp}
             className="w-full bg-white rounded-[32px] border border-[#E5E5EA] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-6 lg:p-8 flex flex-col relative overflow-hidden h-[320px]">
-            <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#F5F5F7] rounded-full pointer-events-none z-0" />
-            <AnimatePresence mode="wait">
+            {/* Abstract "multi-model AI" motif — soft overlapping orbs, no third-party logos */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 pointer-events-none z-0">
+              <motion.div
+                className="absolute top-2 right-6 w-20 h-20 rounded-full bg-[#0066CC] opacity-[0.07] blur-2xl"
+                animate={{ y: [0, 8, 0], x: [0, -4, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute top-10 right-0 w-16 h-16 rounded-full bg-[#7C3AED] opacity-[0.06] blur-2xl"
+                animate={{ y: [0, -6, 0], x: [0, 5, 0] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              />
+              <motion.div
+                className="absolute top-0 right-16 w-14 h-14 rounded-full bg-[#25D366] opacity-[0.07] blur-2xl"
+                animate={{ y: [0, 6, 0], x: [0, -3, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              />
+            </div>
+            <AnimatePresence mode="wait" initial={false}>
               <motion.div key={chatScenarios[activeChat].id}
                 initial={{ opacity: 0, filter: "blur(8px)", x: 10 }}
                 animate={{ opacity: 1, filter: "blur(0px)", x: 0 }}
@@ -329,15 +375,31 @@ export default function FaigenHero() {
             </motion.div>
 
             <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ delay: 0.2 }}
-              className="flex-1 bg-white border border-[#E5E5EA] shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[32px] p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#F5F5F7]/50 z-0" />
-              <div className="relative z-10 flex flex-col items-center">
-                <div className="text-[#1D1D1F] flex items-center justify-center mb-6 relative">
-                  <div className="absolute top-0 right-0 w-3 h-3 bg-[#25D366] rounded-full animate-pulse shadow-[0_0_12px_rgba(37,211,102,0.6)]" />
-                  <Bot size={48} strokeWidth={1} />
-                </div>
-                <span className="text-[2.8rem] font-semibold text-[#1D1D1F] leading-none mb-2 tracking-tighter">24/7</span>
-                <span className="text-[12px] font-medium text-[#86868B] uppercase tracking-widest mt-1">Always Online</span>
+              className="flex-1 bg-white border border-[#E5E5EA] shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[32px] p-7 flex flex-col justify-center relative overflow-hidden">
+              <span className="text-[11px] font-semibold text-[#86868B] uppercase tracking-widest mb-4 block">Fully Automated</span>
+              <div className="relative flex flex-col">
+                {/* Connecting line — gray track, blue fill grows with progress */}
+                <div className="absolute left-[15px] top-[15px] bottom-[15px] w-[2px] bg-[#E5E5EA] rounded-full" />
+                <motion.div
+                  className="absolute left-[15px] top-[15px] w-[2px] bg-[#0066CC] rounded-full origin-top"
+                  animate={{ height: `${(activeNode / (flowNodes.length - 1)) * 100}%` }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                />
+                {flowNodes.map((node, i) => {
+                  const isDone = i <= activeNode
+                  return (
+                    <div key={i} className={`relative z-10 flex items-center gap-3 ${i < flowNodes.length - 1 ? 'mb-5' : ''}`}>
+                      <div className={`w-[30px] h-[30px] rounded-full flex items-center justify-center shrink-0 border-2 transition-colors duration-500 ${
+                        isDone ? 'bg-[#0066CC] border-[#0066CC]' : 'bg-white border-[#E5E5EA]'
+                      }`}>
+                        <node.icon size={13} className={isDone ? 'text-white' : 'text-[#D2D2D7]'} strokeWidth={2} />
+                      </div>
+                      <span className={`text-[13.5px] font-medium transition-colors duration-500 ${isDone ? 'text-[#1D1D1F]' : 'text-[#86868B]'}`}>
+                        {node.label}
+                      </span>
+                    </div>
+                  )
+                })}
               </div>
             </motion.div>
           </div>

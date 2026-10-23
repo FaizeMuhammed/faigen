@@ -2,6 +2,7 @@ import HeroSection from "@/components/homesec";
 import DashboardSection from "@/components/DashboardSection";
 import FeatureSection from "@/components/features";
 import BentoGrid from "@/components/BentoGrid";
+import ServicesSection from "@/components/ServicesSection";
 import FooterSection from "@/components/FooterSection";
 import UseCasesSection from "@/components/UseCasesSection";
 import JoinLeadersSection from "@/components/JoinLeadersSection";
@@ -15,6 +16,7 @@ export default function Home() {
       <FeatureSection />
       {/* <UseCasesSection/> */}
       <BentoGrid />
+      <ServicesSection />
       <FAQSection/>
       {/* <JoinLeadersSection/> */}
       <FooterSection />
