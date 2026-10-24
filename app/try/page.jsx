@@ -3,7 +3,10 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, CheckCircle2, Loader2, RefreshCw, MessageCircle, Sparkles } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Loader2, RefreshCw } from 'lucide-react'
+import Nav from '@/components/site/Nav'
+import FaigenMark from '@/components/site/FaigenMark'
+import { Squiggle, Sparkle } from '@/components/site/Illustrations'
 
 const WhatsAppIcon = ({ size = 20, className = '' }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -14,6 +17,10 @@ const WhatsAppIcon = ({ size = 20, className = '' }) => (
 const BACKEND = 'https://myagent.faigen.in'
 const WA_NUMBER = '919633820462'
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=Hi%20Faigen%20AI!`
+
+const field = 'w-full rounded-2xl border border-black/10 bg-white px-4 py-3.5 text-[16px] text-ink outline-none transition focus:border-accent focus:ring-4 focus:ring-accent/10 placeholder:text-faint'
+const label = 'mb-2 block text-[13px] font-medium text-muted'
+const primary = 'flex w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-4 text-[16px] font-medium text-white shadow-[0_6px_20px_-6px_rgba(0,113,227,.55)] transition hover:bg-[#0077ed] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40'
 
 function OtpInput({ value, onChange, disabled }) {
   const inputs = useRef([])
@@ -55,10 +62,10 @@ function OtpInput({ value, onChange, disabled }) {
           onKeyDown={e => handleKeyDown(i, e)}
           onPaste={handlePaste}
           disabled={disabled}
-          className={`w-11 h-14 sm:w-12 sm:h-16 text-center text-[20px] font-bold rounded-2xl border-2 outline-none transition-all
-            ${value[i] ? 'border-[#0066CC] bg-[#E8F4FF] text-[#0066CC]' : 'border-[#E5E5EA] bg-white text-[#1D1D1F]'}
-            focus:border-[#0066CC] focus:bg-[#F0F8FF]
-            disabled:opacity-50 disabled:cursor-not-allowed`}
+          className={`h-14 w-11 rounded-2xl border-2 text-center text-[20px] font-semibold outline-none transition-all sm:h-16 sm:w-12
+            ${value[i] ? 'border-accent bg-accent-soft text-accent' : 'border-black/10 bg-white text-ink'}
+            focus:border-accent focus:bg-accent-soft
+            disabled:cursor-not-allowed disabled:opacity-50`}
         />
       ))}
     </div>
@@ -181,291 +188,169 @@ export default function TryPage() {
     exit:    { opacity: 0, y: -16, filter: 'blur(6px)', transition: { duration: 0.3 } }
   }
 
-  // Sample chat messages shown on step 1 to show what AI can do
+  // Sample chat shown beside the form so people see what they will get
   const sampleChats = [
-    { user: "Do you have coir mats in stock?",        bot: "Yes! 45 in stock. ₹600 each. Want to order? 😊" },
-    { user: "എന്റെ ഓർഡർ എന്ന് ഡെലിവർ ആകും?",       bot: "നാളെ വൈകുന്നേരം ഡെലിവർ ആകും! 🎉" },
-    { user: "Book appointment for tomorrow 10 AM?",   bot: "Confirmed ✅ Tomorrow 10:00 AM. Reply 'Cancel' to cancel." },
+    { user: 'Do you have coir mats in stock?', bot: 'Yes, 45 in stock. ₹600 each. Want to order?' },
+    { user: 'Ente order eppol delivery aakum?', bot: 'Naale vaikunneram delivery aakum!' },
+    { user: 'Book appointment for tomorrow 10 AM', bot: 'Confirmed. Tomorrow 10:00 AM. Reply Cancel to cancel.' },
   ]
 
   return (
-    <div className="min-h-screen bg-[#FBFBFD] font-sans flex flex-col selection:bg-[#0066CC] selection:text-white">
+    <div className="relative min-h-screen overflow-hidden bg-white">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[620px] bg-[radial-gradient(900px_420px_at_50%_-8%,#e3efff_0%,transparent_70%)]" />
+      <Nav />
 
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#FBFBFD]/90 backdrop-blur-2xl border-b border-[#E5E5EA]">
-        <div className="max-w-[1500px] mx-auto flex justify-between items-center px-5 py-4">
-          <Link href="/"><img src="/logonew.png" alt="Faigen" className="h-8 w-auto object-contain" /></Link>
-          <Link href="/" className="text-[13px] font-medium text-[#86868B] hover:text-[#1D1D1F] transition-colors">
-            Back to site
-          </Link>
+      <main className="container-x relative grid min-h-screen items-center gap-12 pb-16 pt-28 lg:grid-cols-[1fr_460px] lg:gap-20 lg:pt-24">
+        {/* left: promise + sample chat */}
+        <div>
+          <p className="eyebrow">Free live demo</p>
+          <h1 className="display-lg mt-3 max-w-xl">
+            Chat with Faigen on{' '}
+            <span className="relative inline-block text-accent">
+              WhatsApp.
+              <Squiggle className="absolute -bottom-2 left-0 h-[0.2em] w-full" />
+            </span>
+          </h1>
+          <p className="lead mt-6 max-w-lg">Enter your number and our agent sends you a code on WhatsApp. Then you can chat with it for real, in under a minute.</p>
+
+          <div className="relative mt-10 max-w-md">
+            <Sparkle className="pointer-events-none absolute -right-4 -top-5 h-6 w-6" />
+            <div className="rounded-[28px] bg-gradient-to-br from-[#e6f1ff] via-[#f5f5f7] to-[#efe9ff] p-5">
+              <div className="mb-4 flex items-center gap-2.5 border-b border-black/5 pb-3">
+                <FaigenMark className="h-8 w-8" />
+                <div className="leading-tight">
+                  <p className="text-[14px] font-semibold text-ink">Faigen AI</p>
+                  <p className="flex items-center gap-1.5 text-[12px] text-muted"><span className="h-1.5 w-1.5 rounded-full bg-[#34c759]" /> Online 24/7</p>
+                </div>
+                <span className="ml-auto rounded-full bg-white px-2.5 py-1 text-[11px] font-medium text-accent">Example chat</span>
+              </div>
+              <div className="flex flex-col gap-3">
+                {sampleChats.map((c, i) => (
+                  <div key={i} className="flex flex-col gap-1.5">
+                    <p className="w-fit max-w-[85%] self-start rounded-2xl rounded-tl-md bg-white px-3.5 py-2 text-[14px] leading-snug text-ink">{c.user}</p>
+                    <p className="w-fit max-w-[85%] self-end rounded-2xl rounded-tr-md bg-accent px-3.5 py-2 text-[14px] leading-snug text-white">{c.bot}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-      </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center px-5 py-12">
+        {/* right: the steps */}
+        <div className="w-full rounded-[36px] bg-white p-7 shadow-[0_30px_80px_-30px_rgba(0,0,0,.22)] ring-1 ring-black/[0.06] sm:p-9">
+          <div className="mb-8 flex items-center justify-center gap-2">
+            {[1, 2, 3].map(s => (
+              <div key={s} className={`rounded-full transition-all duration-500 ${s === step ? 'h-2 w-8 bg-accent' : s < step ? 'h-2 w-2 bg-accent' : 'h-2 w-2 bg-black/10'}`} />
+            ))}
+          </div>
 
-        {/* Progress dots */}
-        <div className="flex items-center gap-2 mb-10">
-          {[1,2,3].map(s => (
-            <div key={s} className={`rounded-full transition-all duration-500 ${
-              s === step ? 'w-8 h-2 bg-[#0066CC]' :
-              s < step   ? 'w-2 h-2 bg-[#0066CC]' :
-                           'w-2 h-2 bg-[#E5E5EA]'
-            }`} />
-          ))}
-        </div>
-
-        <div className="w-full max-w-[420px]">
           <AnimatePresence mode="wait">
-
-            {/* ── STEP 1: Phone ── */}
+            {/* STEP 1: phone */}
             {step === 1 && (
               <motion.div key="step1" variants={fadeUp} initial="hidden" animate="visible" exit="exit">
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center justify-center w-14 h-14 bg-[#E8F5E9] rounded-2xl mb-5">
-                    <WhatsAppIcon size={28} className="text-[#25D366]" />
-                  </div>
-                  <h1 className="text-[2rem] sm:text-[2.4rem] font-semibold tracking-tighter text-[#1D1D1F] mb-3 leading-[1.05]">
-                    Chat with Faigen AI<br />live on WhatsApp.
-                  </h1>
-                  <p className="text-[#86868B] text-[15px] font-medium leading-relaxed">
-                    Enter your WhatsApp number. Our AI agent will send you a verification code — then you can chat with it directly.
-                  </p>
-                </div>
+                <h2 className="text-[28px] font-semibold leading-tight tracking-[-0.03em]">Get your verification code</h2>
+                <p className="mt-2 text-[15px] leading-relaxed text-muted">We send a 6-digit code to your WhatsApp. Then you can chat with the agent directly.</p>
 
-                {/* Sample chat preview */}
-                <div className="bg-white border border-[#E5E5EA] rounded-[24px] p-4 mb-6 shadow-[0_4px_20px_rgb(0,0,0,0.04)]">
-                  <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#F5F5F7]">
-                    <div className="w-7 h-7 rounded-full bg-[#1D1D1F] flex items-center justify-center shrink-0">
-                      <WhatsAppIcon size={14} className="text-[#25D366]" />
-                    </div>
-                    <div>
-                      <p className="text-[12px] font-bold text-[#1D1D1F]">Faigen AI</p>
-                      <div className="flex items-center gap-1">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" />
-                        <p className="text-[10px] text-[#86868B]">Online 24/7</p>
-                      </div>
-                    </div>
-                    <span className="ml-auto text-[10px] font-semibold text-[#0066CC] bg-[#E8F4FF] px-2 py-1 rounded-full">Live demo</span>
-                  </div>
-                  <div className="flex flex-col gap-2.5">
-                    {sampleChats.map((c, i) => (
-                      <div key={i} className="flex flex-col gap-1.5">
-                        <div className="bg-[#F5F5F7] text-[#1D1D1F] text-[12px] font-medium px-3 py-2 rounded-2xl rounded-tl-sm self-start max-w-[85%]">
-                          {c.user}
-                        </div>
-                        <div className="bg-[#E8F4FF] text-[#0066CC] text-[12px] font-medium px-3 py-2 rounded-2xl rounded-tr-sm self-end max-w-[85%]">
-                          {c.bot}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <form onSubmit={handleRequestOtp} className="flex flex-col gap-4">
+                <form onSubmit={handleRequestOtp} className="mt-7 flex flex-col gap-5">
                   <div>
-                    <label className="text-[12px] font-semibold text-[#86868B] uppercase tracking-widest mb-2 block">
-                      Your name (optional)
-                    </label>
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={e => setName(e.target.value)}
-                      placeholder="e.g. Rahul"
-                      className="w-full px-4 py-3.5 rounded-2xl border border-[#E5E5EA] bg-white text-[#1D1D1F] text-[15px] font-medium outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/10 transition-all placeholder:text-[#C7C7CC]"
-                    />
+                    <label className={label}>Your name (optional)</label>
+                    <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Rahul" className={field} />
                   </div>
-
                   <div>
-                    <label className="text-[12px] font-semibold text-[#86868B] uppercase tracking-widest mb-2 block">
-                      WhatsApp number
-                    </label>
+                    <label className={label}>WhatsApp number</label>
                     <div className="flex gap-2">
-                      <div className="flex items-center px-3.5 py-3.5 rounded-2xl border border-[#E5E5EA] bg-[#F5F5F7] text-[#1D1D1F] text-[15px] font-semibold shrink-0">
-                        🇮🇳 +91
-                      </div>
+                      <div className="flex shrink-0 items-center rounded-2xl border border-black/10 bg-alt px-3.5 text-[15px] font-medium text-ink">+91</div>
                       <input
-                        type="tel"
-                        value={phone}
-                        onChange={e => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                        placeholder="98765 43210"
-                        inputMode="numeric"
-                        autoFocus
-                        className="flex-1 px-4 py-3.5 rounded-2xl border border-[#E5E5EA] bg-white text-[#1D1D1F] text-[15px] font-medium outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/10 transition-all placeholder:text-[#C7C7CC]"
+                        type="tel" value={phone} onChange={e => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                        placeholder="98765 43210" inputMode="numeric" autoFocus className={field}
                       />
                     </div>
-                    <p className="text-[12px] text-[#86868B] font-medium mt-2 ml-1">
-                      Our AI agent will send you a verification code on WhatsApp.
-                    </p>
                   </div>
 
-                  {error && (
-                    <div className="bg-[#FFF2F2] border border-[#FFD0D0] text-[#D70015] text-[13px] font-medium px-4 py-3 rounded-2xl">
-                      {error}
-                    </div>
-                  )}
+                  {error && <div className="rounded-2xl border border-[#ffd0d0] bg-[#fff2f2] px-4 py-3 text-[14px] text-[#d70015]">{error}</div>}
 
-                  <button
-                    type="submit"
-                    disabled={loading || phone.replace(/\D/g,'').length < 10}
-                    className="w-full bg-[#1D1D1F] text-white py-4 rounded-full font-semibold text-[15px] flex items-center justify-center gap-2 hover:bg-black transition-all disabled:opacity-40 disabled:cursor-not-allowed mt-2"
-                  >
-                    {loading
-                      ? <Loader2 size={18} className="animate-spin" />
-                      : <>Get Verification Code <ArrowRight size={16} /></>
-                    }
+                  <button type="submit" disabled={loading || phone.replace(/\D/g, '').length < 10} className={primary}>
+                    {loading ? <Loader2 size={18} className="animate-spin" /> : <>Get verification code <ArrowRight size={17} /></>}
                   </button>
                 </form>
 
-                <p className="text-center text-[12px] text-[#86868B] font-medium mt-6 leading-relaxed">
-                  By continuing you agree to receive a WhatsApp message from Faigen AI.
-                  <br />Your number is never shared or used for ads.
+                <p className="mt-6 text-center text-[12.5px] leading-relaxed text-faint">
+                  By continuing you agree to receive a WhatsApp message from Faigen AI. Your number is never shared or used for ads.
                 </p>
-
-                {/* Trust badges */}
-                <div className="flex items-center gap-4 mt-6 flex-wrap justify-center">
+                <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2">
                   {['Free demo', 'No signup needed', 'Live in 60 seconds'].map(f => (
-                    <div key={f} className="flex items-center gap-1.5 text-[12px] font-medium text-[#86868B]">
-                      <CheckCircle2 size={13} className="text-[#25D366]" /> {f}
-                    </div>
+                    <div key={f} className="flex items-center gap-1.5 text-[13px] text-muted"><CheckCircle2 size={14} className="text-[#25d366]" /> {f}</div>
                   ))}
                 </div>
               </motion.div>
             )}
 
-            {/* ── STEP 2: OTP ── */}
+            {/* STEP 2: code */}
             {step === 2 && (
               <motion.div key="step2" variants={fadeUp} initial="hidden" animate="visible" exit="exit">
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center justify-center w-14 h-14 bg-[#E8F4FF] rounded-2xl mb-5">
-                    <MessageCircle size={28} className="text-[#0066CC]" />
-                  </div>
-                  <h2 className="text-[2rem] sm:text-[2.4rem] font-semibold tracking-tighter text-[#1D1D1F] mb-3 leading-[1.05]">
-                    Check your<br />WhatsApp.
-                  </h2>
-                  <p className="text-[#86868B] text-[15px] font-medium leading-relaxed">
-                    {info ? info : (
-                      <>
-                        Our AI agent sent a 6-digit code to<br />
-                        <span className="font-semibold text-[#1D1D1F]">+91 {maskPhone(phone)}</span>
-                      </>
-                    )}
-                  </p>
-                </div>
+                <h2 className="text-[28px] font-semibold leading-tight tracking-[-0.03em]">Check your WhatsApp</h2>
+                <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                  {info ? info : (<>Our agent sent a 6-digit code to <span className="font-semibold text-ink">+91 {maskPhone(phone)}</span></>)}
+                </p>
 
-                <form onSubmit={handleVerifyOtp} className="flex flex-col gap-6">
+                <form onSubmit={handleVerifyOtp} className="mt-8 flex flex-col gap-6">
                   <OtpInput value={otp} onChange={setOtp} disabled={loading} />
 
-                  {error && (
-                    <div className="bg-[#FFF2F2] border border-[#FFD0D0] text-[#D70015] text-[13px] font-medium px-4 py-3 rounded-2xl text-center">
-                      {error}
-                    </div>
-                  )}
+                  {error && <div className="rounded-2xl border border-[#ffd0d0] bg-[#fff2f2] px-4 py-3 text-center text-[14px] text-[#d70015]">{error}</div>}
 
-                  <button
-                    type="submit"
-                    disabled={loading || otp.length < 6}
-                    className="w-full bg-[#1D1D1F] text-white py-4 rounded-full font-semibold text-[15px] flex items-center justify-center gap-2 hover:bg-black transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    {loading
-                      ? <Loader2 size={18} className="animate-spin" />
-                      : <>Verify & Start Chatting <ArrowRight size={16} /></>
-                    }
+                  <button type="submit" disabled={loading || otp.length < 6} className={primary}>
+                    {loading ? <Loader2 size={18} className="animate-spin" /> : <>Verify and start chatting <ArrowRight size={17} /></>}
                   </button>
 
                   <div className="text-center">
                     {canResend ? (
-                      <button
-                        type="button"
-                        onClick={() => { setOtp(''); setError(''); setInfo(''); setStep(1) }}
-                        className="flex items-center gap-1.5 text-[13px] font-semibold text-[#0066CC] hover:text-[#0055BB] transition-colors mx-auto"
-                      >
-                        <RefreshCw size={13} /> Resend OTP
+                      <button type="button" onClick={() => { setOtp(''); setError(''); setInfo(''); setStep(1) }} className="mx-auto flex items-center gap-1.5 text-[14px] font-medium text-accent hover:underline">
+                        <RefreshCw size={14} /> Resend code
                       </button>
                     ) : (
-                      <p className="text-[13px] text-[#86868B] font-medium">
-                        Resend in <span className="font-semibold text-[#1D1D1F]">{formatTimer(resendTimer)}</span>
-                      </p>
+                      <p className="text-[14px] text-muted">Resend in <span className="font-semibold text-ink">{formatTimer(resendTimer)}</span></p>
                     )}
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => { setStep(1); setOtp(''); setError(''); setInfo('') }}
-                    className="text-center text-[13px] text-[#86868B] font-medium hover:text-[#1D1D1F] transition-colors"
-                  >
+                  <button type="button" onClick={() => { setStep(1); setOtp(''); setError(''); setInfo('') }} className="text-center text-[14px] text-muted transition-colors hover:text-ink">
                     ← Change number
                   </button>
                 </form>
               </motion.div>
             )}
 
-            {/* ── STEP 3: Success — now directs to chat ── */}
+            {/* STEP 3: verified */}
             {step === 3 && (
               <motion.div key="step3" variants={fadeUp} initial="hidden" animate="visible" exit="exit">
                 <div className="text-center">
                   <motion.div
                     initial={{ scale: 0 }} animate={{ scale: 1 }}
                     transition={{ type: 'spring', stiffness: 200, damping: 14, delay: 0.1 }}
-                    className="inline-flex items-center justify-center w-20 h-20 bg-[#E8F5E9] rounded-full mb-6"
+                    className="mb-5 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#e9f9ee]"
                   >
-                    <CheckCircle2 size={40} className="text-[#25D366]" strokeWidth={2} />
+                    <CheckCircle2 size={34} className="text-[#25d366]" strokeWidth={2} />
                   </motion.div>
+                  <h2 className="text-[28px] font-semibold leading-tight tracking-[-0.03em]">Verified. Now start chatting.</h2>
+                  <p className="mt-2 text-[15px] leading-relaxed text-muted">Open WhatsApp and send a message to our agent. It replies instantly. Try Manglish, ask about products, or place a test order.</p>
+                </div>
 
-                  <h2 className="text-[2rem] sm:text-[2.4rem] font-semibold tracking-tighter text-[#1D1D1F] mb-3 leading-[1.05]">
-                    Verified! Now start<br />chatting. 🎉
-                  </h2>
-                  <p className="text-[#86868B] text-[15px] font-medium leading-relaxed mb-6">
-                    Open WhatsApp and send a message to our AI agent. It will reply instantly — try Malayalam, ask about products, or place a test order.
-                  </p>
-
-                  {/* What to try */}
-                  <div className="bg-white border border-[#E5E5EA] rounded-[24px] p-5 mb-6 text-left shadow-[0_4px_20px_rgb(0,0,0,0.04)]">
-                    <p className="text-[11px] font-bold text-[#86868B] uppercase tracking-widest mb-4">Try asking the AI:</p>
-                    <div className="flex flex-col gap-2.5">
-                      {[
-                        "What products do you have?",
-                        "എന്റെ ഓർഡർ എന്ന് ഡെലിവർ ആകും?",
-                        "Book an appointment for tomorrow",
-                        "Send me your price list",
-                      ].map((q, i) => (
-                        <div key={i} className="flex items-center gap-2.5">
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#0066CC] shrink-0" />
-                          <p className="text-[13px] font-medium text-[#1D1D1F]">{q}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Main CTA */}
-                  <a
-                    href={WA_LINK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-[#25D366] text-white py-4 rounded-full font-semibold text-[15px] flex items-center justify-center gap-2 hover:bg-[#20BA5A] transition-colors mb-3"
-                  >
-                    <WhatsAppIcon size={20} /> Open WhatsApp & Chat
-                  </a>
-
-                  <p className="text-[12px] text-[#86868B] font-medium mb-6">
-                    Tap above → WhatsApp opens → Send any message → AI replies instantly
-                  </p>
-
-                  <Link href="/" className="block text-center text-[13px] font-medium text-[#86868B] hover:text-[#1D1D1F] transition-colors">
-                    Learn more about Faigen →
-                  </Link>
-
-                  {/* Feature pills */}
-                  <div className="mt-8 flex flex-wrap gap-2 justify-center">
-                    {['Malayalam support', '24/7 AI replies', 'Order taking', 'Broadcast campaigns'].map(f => (
-                      <span key={f} className="px-3 py-1.5 bg-white border border-[#E5E5EA] rounded-full text-[12px] font-semibold text-[#86868B]">
-                        {f}
-                      </span>
+                <div className="mt-6 rounded-2xl bg-alt p-5">
+                  <p className="mb-3 text-[13px] font-medium text-muted">Try asking:</p>
+                  <div className="flex flex-col gap-2.5">
+                    {['What products do you have?', 'Ente order eppol delivery aakum?', 'Book an appointment for tomorrow', 'Send me your price list'].map((q, i) => (
+                      <div key={i} className="flex items-center gap-2.5"><span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" /><p className="text-[14.5px] text-ink">{q}</p></div>
                     ))}
                   </div>
                 </div>
+
+                <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
+                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[#25d366] px-6 py-4 text-[16px] font-medium text-white transition hover:bg-[#20ba5a]">
+                  <WhatsAppIcon size={20} /> Open WhatsApp and chat
+                </a>
+                <p className="mt-3 text-center text-[13px] text-muted">Tap above, send any message, and the agent replies.</p>
+                <Link href="/" className="mt-6 block text-center text-[14px] font-medium text-accent hover:underline">Learn more about Faigen</Link>
               </motion.div>
             )}
-
           </AnimatePresence>
         </div>
       </main>
