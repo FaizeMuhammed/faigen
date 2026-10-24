@@ -328,3 +328,14 @@ export function PlanPencil({ className = '', color = INK }) {
     </svg>
   )
 }
+
+/* A crescent moon with stars, white line work for dark panels */
+export function MoonDoodle({ className = '' }) {
+  return (
+    <svg viewBox="0 0 140 110" className={className} fill="none" aria-hidden="true">
+      <Draw d="M62 14 C 38 16, 20 38, 26 64 C 32 90, 62 102, 86 90 C 62 84, 50 58, 60 34 C 62 26, 62 20, 62 14 Z" stroke="#fff" width={3} delay={0.2} duration={1.2} />
+      <Pop delay={1.2}><SparkleG x={96} y={14} s={1} color="#2997ff" /></Pop>
+      <Pop delay={1.5}><SparkleG x={118} y={52} s={0.6} color="#fff" /></Pop>
+    </svg>
+  )
+}
