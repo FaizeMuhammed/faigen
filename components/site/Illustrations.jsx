@@ -234,36 +234,36 @@ export function InfinityDoodle({ className = '' }) {
 }
 
 /* ── Use-case drawings (white line work with a blue touch, for dark cards) ── */
-export function DoodleRetail({ className = '' }) {
+export function DoodleRetail({ className = '', color = '#fff' }) {
   return (
     <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
-      <Draw d="M14 30 H66 L72 74 H8 Z" stroke="#fff" width={2.6} delay={0.1} duration={1} />
-      <Draw d="M28 30 V22 a12 12 0 0 1 24 0 V30" stroke="#fff" width={2.6} delay={0.8} duration={0.7} />
+      <Draw d="M14 30 H66 L72 74 H8 Z" stroke={color} width={2.6} delay={0.1} duration={1} />
+      <Draw d="M28 30 V22 a12 12 0 0 1 24 0 V30" stroke={color} width={2.6} delay={0.8} duration={0.7} />
       <Draw d="M28 52 L37 61 L53 43" stroke="#2997ff" width={3.2} delay={1.3} duration={0.5} />
     </svg>
   )
 }
-export function DoodleClinic({ className = '' }) {
+export function DoodleClinic({ className = '', color = '#fff' }) {
   return (
     <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
-      <Draw d="M18 10 H62 a8 8 0 0 1 8 8 V62 a8 8 0 0 1 -8 8 H18 a8 8 0 0 1 -8 -8 V18 a8 8 0 0 1 8 -8 Z" stroke="#fff" width={2.6} delay={0.1} duration={1} />
+      <Draw d="M18 10 H62 a8 8 0 0 1 8 8 V62 a8 8 0 0 1 -8 8 H18 a8 8 0 0 1 -8 -8 V18 a8 8 0 0 1 8 -8 Z" stroke={color} width={2.6} delay={0.1} duration={1} />
       <Draw d="M40 24 V56 M24 40 H56" stroke="#2997ff" width={4} delay={1} duration={0.6} />
     </svg>
   )
 }
-export function DoodleFood({ className = '' }) {
+export function DoodleFood({ className = '', color = '#fff' }) {
   return (
     <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
-      <Draw d="M8 12 V32 M14 12 V32 M20 12 V32 M8 32 C 8 38, 20 38, 20 32 M14 36 V70" stroke="#fff" width={2.6} delay={0.1} duration={1} />
-      <Draw d="M72 12 C 60 22, 60 40, 72 42 V70" stroke="#fff" width={2.6} delay={0.6} duration={0.9} />
+      <Draw d="M8 12 V32 M14 12 V32 M20 12 V32 M8 32 C 8 38, 20 38, 20 32 M14 36 V70" stroke={color} width={2.6} delay={0.1} duration={1} />
+      <Draw d="M72 12 C 60 22, 60 40, 72 42 V70" stroke={color} width={2.6} delay={0.6} duration={0.9} />
       <Draw d="M26 42 a14 14 0 1 0 28 0 a14 14 0 1 0 -28 0" stroke="#2997ff" width={3} delay={1.1} duration={0.8} />
     </svg>
   )
 }
-export function DoodleHome({ className = '' }) {
+export function DoodleHome({ className = '', color = '#fff' }) {
   return (
     <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
-      <Draw d="M8 42 L40 12 L72 42 M16 38 V72 H64 V38" stroke="#fff" width={2.6} delay={0.1} duration={1.1} />
+      <Draw d="M8 42 L40 12 L72 42 M16 38 V72 H64 V38" stroke={color} width={2.6} delay={0.1} duration={1.1} />
       <Draw d="M33 72 V54 H47 V72" stroke="#2997ff" width={3} delay={1.2} duration={0.6} />
     </svg>
   )

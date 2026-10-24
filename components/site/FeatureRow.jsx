@@ -4,10 +4,11 @@ import { TextLink } from './Buttons'
 import { Blob } from './Illustrations'
 
 // Text on one side, a visual on a soft card on the other. Used on Features and Use cases.
-export default function FeatureRow({ eyebrow, title, text, points = [], visual, reverse, badge, link, bare = false }) {
+export default function FeatureRow({ eyebrow, title, text, points = [], visual, reverse, badge, link, bare = false, icon = null }) {
   return (
     <div className="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <Reveal className={reverse ? 'lg:order-2' : ''}>
+        {icon && <div className="mb-5">{icon}</div>}
         <div className="flex items-center gap-3">
           <p className="eyebrow">{eyebrow}</p>
           {badge && <span className="rounded-full bg-accent-soft px-2.5 py-0.5 text-[11px] font-semibold text-accent">{badge}</span>}

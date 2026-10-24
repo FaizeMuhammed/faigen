@@ -280,3 +280,21 @@ export function InstaArtStats({ className = '' }) {
     </svg>
   )
 }
+
+/* ── A short conversation that ends in a result (used on Use cases) ── */
+export function ConvoScene({ q = [], a = [], done = '', className = '' }) {
+  return (
+    <svg viewBox="0 0 460 262" className={className} fill="none" role="img" aria-label={`${q.join(' ')} ${a.join(' ')} ${done}`}>
+      <Pop><path d={BLOB} fill={TINT} opacity="0.7" /></Pop>
+      <Draw d="M164 24 H426 a14 14 0 0 1 14 14 V76 a14 14 0 0 1 -14 14 H420 L436 108 L402 90 H164 a14 14 0 0 1 -14 -14 V38 a14 14 0 0 1 14 -14 Z" fill="#d9fdd3" delay={0.1} duration={1} />
+      {q.map((l, i) => <Label key={i} x={166} y={53 + i * 24} size={21} delay={0.8 + i * 0.15}>{l}</Label>)}
+      <Face cx={44} cy={152} r={24} delay={1.2} />
+      <Draw d="M98 118 H360 a14 14 0 0 1 14 14 V170 a14 14 0 0 1 -14 14 H98 a14 14 0 0 1 -14 -14 V132 a14 14 0 0 1 14 -14 Z" fill="#fff" delay={1.4} duration={1} />
+      {a.map((l, i) => <Label key={i} x={100} y={147 + i * 24} size={21} delay={2.1 + i * 0.15}>{l}</Label>)}
+      <Draw d="M98 208 H342 a17 17 0 0 1 17 17 a17 17 0 0 1 -17 17 H98 a17 17 0 0 1 -17 -17 a17 17 0 0 1 17 -17 Z" stroke={BLUE} fill="#fff" delay={2.6} duration={0.8} />
+      <Pop delay={3.1}><circle cx="106" cy="225" r="9" fill={BLUE} /></Pop>
+      <Draw d="M101 225 L105 229 L112 221" stroke="#fff" width={2.4} delay={3.2} duration={0.3} />
+      <Label x={124} y={232} size={21} fill={BLUE} delay={3.3}>{done}</Label>
+    </svg>
+  )
+}
