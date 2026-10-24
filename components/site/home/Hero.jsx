@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { ShoppingBag, Zap } from 'lucide-react'
 import PhoneChat from '../PhoneChat'
 import { PillButton, TextLink } from '../Buttons'
-import { Squiggle, Sparkle, Burst } from '../Illustrations'
+import { Squiggle, DoodleRays, DoodleDots, HeroDoodlesLeft, HeroDoodlesRight } from '../Illustrations'
 
 const rise = (delay = 0) => ({
   initial: { opacity: 0, y: 18 },
@@ -17,15 +17,8 @@ export default function Hero() {
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[620px] bg-[radial-gradient(900px_420px_at_50%_-8%,#e3efff_0%,transparent_70%)]" />
 
       {/* quiet hand-drawn accents */}
-      <motion.div aria-hidden initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 1.1 }} className="pointer-events-none absolute left-[9%] top-[30%] hidden lg:block">
-        <Burst className="h-12 w-12 -rotate-12" />
-      </motion.div>
-      <motion.div aria-hidden initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 1.3 }} className="pointer-events-none absolute right-[10%] top-[26%] hidden lg:block">
-        <Sparkle className="h-10 w-10" />
-      </motion.div>
-      <motion.div aria-hidden initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 1.5 }} className="pointer-events-none absolute right-[18%] top-[44%] hidden lg:block">
-        <Sparkle className="h-5 w-5" color="#1d1d1f" />
-      </motion.div>
+      <DoodleRays className="pointer-events-none absolute left-[9%] top-[30%] hidden h-14 w-14 -rotate-6 lg:block" />
+      <DoodleDots className="pointer-events-none absolute right-[10%] top-[26%] hidden h-14 w-14 rotate-6 lg:block" />
 
       <div className="container-x relative text-center">
         <motion.p {...rise(0)} className="mx-auto inline-flex items-center gap-2 rounded-full border border-soft bg-white/80 px-3.5 py-1.5 text-[13px] font-medium text-ink backdrop-blur">
@@ -51,7 +44,7 @@ export default function Hero() {
       </div>
 
       {/* phone, cropped at the bottom like a product shot */}
-      <div className="relative mx-auto mt-14 h-[470px] max-w-[1100px] overflow-hidden sm:h-[560px]">
+      <div className="relative mx-auto mt-10 h-[430px] max-w-[1100px] overflow-hidden sm:h-[500px]">
         <motion.div initial={{ opacity: 0, y: 70 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}>
           <PhoneChat />
         </motion.div>
@@ -68,6 +61,9 @@ export default function Hero() {
             <div className="text-left leading-tight"><p className="text-[13px] font-semibold text-ink">Replied in seconds</p><p className="text-[12px] text-muted">Even at 2 AM</p></div>
           </div>
         </motion.div>
+
+        <HeroDoodlesLeft className="pointer-events-none absolute left-[1%] top-0 hidden w-[300px] lg:block" />
+        <HeroDoodlesRight className="pointer-events-none absolute right-[1%] top-0 hidden w-[300px] lg:block" />
 
         <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent" />
       </div>

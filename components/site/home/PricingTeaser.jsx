@@ -1,6 +1,7 @@
 import Reveal from '../Reveal'
 import { TextLink } from '../Buttons'
 import PlanCards from '../PlanCards'
+import { CardNote } from '../Illustrations'
 
 export default function PricingTeaser() {
   return (
@@ -12,7 +13,10 @@ export default function PricingTeaser() {
           <p className="lead mt-5">One setup fee, one monthly fee. Unlimited conversations on every plan.</p>
         </Reveal>
 
-        <div className="mt-14"><PlanCards /></div>
+        <div className="relative mt-20">
+          <CardNote text="most businesses pick this" className="pointer-events-none absolute -top-[74px] left-[26%] hidden w-[300px] lg:block" />
+          <PlanCards />
+        </div>
         <Reveal className="mt-10 text-center"><TextLink href="/pricing">Compare plans and message rates</TextLink></Reveal>
       </div>
     </section>

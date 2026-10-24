@@ -1,10 +1,10 @@
 import { Check } from 'lucide-react'
 import Reveal from '../Reveal'
 import { TextLink } from '../Buttons'
-import { Blob } from '../Illustrations'
+import { CardNote } from '../Illustrations'
 import { OrdersVisual, InstagramVisual, BroadcastVisual, DashboardVisual } from '../Visuals'
 
-function Row({ eyebrow, title, text, points, visual, reverse, badge, link }) {
+function Row({ eyebrow, title, text, points, visual, reverse, badge, link, note }) {
   return (
     <div className="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <Reveal className={reverse ? 'lg:order-2' : ''}>
@@ -24,7 +24,10 @@ function Row({ eyebrow, title, text, points, visual, reverse, badge, link }) {
         {link && <div className="mt-8"><TextLink href={link[1]}>{link[0]}</TextLink></div>}
       </Reveal>
       <Reveal delay={0.12} className={reverse ? 'lg:order-1' : ''}>
-        <div className="card relative flex min-h-[440px] items-center justify-center overflow-hidden rounded-[32px] p-6 sm:p-12"><Blob className="pointer-events-none absolute -right-14 -top-14 w-64 opacity-60" /><div className="relative">{visual}</div></div>
+        <div className="card relative flex min-h-[500px] items-center justify-center overflow-hidden rounded-[32px] p-6 pt-16 sm:p-12 sm:pt-20">
+          <CardNote text={note} className="pointer-events-none absolute left-5 top-2 hidden w-[250px] sm:left-8 sm:top-4 sm:block" />
+          <div className="relative">{visual}</div>
+        </div>
       </Reveal>
     </div>
   )
@@ -38,6 +41,7 @@ export default function Showcase() {
         title="From “I want two” to a confirmed order."
         text="The agent answers from your own catalog, asks for what it needs — name, product, quantity, address — and hands you a finished order. No forms, no waiting."
         points={['Answers from your products and FAQs', 'Collects the full order inside the chat', 'You see every order in your dashboard']}
+        note="no forms, no waiting"
         visual={<OrdersVisual />}
         link={['See how orders work', '/features']}
       />
@@ -48,6 +52,7 @@ export default function Showcase() {
         title="Comments turn into conversations."
         text="When someone comments “price” on your Reel, Faigen replies publicly and slides into their DMs with the details — and keeps the conversation going."
         points={['A public reply plus a private DM, automatically', 'You choose the trigger words and the wording', 'Spam comments hidden for you']}
+        note="a comment becomes a DM"
         visual={<InstagramVisual />}
         link={['Ask about Instagram', '/contact']}
       />
@@ -56,6 +61,7 @@ export default function Showcase() {
         title="One message. A thousand customers."
         text="Send offers, festival greetings and order updates to your whole list in minutes, with delivery and read tracking for every campaign."
         points={['Approved WhatsApp templates', 'Delivery and read reports', 'Pay per message — no monthly cap']}
+        note="1,000 chats, one tap"
         visual={<BroadcastVisual />}
         link={['See pricing', '/pricing']}
       />
@@ -65,6 +71,7 @@ export default function Showcase() {
         title="Everything, in one calm place."
         text="Every conversation, order and number — clear at a glance. Pause the AI on any chat and reply yourself whenever you want to."
         points={['Live inbox across your channels', 'Orders and analytics', 'API keys for your own systems']}
+        note="all in one place"
         visual={<DashboardVisual />}
         link={['Explore the dashboard', '/guide']}
       />

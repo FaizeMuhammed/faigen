@@ -1,10 +1,13 @@
 import Reveal from '../Reveal'
 import { PillButton, TextLink } from '../Buttons'
+import { CtaPlane, CtaChat } from '../Illustrations'
 
 export default function FinalCta() {
   return (
     <section className="relative overflow-hidden bg-black text-white section">
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(800px_400px_at_50%_110%,rgba(0,113,227,.35),transparent_70%)]" />
+      <CtaPlane className="pointer-events-none absolute left-[4%] top-[18%] hidden w-[190px] lg:block xl:left-[8%]" />
+      <CtaChat className="pointer-events-none absolute bottom-[16%] right-[4%] hidden w-[170px] lg:block xl:right-[8%]" />
       <div className="container-x relative text-center">
         <Reveal>
           <h2 className="display-xl mx-auto max-w-4xl">Ready when your customers are.</h2>

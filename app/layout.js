@@ -1,8 +1,9 @@
-import { Inter } from "next/font/google";
+import { Inter, Caveat } from "next/font/google";
 import "./globals.css";
 import MotionProvider from "@/components/site/MotionProvider";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
+const hand = Caveat({ variable: "--font-hand", subsets: ["latin"], display: "swap", weight: ["600"] });
 
 export const metadata = {
   title: "Faigen — AI agents for WhatsApp and Instagram",
@@ -23,7 +24,7 @@ export const viewport = { themeColor: "#ffffff" };
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased`}>
+      <body className={`${inter.variable} ${hand.variable} antialiased`}>
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>

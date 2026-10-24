@@ -88,64 +88,6 @@ export function Blob({ className = '', color = TINT }) {
   )
 }
 
-/* ── Channels → Faigen → outcomes (echoes the logo's nodes and lines) ── */
-export function NetworkDiagram({ className = '' }) {
-  const left = [['WhatsApp', 62], ['Instagram', 180], ['Website', 298]]
-  const right = [['Orders', 62], ['Answers', 180], ['Follow-ups', 298]]
-  return (
-    <svg viewBox="0 0 560 360" className={className} fill="none" role="img" aria-label="Customers on WhatsApp, Instagram and your website flow into Faigen, which produces orders, answers and follow-ups">
-      {/* lines in */}
-      {left.map(([, y], i) => (
-        <Draw key={'l' + i} d={`M118 ${y} C 190 ${y}, 200 180, 244 180`} stroke="rgba(255,255,255,.55)" width={2.2} delay={0.2 + i * 0.15} duration={1.2} />
-      ))}
-      {/* lines out */}
-      {right.map(([, y], i) => (
-        <Draw key={'r' + i} d={`M316 180 C 360 180, 370 ${y}, 442 ${y}`} stroke="rgba(255,255,255,.55)" width={2.2} delay={0.9 + i * 0.15} duration={1.2} />
-      ))}
-
-      {/* moving dots (hidden for reduced motion via CSS) */}
-      {left.map(([, y], i) => (
-        <circle key={'dl' + i} r="3.4" fill="#2997ff" className="flow-dot">
-          <animateMotion dur="3.6s" begin={`${i * 0.9}s`} repeatCount="indefinite" path={`M118 ${y} C 190 ${y}, 200 180, 244 180`} />
-        </circle>
-      ))}
-      {right.map(([, y], i) => (
-        <circle key={'dr' + i} r="3.4" fill="#2997ff" className="flow-dot">
-          <animateMotion dur="3.6s" begin={`${1.4 + i * 0.9}s`} repeatCount="indefinite" path={`M316 180 C 360 180, 370 ${y}, 442 ${y}`} />
-        </circle>
-      ))}
-
-      {/* left nodes */}
-      {left.map(([label, y], i) => (
-        <Pop key={label} delay={0.1 + i * 0.12}>
-          <circle cx="86" cy={y} r="30" fill="#1d1d1f" stroke="rgba(255,255,255,.55)" strokeWidth="2.2" />
-          <path d={`M74 ${y - 7} h24 a4 4 0 0 1 4 4 v9 a4 4 0 0 1 -4 4 h-12 l-7 6 v-6 h-5 a4 4 0 0 1 -4 -4 v-9 a4 4 0 0 1 4 -4 z`} stroke="#fff" strokeWidth="2" strokeLinejoin="round" />
-          <text x="86" y={y + 50} textAnchor="middle" fill="rgba(255,255,255,.75)" fontSize="13.5" fontFamily="inherit">{label}</text>
-        </Pop>
-      ))}
-
-      {/* center: the agent */}
-      <Pop delay={0.5}>
-        <circle cx="280" cy="180" r="62" fill="#0071e3" opacity="0.18" />
-        <circle cx="280" cy="180" r="44" fill="#0071e3" />
-        <path d="M262 168 C262 158 270 152 280 152 H288 C298 152 306 158 306 168 V184 C306 194 298 200 288 200 H279 L268 210 V200 C264 198 262 192 262 184 Z" fill="#fff" />
-        <circle cx="276" cy="176" r="2.6" fill="#0071e3" /><circle cx="291" cy="176" r="2.6" fill="#0071e3" />
-        <path d="M274 186 C279 191 288 191 293 186" stroke="#0071e3" strokeWidth="2.4" strokeLinecap="round" />
-        <text x="280" y="268" textAnchor="middle" fill="#fff" fontSize="15" fontWeight="600" fontFamily="inherit">Faigen</text>
-      </Pop>
-
-      {/* right nodes */}
-      {right.map(([label, y], i) => (
-        <Pop key={label} delay={1.1 + i * 0.12}>
-          <circle cx="474" cy={y} r="30" fill="#fff" />
-          <path d={`M462 ${y} l8 8 l16 -17`} stroke="#0071e3" strokeWidth="3.6" strokeLinecap="round" strokeLinejoin="round" />
-          <text x="474" y={y + 50} textAnchor="middle" fill="rgba(255,255,255,.75)" fontSize="13.5" fontFamily="inherit">{label}</text>
-        </Pop>
-      ))}
-    </svg>
-  )
-}
-
 /* ── "How it works" step drawings ──────────────────────────────── */
 
 export function StepNotebook({ className = '' }) {
@@ -207,6 +149,151 @@ export function InstaDoodles({ className = '' }) {
       <Draw d="M158 112 H228 M158 128 H206" stroke="rgba(255,255,255,.6)" width={2.4} delay={1.3} duration={0.7} />
       <Draw d="M196 30 L274 56 L212 70 L204 98 L196 30 Z M212 70 L274 56" stroke="#ffb86b" width={2.8} delay={0.9} duration={1.1} />
       <Draw d="M126 64 C150 50 160 62 168 78" stroke="rgba(255,255,255,.4)" width={2.2} dash="2 7" delay={1.6} duration={0.8} />
+    </svg>
+  )
+}
+
+/* ── Hero doodles: a customer asks at 2 AM, Faigen answers ─────── */
+const HAND = { fontFamily: 'var(--font-hand), cursive', fontWeight: 600 }
+
+function Label({ x, y, rotate = 0, children, fill = INK, size = 30, delay = 0, anchor = 'start' }) {
+  return (
+    <motion.text
+      x={x} y={y} fontSize={size} fill={fill} textAnchor={anchor} style={HAND} transform={`rotate(${rotate} ${x} ${y})`}
+      initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay }}
+    >{children}</motion.text>
+  )
+}
+
+export function HeroDoodlesLeft({ className = '' }) {
+  return (
+    <svg viewBox="0 0 320 480" className={className} fill="none" aria-hidden="true">
+      {/* the customer's message */}
+      <Draw d="M34 22 H168 a16 16 0 0 1 16 16 V84 a16 16 0 0 1 -16 16 H96 L66 124 V100 H34 a16 16 0 0 1 -16 -16 V38 a16 16 0 0 1 16 -16 Z" delay={1.2} duration={1.3} />
+      <Pop delay={2.2}><g fill={INK}><circle cx="68" cy="61" r="5" /><circle cx="101" cy="61" r="5" /><circle cx="134" cy="61" r="5" /></g></Pop>
+      <Label x={24} y={168} rotate={-4} delay={2.3}>2 AM: “price?”</Label>
+      {/* arrow toward the phone */}
+      <Draw d="M168 150 C 205 160, 240 180, 272 218" stroke={BLUE} width={3} delay={2.5} duration={0.9} />
+      <Draw d="M254 220 L274 220 L268 200" stroke={BLUE} width={3} delay={3.3} duration={0.3} />
+    </svg>
+  )
+}
+
+export function HeroDoodlesRight({ className = '' }) {
+  return (
+    <svg viewBox="0 0 320 480" className={className} fill="none" aria-hidden="true">
+      {/* Faigen's reply flies back */}
+      <Draw d="M196 46 L298 12 L266 92 L240 66 Z M240 66 L298 12 M240 66 L238 92 L254 76" stroke={BLUE} width={3} delay={1.6} duration={1.3} />
+      <Draw d="M30 130 C 80 84, 130 96, 190 62" stroke={INK} width={2.2} dash="2 8" opacity={0.5} delay={2.4} duration={1} />
+      <Label x={64} y={168} rotate={3} fill={BLUE} delay={2.6}>Faigen replies!</Label>
+      <Draw d="M258 186 C 296 222, 302 256, 276 290" stroke={INK} width={3} delay={2.9} duration={0.9} />
+      <Draw d="M262 270 L276 292 L292 276" stroke={INK} width={3} delay={3.7} duration={0.3} />
+    </svg>
+  )
+}
+
+/* Small hero accents in the loose dot-and-tick style of hand-drawn sketches */
+export function DoodleRays({ className = '' }) {
+  return (
+    <svg viewBox="0 0 90 90" className={className} fill="none" aria-hidden="true">
+      <Draw d="M45 6 L45 24 M45 66 L45 84 M6 45 L24 45 M66 45 L84 45 M17 17 L29 29 M61 61 L73 73 M73 17 L61 29 M29 61 L17 73" width={4} delay={1.4} duration={0.9} />
+      <Pop delay={2.1}><circle cx="45" cy="45" r="5" fill={BLUE} /></Pop>
+    </svg>
+  )
+}
+
+export function DoodleDots({ className = '' }) {
+  return (
+    <svg viewBox="0 0 90 90" className={className} fill="none" aria-hidden="true">
+      <Pop delay={1.6}><g fill={INK}><circle cx="20" cy="62" r="5" /><circle cx="44" cy="44" r="5" /></g><circle cx="68" cy="26" r="5" fill={BLUE} /></Pop>
+      <Draw d="M26 56 C 32 52, 36 48, 39 47 M50 40 C 55 36, 60 32, 63 30" width={3} dash="1 8" delay={2.0} duration={0.8} />
+      <Draw d="M60 70 C 66 62, 76 62, 80 70" stroke={BLUE} width={3.4} delay={2.5} duration={0.6} />
+    </svg>
+  )
+}
+
+/* A handwritten note with an arrow, sitting in the corner of a showcase card */
+export function CardNote({ text, className = '' }) {
+  return (
+    <svg viewBox="0 0 280 96" className={className} fill="none" aria-hidden="true">
+      <Label x={6} y={34} rotate={-3} fill={BLUE} size={28} delay={0.9}>{text}</Label>
+      <Draw d="M200 46 C 226 52, 244 66, 252 90" stroke={BLUE} width={2.6} delay={1.4} duration={0.8} />
+      <Draw d="M238 78 L252 92 L260 74" stroke={BLUE} width={2.6} delay={2.1} duration={0.3} />
+    </svg>
+  )
+}
+
+/* A hand-drawn infinity loop that draws itself */
+export function InfinityDoodle({ className = '' }) {
+  return (
+    <svg viewBox="0 0 220 110" className={className} fill="none" aria-hidden="true">
+      <Draw d="M110 55 C 90 20, 30 14, 24 55 C 18 96, 84 92, 110 55 C 136 18, 200 14, 196 55 C 192 96, 130 90, 110 55" stroke={BLUE} width={6} delay={0.2} duration={1.8} />
+      <Pop delay={1.7}><SparkleG x={170} y={4} s={0.8} /></Pop>
+    </svg>
+  )
+}
+
+/* ── Use-case drawings (white line work with a blue touch, for dark cards) ── */
+export function DoodleRetail({ className = '' }) {
+  return (
+    <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
+      <Draw d="M14 30 H66 L72 74 H8 Z" stroke="#fff" width={2.6} delay={0.1} duration={1} />
+      <Draw d="M28 30 V22 a12 12 0 0 1 24 0 V30" stroke="#fff" width={2.6} delay={0.8} duration={0.7} />
+      <Draw d="M28 52 L37 61 L53 43" stroke="#2997ff" width={3.2} delay={1.3} duration={0.5} />
+    </svg>
+  )
+}
+export function DoodleClinic({ className = '' }) {
+  return (
+    <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
+      <Draw d="M18 10 H62 a8 8 0 0 1 8 8 V62 a8 8 0 0 1 -8 8 H18 a8 8 0 0 1 -8 -8 V18 a8 8 0 0 1 8 -8 Z" stroke="#fff" width={2.6} delay={0.1} duration={1} />
+      <Draw d="M40 24 V56 M24 40 H56" stroke="#2997ff" width={4} delay={1} duration={0.6} />
+    </svg>
+  )
+}
+export function DoodleFood({ className = '' }) {
+  return (
+    <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
+      <Draw d="M8 12 V32 M14 12 V32 M20 12 V32 M8 32 C 8 38, 20 38, 20 32 M14 36 V70" stroke="#fff" width={2.6} delay={0.1} duration={1} />
+      <Draw d="M72 12 C 60 22, 60 40, 72 42 V70" stroke="#fff" width={2.6} delay={0.6} duration={0.9} />
+      <Draw d="M26 42 a14 14 0 1 0 28 0 a14 14 0 1 0 -28 0" stroke="#2997ff" width={3} delay={1.1} duration={0.8} />
+    </svg>
+  )
+}
+export function DoodleHome({ className = '' }) {
+  return (
+    <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
+      <Draw d="M8 42 L40 12 L72 42 M16 38 V72 H64 V38" stroke="#fff" width={2.6} delay={0.1} duration={1.1} />
+      <Draw d="M33 72 V54 H47 V72" stroke="#2997ff" width={3} delay={1.2} duration={0.6} />
+    </svg>
+  )
+}
+
+/* A speech bubble with a question mark, for the FAQ heading */
+export function DoodleAsk({ className = '' }) {
+  return (
+    <svg viewBox="0 0 110 100" className={className} fill="none" aria-hidden="true">
+      <Draw d="M20 12 H88 a12 12 0 0 1 12 12 V58 a12 12 0 0 1 -12 12 H52 L30 90 V70 H20 a12 12 0 0 1 -12 -12 V24 a12 12 0 0 1 12 -12 Z" delay={0.1} duration={1.2} />
+      <Draw d="M44 34 C44 24, 62 24, 62 34 C62 42, 54 42, 54 50" stroke={BLUE} width={4} delay={1.0} duration={0.7} />
+      <Pop delay={1.7}><circle cx="54" cy="59" r="3.2" fill={BLUE} /></Pop>
+    </svg>
+  )
+}
+
+/* Closing call-to-action drawings, in white line work on black */
+export function CtaPlane({ className = '' }) {
+  return (
+    <svg viewBox="0 0 200 140" className={className} fill="none" aria-hidden="true">
+      <Draw d="M110 44 L190 14 L162 100 L140 76 Z M140 76 L190 14 M140 76 L138 102 L152 88" stroke="#fff" width={3} delay={0.2} duration={1.4} />
+      <Draw d="M8 118 C 40 90, 70 112, 100 80" stroke="#2997ff" width={2.6} dash="2 9" delay={1.2} duration={1} />
+    </svg>
+  )
+}
+export function CtaChat({ className = '' }) {
+  return (
+    <svg viewBox="0 0 170 130" className={className} fill="none" aria-hidden="true">
+      <Draw d="M30 14 H140 a14 14 0 0 1 14 14 V72 a14 14 0 0 1 -14 14 H80 L52 112 V86 H30 a14 14 0 0 1 -14 -14 V28 a14 14 0 0 1 14 -14 Z" stroke="#fff" width={3} delay={0.2} duration={1.4} />
+      <Draw d="M60 50 L76 66 L110 34" stroke="#2997ff" width={5} delay={1.4} duration={0.7} />
     </svg>
   )
 }
