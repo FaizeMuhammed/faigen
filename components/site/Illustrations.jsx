@@ -297,3 +297,5 @@ export function CtaChat({ className = '' }) {
     </svg>
   )
 }
+
+export { Draw, Pop, Label, INK, BLUE, TINT }
