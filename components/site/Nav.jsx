@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { NAV } from '@/lib/site'
 import { PillButton } from './Buttons'
+import { FaigenLogo } from './FaigenMark'
 
 export default function Nav({ dark = false }) {
   const [scrolled, setScrolled] = useState(false)
@@ -33,7 +34,7 @@ export default function Nav({ dark = false }) {
       >
         <nav className="container-wide h-14 flex items-center justify-between" aria-label="Main">
           <Link href="/" aria-label="Faigen home" className="shrink-0 relative z-50">
-            <img src="/logonew.png" alt="Faigen" className={`h-7 w-auto ${dark ? 'invert' : ''}`} />
+            <FaigenLogo dark={dark} />
           </Link>
 
           <ul className="hidden md:flex items-center gap-9">

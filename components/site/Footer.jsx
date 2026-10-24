@@ -1,3 +1,4 @@
+import { FaigenLogo } from './FaigenMark'
 import Link from 'next/link'
 
 const COLS = [
@@ -13,7 +14,7 @@ export default function Footer() {
       <div className="container-wide py-14">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
           <div className="max-w-xs">
-            <img src="/logonew.png" alt="Faigen" className="h-7 w-auto mb-4" />
+            <FaigenLogo className="mb-4" />
             <p className="leading-relaxed text-[13px]">AI agents that answer your customers on WhatsApp and Instagram — in Malayalam, Manglish and English.</p>
             <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[12px] font-medium text-ink border border-soft">
               <span className="h-1.5 w-1.5 rounded-full bg-[#34c759]" /> Meta Verified Tech Provider

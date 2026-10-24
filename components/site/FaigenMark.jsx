@@ -1,21 +1,50 @@
-// The Faigen mark: the logo's "f" with its three hollow nodes.
-// variant "a": white f on a blue circle. variant "c": white f on a black tile.
-export default function FaigenMark({ variant = 'a', className = '' }) {
-  const bg = variant === 'c' ? '#1d1d1f' : '#0071e3'
+// The Faigen mark, traced from the logo: an "f" whose branches end in four hollow nodes.
+// Coordinates are in the logo's own space (about x 141–369, y 109–361).
+function MarkShapes({ stroke, nodeFill, width = 18 }) {
+  return (
+    <g fill="none" stroke={stroke} strokeWidth={width} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M185 352 V195 C185 145 220 115 270 118 C285 119 296 125 303 136" />
+      <path d="M150 262 C175 262 190 266 205 258 L254 220" />
+      <path d="M293 217 H318" />
+      <path d="M185 338 C192 352 217 352 234 330 L247 313" />
+      <circle cx="305" cy="157" r="21" fill={nodeFill} />
+      <circle cx="273" cy="217" r="21" fill={nodeFill} />
+      <circle cx="339" cy="217" r="21" fill={nodeFill} />
+      <circle cx="261" cy="295" r="21" fill={nodeFill} />
+    </g>
+  )
+}
+
+const BLUE = '#0071e3'
+
+// Round avatar / favicon: white mark on a blue circle. variant "chat": the mark inside a chat bubble.
+export default function FaigenMark({ variant = 'circle', className = '' }) {
   return (
     <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
-      {variant === 'c' ? <rect width="64" height="64" rx="16" fill={bg} /> : <circle cx="32" cy="32" r="32" fill={bg} />}
-      <g fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M23 52 V29 C23 19 29 14 38 14" />
-        <path d="M14 33 H24 C29 33 31 29 34 27.5" />
-        <path d="M42.7 26 H45.8" />
-        <path d="M23 52 C27 52 31 49 34 45" />
-        <circle cx="43" cy="14.5" r="4.2" fill={bg} />
-        <circle cx="38.5" cy="26" r="4.2" fill={bg} />
-        <circle cx="50" cy="26" r="4.2" fill={bg} />
-        <circle cx="38" cy="41.5" r="4.2" fill={bg} />
-      </g>
+      {variant === 'chat' ? (
+        <>
+          <path d="M12 4 H52 a8 8 0 0 1 8 8 V38 a8 8 0 0 1 -8 8 H31 L16 60 V46 H12 a8 8 0 0 1 -8 -8 V12 a8 8 0 0 1 8 -8 Z" fill={BLUE} />
+          <g transform="translate(2.7 -2) scale(.115)"><MarkShapes stroke="#fff" nodeFill={BLUE} /></g>
+        </>
+      ) : (
+        <>
+          <circle cx="32" cy="32" r="32" fill={BLUE} />
+          <g transform="translate(-6.25 -3.25) scale(.15)"><MarkShapes stroke="#fff" nodeFill={BLUE} /></g>
+        </>
+      )}
     </svg>
+  )
+}
+
+// The brand lockup for the menu and footer: the mark with blue nodes, then the original wordmark.
+export function FaigenLogo({ className = '', dark = false }) {
+  return (
+    <span className={`relative inline-block h-7 w-[81px] shrink-0 ${className}`} role="img" aria-label="Faigen">
+      <svg viewBox="141 109 228 252" className="absolute" style={{ left: '2.6px', top: '2.9px', width: '17.7px', height: '20.6px' }} aria-hidden="true">
+        <MarkShapes stroke={dark ? '#fff' : '#1d1d1f'} nodeFill={BLUE} width={22} />
+      </svg>
+      <img src="/wordmark.png" alt="" className={`absolute ${dark ? 'invert' : ''}`} style={{ left: '22.7px', top: '6.9px', width: '53.6px', height: 'auto' }} />
+    </span>
   )
 }
 

@@ -40,7 +40,7 @@ export default function Statement() {
                       <span className="text-white/50">{e.who}:</span> {e.ask}
                     </p>
                     <div className="mt-2.5 flex items-start gap-2.5">
-                      <FaigenMark className="mt-0.5 h-7 w-7 shrink-0" />
+                      <FaigenMark variant="chat" className="mt-0.5 h-7 w-7 shrink-0" />
                       <div className="min-w-0">
                         <p className="rounded-2xl rounded-tl-md bg-[#0071e3]/20 px-4 py-2.5 text-[15px] leading-snug text-white ring-1 ring-[#2997ff]/30">{e.reply}</p>
                         <p className="mt-1.5 pl-1 text-[12px] font-medium text-[#2997ff]">Replied in {e.secs}s</p>
