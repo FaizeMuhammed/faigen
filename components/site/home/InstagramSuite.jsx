@@ -1,48 +1,13 @@
-import { MessageCircle, Reply, ShieldCheck, BarChart3, ArrowRight, EyeOff, Check } from 'lucide-react'
 import Reveal from '../Reveal'
 import { PillButton } from '../Buttons'
 import { InstaDoodles } from '../Illustrations'
-
-/* Tiny pictures that show what each feature does */
-const Mini = {
-  dm: () => (
-    <div className="flex h-full items-center gap-2.5">
-      <p className="rounded-2xl rounded-bl-md bg-white/10 px-3 py-2 text-[12.5px] leading-tight text-white"><span className="font-semibold">ravi.k</span> price?</p>
-      <ArrowRight size={16} className="shrink-0 text-[#ff9ec7]" />
-      <p className="rounded-2xl rounded-br-md bg-gradient-to-br from-[#d62976] to-[#fa7e1e] px-3 py-2 text-[12.5px] leading-tight text-white">Here’s the price list 📩</p>
-    </div>
-  ),
-  reply: () => (
-    <div className="flex h-full flex-col justify-center gap-2.5">
-      <p className="rounded-xl bg-white/10 px-3 py-2 text-[12.5px] leading-tight text-white/90">Yes, we deliver to Aluva — 2 days!</p>
-      <div className="flex gap-2 text-[12px] font-medium">
-        <span className="inline-flex items-center gap-1 rounded-full bg-[#0071e3] px-3 py-1 text-white"><Check size={12} strokeWidth={3} /> Approve</span>
-        <span className="rounded-full bg-white/10 px-3 py-1 text-white/80">Edit</span>
-        <span className="rounded-full bg-white/10 px-3 py-1 text-white/80">Skip</span>
-      </div>
-    </div>
-  ),
-  spam: () => (
-    <div className="flex h-full flex-col justify-center gap-2">
-      <div className="flex items-center gap-2 text-[12.5px]"><span className="text-white/35 line-through">buy followers now!!! click link</span><span className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 text-[11px] text-white/70"><EyeOff size={11} /> Hidden</span></div>
-      <p className="text-[12.5px] text-white/90"><span className="font-semibold">meera.s</span> Love this! Do you ship to Dubai?</p>
-    </div>
-  ),
-  stats: () => (
-    <div className="flex h-full items-end gap-4">
-      <div className="flex h-full flex-1 items-end gap-1.5">
-        {[34, 48, 40, 62, 54, 82, 70].map((h, i) => <span key={i} className={`flex-1 rounded-t ${i === 5 ? 'bg-[#2997ff]' : 'bg-white/20'}`} style={{ height: `${h}%` }} />)}
-      </div>
-      <div className="pb-0.5 text-right leading-tight"><p className="text-[11px] text-white/50">Best time to post</p><p className="text-[15px] font-semibold text-white">7 PM</p></div>
-    </div>
-  ),
-}
+import { InstaArtDm, InstaArtReply, InstaArtSpam, InstaArtStats } from '../Scenes'
 
 const ITEMS = [
-  { mini: 'dm', icon: MessageCircle, title: 'Comment-to-DM', text: 'Someone comments “price” on your Reel. Faigen answers publicly and sends the details to their DMs.' },
-  { mini: 'reply', icon: Reply, title: 'Smart comment replies', text: 'The AI drafts replies to questions in your comments. You approve, edit or skip each one — or let it reply on its own.' },
-  { mini: 'spam', icon: ShieldCheck, title: 'Spam shield', text: 'Abusive and spammy comments are hidden automatically, using the words and rules you choose.' },
-  { mini: 'stats', icon: BarChart3, title: 'Instagram insights', text: 'Views, reach, your top Reels and the best time to post — clear numbers, in the same dashboard.' },
+  { Art: InstaArtDm, title: 'Comment-to-DM', text: 'Someone comments “price” on your Reel. Faigen answers publicly and sends the details to their DMs.' },
+  { Art: InstaArtReply, title: 'Smart comment replies', text: 'The AI drafts replies to questions in your comments. You approve, edit or skip each one — or let it reply on its own.' },
+  { Art: InstaArtSpam, title: 'Spam shield', text: 'Abusive and spammy comments are hidden automatically, using the words and rules you choose.' },
+  { Art: InstaArtStats, title: 'Instagram insights', text: 'Views, reach, your top Reels and the best time to post — clear numbers, in the same dashboard.' },
 ]
 
 export default function InstagramSuite() {
@@ -66,16 +31,13 @@ export default function InstagramSuite() {
             </Reveal>
           </div>
 
-          <div className="relative mt-14 grid gap-4 sm:grid-cols-2">
-            {ITEMS.map((it, i) => (
-              <Reveal key={it.title} delay={(i % 2) * 0.1}>
-                <div className="h-full rounded-[26px] bg-white/[0.07] p-7 ring-1 ring-white/10 backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.11]">
-                  <div className="h-[104px] overflow-hidden rounded-2xl bg-black/45 p-4 ring-1 ring-white/10">{Mini[it.mini]()}</div>
-                  <div className="mt-6 flex items-center gap-3">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/12 text-white"><it.icon size={17} /></span>
-                    <h3 className="text-[21px] font-semibold tracking-[-0.02em]">{it.title}</h3>
-                  </div>
-                  <p className="mt-3 text-[15.5px] leading-relaxed text-white/65">{it.text}</p>
+          <div className="relative mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+            {ITEMS.map(({ Art, title, text }, i) => (
+              <Reveal key={title} delay={(i % 4) * 0.08}>
+                <div className="text-center sm:text-left">
+                  <Art className="mx-auto h-36 w-auto sm:mx-0" />
+                  <h3 className="mt-5 text-[21px] font-semibold tracking-[-0.02em]">{title}</h3>
+                  <p className="mt-2 text-[15.5px] leading-relaxed text-white/60">{text}</p>
                 </div>
               </Reveal>
             ))}

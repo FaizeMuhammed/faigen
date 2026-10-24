@@ -210,3 +210,73 @@ export function FeatureSecure({ className = '' }) {
     </svg>
   )
 }
+
+/* ── Instagram panel drawings (white line work on black) ───────── */
+const W = '#fff'
+const PINK = '#ff9ec7'
+const ORANGE = '#ffb86b'
+const LIGHT = '#2997ff'
+const DARKBLOB = 'rgba(255,255,255,0.07)'
+
+function Bg() {
+  return <Pop><path d={SOFT} fill={DARKBLOB} /></Pop>
+}
+
+export function InstaArtDm({ className = '' }) {
+  return (
+    <svg viewBox="0 0 180 150" className={className} fill="none" aria-hidden="true">
+      <Bg />
+      <Draw d="M22 34 H80 a9 9 0 0 1 9 9 V70 a9 9 0 0 1 -9 9 H48 L32 96 V79 H22 a9 9 0 0 1 -9 -9 V43 a9 9 0 0 1 9 -9 Z" stroke={W} width={2.8} delay={0.1} duration={0.9} />
+      <Label x={21} y={62} size={20} fill={W} delay={0.9}>price?</Label>
+      <Draw d="M96 60 C 106 52, 114 52, 124 60" stroke={PINK} width={2.8} delay={1.1} duration={0.5} />
+      <Draw d="M116 52 L126 61 L114 67" stroke={PINK} width={2.8} delay={1.5} duration={0.25} />
+      <Draw d="M112 84 L166 54 L152 112 L138 92 Z M138 92 L166 54" stroke={ORANGE} width={2.8} delay={1.4} duration={1} />
+      <Draw d="M104 118 C 116 106, 128 112, 136 98" stroke={W} width={2} dash="2 7" delay={2.2} duration={0.6} opacity={0.5} />
+    </svg>
+  )
+}
+
+export function InstaArtReply({ className = '' }) {
+  return (
+    <svg viewBox="0 0 180 150" className={className} fill="none" aria-hidden="true">
+      <Bg />
+      <Draw d="M22 24 H146 a10 10 0 0 1 10 10 V62 a10 10 0 0 1 -10 10 H22 a10 10 0 0 1 -10 -10 V34 a10 10 0 0 1 10 -10 Z" stroke={W} width={2.8} delay={0.1} duration={0.9} />
+      <Draw d="M26 42 H124 M26 58 H98" stroke={W} width={2.2} delay={0.9} duration={0.7} opacity={0.6} />
+      <Pop delay={1.2}><circle cx="44" cy="108" r="17" fill={LIGHT} /></Pop>
+      <Draw d="M36 108 L42 114 L53 101" stroke={W} width={3.4} delay={1.4} duration={0.4} />
+      <Draw d="M84 124 L100 98 L110 104 L94 130 Z M84 124 L82 133 L94 130" stroke={W} width={2.6} delay={1.6} duration={0.6} />
+      <Draw d="M124 108 a17 17 0 1 0 34 0 a17 17 0 1 0 -34 0 M133 99 L149 117 M149 99 L133 117" stroke={W} width={2.6} delay={1.9} duration={0.7} opacity={0.75} />
+    </svg>
+  )
+}
+
+export function InstaArtSpam({ className = '' }) {
+  return (
+    <svg viewBox="0 0 180 150" className={className} fill="none" aria-hidden="true">
+      <Bg />
+      <Draw d="M18 22 H112 a9 9 0 0 1 9 9 V58 a9 9 0 0 1 -9 9 H50 L34 84 V67 H18 a9 9 0 0 1 -9 -9 V31 a9 9 0 0 1 9 -9 Z" stroke={W} width={2.6} delay={0.1} duration={0.9} opacity={0.6} />
+      <Draw d="M20 40 H100 M20 52 H78" stroke={PINK} width={2.6} delay={0.9} duration={0.6} />
+      <Draw d="M12 46 L118 46" stroke={PINK} width={3.6} delay={1.3} duration={0.5} />
+      <Draw d="M124 74 L152 84 V104 C152 120 140 130 124 136 C108 130 96 120 96 104 V84 Z" stroke={LIGHT} width={3} delay={1.1} duration={1} />
+      <Draw d="M112 106 L121 115 L138 96" stroke={W} width={3.4} delay={1.9} duration={0.5} />
+    </svg>
+  )
+}
+
+export function InstaArtStats({ className = '' }) {
+  const bars = [30, 44, 36, 58, 48, 76, 64]
+  return (
+    <svg viewBox="0 0 180 150" className={className} fill="none" aria-hidden="true">
+      <Bg />
+      <Draw d="M14 124 H166" stroke={W} width={2.4} delay={0.1} duration={0.6} opacity={0.6} />
+      {bars.map((h, i) => (
+        i === 5
+          ? <Pop key={i} delay={0.6 + i * 0.1}><rect x={24 + i * 19} y={124 - h} width="13" height={h} rx="3" fill={LIGHT} /></Pop>
+          : <Draw key={i} d={`M${24 + i * 19} 124 V${124 - h + 3} a3 3 0 0 1 3 -3 H${34 + i * 19} a3 3 0 0 1 3 3 V124`} stroke={W} width={2.4} delay={0.4 + i * 0.1} duration={0.5} />
+      ))}
+      <Label x={96} y={26} size={24} fill={ORANGE} delay={1.6}>7 PM</Label>
+      <Draw d="M132 40 C 130 50, 128 54, 124 58" stroke={ORANGE} width={2.4} delay={2.0} duration={0.4} />
+      <Pop delay={1.9}><SparkleG x={134} y={8} s={0.8} color={ORANGE} /></Pop>
+    </svg>
+  )
+}
