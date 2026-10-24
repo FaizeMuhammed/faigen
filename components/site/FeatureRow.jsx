@@ -4,7 +4,7 @@ import { TextLink } from './Buttons'
 import { Blob } from './Illustrations'
 
 // Text on one side, a visual on a soft card on the other. Used on Features and Use cases.
-export default function FeatureRow({ eyebrow, title, text, points = [], visual, reverse, badge, link }) {
+export default function FeatureRow({ eyebrow, title, text, points = [], visual, reverse, badge, link, bare = false }) {
   return (
     <div className="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <Reveal className={reverse ? 'lg:order-2' : ''}>
@@ -26,10 +26,14 @@ export default function FeatureRow({ eyebrow, title, text, points = [], visual, 
         {link && <div className="mt-8"><TextLink href={link[1]}>{link[0]}</TextLink></div>}
       </Reveal>
       <Reveal delay={0.12} className={reverse ? 'lg:order-1' : ''}>
-        <div className="card relative flex min-h-[440px] items-center justify-center overflow-hidden rounded-[32px] p-6 sm:p-12">
-          <Blob className="pointer-events-none absolute -right-14 -top-14 w-64 opacity-60" />
-          <div className="relative">{visual}</div>
-        </div>
+        {bare ? (
+          <div className="mx-auto w-full max-w-[540px]">{visual}</div>
+        ) : (
+          <div className="card relative flex min-h-[440px] items-center justify-center overflow-hidden rounded-[32px] p-6 sm:p-12">
+            <Blob className="pointer-events-none absolute -right-14 -top-14 w-64 opacity-60" />
+            <div className="relative">{visual}</div>
+          </div>
+        )}
       </Reveal>
     </div>
   )

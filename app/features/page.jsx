@@ -1,29 +1,19 @@
-import { Infinity as InfinityIcon, Languages, SlidersHorizontal, UserCheck, LayoutGrid, Code2, ShieldCheck, ShoppingBag, Send, KeyRound } from 'lucide-react'
 import Nav from '@/components/site/Nav'
 import Footer from '@/components/site/Footer'
 import PageHero from '@/components/site/PageHero'
 import FeatureRow from '@/components/site/FeatureRow'
 import Reveal from '@/components/site/Reveal'
+import Bento from '@/components/site/home/Bento'
 import FinalCta from '@/components/site/home/FinalCta'
 import { PillButton, TextLink } from '@/components/site/Buttons'
-import { OrdersVisual, InstagramVisual, BroadcastVisual, DashboardVisual } from '@/components/site/Visuals'
+import { OrdersScene, InstagramScene, BroadcastScene, DashboardScene } from '@/components/site/Scenes'
 
 export const metadata = {
   title: 'Features — Faigen',
   description: 'AI replies, orders, broadcasts, OTP, a clear dashboard and Instagram automation — everything Faigen does for your business.',
 }
 
-const MORE = [
-  { icon: InfinityIcon, title: 'Unlimited conversations', text: 'No cap on how many customers message you. One flat monthly fee.' },
-  { icon: Languages, title: 'Speaks their language', text: 'English, Malayalam and Manglish, detected on every message.' },
-  { icon: SlidersHorizontal, title: 'Your rules', text: 'Trained on your FAQs and tone, with guardrails on what it must never say.' },
-  { icon: UserCheck, title: 'You can step in', text: 'Pause the AI on any chat and take over whenever you like.' },
-  { icon: KeyRound, title: 'OTP messages', text: 'Verification codes for logins and checkouts, billed per message sent.' },
-  { icon: Code2, title: 'API access', text: 'API keys and docs to plug messaging and orders into your own systems.' },
-  { icon: ShoppingBag, title: 'Orders & catalog', text: 'Products, prices and stock answered from your own data.' },
-  { icon: Send, title: 'Templates', text: 'Create and send approved WhatsApp templates from the dashboard.' },
-  { icon: ShieldCheck, title: 'Security first', text: 'An official Meta Tech Provider. Your data stays yours and is never sold.' },
-]
+const ALSO = ['Order collection', 'Product catalog', 'Custom services menu', 'WhatsApp templates', 'OTP messages', 'Delivery and read tracking', 'Live inbox', 'Analytics', 'API keys and docs']
 
 export default function FeaturesPage() {
   return (
@@ -41,57 +31,54 @@ export default function FeaturesPage() {
 
         <section className="bg-white section !pt-8 space-y-28 sm:space-y-40">
           <FeatureRow
+            bare
             eyebrow="Replies & orders"
             title="Answers from your business, not from guesswork."
             text="Faigen learns your products, prices and policies, then replies like your best salesperson — and turns the chat into a finished order."
             points={['Trained on your FAQs, catalog and tone', 'Collects name, product, quantity and address', 'Hands off to you whenever you want']}
-            visual={<OrdersVisual />}
+            visual={<OrdersScene className="w-full" />}
           />
           <FeatureRow
+            bare
             reverse
             eyebrow="Broadcasts & OTP"
             title="Reach your whole list in minutes."
             text="Send offers and updates with approved templates, and see exactly who received and read them."
             points={['Delivery and read tracking per campaign', 'OTP and verification messages', 'Billed only per message sent']}
-            visual={<BroadcastVisual />}
+            visual={<BroadcastScene className="w-full" />}
             link={['See message rates', '/pricing']}
           />
           <FeatureRow
+            bare
             eyebrow="Dashboard"
             title="Every conversation in one calm place."
             text="Live inbox, orders, templates and analytics. Take over any chat, or let the agent run."
             points={['Live inbox with AI on/off per chat', 'Orders and customers at a glance', 'Numbers that matter, no clutter']}
-            visual={<DashboardVisual />}
+            visual={<DashboardScene className="w-full" />}
           />
           <FeatureRow
+            bare
             reverse
             badge="Early access"
             eyebrow="Instagram"
             title="Comments become conversations."
             text="The same agent works your Instagram: it replies to comments, sends the details by DM, hides spam and shows you the numbers."
             points={['Comment-to-DM with a public reply', 'AI drafts replies you approve first', 'Spam shield and account insights']}
-            visual={<InstagramVisual />}
+            visual={<InstagramScene className="w-full" />}
             link={['Ask about Instagram', '/contact']}
           />
         </section>
 
-        <section className="bg-alt section">
-          <div className="container-x">
-            <Reveal className="mx-auto max-w-3xl text-center">
-              <p className="eyebrow">And more</p>
-              <h2 className="display-lg mt-3">The details matter.</h2>
+        <Bento />
+
+        <section className="bg-alt section !py-16 sm:!py-20">
+          <div className="container-x max-w-4xl text-center">
+            <Reveal>
+              <p className="eyebrow">Also included</p>
+              <div className="mt-6 flex flex-wrap justify-center gap-2.5">
+                {ALSO.map(a => <span key={a} className="rounded-full bg-white px-4 py-2 text-[14.5px] font-medium text-ink shadow-[0_1px_2px_rgba(0,0,0,.05)]">{a}</span>)}
+              </div>
             </Reveal>
-            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {MORE.map((f, i) => (
-                <Reveal key={f.title} delay={(i % 3) * 0.08}>
-                  <div className="card-white h-full p-7">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent"><f.icon size={20} /></span>
-                    <h3 className="mt-5 text-[19px] font-semibold tracking-[-0.02em] text-ink">{f.title}</h3>
-                    <p className="mt-2 text-[15px] leading-relaxed text-muted">{f.text}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
           </div>
         </section>
 

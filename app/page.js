@@ -7,7 +7,6 @@ import InstagramSuite from "@/components/site/home/InstagramSuite";
 import Bento from "@/components/site/home/Bento";
 import UseCases from "@/components/site/home/UseCases";
 import HowItWorks from "@/components/site/home/HowItWorks";
-import PricingTeaser from "@/components/site/home/PricingTeaser";
 import Faq from "@/components/site/home/Faq";
 import FinalCta from "@/components/site/home/FinalCta";
 
@@ -23,7 +22,6 @@ export default function Home() {
         <Bento />
         <UseCases />
         <HowItWorks />
-        <PricingTeaser />
         <Faq />
         <FinalCta />
       </main>
