@@ -339,3 +339,22 @@ export function MoonDoodle({ className = '' }) {
     </svg>
   )
 }
+
+/* ── Contact drawings ─────────────────────────────────────────── */
+export function DoodleMail({ className = '' }) {
+  return (
+    <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
+      <Draw d="M10 22 H70 a4 4 0 0 1 4 4 V58 a4 4 0 0 1 -4 4 H10 a4 4 0 0 1 -4 -4 V26 a4 4 0 0 1 4 -4 Z" delay={0.1} duration={1} />
+      <Draw d="M8 26 L40 46 L72 26" stroke={BLUE} width={3} delay={1.0} duration={0.6} />
+      <Pop delay={1.5}><SparkleG x={58} y={4} s={0.8} /></Pop>
+    </svg>
+  )
+}
+export function DoodlePin({ className = '' }) {
+  return (
+    <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
+      <Draw d="M40 72 C 22 52, 16 42, 16 32 C 16 18, 27 8, 40 8 C 53 8, 64 18, 64 32 C 64 42, 58 52, 40 72 Z" delay={0.1} duration={1.1} />
+      <Pop delay={1.1}><circle cx="40" cy="32" r="8" fill={BLUE} /></Pop>
+    </svg>
+  )
+}
