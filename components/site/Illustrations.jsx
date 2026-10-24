@@ -299,3 +299,32 @@ export function CtaChat({ className = '' }) {
 }
 
 export { Draw, Pop, Label, INK, BLUE, TINT }
+
+/* ── Plan drawings (one per plan) ─────────────────────────────── */
+export function PlanSprout({ className = '', color = INK }) {
+  return (
+    <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
+      <Draw d="M40 72 V40" stroke={color} width={3} delay={0.1} duration={0.6} />
+      <Draw d="M40 54 C 24 54, 14 46, 14 30 C 30 30, 40 38, 40 54 Z" stroke={color} width={3} delay={0.6} duration={0.8} />
+      <Draw d="M40 46 C 40 32, 50 22, 66 22 C 66 38, 56 48, 40 46 Z" stroke={BLUE} width={3} delay={1.0} duration={0.8} />
+      <Draw d="M24 74 H56" stroke={color} width={3} delay={0.1} duration={0.4} />
+    </svg>
+  )
+}
+export function PlanPlane({ className = '', color = '#fff' }) {
+  return (
+    <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
+      <Draw d="M10 40 L72 12 L58 68 L42 50 Z M42 50 L72 12 M42 50 L40 68 L50 58" stroke={color} width={3} delay={0.1} duration={1.1} />
+      <Draw d="M8 66 C 18 54, 26 60, 34 48" stroke="#2997ff" width={2.6} dash="2 7" delay={1.0} duration={0.7} />
+    </svg>
+  )
+}
+export function PlanPencil({ className = '', color = INK }) {
+  return (
+    <svg viewBox="0 0 80 80" className={className} fill="none" aria-hidden="true">
+      <Draw d="M14 66 L18 50 L52 16 L64 28 L30 62 Z M46 22 L58 34" stroke={color} width={3} delay={0.1} duration={1.1} />
+      <Draw d="M14 66 L22 64" stroke={BLUE} width={4} delay={1.1} duration={0.3} />
+      <Pop delay={1.3}><SparkleG x={56} y={2} s={0.9} /></Pop>
+    </svg>
+  )
+}
