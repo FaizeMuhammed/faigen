@@ -217,6 +217,8 @@ export default function PrivacyPolicy() {
                   {[
                     { label: 'Conversation Data', value: 'Up to 90 Days' },
                     { label: 'Order & Transaction Data', value: 'Up to 1 Year' },
+                    { label: 'Instagram Comments', value: 'Up to 90 Days' },
+                    { label: 'Instagram Insight Numbers', value: 'Up to 13 Months' },
                   ].map(item => (
                     <div key={item.label} className="p-5 rounded-2xl border border-gray-100 bg-white shadow-sm">
                       <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">{item.label}</p>
@@ -234,12 +236,18 @@ export default function PrivacyPolicy() {
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Third-Party Services</h2>
                 <p className="mb-4">Faigen relies on the following third-party services:</p>
                 <div className="flex flex-wrap gap-2">
-                  {['Meta Platforms Inc.', 'Google (Gemini AI)', 'DigitalOcean', 'MongoDB'].map(service => (
+                  {['Meta Platforms Inc.', 'Groq', 'Google (Gemini)', 'OpenAI', 'Anthropic', 'DigitalOcean', 'MongoDB'].map(service => (
                     <span key={service} className="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 text-[13px] font-semibold">
                       {service}
                     </span>
                   ))}
                 </div>
+                <p className="mt-4">
+                  <span className="font-semibold text-gray-800">AI providers.</span> Replies are written by AI language
+                  models. For each business, Faigen uses one of Groq, Google (Gemini), OpenAI or Anthropic. To write a
+                  reply, we send that provider the customer's message, the recent conversation, and the business
+                  information the agent needs to answer. We do not send it for any other purpose, and we do not sell it.
+                </p>
                 <p className="mt-4 text-gray-500">
                   These providers have their own privacy policies governing data usage.
                 </p>

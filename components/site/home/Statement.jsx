@@ -9,7 +9,7 @@ const EVENTS = [
 
 export default function Statement() {
   return (
-    <section className="bg-black text-white section">
+    <section className="overflow-hidden bg-black text-white section">
       <div className="container-x grid items-center gap-14 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
         <Reveal>
           <p className="eyebrow text-[#2997ff]">Why Faigen</p>
