@@ -137,10 +137,10 @@ export function InstaDoodles({ className = '' }) {
 }
 
 
-/* ── Hero: someone out shopping, the cart full of customer chats ─ */
+/* ── Hero: someone out shopping, chats flying into the cart ───── */
 export function HeroTrolley({ className = '' }) {
   return (
-    <svg viewBox="0 0 760 330" className={className} fill="none" role="img" aria-label="A person pushing a shopping trolley with a WhatsApp and an Instagram chat inside">
+    <svg viewBox="0 0 760 330" className={className} fill="none" role="img" aria-label="A person pushing a shopping trolley that is filling up with WhatsApp and Instagram chats">
       <defs>
         <linearGradient id="trolley-ig" x1="0" y1="1" x2="1" y2="0">
           <stop offset="0" stopColor="#feda75" /><stop offset=".35" stopColor="#fa7e1e" /><stop offset=".65" stopColor="#d62976" /><stop offset="1" stopColor="#4f5bd5" />
@@ -148,28 +148,32 @@ export function HeroTrolley({ className = '' }) {
       </defs>
 
       {/* soft color blob + hand-drawn ground */}
-      <path d="M58 196 C46 96 178 30 372 36 C576 42 706 104 698 212 C690 296 530 316 372 312 C214 308 70 288 58 196 Z" fill={TINT} opacity=".6" />
-      <Draw d="M30 314 C190 309 330 318 480 312 C600 307 680 316 730 311" width={2.4} />
-      <Draw d="M44 224 H 84 M 30 254 H 74 M 54 284 H 90" width={2.3} opacity={0.35} />
+      <path d="M58 196 C46 96 178 30 372 36 C576 42 706 104 698 212 C690 296 530 316 372 312 C214 308 70 288 58 196 Z" fill={TINT} opacity=".55" />
+      <Draw d="M60 314 C220 309 400 318 700 311" width={2.4} />
+
+      {/* messages drifting toward the cart */}
+      <Draw d="M560 56 C 540 78 520 98 498 118" width={2.2} dash="2 7" />
+      <Draw d="M646 124 C 620 132 580 140 540 146" width={2.2} dash="2 7" />
+      <Draw d="M236 74 C 252 88 268 100 288 112" width={2.2} dash="2 7" />
+      <Draw d="M560 14 H604 a10 10 0 0 1 10 10 V36 a10 10 0 0 1 -10 10 H592 L602 56 L582 46 H560 a10 10 0 0 1 -10 -10 V24 a10 10 0 0 1 10 -10 Z" fill="#fff" width={2.4} />
+      <Label x={582} y={37} size={22} anchor="middle" rotate={-2}>price?</Label>
+      <Draw d="M650 96 H692 a10 10 0 0 1 10 10 V118 a10 10 0 0 1 -10 10 H650 a10 10 0 0 1 -10 -10 V106 a10 10 0 0 1 10 -10 Z" fill="#fff" width={2.4} />
+      <Label x={671} y={119} size={22} anchor="middle" rotate={2}>order</Label>
+      <Draw d="M200 30 H250 a10 10 0 0 1 10 10 V52 a10 10 0 0 1 -10 10 H232 L222 72 V62 H200 a10 10 0 0 1 -10 -10 V40 a10 10 0 0 1 10 -10 Z" fill="#fff" width={2.4} />
+      <Label x={225} y={53} size={22} anchor="middle" rotate={-2}>hi!</Label>
 
       {/* the two chats riding in the trolley */}
-      <g transform="rotate(-8 352 124)">
-        <circle cx="352" cy="124" r="38" fill="#25d366" />
-        <path d="M352 100a24 24 0 0 0-20.6 36.2l-3.1 11.5 11.8-3.1A24 24 0 1 0 352 100Z" stroke="#fff" strokeWidth="4.6" strokeLinejoin="round" />
-        <path d="M343 113c1-1.4 2.3-1.4 2.8-.6l2.6 4.5c.3.8 0 1.7-.6 2.2l-1.4 1.4c1.7 3.4 4.2 5.6 7.6 7.6l1.7-1.7c.6-.6 1.4-.8 2.2-.3l4.5 2.5c.8.6.8 1.9-.3 3.3-2 2.5-4.7 3-8.1 1.7-6.5-2.5-11.5-7.6-13.8-14-.6-2.5.3-4.700 1-6.600Z" fill="#fff" />
+      <g transform="rotate(-8 352 126)">
+        <circle cx="352" cy="126" r="38" fill="#25d366" />
+        <path d="M352 102a24 24 0 0 0-20.6 36.2l-3.1 11.5 11.8-3.1A24 24 0 1 0 352 102Z" stroke="#fff" strokeWidth="4.6" strokeLinejoin="round" />
+        <path d="M343 115c1-1.4 2.3-1.4 2.8-.6l2.6 4.5c.3.8 0 1.7-.6 2.2l-1.4 1.4c1.7 3.4 4.2 5.6 7.6 7.6l1.7-1.7c.6-.6 1.4-.8 2.2-.3l4.5 2.5c.8.6.8 1.9-.3 3.3-2 2.5-4.7 3-8.1 1.7-6.5-2.5-11.5-7.6-13.8-14-.6-2.5.3-4.7 1-6.6Z" fill="#fff" />
       </g>
-      <g transform="rotate(7 448 120)">
-        <rect x="412" y="84" width="72" height="72" rx="21" fill="url(#trolley-ig)" />
-        <rect x="428" y="100" width="40" height="40" rx="12" stroke="#fff" strokeWidth="4.6" />
-        <circle cx="448" cy="120" r="9.5" stroke="#fff" strokeWidth="4.6" />
-        <circle cx="460" cy="108" r="2.8" fill="#fff" />
+      <g transform="rotate(7 448 122)">
+        <rect x="412" y="86" width="72" height="72" rx="21" fill="url(#trolley-ig)" />
+        <rect x="428" y="102" width="40" height="40" rx="12" stroke="#fff" strokeWidth="4.6" />
+        <circle cx="448" cy="122" r="9.5" stroke="#fff" strokeWidth="4.6" />
+        <circle cx="460" cy="110" r="2.8" fill="#fff" />
       </g>
-
-      {/* their questions, as little speech bubbles */}
-      <Draw d="M300 40 H352 a10 10 0 0 1 10 10 V62 a10 10 0 0 1 -10 10 H334 L324 82 V72 H300 a10 10 0 0 1 -10 -10 V50 a10 10 0 0 1 10 -10 Z" fill="#fff" width={2.4} />
-      <Label x={326} y={63} size={22} anchor="middle" rotate={-2}>in stock?</Label>
-      <Draw d="M430 30 H474 a10 10 0 0 1 10 10 V52 a10 10 0 0 1 -10 10 H462 L472 72 L452 62 H430 a10 10 0 0 1 -10 -10 V40 a10 10 0 0 1 10 -10 Z" fill="#fff" width={2.4} />
-      <Label x={452} y={53} size={22} anchor="middle" rotate={2}>price?</Label>
 
       {/* the trolley */}
       <Draw d="M270 152 C340 148 440 150 530 148 C520 178 504 212 494 242 C430 246 360 244 306 240 C292 212 280 180 270 152 Z" fill="#fff" width={2.8} />
@@ -179,28 +183,24 @@ export function HeroTrolley({ className = '' }) {
       <circle cx="322" cy="298" r="14" fill="#fff" stroke={INK} strokeWidth="2.8" /><circle cx="322" cy="298" r="3" fill={INK} />
       <circle cx="484" cy="298" r="14" fill="#fff" stroke={INK} strokeWidth="2.8" /><circle cx="484" cy="298" r="3" fill={INK} />
 
+      {/* the Faigen flag on the trolley */}
+      <Draw d="M300 146 V 40" width={2.6} />
+      <path d="M300 42 C318 37 332 47 350 41 L350 66 C332 72 318 62 300 67 Z" fill={BLUE} stroke={INK} strokeWidth="2.4" strokeLinejoin="round" />
+      <circle cx="325" cy="54" r="6" fill="#fff" />
+
       {/* the shopper, walking right */}
       <Draw d="M164 190 C160 228 152 262 146 298 M 188 190 C 198 226 208 262 226 296" width={2.8} />
       <Draw d="M132 302 C 140 298 150 298 156 301 M 214 299 C 224 295 236 296 244 300" width={2.8} />
       <path d="M150 112 C168 104 192 104 204 112 L 212 190 C 196 198 168 198 150 192 Z" fill={BLUE} stroke={INK} strokeWidth="2.6" strokeLinejoin="round" />
       <Draw d="M196 120 C 214 132 232 140 244 140 C 258 140 266 140 272 142" width={2.8} />
       <Draw d="M154 122 C 138 144 134 170 146 188" width={2.8} />
-      <path d="M172 112 C 172 104 172 100 172 98" stroke={INK} strokeWidth="2.6" strokeLinecap="round" />
       <path d="M146 76 C 146 58 160 50 174 50 C 192 50 202 62 202 78 C 202 96 190 106 174 106 C 158 106 146 94 146 76 Z" fill="#fff" stroke={INK} strokeWidth="2.6" strokeLinejoin="round" />
-      <Draw d="M148 66 C 156 44 188 40 200 62" width={3.4} stroke={INK} />
-      <Draw d="M160 78 v 3 M 184 78 v 3" width={2.6} />
+      <Draw d="M148 66 C 156 44 188 40 200 62" width={3.4} />
+      <Draw d="M160 78 v 3 M 184 78 v 3" width={2.4} />
       <Draw d="M164 90 C 170 97 180 97 186 89" width={2.4} />
 
-      {/* wires and nodes, like the logo */}
-      <Draw d="M520 96 C 560 84 590 72 618 52" width={2.2} dash="2 7" />
-      <Pop><circle cx="626" cy="46" r="7" fill="#fff" stroke={INK} strokeWidth="2.4" /></Pop>
-      <Draw d="M530 124 C 570 128 604 130 640 128" width={2.2} dash="2 7" />
-      <Pop><circle cx="648" cy="128" r="7" fill={BLUE} stroke={INK} strokeWidth="2.4" /></Pop>
-      <SparkleG x={246} y={34} s={1.2} />
-      <SparkleG x={560} y={176} s={0.9} />
-      <SparkleG x={112} y={96} s={0.8} />
-      <Label x={604} y={198} size={26} rotate={-5}>always on</Label>
-      <Draw d="M608 208 C 626 216 652 214 670 206" width={3} stroke={BLUE} />
+      <SparkleG x={108} y={90} s={0.9} />
+      <SparkleG x={600} y={176} s={0.8} />
     </svg>
   )
 }
