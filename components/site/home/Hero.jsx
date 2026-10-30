@@ -1,7 +1,6 @@
 'use client'
-import PhoneChat from '../PhoneChat'
 import { PillButton, TextLink } from '../Buttons'
-import { Squiggle, DoodleRays, DoodleDots, HeroDoodlesLeft, HeroDoodlesRight } from '../Illustrations'
+import { Squiggle, DoodleRays, DoodleDots, HeroTrolley } from '../Illustrations'
 
 export default function Hero() {
   return (
@@ -35,14 +34,9 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* phone, cropped at the bottom like a product shot */}
-      <div className="relative mx-auto mt-10 h-[430px] max-w-[1100px] overflow-hidden sm:h-[500px]">
-        <PhoneChat still />
-
-        <HeroDoodlesLeft className="pointer-events-none absolute left-[1%] top-0 hidden w-[300px] lg:block" />
-        <HeroDoodlesRight className="pointer-events-none absolute right-[1%] top-0 hidden w-[300px] lg:block" />
-
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent" />
+      {/* a shopper, the cart full of chats */}
+      <div className="container-x relative pb-16 pt-12 sm:pb-24">
+        <HeroTrolley className="mx-auto w-full max-w-[720px]" />
       </div>
     </section>
   )

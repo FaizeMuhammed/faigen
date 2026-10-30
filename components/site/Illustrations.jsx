@@ -136,6 +136,63 @@ export function InstaDoodles({ className = '' }) {
   )
 }
 
+
+/* ── Hero: someone out shopping, the cart full of customer chats ─ */
+export function HeroTrolley({ className = '' }) {
+  return (
+    <svg viewBox="0 0 760 380" className={className} fill="none" role="img" aria-label="A person pushing a shopping trolley with a WhatsApp and an Instagram chat inside">
+      <defs>
+        <linearGradient id="trolley-ig" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" stopColor="#feda75" /><stop offset=".35" stopColor="#fa7e1e" /><stop offset=".65" stopColor="#d62976" /><stop offset="1" stopColor="#4f5bd5" />
+        </linearGradient>
+      </defs>
+
+      {/* soft ground + shadow */}
+      <ellipse cx="380" cy="352" rx="300" ry="14" fill={TINT} opacity=".7" />
+      <Draw d="M40 346 H 720" width={2.4} opacity={0.35} />
+
+      {/* the two chats riding in the trolley */}
+      <g transform="rotate(-8 352 166)">
+        <circle cx="352" cy="166" r="40" fill="#25d366" />
+        <path d="M352 140a26 26 0 0 0-22.3 39.2l-3.4 12.4 12.7-3.3A26 26 0 1 0 352 140Z" stroke="#fff" strokeWidth="5" strokeLinejoin="round" />
+        <path d="M342 154c1-1.5 2.5-1.5 3-.6l2.8 4.9c.3.9 0 1.8-.6 2.4l-1.5 1.5c1.8 3.7 4.6 6.1 8.2 8.2l1.8-1.8c.6-.6 1.5-.9 2.4-.3l4.9 2.7c.9.6.9 2.1-.3 3.6-2.1 2.7-5.1 3.3-8.8 1.8-7-2.7-12.5-8.2-15-15.2-.6-2.7.3-5.1 1.1-7.2Z" fill="#fff" />
+      </g>
+      <g transform="rotate(7 446 160)">
+        <rect x="408" y="122" width="76" height="76" rx="22" fill="url(#trolley-ig)" />
+        <rect x="425" y="139" width="42" height="42" rx="13" stroke="#fff" strokeWidth="5" />
+        <circle cx="446" cy="160" r="10" stroke="#fff" strokeWidth="5" />
+        <circle cx="459" cy="147" r="3" fill="#fff" />
+      </g>
+
+      {/* the trolley */}
+      <Draw d="M268 190 H 520 L 488 280 H 306 Z" fill="#fff" width={4} delay={0.2} />
+      <Draw d="M300 190 L 318 280 M 340 190 L 346 280 M 380 190 V 280 M 420 190 L 414 280 M 460 190 L 450 280 M 276 215 H 512 M 286 245 H 500" width={2} opacity={0.35} />
+      <Draw d="M252 172 H 284 L 306 280" width={4} />
+      <Draw d="M316 280 V 312 M 482 280 V 312 M 312 312 H 492" width={4} />
+      <circle cx="316" cy="328" r="15" stroke={INK} strokeWidth="4" fill="#fff" />
+      <circle cx="482" cy="328" r="15" stroke={INK} strokeWidth="4" fill="#fff" />
+      <circle cx="316" cy="328" r="3" fill={INK} /><circle cx="482" cy="328" r="3" fill={INK} />
+
+      {/* the shopper, walking right */}
+      <circle cx="170" cy="112" r="28" fill="#fff" stroke={INK} strokeWidth="4" />
+      <Draw d="M158 108 v 3 M 178 108 v 3 M 160 124 Q 169 132 180 123" width={3} />
+      <Draw d="M146 96 Q 168 74 196 92" width={4} stroke={BLUE} />
+      <Draw d="M170 142 C 172 175 178 205 182 236" width={4} />
+      <Draw d="M176 166 C 205 168 232 172 252 172" width={4} />
+      <Draw d="M172 160 C 150 180 140 206 150 222" width={4} />
+      <Draw d="M182 236 L 160 340 M 182 236 L 214 338" width={4} />
+      <Draw d="M146 342 H 168 M 204 340 H 230" width={4} />
+
+      {/* little accents */}
+      <SparkleG x={286} y={78} s={1.2} />
+      <SparkleG x={520} y={96} s={0.9} />
+      <Draw d="M60 190 H 96 M 48 226 H 92 M 68 262 H 104" width={3} opacity={0.3} />
+      <Pop><circle cx="400" cy="96" r="5" fill={BLUE} /></Pop>
+      <Pop><circle cx="560" cy="150" r="3.5" fill={INK} /></Pop>
+    </svg>
+  )
+}
+
 /* ── Hero doodles: a customer asks at 2 AM, Faigen answers ─────── */
 const HAND = { fontFamily: 'var(--font-hand), cursive', fontWeight: 600 }
 
