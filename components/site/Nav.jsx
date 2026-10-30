@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { NAV } from '@/lib/site'
 import { PillButton } from './Buttons'
-import { FaigenLogo } from './FaigenMark'
+import FaigenMark, { FaigenLogo } from './FaigenMark'
 
 export default function Nav({ dark = false }) {
   const [scrolled, setScrolled] = useState(false)
@@ -33,8 +33,14 @@ export default function Nav({ dark = false }) {
         }`}
       >
         <nav className="container-wide h-14 flex items-center justify-between" aria-label="Main">
-          <Link href="/" aria-label="Faigen home" className="shrink-0 relative z-50">
-            <FaigenLogo dark={dark} />
+          <Link href="/" aria-label="Faigen home" className="relative z-50 h-8 w-[84px] shrink-0">
+            {/* full logo at the top of the page; the round blue icon takes over once you scroll */}
+            <span className={`absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-300 ease-out ${scrolled && !open ? 'pointer-events-none -translate-x-2 opacity-0 scale-90' : 'opacity-100'}`}>
+              <FaigenLogo dark={dark} />
+            </span>
+            <span className={`absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-300 ease-out ${scrolled && !open ? 'opacity-100' : 'pointer-events-none translate-x-2 opacity-0 scale-75'}`}>
+              <FaigenMark className="h-8 w-8" />
+            </span>
           </Link>
 
           <ul className="hidden md:flex items-center gap-9">
