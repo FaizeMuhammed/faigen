@@ -1,6 +1,6 @@
 'use client'
 import { PillButton, TextLink } from '../Buttons'
-import { Squiggle, DoodleRays, DoodleDots, HeroTrolley } from '../Illustrations'
+import { Squiggle, DoodleRays, HeroTrolley } from '../Illustrations'
 
 export default function Hero() {
   return (
@@ -9,7 +9,6 @@ export default function Hero() {
 
       {/* quiet hand-drawn accents */}
       <DoodleRays className="pointer-events-none absolute left-[9%] top-[30%] hidden h-14 w-14 -rotate-6 lg:block" />
-      <DoodleDots className="pointer-events-none absolute right-[10%] top-[26%] hidden h-14 w-14 rotate-6 lg:block" />
 
       <div className="container-x relative text-center">
         <p className="mx-auto inline-flex items-center gap-2 rounded-full border border-soft bg-white/80 px-3.5 py-1.5 text-[13px] font-medium text-ink backdrop-blur">
