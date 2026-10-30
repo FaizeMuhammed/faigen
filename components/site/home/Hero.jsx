@@ -35,7 +35,7 @@ export default function Hero() {
       </div>
 
       {/* a shopper, the cart full of chats */}
-      <div className="container-x relative pb-16 pt-12 sm:pb-24">
+      <div className="container-x relative pb-12 pt-2 sm:pb-20 sm:pt-4">
         <HeroTrolley className="mx-auto w-full max-w-[720px]" />
       </div>
     </section>
