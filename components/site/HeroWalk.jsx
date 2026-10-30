@@ -1,5 +1,4 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { SparkleG } from './Illustrations'
 
 /* ────────────────────────────────────────────────────────────────
@@ -40,7 +39,7 @@ function P({ d, width = 2.8, fill = 'none', stroke = INK, dash, opacity = 1 }) {
   return <path d={d} fill={fill} stroke={stroke} strokeWidth={width} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={dash} opacity={opacity} />
 }
 
-// animateTransform / animate wrappers that vanish in the still version
+// animateTransform / animate wrappers that switch off when `on` is false
 function Move({ on, type, values, times, splines }) {
   if (!on) return null
   return (
@@ -75,15 +74,7 @@ function Words({ on, from, x, y, rotate, children }) {
 }
 
 export default function HeroWalk({ className = '' }) {
-  const [still, setStill] = useState(false)
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const sync = () => setStill(mq.matches)
-    sync()
-    mq.addEventListener('change', sync)
-    return () => mq.removeEventListener('change', sync)
-  }, [])
-  const on = !still
+  const on = true // always plays, whatever the browser's motion setting
 
   const legA = walkSeries(16, -16), legB = walkSeries(-16, 16)
   const bob = walkSeries(-3, 0)
