@@ -25,13 +25,13 @@ const SCRIPTS = [
   },
 ]
 
-function Bubble({ step }) {
+function Bubble({ step, still }) {
   const mine = step.from === 'me'
   if (step.card) {
     return (
       <motion.div
         layout
-        initial={{ opacity: 0, y: 14, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }}
+        initial={still ? false : { opacity: 0, y: 14, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
         className="max-w-[88%] self-start rounded-2xl rounded-bl-md bg-white shadow-sm overflow-hidden"
       >
@@ -50,7 +50,7 @@ function Bubble({ step }) {
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, y: 14, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }}
+      initial={still ? false : { opacity: 0, y: 14, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
       className={`max-w-[84%] rounded-2xl px-3 py-2 shadow-sm ${mine ? 'self-end rounded-br-md bg-[#d9fdd3]' : 'self-start rounded-bl-md bg-white'}`}
     >
@@ -143,7 +143,7 @@ export default function PhoneChat({ className = '', still = false }) {
           {/* chat */}
           <div className="relative flex flex-1 flex-col justify-end gap-2 overflow-hidden px-3 pb-3">
             <AnimatePresence initial={false}>
-              {script.steps.slice(0, shown).map((step, i) => <Bubble key={`${scriptIdx}-${i}`} step={step} />)}
+              {script.steps.slice(0, shown).map((step, i) => <Bubble key={`${scriptIdx}-${i}`} step={step} still={still} />)}
               {typing && <TypingBubble key="typing" />}
             </AnimatePresence>
           </div>

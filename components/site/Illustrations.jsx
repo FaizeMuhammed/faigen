@@ -1,55 +1,33 @@
 'use client'
-import { motion } from 'framer-motion'
 
 /* ────────────────────────────────────────────────────────────────
    Hand-drawn illustrations in Faigen's colors: ink, white, blue.
    Loose, rounded line work with soft color blobs behind it — the same
-   node-and-line language as the Faigen logo. All drawing animations
-   play once, when scrolled into view.
+   node-and-line language as the Faigen logo. All drawings are static.
    ──────────────────────────────────────────────────────────────── */
 
 const INK = '#1d1d1f'
 const BLUE = '#0071e3'
 const TINT = '#dcebff'
 
-const ease = [0.22, 1, 0.36, 1]
-
-// Animation pacing: drawings start as soon as they enter the screen and finish quickly.
-const DELAY = 0.35 // multiplier on the delays written in each drawing
-const DRAW = 0.5 // multiplier on how long a line takes to draw
-const IN_VIEW = { once: true, amount: 0.15, margin: '0px 0px -6% 0px' }
-
-// A line that draws itself when it scrolls into view
-function Draw({ d, stroke = INK, width = 2.6, delay = 0, duration = 1.1, fill = 'none', dash, opacity = 1 }) {
+// Everything is drawn in place on first paint — no scroll-triggered animation.
+function Draw({ d, stroke = INK, width = 2.6, fill = 'none', dash, opacity = 1 }) {
   return (
-    <motion.path
-      d={d} fill={fill} stroke={stroke} strokeWidth={width} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={dash} opacity={opacity}
-      initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={IN_VIEW}
-      transition={{ duration: duration * DRAW, delay: delay * DELAY, ease }}
-    />
+    <path d={d} fill={fill} stroke={stroke} strokeWidth={width} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={dash} opacity={opacity} />
   )
 }
 
-// A shape that gently fades in
-function Pop({ children, delay = 0 }) {
-  return (
-    <motion.g initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={IN_VIEW}
-      transition={{ duration: 0.45, delay: delay * DELAY, ease }} style={{ transformBox: 'fill-box', transformOrigin: 'center' }}>
-      {children}
-    </motion.g>
-  )
+function Pop({ children }) {
+  return <g>{children}</g>
 }
 
 /* ── Small decorations ─────────────────────────────────────────── */
 
 // Hand-drawn underline for a headline word
-export function Squiggle({ className = '', color = BLUE, delay = 0.9 }) {
+export function Squiggle({ className = '', color = BLUE }) {
   return (
     <svg viewBox="0 0 240 22" className={className} fill="none" aria-hidden="true" preserveAspectRatio="none">
-      <motion.path
-        d="M4 13 C34 5, 62 19, 98 10 S168 5, 236 11" stroke={color} strokeWidth="5" strokeLinecap="round"
-        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.7, delay: delay * DELAY, ease }}
-      />
+      <path d="M4 13 C34 5, 62 19, 98 10 S168 5, 236 11" stroke={color} strokeWidth="5" strokeLinecap="round" />
     </svg>
   )
 }
@@ -163,10 +141,7 @@ const HAND = { fontFamily: 'var(--font-hand), cursive', fontWeight: 600 }
 
 function Label({ x, y, rotate = 0, children, fill = INK, size = 30, delay = 0, anchor = 'start' }) {
   return (
-    <motion.text
-      x={x} y={y} fontSize={size} fill={fill} textAnchor={anchor} style={HAND} transform={`rotate(${rotate} ${x} ${y})`}
-      initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={IN_VIEW} transition={{ duration: 0.5, delay: delay * DELAY }}
-    >{children}</motion.text>
+    <text x={x} y={y} fontSize={size} fill={fill} textAnchor={anchor} style={HAND} transform={`rotate(${rotate} ${x} ${y})`}>{children}</text>
   )
 }
 
