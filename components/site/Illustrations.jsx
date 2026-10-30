@@ -191,8 +191,8 @@ export function HeroDoodlesRight({ className = '' }) {
       <Draw d="M196 46 L298 12 L266 92 L240 66 Z M240 66 L298 12 M240 66 L238 92 L254 76" stroke={BLUE} width={3} delay={1.6} duration={1.3} />
       <Draw d="M30 130 C 80 84, 130 96, 190 62" stroke={INK} width={2.2} dash="2 8" opacity={0.5} delay={2.4} duration={1} />
       <Label x={64} y={168} rotate={3} fill={BLUE} delay={2.6}>Faigen replies!</Label>
-      <Draw d="M258 186 C 296 222, 302 256, 276 290" stroke={INK} width={3} delay={2.9} duration={0.9} />
-      <Draw d="M262 270 L276 292 L292 276" stroke={INK} width={3} delay={3.7} duration={0.3} />
+      <Draw d="M62 178 C 30 196, 20 226, 36 258" stroke={INK} width={3} delay={2.9} duration={0.9} />
+      <Draw d="M22 244 L37 260 L52 246" stroke={INK} width={3} delay={3.7} duration={0.3} />
     </svg>
   )
 }

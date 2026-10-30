@@ -1,6 +1,5 @@
 'use client'
 import { motion } from 'framer-motion'
-import { ShoppingBag, Zap } from 'lucide-react'
 import PhoneChat from '../PhoneChat'
 import { PillButton, TextLink } from '../Buttons'
 import { Squiggle, DoodleRays, DoodleDots, HeroDoodlesLeft, HeroDoodlesRight } from '../Illustrations'
@@ -45,22 +44,7 @@ export default function Hero() {
 
       {/* phone, cropped at the bottom like a product shot */}
       <div className="relative mx-auto mt-10 h-[430px] max-w-[1100px] overflow-hidden sm:h-[500px]">
-        <motion.div initial={{ opacity: 0, y: 70 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}>
-          <PhoneChat />
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, delay: 1.2 }} className="absolute left-[3%] top-[34%] hidden md:block">
-          <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3 shadow-[0_20px_50px_-15px_rgba(0,0,0,.25)] ring-1 ring-black/5 backdrop-blur">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e9f9ee] text-[#1a9b4a]"><ShoppingBag size={17} /></span>
-            <div className="text-left leading-tight"><p className="text-[13px] font-semibold text-ink">New order</p><p className="text-[12px] text-muted">₹1,200 · just now</p></div>
-          </div>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, delay: 1.4 }} className="absolute right-[3%] top-[52%] hidden md:block">
-          <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3 shadow-[0_20px_50px_-15px_rgba(0,0,0,.25)] ring-1 ring-black/5 backdrop-blur">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-soft text-accent"><Zap size={17} /></span>
-            <div className="text-left leading-tight"><p className="text-[13px] font-semibold text-ink">Replied in seconds</p><p className="text-[12px] text-muted">Even at 2 AM</p></div>
-          </div>
-        </motion.div>
+        <PhoneChat still />
 
         <HeroDoodlesLeft className="pointer-events-none absolute left-[1%] top-0 hidden w-[300px] lg:block" />
         <HeroDoodlesRight className="pointer-events-none absolute right-[1%] top-0 hidden w-[300px] lg:block" />

@@ -78,17 +78,17 @@ function TypingBubble() {
   )
 }
 
-export default function PhoneChat({ className = '' }) {
+export default function PhoneChat({ className = '', still = false }) {
   const ref = useRef(null)
   const inView = useInView(ref, { amount: 0.3 })
   const reduce = useReducedMotion()
   const [scriptIdx, setScriptIdx] = useState(0)
-  const [shown, setShown] = useState(0)
+  const [shown, setShown] = useState(still ? SCRIPTS[0].steps.length : 0)
   const [typing, setTyping] = useState(false)
   const idxRef = useRef(0)
 
   useEffect(() => {
-    if (reduce) { setShown(SCRIPTS[0].steps.length); return }
+    if (reduce || still) { setShown(SCRIPTS[0].steps.length); return }
     if (!inView) return
     let cancelled = false
     const sleep = (ms) => new Promise(r => setTimeout(r, ms))
@@ -111,7 +111,7 @@ export default function PhoneChat({ className = '' }) {
       }
     })()
     return () => { cancelled = true }
-  }, [inView, reduce])
+  }, [inView, reduce, still])
 
   const script = SCRIPTS[scriptIdx]
 
