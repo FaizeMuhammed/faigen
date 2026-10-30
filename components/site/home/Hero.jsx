@@ -1,6 +1,7 @@
 'use client'
 import { PillButton, TextLink } from '../Buttons'
-import { Squiggle, DoodleRays, HeroTrolley } from '../Illustrations'
+import { Squiggle, DoodleRays } from '../Illustrations'
+import HeroWalk from '../HeroWalk'
 
 export default function Hero() {
   return (
@@ -35,7 +36,7 @@ export default function Hero() {
 
       {/* a shopper, the cart full of chats */}
       <div className="container-x relative pb-12 pt-2 sm:pb-20 sm:pt-4">
-        <HeroTrolley className="mx-auto w-full max-w-[720px]" />
+        <HeroWalk className="mx-auto w-full max-w-[720px]" />
       </div>
     </section>
   )
