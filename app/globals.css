@@ -104,3 +104,15 @@ body {
 .sb-case .sb-rest { color: var(--rest); transition: color .35s ease; }
 
 @keyframes sbRowIn { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+
+/* Compare table: the full 340 + 3 x 300 grid on desktop; on phones a compact grid that fits the screen */
+.sb-cmp { display: grid; grid-template-columns: 340px repeat(3, 300px); width: 1240px; margin: 0 auto; }
+@media (max-width: 1260px) { .sb-cmp { width: 100%; grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 700px) {
+  .sb-cmp { grid-template-columns: minmax(0, 1fr) repeat(3, 58px); }
+  .sb-cmp .sb-c { padding: 10px 4px !important; justify-content: center; text-align: center; }
+  .sb-cmp .sb-c span { font-size: 12px !important; }
+  .sb-cmp .sb-pn { font-size: 12.5px !important; line-height: 16px !important; }
+  .sb-cmp .sb-hide-m { display: none; }
+  .sb-cmp > div:nth-child(-n+4) { min-height: 56px !important; }
+}

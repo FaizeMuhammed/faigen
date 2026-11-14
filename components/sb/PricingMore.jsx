@@ -59,12 +59,11 @@ function Cross() {
 function Cell({ v }) {
   if (v === true) return <Tick />
   if (v === false) return <Cross />
-  if (v === 'launch') return <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><Tick /><span style={{ fontSize: 16, color: '#52525b' }}>Included</span></span>
+  if (v === 'launch') return <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><Tick /><span className="sb-hide-m" style={{ fontSize: 16, color: '#52525b' }}>Included</span></span>
   return <span style={{ fontSize: 16, lineHeight: '22.4px', color: '#52525b' }}>{v}</span>
 }
 export function CompareTable() {
-  const cols = '340px repeat(3,300px)'
-  const cell = { background: '#fafaf9', minHeight: 52, padding: '12px 24px', display: 'flex', alignItems: 'center' }
+    const cell = { background: '#fafaf9', minHeight: 52, padding: '12px 24px', display: 'flex', alignItems: 'center' }
   const first = { ...cell, padding: '12px 0', fontSize: 16, lineHeight: '22.4px', color: '#52525b' }
   return (
     <section style={{ padding: '80px 0' }}>
@@ -73,15 +72,15 @@ export function CompareTable() {
           <H2>Find the perfect plan for your business</H2>
           <p style={{ margin: '12px auto 0', maxWidth: 520, fontSize: 21, lineHeight: '29.4px', color: '#535353' }}>Compare plans and pick the one that fits your business best.</p>
         </div>
-        <div className="mt-10 overflow-x-auto">
-          <div style={{ width: 1240, maxWidth: 'none', margin: '0 auto', display: 'grid', gridTemplateColumns: cols }}>
+        <div className="mt-10">
+          <div className="sb-cmp">
             <div className="font-heading" style={{ ...first, minHeight: 95, alignItems: 'flex-end', paddingBottom: 12, fontSize: 20, lineHeight: '28px', fontWeight: 500, color: '#1a1a1a' }}>Features</div>
             {PLANS.map((p, i) => (
-              <div key={p.id} style={{ background: '#f8f6f4', padding: '12px 24px', minHeight: 95, borderRadius: i === 0 ? '24px 0 0 0' : i === 2 ? '0 24px 0 0' : 0 }}>
-                <p style={{ margin: 0, fontSize: 21, lineHeight: '29.4px', color: '#52525b' }}>{p.name}</p>
-                {p.custom
+              <div key={p.id} className="sb-c" style={{ background: '#f8f6f4', padding: '12px 24px', minHeight: 95, borderRadius: i === 0 ? '24px 0 0 0' : i === 2 ? '0 24px 0 0' : 0 }}>
+                <p className="sb-pn" style={{ margin: 0, fontSize: 21, lineHeight: '29.4px', color: '#52525b' }}>{p.name}</p>
+                <div className="sb-hide-m">{p.custom
                   ? <p className="font-heading" style={{ margin: '2px 0 0', fontSize: 31, lineHeight: '37.2px', fontWeight: 500, color: '#1a1a1a' }}>Let’s talk</p>
-                  : <p style={{ margin: '2px 0 0', display: 'flex', alignItems: 'baseline', gap: 4 }}><span className="font-heading" style={{ fontSize: 31, lineHeight: '37.2px', fontWeight: 500, color: '#1a1a1a' }}>₹{p.monthly.toLocaleString('en-IN')}</span><span style={{ fontSize: 14, color: '#52525b' }}>/month</span></p>}
+                  : <p style={{ margin: '2px 0 0', display: 'flex', alignItems: 'baseline', gap: 4 }}><span className="font-heading" style={{ fontSize: 31, lineHeight: '37.2px', fontWeight: 500, color: '#1a1a1a' }}>₹{p.monthly.toLocaleString('en-IN')}</span><span style={{ fontSize: 14, color: '#52525b' }}>/month</span></p>}</div>
               </div>
             ))}
             {COMPARE.map(g => (
@@ -104,7 +103,7 @@ function GroupRows({ g, cell, first }) {
   return (
     <>
       <div className="font-heading" style={{ ...first, minHeight: 64, alignItems: 'flex-end', paddingBottom: 8, fontSize: 20, lineHeight: '28px', fontWeight: 500, color: '#1a1a1a' }}>{g.group}</div>
-      <div style={{ ...cell, minHeight: 64 }} /><div style={{ ...cell, minHeight: 64 }} /><div style={{ ...cell, minHeight: 64 }} />
+      <div className="sb-c" style={{ ...cell, minHeight: 64 }} /><div className="sb-c" style={{ ...cell, minHeight: 64 }} /><div className="sb-c" style={{ ...cell, minHeight: 64 }} />
       {g.rows.map(([name, ...vals]) => (
         <Row key={name} name={name} vals={vals} cell={cell} first={first} />
       ))}
@@ -115,7 +114,7 @@ function Row({ name, vals, cell, first }) {
   return (
     <>
       <div style={first}>{name}</div>
-      {vals.map((v, i) => <div key={i} style={cell}><Cell v={v} /></div>)}
+      {vals.map((v, i) => <div key={i} className="sb-c" style={cell}><Cell v={v} /></div>)}
     </>
   )
 }

@@ -28,7 +28,7 @@ export default function PricingPage() {
             <p className="max-w-[520px] text-[clamp(1.05rem,1.5vw,1.3125rem)] leading-[1.4] text-[#535353]">An AI agent that sells and supports on WhatsApp and Instagram, around the clock. One monthly fee, unlimited conversations.</p>
             {LAUNCH_OFFER.active && (
               <a href="#plans" className="mt-1 inline-flex items-center gap-2 rounded-full bg-[#dbfc74] px-4 py-2 text-[15px] font-medium leading-[22px] text-[#1a1a1a]">
-                <span className="rounded-full bg-[#1a1a1a] px-2 py-0.5 text-[11px] text-white">{LAUNCH_OFFER.badge}</span>{LAUNCH_OFFER.text}
+                <span className="shrink-0 whitespace-nowrap rounded-full bg-[#1a1a1a] px-2 py-0.5 text-[11px] text-white">{LAUNCH_OFFER.badge}</span>{LAUNCH_OFFER.text}
               </a>
             )}
           </div>
