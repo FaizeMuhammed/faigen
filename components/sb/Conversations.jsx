@@ -18,17 +18,28 @@ const COLS = [
   ],
 ]
 
-function Card({ wa, ask, reply, who, role, tone }) {
+// Quote mark from the reference (stone-200), top right of every card
+function QuoteMark() {
   return (
-    <div className="relative flex min-h-[300px] flex-col justify-between rounded-[24px] bg-white px-5 pb-5 pt-12">
-      {wa ? <WhatsAppGlyph className="absolute right-3.5 top-3.5 h-10 w-10" /> : <InstagramGlyph className="absolute right-3.5 top-3.5 h-10 w-10" />}
-      <div className="flex flex-col gap-3 text-[16px] leading-[22.4px] text-[#1a1a1a]">
-        <p>“{ask}”</p>
-        <p className="text-[#71717a]">{reply}</p>
+    <svg viewBox="0 0 40 40" width="40" height="40" aria-hidden style={{ position: 'absolute', right: 20, top: 14 }}>
+      <path fill="#eeebe7" d="M19.77 17.035H16.823c-1.214 0-1.965.202-2.254.606-.289.347-.433 1.012-.433 1.994V31.597H1.047V18.075c0-2.832.867-5.086 2.6-6.761C5.381 9.638 7.953 8.8 11.362 8.8H19.77zM39.447 17.035H36.5c-1.214 0-1.965.202-2.254.606-.289.347-.433 1.012-.433 1.994V31.597H20.724V18.075c0-2.832.866-5.086 2.6-6.761C25.058 9.638 27.629 8.8 31.039 8.8H39.447z" />
+    </svg>
+  )
+}
+
+// Card: white, radius 24, padding 48 / 20 / 20, min height 300. Name and role on the left, a 40px radius-8 tile on the right.
+function Card({ wa, ask, reply, who, role, tone }) {
+  const Glyph = wa ? WhatsAppGlyph : InstagramGlyph
+  return (
+    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 32, minHeight: 300, background: '#fff', borderRadius: 24, padding: '48px 20px 20px' }}>
+      <QuoteMark />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontSize: 16, lineHeight: '22.4px', color: '#1a1a1a' }}>
+        <p style={{ margin: 0 }}>“{ask}”</p>
+        <p style={{ margin: 0, color: '#71717a' }}>{reply}</p>
       </div>
-      <div className="mt-8 flex items-center gap-5">
-        <span className="flex h-10 w-10 items-center justify-center rounded-full text-[15px] font-medium" style={{ background: tone }}>{who[0]}</span>
-        <div><p className="text-[14px] font-medium leading-[19.6px]">{who}</p><p className="text-[14px] leading-[19.6px] text-[#71717a]">{role}</p></div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+        <div style={{ lineHeight: '19.6px', fontSize: 14 }}><p style={{ margin: 0, fontWeight: 500, color: '#1a1a1a' }}>{who}</p><p style={{ margin: 0, color: '#71717a' }}>{role}</p></div>
+        <span style={{ width: 40, height: 40, borderRadius: 8, background: tone, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Glyph style={{ width: 24, height: 24 }} className="h-6 w-6" /></span>
       </div>
     </div>
   )
