@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Check, Minus, Plus } from 'lucide-react'
+import { Minus, Plus } from 'lucide-react'
 import { COMPARE, FAQS, MESSAGE_FEES, COMING_SOON, PLANS } from '@/lib/site'
 import { GreyPill, H2 } from './ui'
 
@@ -48,34 +48,44 @@ export function FeeCards() {
   )
 }
 
-// ── Compare table: features column plus three plan columns (header cells #f8f6f4, rows 52 high) ──
+// ── Compare table, as on the reference: a 340 features column + three 300 plan columns, no borders.
+// Plan header cells #f8f6f4 (95 high), body cells #fafaf9 (52 high), values in grey or as a lime tick / grey cross.
+function Tick() {
+  return <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden><g transform="translate(7 7)"><circle cx="5" cy="5" r="5" fill="#dbfc74" stroke="#dbfc74" strokeWidth="1.29" /><path d="M3.857 5.336s.667.381 1 .938c0 0 1-2.188 2.333-2.917" fill="none" stroke="#1a1a1a" strokeWidth="1.07" strokeLinecap="round" strokeLinejoin="round" /></g></svg>
+}
+function Cross() {
+  return <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden><g transform="translate(7 7)"><circle cx="5" cy="5" r="5" fill="#f0eeeb" /><path d="M3.4 3.4l3.2 3.2M6.6 3.4L3.4 6.6" stroke="#a1a1aa" strokeWidth="1.07" strokeLinecap="round" /></g></svg>
+}
 function Cell({ v }) {
-  if (v === true) return <span style={{ width: 24, height: 24, borderRadius: 12, background: '#dbfc74', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}><Check size={14} strokeWidth={2.8} /></span>
-  if (v === false) return <Minus size={16} color="#c4c4cb" />
-  if (v === 'launch') return <span style={{ background: '#dbfc74', fontSize: 12, padding: '4px 10px', borderRadius: 10, whiteSpace: 'nowrap' }}>Included · launch offer</span>
-  return <span style={{ fontSize: 15, color: '#1a1a1a' }}>{v}</span>
+  if (v === true) return <Tick />
+  if (v === false) return <Cross />
+  if (v === 'launch') return <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><Tick /><span style={{ fontSize: 16, color: '#52525b' }}>Included</span></span>
+  return <span style={{ fontSize: 16, lineHeight: '22.4px', color: '#52525b' }}>{v}</span>
 }
 export function CompareTable() {
-  const cols = 'minmax(220px,340px) repeat(3,minmax(150px,300px))'
-  const cell = { background: '#fafaf9', minHeight: 52, padding: '12px 24px', display: 'flex', alignItems: 'center', borderBottom: '1px solid #f0eeeb' }
+  const cols = '340px repeat(3,300px)'
+  const cell = { background: '#fafaf9', minHeight: 52, padding: '12px 24px', display: 'flex', alignItems: 'center' }
+  const first = { ...cell, padding: '12px 0', fontSize: 16, lineHeight: '22.4px', color: '#52525b' }
   return (
     <section style={{ padding: '80px 0' }}>
       <div className="mx-auto w-full max-w-[1240px] px-5">
         <div style={{ textAlign: 'center' }}>
-          <H2>Compare plans</H2>
-          <p style={{ margin: '12px auto 0', maxWidth: 520, fontSize: 21, lineHeight: '29.4px', color: '#535353' }}>See exactly what you get in each plan.</p>
+          <H2>Find the perfect plan for your business</H2>
+          <p style={{ margin: '12px auto 0', maxWidth: 520, fontSize: 21, lineHeight: '29.4px', color: '#535353' }}>Compare plans and pick the one that fits your business best.</p>
         </div>
         <div className="mt-10 overflow-x-auto">
-          <div style={{ minWidth: 880, display: 'grid', gridTemplateColumns: cols, justifyContent: 'center' }}>
-            <div style={{ ...cell, background: 'transparent', borderBottom: 0, minHeight: 95 }} />
+          <div style={{ width: 1240, maxWidth: 'none', margin: '0 auto', display: 'grid', gridTemplateColumns: cols }}>
+            <div className="font-heading" style={{ ...first, minHeight: 95, alignItems: 'flex-end', paddingBottom: 12, fontSize: 20, lineHeight: '28px', fontWeight: 500, color: '#1a1a1a' }}>Features</div>
             {PLANS.map((p, i) => (
               <div key={p.id} style={{ background: '#f8f6f4', padding: '12px 24px', minHeight: 95, borderRadius: i === 0 ? '24px 0 0 0' : i === 2 ? '0 24px 0 0' : 0 }}>
-                <p className="font-heading" style={{ margin: 0, fontSize: 24, lineHeight: '29px', fontWeight: 500 }}>{p.name}</p>
-                <p style={{ margin: '4px 0 0', fontSize: 14, color: '#71717a' }}>{p.custom ? 'Let’s talk' : `₹${p.monthly.toLocaleString('en-IN')}/month`}</p>
+                <p style={{ margin: 0, fontSize: 21, lineHeight: '29.4px', color: '#52525b' }}>{p.name}</p>
+                {p.custom
+                  ? <p className="font-heading" style={{ margin: '2px 0 0', fontSize: 31, lineHeight: '37.2px', fontWeight: 500, color: '#1a1a1a' }}>Let’s talk</p>
+                  : <p style={{ margin: '2px 0 0', display: 'flex', alignItems: 'baseline', gap: 4 }}><span className="font-heading" style={{ fontSize: 31, lineHeight: '37.2px', fontWeight: 500, color: '#1a1a1a' }}>₹{p.monthly.toLocaleString('en-IN')}</span><span style={{ fontSize: 14, color: '#52525b' }}>/month</span></p>}
               </div>
             ))}
             {COMPARE.map(g => (
-              <FragmentRows key={g.group} g={g} cell={cell} />
+              <GroupRows key={g.group} g={g} cell={cell} first={first} />
             ))}
           </div>
         </div>
@@ -90,20 +100,21 @@ export function CompareTable() {
     </section>
   )
 }
-function FragmentRows({ g, cell }) {
+function GroupRows({ g, cell, first }) {
   return (
     <>
-      <div style={{ ...cell, gridColumn: '1 / -1', background: '#f0eeeb', minHeight: 44, padding: '10px 24px', fontSize: 14, fontWeight: 500, letterSpacing: '.02em' }}>{g.group}</div>
+      <div className="font-heading" style={{ ...first, minHeight: 64, alignItems: 'flex-end', paddingBottom: 8, fontSize: 20, lineHeight: '28px', fontWeight: 500, color: '#1a1a1a' }}>{g.group}</div>
+      <div style={{ ...cell, minHeight: 64 }} /><div style={{ ...cell, minHeight: 64 }} /><div style={{ ...cell, minHeight: 64 }} />
       {g.rows.map(([name, ...vals]) => (
-        <FragmentRow key={name} name={name} vals={vals} cell={cell} />
+        <Row key={name} name={name} vals={vals} cell={cell} first={first} />
       ))}
     </>
   )
 }
-function FragmentRow({ name, vals, cell }) {
+function Row({ name, vals, cell, first }) {
   return (
     <>
-      <div style={{ ...cell, fontSize: 16, lineHeight: '22.4px', color: '#1a1a1a' }}>{name}</div>
+      <div style={first}>{name}</div>
       {vals.map((v, i) => <div key={i} style={cell}><Cell v={v} /></div>)}
     </>
   )
