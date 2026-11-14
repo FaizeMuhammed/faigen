@@ -2,19 +2,13 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
+import SbNav from '@/components/sb/Nav'
+import CtaFooter from '@/components/sb/CtaFooter'
+import { urbanist, jost } from '@/components/sb/fonts'
 
-const NAV = [
-  { label: 'Home', href: '/' },
-  { label: 'Use Cases', href: '/use-cases' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Brochure', href: '/brochure' },
-  { label: 'Guide', href: '/guide' },
-  { label: 'Contact Us', href: '/contact' },
-]
 
 export default function EmbedPage({ src, title, active }) {
-  const [menuOpen, setMenuOpen] = useState(false)
   const [height, setHeight] = useState(900)
   const frameRef = useRef(null)
   const cleanupRef = useRef(null)
@@ -50,74 +44,35 @@ export default function EmbedPage({ src, title, active }) {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#FBFBFD] font-sans text-[#1D1D1F]">
-      <header className="sticky top-0 z-50 bg-[#FBFBFD]/80 backdrop-blur-2xl border-b border-[#E5E5EA]">
-        <div className="max-w-[1500px] mx-auto px-6 md:px-10 py-5 flex justify-between items-center">
-          <Link href="/">
-            <img src="/logonew.png" alt="Faigen Logo" className="h-8 md:h-14 w-auto object-contain" />
-          </Link>
-
-          <nav className="hidden lg:flex items-center gap-10 text-[14px] font-medium text-[#86868B]">
-            {NAV.map(item =>
-              item.label === active ? (
-                <span key={item.href} className="text-[#1D1D1F] font-semibold">{item.label}</span>
-              ) : (
-                <Link key={item.href} href={item.href} className="hover:text-[#1D1D1F] transition-colors">{item.label}</Link>
-              )
-            )}
-          </nav>
-
-          <div className="hidden lg:flex items-center gap-6">
-            <Link href="/try" className="bg-[#1D1D1F] text-white px-5 py-2 text-[14px] font-semibold rounded-full hover:bg-black transition-colors">
-              Try it now
-            </Link>
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen overflow-x-clip bg-[#fafafa] text-[#1a1a1a]`}>
+      <SbNav />
+      <main className="pt-[100px]">
+        <div className="mx-auto flex w-full max-w-[1240px] items-center justify-between gap-4 px-5 pb-4">
+          <div>
+            <p className="m-0 flex items-center gap-2 text-[16px] leading-[22.4px] text-[#535353]"><span className="h-2 w-2 rounded-full bg-[#34c759]" />{active}</p>
+            <h1 className="font-heading m-0 mt-1 text-[32px] font-medium leading-[1.2] sm:text-[44px]">{title}</h1>
           </div>
-
-          <button className="lg:hidden p-2 text-[#1D1D1F]" onClick={() => setMenuOpen(v => !v)} aria-label="Menu">
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </header>
-
-      {menuOpen && (
-        <div className="lg:hidden fixed top-[73px] left-0 right-0 bg-white/95 backdrop-blur-3xl border-b border-[#E5E5EA] px-6 pb-8 flex flex-col z-40">
-          {NAV.map(item => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setMenuOpen(false)}
-              className={`text-[16px] py-5 border-b border-[#F5F5F7] ${item.label === active ? 'font-bold text-[#1D1D1F]' : 'font-medium text-[#86868B]'}`}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link href="/try" onClick={() => setMenuOpen(false)} className="mt-6 bg-[#1D1D1F] text-white text-center py-3 rounded-full text-[15px] font-semibold">
-            Try it now
-          </Link>
-        </div>
-      )}
-
-      <main>
-        <div className="max-w-[1240px] mx-auto px-2 sm:px-4 pt-4 flex justify-end">
-          <a
-            href={src}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#86868B] hover:text-[#0066CC] transition-colors px-4 py-2"
-          >
-            Open full screen <ArrowUpRight size={14} />
+          <a href={src} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-[24px] bg-[#f0eeeb] px-5 text-[15px] font-medium text-[#1a1a1a] hover:bg-[#e7e4df]">
+            Open full screen <ArrowUpRight size={15} />
           </a>
         </div>
-        <iframe
-          ref={frameRef}
-          src={src}
-          title={title}
-          onLoad={attach}
-          scrolling="no"
-          className="block w-full border-0 bg-[#FBFBFD]"
-          style={{ height }}
-        />
+        <div className="mx-auto w-full max-w-[1240px] px-5 pb-20">
+          <div className="rounded-[32px] bg-[#f0eeeb] p-2">
+            <div className="overflow-hidden rounded-[24px] bg-white">
+              <iframe
+                ref={frameRef}
+                src={src}
+                title={title}
+                onLoad={attach}
+                scrolling="no"
+                className="block w-full border-0 bg-white"
+                style={{ height }}
+              />
+            </div>
+          </div>
+        </div>
       </main>
+      <CtaFooter />
     </div>
   )
 }
