@@ -39,29 +39,39 @@ function Bubble({ me, children, time }) {
   )
 }
 
+// Card 1: three tilted message notes, like Sunbeam's task notes, but each is a real customer message
+const FACES = { Anjali: '/sb/faces/f2.png', priya_crafts: '/sb/faces/f9.png', Fathima: '/sb/faces/f6.png', Daniel: '/sb/faces/f1.png' }
+function Note({ ch, tag, tagBg, user, text, reply, meta, style }) {
+  return (
+    <div style={abs({ width: 232, background: '#fff', borderRadius: 16, padding: '11px 13px 10px', boxShadow: SHADOW, ...style })}>
+      <div style={row({ gap: 8 })}>
+        <span style={{ position: 'relative', width: 30, height: 30, flexShrink: 0 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={FACES[user]} alt="" width={30} height={30} style={{ display: 'block', width: 30, height: 30, borderRadius: 15, objectFit: 'cover' }} />
+          <span style={abs({ right: -4, bottom: -4, background: '#fff', borderRadius: 8, padding: 1.5, display: 'flex' })}><Glyph G={ch} size={12} /></span>
+        </span>
+        <span style={{ fontSize: 13, fontWeight: 500, color: '#1a1a1a' }}>{user}</span>
+        <span style={{ marginLeft: 'auto', fontSize: 10.5, lineHeight: 1, padding: '4px 9px', borderRadius: 10, background: tagBg, color: '#1a1a1a' }}>{tag}</span>
+      </div>
+      <p style={{ margin: '8px 0 0', fontSize: 13, lineHeight: 1.35, color: '#1a1a1a' }}>{text}</p>
+      <div style={{ marginTop: 7, background: '#d9fdd3', borderRadius: '12px 12px 4px 12px', padding: '6px 10px', fontSize: 12, lineHeight: 1.35, color: '#111b21' }}>
+        <span style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: '.04em', color: '#1d7a36', marginRight: 6 }}>AI</span>{reply}
+      </div>
+      <div style={{ ...row({ gap: 6 }), marginTop: 7, fontSize: 10.5, color: '#8b8b92' }}>
+        <span style={{ width: 6, height: 6, borderRadius: 3, background: '#34c759' }} />{meta}
+        <span style={{ marginLeft: 'auto', color: '#53bdeb', letterSpacing: -2 }}>✓✓</span>
+      </div>
+    </div>
+  )
+}
 function ChatArt() {
   return (
     <>
       <Cloud style={{ left: -34, top: -8, width: 200, height: 100 }} tint="rgba(143,190,248,.42)" />
       <Cloud style={{ right: -44, bottom: -22, width: 240, height: 120 }} tint="rgba(143,190,248,.42)" />
-      <div style={abs({ left: 16, top: 30, width: 235, height: 352, borderRadius: 22, background: '#efeae2', boxShadow: SHADOW, overflow: 'hidden' })}>
-        <div style={row({ height: 48, background: '#fff', padding: '0 12px', gap: 8, borderBottom: '1px solid rgba(0,0,0,.05)' })}>
-          <span style={{ width: 28, height: 28, borderRadius: 14, background: 'linear-gradient(135deg,#9bbcf6,#c797f7)', color: '#fff', fontSize: 11, fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>K</span>
-          <span style={{ display: 'flex', flexDirection: 'column', gap: 2 }}><span style={{ fontSize: 11.5, fontWeight: 500, lineHeight: 1, color: '#111b21' }}>Kerala Coir Co.</span><span style={{ fontSize: 9, lineHeight: 1, color: '#1d7a36' }}>AI is replying…</span></span>
-          <span style={{ marginLeft: 'auto' }}><Glyph G={WhatsAppGlyph} size={16} /></span>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '10px 10px 0' }}>
-          <Bubble time="10:41">Price ethra aanu?</Bubble>
-          <Bubble me time="10:41">₹600 aanu 😊 Order cheyyano?</Bubble>
-          <Bubble time="10:42">Delivery undo? Kakkanad</Bubble>
-          <Bubble me time="10:42">Undu, 2 days-il ethum 🚚 Name and address ayakkumo?</Bubble>
-        </div>
-        <div style={abs({ left: 8, right: 8, bottom: 8, height: 30, borderRadius: 15, background: '#fff', ...row({ padding: '0 6px 0 12px', justifyContent: 'space-between' }) })}>
-          <span style={{ fontSize: 10.5, color: '#8696a0' }}>Type a message</span>
-          <span style={{ width: 22, height: 22, borderRadius: 11, background: '#25d366', color: '#fff', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>➤</span>
-        </div>
-      </div>
-      <div style={abs({ right: 10, top: 366, background: '#fff', borderRadius: 14, padding: '5px 10px', fontSize: 10, fontWeight: 500, boxShadow: SHADOW, ...row({ gap: 5 }) })}><span style={{ width: 6, height: 6, borderRadius: 3, background: '#34c759' }} />Replied in 3 sec</div>
+      <Note ch={WhatsAppGlyph} tag="WhatsApp" tagBg="#cdf3d6" user="Anjali" text="Price ethra aanu Coir Mat?" reply="₹600 aanu 😊 Order?" meta="Replied in 3 sec" style={{ left: 22, top: 8, transform: 'rotate(-3deg)', zIndex: 1 }} />
+      <Note ch={InstagramGlyph} tag="Instagram" tagBg="#fbd3f3" user="priya_crafts" text="Is the red bag still available?" reply="Yes! Check your DMs 📩" meta="Replied in 2 sec" style={{ left: 16, top: 142, zIndex: 2 }} />
+      <Note ch={WhatsAppGlyph} tag="Malayalam" tagBg="#e6d4ff" user="Fathima" text="Delivery Kochi undo?" reply="Undu, 2 days-il ethum 🚚" meta="Replied in 3 sec" style={{ left: 26, top: 268, transform: 'rotate(3deg)', zIndex: 3 }} />
     </>
   )
 }
@@ -94,30 +104,43 @@ function OrderArt() {
   )
 }
 
+// Card 3: a small live inbox. Chats from both channels, one flagged "Needs you", with the Take over button
 function InboxArt() {
-  const Chat = ({ ic, name, last, chip, tone, hot, avatar }) => (
-    <div style={row({ gap: 8, padding: '8px 10px', borderRadius: 12, background: hot ? '#fff6ea' : 'transparent' })}>
-      <span style={{ position: 'relative', width: 30, height: 30, borderRadius: 15, background: avatar, color: '#fff', fontSize: 11.5, fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{name[0].toUpperCase()}<span style={{ position: 'absolute', right: -3, bottom: -3, background: '#fff', borderRadius: 8, padding: 1, display: 'flex' }}><Glyph G={ic} size={11} /></span></span>
-      <span style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0, flex: 1 }}><span style={{ fontSize: 11.5, fontWeight: 500, lineHeight: 1 }}>{name}</span><span style={{ fontSize: 10, lineHeight: 1.1, color: '#71717a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{last}</span></span>
-      <span style={{ fontSize: 9, fontWeight: 600, padding: '3px 7px', borderRadius: 9, background: tone[0], color: tone[1], flexShrink: 0 }}>{chip}</span>
+  const Chat = ({ user, ch, last, chip, tone, hot }) => (
+    <div style={{ ...row({ gap: 9 }), padding: '8px 9px', borderRadius: 12, background: hot ? '#fff3e2' : 'transparent', border: hot ? '1px solid #f6d9ad' : '1px solid transparent' }}>
+      <span style={{ position: 'relative', width: 34, height: 34, flexShrink: 0 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={FACES[user]} alt="" width={34} height={34} style={{ display: 'block', width: 34, height: 34, borderRadius: 17, objectFit: 'cover' }} />
+        <span style={abs({ right: -4, bottom: -4, background: '#fff', borderRadius: 8, padding: 1.5, display: 'flex' })}><Glyph G={ch} size={12} /></span>
+      </span>
+      <span style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0, flex: 1 }}>
+        <span style={{ fontSize: 12.5, fontWeight: 500, lineHeight: 1 }}>{user}</span>
+        <span style={{ fontSize: 11, lineHeight: 1.1, color: '#71717a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{last}</span>
+      </span>
+      <span style={{ fontSize: 9.5, fontWeight: 600, padding: '4px 8px', borderRadius: 9, background: tone[0], color: tone[1], flexShrink: 0 }}>{chip}</span>
     </div>
   )
-  const AI = ['#e1f7e5', '#1d7a36'], NEED = ['#ffe2bd', '#a64b00']
+  const AI = ['#e1f7e5', '#1d7a36']
   return (
     <>
-      <Cloud style={{ left: -34, top: -8, width: 200, height: 100 }} tint="rgba(255,255,255,.26)" />
+      <Cloud style={{ left: -34, top: -8, width: 200, height: 100 }} tint="rgba(255,255,255,.3)" />
       <Cloud style={{ right: -44, bottom: -22, width: 240, height: 120 }} tint="rgba(255,255,255,.26)" />
-      <div style={abs({ left: 16, top: 30, width: 235, height: 352, borderRadius: 22, background: '#fff', boxShadow: SHADOW, padding: '14px 8px' })}>
-        <div style={row({ justifyContent: 'space-between', padding: '0 6px 10px' })}>
-          <span style={{ display: 'flex', flexDirection: 'column', gap: 4 }}><span className="font-heading" style={{ fontSize: 15, fontWeight: 500, lineHeight: 1 }}>Live inbox</span><span style={{ fontSize: 9.5, color: '#71717a', lineHeight: 1 }}>24 chats today</span></span>
-          <span style={row({ gap: 5, fontSize: 9.5, fontWeight: 500 })}>AI replies<span style={{ width: 26, height: 15, borderRadius: 8, background: '#34c759', padding: 2, display: 'flex', justifyContent: 'flex-end' }}><span style={{ width: 11, height: 11, borderRadius: 6, background: '#fff' }} /></span></span>
+      <div style={abs({ left: 16, top: 26, width: 240, borderRadius: 20, background: '#fff', boxShadow: SHADOW, padding: '14px 8px 12px' })}>
+        <div style={row({ justifyContent: 'space-between', padding: '0 7px 8px' })}>
+          <span className="font-heading" style={{ fontSize: 15, fontWeight: 500, lineHeight: 1 }}>Live inbox</span>
+          <span style={row({ gap: 6, fontSize: 10.5, fontWeight: 500 })}>AI replies<span style={{ width: 28, height: 16, borderRadius: 8, background: '#34c759', padding: 2, display: 'flex', justifyContent: 'flex-end' }}><span style={{ width: 12, height: 12, borderRadius: 6, background: '#fff' }} /></span></span>
         </div>
-        <Chat ic={WhatsAppGlyph} name="Anjali" last="Delivery undo? Kakkanad" chip="AI" tone={AI} avatar="linear-gradient(135deg,#9bbcf6,#7fa8ff)" />
-        <Chat ic={WhatsAppGlyph} name="Daniel" last="Wants to talk to a person" chip="Needs you" tone={NEED} avatar="linear-gradient(135deg,#f6a56b,#ef7d57)" hot />
-        <Chat ic={InstagramGlyph} name="priya_crafts" last="Price for the red bag?" chip="AI" tone={AI} avatar="linear-gradient(135deg,#d79bf7,#a87bff)" />
-        <Chat ic={WhatsAppGlyph} name="Meera" last="Do you have size M in stock?" chip="AI" tone={AI} avatar="linear-gradient(135deg,#f2a3c8,#e87fb0)" />
-        <Chat ic={WhatsAppGlyph} name="Rahul" last="Order placed ✓ ₹1,200" chip="AI" tone={AI} avatar="linear-gradient(135deg,#8fd9a8,#4cc07d)" />
-        <div style={abs({ left: 12, right: 12, bottom: 12, background: '#1a1a1a', color: '#fff', borderRadius: 12, padding: '9px 12px', fontSize: 11.5, fontWeight: 500, ...row({ justifyContent: 'space-between' }) })}>Take over Daniel’s chat<span>→</span></div>
+        <Chat user="Anjali" ch={WhatsAppGlyph} last="Price ethra aanu Coir Mat?" chip="AI" tone={AI} />
+        <Chat user="priya_crafts" ch={InstagramGlyph} last="Is the red bag available?" chip="AI" tone={AI} />
+        <Chat user="Daniel" ch={WhatsAppGlyph} last="Wants a person" chip="Needs you" tone={['#ffe2bd', '#a64b00']} hot />
+        <div style={{ ...row({ justifyContent: 'center', gap: 6 }), margin: '10px 4px 0', background: '#1a1a1a', color: '#fff', borderRadius: 12, padding: '10px 0', fontSize: 12.5, fontWeight: 500 }}>Take over Daniel’s chat <span>→</span></div>
+      </div>
+      <div style={abs({ left: 52, top: 318, width: 200, borderRadius: 14, background: '#fff', boxShadow: SHADOW, padding: '10px 12px', transform: 'rotate(3deg)' })}>
+        <div style={row({ gap: 8 })}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/sb/faces/f4.png" alt="" width={24} height={24} style={{ display: 'block', width: 24, height: 24, borderRadius: 12, objectFit: 'cover' }} />
+          <span style={{ fontSize: 12, lineHeight: 1.3 }}><b style={{ fontWeight: 500 }}>You’re replying.</b><br /><span style={{ color: '#71717a' }}>AI paused for this chat</span></span>
+        </div>
       </div>
     </>
   )
