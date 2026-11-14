@@ -1,17 +1,17 @@
 import { ShoppingBag, Languages, Handshake, BookOpen, MessageSquareReply, LayoutGrid, ShieldCheck, BarChart3, FileImage, MousePointerClick, Truck, Image as ImageIcon } from 'lucide-react'
-import { TryLink, Tag, Wrap, H2, Grain, PANEL } from './ui'
-import { WhatsAppMock, InstagramMock, BroadcastMock } from './mocks'
+import { TryLink, Tag, Wrap, H2 } from './ui'
+import FeaturePanel from './FeatureArt'
 
 // Three #f0eeeb cards: 1200 x 580, padding 40, text column 540 + picture column 540 x 500 (radius 20).
 // Each card sticks at 90px from the top so the next one slides over it (shadow 0 -12px 32px rgba(128,128,128,.05)).
 // The product window starts ~54px in and runs off the right and bottom of the coloured panel.
 const PANELS = [
   { title: 'Conversations that close sales', text: 'Faigen answers from your own catalog and FAQs, asks for what it needs (name, product, quantity, address) and hands you a finished order. In Malayalam, Manglish or English.',
-    tags: [[ShoppingBag, 'Order collection'], [BookOpen, 'Your catalog & FAQs'], [Languages, 'Malayalam & Manglish'], [Handshake, 'Human hand-off']], Mock: WhatsAppMock, bg: PANEL.purple, link: ['Try it on WhatsApp', '/try'] },
+    tags: [[ShoppingBag, 'Order collection'], [BookOpen, 'Your catalog & FAQs'], [Languages, 'Malayalam & Manglish'], [Handshake, 'Human hand-off']], kind: 'inbox', link: ['Try it on WhatsApp', '/try'] },
   { title: 'Instagram, on autopilot', text: 'Someone comments “price” on your Reel. Faigen replies under the comment and sends the details to their DMs, with buttons to tap. It hides spam and shows you the numbers.',
-    tags: [[MessageSquareReply, 'Comment-to-DM'], [LayoutGrid, 'Buttons & chat menu'], [ShieldCheck, 'Spam shield']], Mock: InstagramMock, bg: PANEL.blue, link: ['See what’s included', '/pricing'] },
+    tags: [[MessageSquareReply, 'Comment-to-DM'], [LayoutGrid, 'Buttons & chat menu'], [ShieldCheck, 'Spam shield']], kind: 'insta', link: ['See what’s included', '/pricing'] },
   { title: 'Campaigns that bring people back', text: 'Send offers, festival greetings and event invites with an image and two buttons. See who read it, who tapped Interested, and download the list to follow up.',
-    tags: [[FileImage, 'Images & PDFs'], [MousePointerClick, 'Interested buttons']], Mock: BroadcastMock, bg: PANEL.lime, link: ['See how campaigns work', '/features'] },
+    tags: [[FileImage, 'Images & PDFs'], [MousePointerClick, 'Interested buttons']], kind: 'campaigns', link: ['See how campaigns work', '/features'] },
 ]
 
 export default function Features() {
@@ -20,7 +20,7 @@ export default function Features() {
       <Wrap className="flex flex-col gap-10">
         <H2 className="mx-auto max-w-[780px] text-center">Everything your customers ask for, handled in one place</H2>
         <div className="flex flex-col gap-10">
-          {PANELS.map(({ title, text, tags, Mock, bg, link }) => (
+          {PANELS.map(({ title, text, tags, kind, link }) => (
             <article key={title} className="sticky top-[90px] rounded-[24px] bg-[#f0eeeb] p-6 shadow-[0_-12px_32px_rgba(128,128,128,0.05)] sm:p-10">
               <div className="grid gap-10 lg:min-h-[500px] lg:grid-cols-2">
                 <div className="flex flex-col justify-between gap-8">
@@ -31,10 +31,7 @@ export default function Features() {
                   </div>
                   <TryLink href={link[1]}>{link[0]}</TryLink>
                 </div>
-                <div className="relative h-[360px] overflow-hidden rounded-[20px] lg:h-[500px]" style={{ background: bg }}>
-                  <Grain />
-                  <div className="absolute left-5 top-6 w-[720px] origin-top-left [transform:scale(.62)] sm:left-8 sm:top-10 sm:[transform:scale(.8)] lg:left-[54px] lg:top-[59px] lg:[transform:scale(.89)]"><Mock /></div>
-                </div>
+                <FeaturePanel kind={kind} />
               </div>
             </article>
           ))}
