@@ -6,7 +6,7 @@ import FeaturePanel from './FeatureArt'
 export default function FeatureStack({ items }) {
   return (
     <div className="flex flex-col gap-10">
-      {items.map(({ title, text, tags, kind, link }, i) => (
+      {items.map(({ title, text, tags, kind, link, data }, i) => (
         <article key={title} className="sticky top-[90px] rounded-[24px] bg-[#f0eeeb] p-6 shadow-[0_-12px_32px_rgba(128,128,128,0.05)] sm:p-10">
           <div className={`grid gap-10 lg:min-h-[500px] lg:grid-cols-2 ${i % 2 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
             <div className="flex flex-col justify-between gap-8">
@@ -17,7 +17,7 @@ export default function FeatureStack({ items }) {
               </div>
               <TryLink href={link[1]}>{link[0]}</TryLink>
             </div>
-            <FeaturePanel kind={kind} />
+            <FeaturePanel kind={kind} data={data} />
           </div>
         </article>
       ))}

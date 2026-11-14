@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Home, MessagesSquare, ShoppingBag, Megaphone, CalendarDays, ClipboardList, LayoutGrid, List, Search, Clock, MessageCircle, ArrowUp, Inbox, Camera } from 'lucide-react'
+import { Check, Home, MessagesSquare, ShoppingBag, Megaphone, CalendarDays, ClipboardList, LayoutGrid, List, Search, Clock, MessageCircle, ArrowUp, Inbox, Camera } from 'lucide-react'
 
 // The big picture in each feature card, built like Sunbeam's: a flat grained colour with soft clouds, and a product
 // window that starts ~52px in and runs off the right and bottom. Design size 540 x 500; scaled to fit on small screens.
@@ -176,10 +176,37 @@ function DashWin() {
   )
 }
 
-const WINDOWS = { inbox: InboxWin, insta: InstaWin, campaigns: CampWin, dashboard: DashWin }
+// ── 4 · A conversation (used for the use-case cards): chat window with the customer's question, the agent's reply and the outcome ──
+function ConvoWin({ data }) {
+  const d = data || {}
+  const bub = (me, text) => (
+    <div style={{ alignSelf: me ? 'flex-end' : 'flex-start', maxWidth: '82%', background: me ? '#d9fdd3' : '#fff', border: me ? 0 : '1px solid rgba(0,0,0,.06)', borderRadius: me ? '12px 12px 4px 12px' : '12px 12px 12px 4px', padding: '9px 12px', fontSize: 12.5, lineHeight: 1.4, color: INK }}>{text}</div>
+  )
+  return (
+    <Window title={d.title || 'Chats'} active={1} pills={[[MessagesSquare, 'Chats', true], [List, 'Orders']]} search="Search chats">
+      <div style={{ padding: '16px 18px', width: 385, boxSizing: 'border-box' }}>
+        <div style={{ ...flex({ gap: 8 }), fontSize: 11.5, color: GREY }}>
+          <span style={{ width: 22, height: 22, borderRadius: 11, background: 'linear-gradient(135deg,#9bbcf6,#7fa8ff)', color: '#fff', fontSize: 10, ...flex({ justifyContent: 'center' }) }}>A</span>
+          Anjali · WhatsApp <span style={{ background: '#e1f7e5', color: '#1d7a36', fontSize: 10, fontWeight: 500, padding: '3px 8px', borderRadius: 10 }}>AI is replying</span>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 14 }}>
+          {bub(false, d.q)}
+          {bub(true, d.a)}
+          {bub(false, 'Yes please 👍')}
+          {bub(true, 'Done! I have noted everything and will send the details now.')}
+        </div>
+        <div style={{ ...flex({ gap: 8 }), marginTop: 16, background: '#fafdea', border: '1px solid #ecf5b4', borderRadius: 12, padding: '10px 12px', fontSize: 12, fontWeight: 500 }}>
+          <span style={{ width: 20, height: 20, borderRadius: 10, background: '#dbfc74', ...flex({ justifyContent: 'center' }) }}><Check size={12} strokeWidth={3} /></span>{d.done}
+        </div>
+      </div>
+    </Window>
+  )
+}
+
+const WINDOWS = { inbox: InboxWin, insta: InstaWin, campaigns: CampWin, dashboard: DashWin, convo: ConvoWin }
 const TONE = { inbox: 'purple', insta: 'blue', campaigns: 'lime', dashboard: 'purple' }
 
-export default function FeaturePanel({ kind }) {
+export default function FeaturePanel({ kind, data }) {
   const outer = useRef(null)
   const [scale, setScale] = useState(1)
   useEffect(() => {
@@ -189,14 +216,14 @@ export default function FeaturePanel({ kind }) {
     outer.current && ro.observe(outer.current)
     return () => ro.disconnect()
   }, [])
-  const tone = TONE[kind], Win = WINDOWS[kind]
+  const tone = (data && data.tone) || TONE[kind], Win = WINDOWS[kind]
   return (
     <div ref={outer} style={{ position: 'relative', width: '100%', height: 500 * scale, borderRadius: 20, overflow: 'hidden', background: BASE[tone] }}>
       <div style={{ position: 'absolute', left: 0, top: 0, width: 540, height: 500, transform: `scale(${scale})`, transformOrigin: 'top left', overflow: 'hidden', background: BASE[tone] }}>
         <Cloud tint={CLOUD[tone]} style={{ left: -60, top: -40, width: 330, height: 165 }} />
         <Cloud tint={CLOUD[tone]} style={{ left: -20, top: 150, width: 240, height: 120 }} />
         <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/sb/grain.png)', backgroundSize: '256px 256px', mixBlendMode: 'overlay', opacity: 0.3, pointerEvents: 'none' }} />
-        <Win />
+        <Win data={data} />
       </div>
     </div>
   )
