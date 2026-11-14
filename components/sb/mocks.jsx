@@ -5,7 +5,7 @@ import FaigenMark, { WhatsAppGlyph, InstagramGlyph } from '../site/FaigenMark'
 
 function AppWindow({ title, children, className = '' }) {
   return (
-    <div className={`@container overflow-hidden rounded-[22px] bg-[#fbfbf9] text-left shadow-[0_30px_80px_-30px_rgba(40,20,90,.45)] ring-1 ring-black/[0.06] ${className}`}>
+    <div className={`@container overflow-hidden rounded-[8px] bg-[#f4f3f0] text-left shadow-[0_30px_80px_-30px_rgba(40,20,90,.35)] ${className}`}>
       <div className="flex items-center gap-3 border-b border-black/[0.06] bg-white px-4 py-3">
         <FaigenMark className="h-6 w-6" />
         <p className="text-[14px] font-semibold">{title}</p>
@@ -15,7 +15,7 @@ function AppWindow({ title, children, className = '' }) {
         <div className="hidden w-12 shrink-0 flex-col items-center gap-4 border-r border-black/[0.05] bg-white py-4 text-black/30 sm:flex">
           <LayoutDashboard size={17} /><Inbox size={17} className="text-[#1a1a1a]" /><ShoppingBag size={17} /><Megaphone size={17} /><Settings size={17} />
         </div>
-        <div className="min-w-0 flex-1">{children}</div>
+        <div className="min-w-0 flex-1 sm:min-h-[340px]">{children}</div>
       </div>
     </div>
   )

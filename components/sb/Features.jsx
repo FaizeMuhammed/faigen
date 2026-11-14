@@ -1,39 +1,45 @@
-import { ShoppingBag, Languages, Handshake, BookOpen, MessageSquareReply, LayoutGrid, ShieldCheck, BarChart3, FileImage, MousePointerClick, ImageIcon, Truck } from 'lucide-react'
-import { TryLink, Chip } from './ui'
+import { ShoppingBag, Languages, Handshake, BookOpen, MessageSquareReply, LayoutGrid, ShieldCheck, BarChart3, FileImage, MousePointerClick, Truck, Image as ImageIcon } from 'lucide-react'
+import { TryLink, Tag, Wrap, H2, Grain, PANEL } from './ui'
 import { WhatsAppMock, InstagramMock, BroadcastMock } from './mocks'
-import { LAUNCH_OFFER } from '@/lib/site'
 
+// Three #f0eeeb cards: 1200 x 580, padding 40, text column 540 + picture column 540 x 500 (radius 20).
+// Each card sticks at 90px from the top so the next one slides over it (shadow 0 -12px 32px rgba(128,128,128,.05)).
+// The product window starts ~54px in and runs off the right and bottom of the coloured panel.
 const PANELS = [
-  { title: 'Conversations that close sales', text: 'Faigen answers from your own catalog and FAQs, asks for what it needs — name, product, quantity, address — and hands you a finished order. In Malayalam, Manglish or English.',
-    chips: [[ShoppingBag, 'Order collection'], [BookOpen, 'Your catalog & FAQs'], [Languages, 'Malayalam & Manglish'], [Handshake, 'Human hand-off']], Mock: WhatsAppMock, bg: 'from-[#e1d1ff] to-[#bda4ff]', link: ['Try it on WhatsApp', '/try'] },
+  { title: 'Conversations that close sales', text: 'Faigen answers from your own catalog and FAQs, asks for what it needs (name, product, quantity, address) and hands you a finished order. In Malayalam, Manglish or English.',
+    tags: [[ShoppingBag, 'Order collection'], [BookOpen, 'Your catalog & FAQs'], [Languages, 'Malayalam & Manglish'], [Handshake, 'Human hand-off']], Mock: WhatsAppMock, bg: PANEL.purple, link: ['Try it on WhatsApp', '/try'] },
   { title: 'Instagram, on autopilot', text: 'Someone comments “price” on your Reel. Faigen replies under the comment and sends the details to their DMs, with buttons to tap. It hides spam and shows you the numbers.',
-    chips: [[MessageSquareReply, 'Comment-to-DM'], [LayoutGrid, 'Buttons & chat menu'], [ShieldCheck, 'Spam shield'], [BarChart3, 'Insights']], Mock: InstagramMock, bg: 'from-[#ffd3e6] via-[#ffcab6] to-[#e4c8ff]', link: ['See what’s included', '/pricing'], badge: LAUNCH_OFFER.active ? 'Launch offer: included in your plan' : null },
+    tags: [[MessageSquareReply, 'Comment-to-DM'], [LayoutGrid, 'Buttons & chat menu'], [ShieldCheck, 'Spam shield']], Mock: InstagramMock, bg: PANEL.blue, link: ['See what’s included', '/pricing'] },
   { title: 'Campaigns that bring people back', text: 'Send offers, festival greetings and event invites with an image and two buttons. See who read it, who tapped Interested, and download the list to follow up.',
-    chips: [[FileImage, 'Images & PDFs'], [MousePointerClick, 'Interested buttons'], [Truck, 'Delivery tracking'], [ImageIcon, 'Approved templates']], Mock: BroadcastMock, bg: 'from-[#efffb8] to-[#cdf56e]', link: ['See how campaigns work', '/features'] },
+    tags: [[FileImage, 'Images & PDFs'], [MousePointerClick, 'Interested buttons']], Mock: BroadcastMock, bg: PANEL.lime, link: ['See how campaigns work', '/features'] },
 ]
 
 export default function Features() {
   return (
-    <section className="py-16 sm:py-24">
-      <div className="mx-auto w-[min(1200px,100%-2.5rem)]">
-        <h2 className="mx-auto max-w-3xl text-center text-[clamp(2.2rem,4.6vw,3.4rem)] text-balance font-medium leading-[1.06] tracking-[-0.03em]">Everything your customers ask for, handled in one place</h2>
-        <div className="mt-14 space-y-6">
-          {PANELS.map(({ title, text, chips, Mock, bg, link, badge }, i) => (
-            <article key={title} className="sticky overflow-hidden rounded-[36px] bg-[#eeede6] p-6 ring-1 ring-black/[0.04] sm:p-10 lg:p-12" style={{ top: 96 + i * 18, zIndex: i + 1 }}>
-              <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-                <div>
-                  {badge && <span className="mb-4 inline-block rounded-full bg-[#d9ff57] px-3 py-1.5 text-[12.5px] font-semibold">{badge}</span>}
-                  <h3 className="text-[clamp(1.9rem,3.2vw,2.7rem)] font-medium leading-[1.08] tracking-[-0.025em]">{title}</h3>
-                  <p className="mt-4 max-w-md text-[17px] leading-snug text-[#1a1a1a]/65">{text}</p>
-                  <div className="mt-6 flex flex-wrap gap-2.5">{chips.map(([Icon, label]) => <Chip key={label} icon={Icon}>{label}</Chip>)}</div>
-                  <div className="mt-8"><TryLink href={link[1]} tone="dark">{link[0]}</TryLink></div>
+    <section className="py-10">
+      <Wrap className="flex flex-col gap-10">
+        <H2 className="mx-auto max-w-[780px] text-center">Everything your customers ask for, handled in one place</H2>
+        <div className="flex flex-col gap-10">
+          {PANELS.map(({ title, text, tags, Mock, bg, link }) => (
+            <article key={title} className="sticky top-[90px] rounded-[24px] bg-[#f0eeeb] p-6 shadow-[0_-12px_32px_rgba(128,128,128,0.05)] sm:p-10">
+              <div className="grid gap-10 lg:min-h-[500px] lg:grid-cols-2">
+                <div className="flex flex-col justify-between gap-8">
+                  <div className="flex flex-col gap-5">
+                    <h3 className="font-heading text-[clamp(1.9rem,3vw,2.625rem)] font-medium leading-[1.2] text-[#1a1a1a]">{title}</h3>
+                    <p className="text-[16px] font-normal leading-[22.4px] text-[#52525b]">{text}</p>
+                    <div className="mt-1 flex flex-col gap-2">{tags.map(([Icon, label]) => <Tag key={label} icon={Icon}>{label}</Tag>)}</div>
+                  </div>
+                  <TryLink href={link[1]}>{link[0]}</TryLink>
                 </div>
-                <div className={`rounded-[28px] bg-gradient-to-br ${bg} p-4 sm:p-7`}><Mock /></div>
+                <div className="relative h-[360px] overflow-hidden rounded-[20px] lg:h-[500px]" style={{ background: bg }}>
+                  <Grain />
+                  <div className="absolute left-5 top-6 w-[720px] origin-top-left [transform:scale(.62)] sm:left-8 sm:top-10 sm:[transform:scale(.8)] lg:left-[54px] lg:top-[59px] lg:[transform:scale(.89)]"><Mock /></div>
+                </div>
               </div>
             </article>
           ))}
         </div>
-      </div>
+      </Wrap>
     </section>
   )
 }

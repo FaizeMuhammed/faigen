@@ -1,35 +1,33 @@
-import { Urbanist } from "next/font/google";
+import { Urbanist, Jost } from "next/font/google";
 import Nav from "@/components/sb/Nav";
 import Hero from "@/components/sb/Hero";
-import Benefits from "@/components/sb/Benefits";
+import TwoCards from "@/components/sb/TwoCards";
+import Logos from "@/components/sb/Logos";
 import Features from "@/components/sb/Features";
-import UseCases from "@/components/sb/UseCases";
+import Conversations from "@/components/sb/Conversations";
 import Orbit from "@/components/sb/Orbit";
-import Steps from "@/components/sb/Steps";
-import PricingTeaser from "@/components/sb/PricingTeaser";
-import Faq from "@/components/sb/Faq";
-import Cta from "@/components/sb/Cta";
-import Footer from "@/components/sb/Footer";
+import Cases from "@/components/sb/Cases";
+import CtaFooter from "@/components/sb/CtaFooter";
 
-const urbanist = Urbanist({ subsets: ["latin"], weight: ["400", "500", "600"], display: "swap" });
+const urbanist = Urbanist({ subsets: ["latin"], weight: ["500"], display: "swap", variable: "--font-heading" });
+const jost = Jost({ subsets: ["latin"], weight: ["400", "500"], display: "swap" });
 
-// Home page in the "sunbeam-style" design (branch: sunbeam-style).
+// Home page, built to the measurements of the reference layout (branch: sunbeam-style).
+// Sections in order: hero + product tabs, three cards, platforms, feature cards, conversations, orbit, steps, CTA + footer.
 export default function Home() {
   return (
-    <div className={`${urbanist.className} min-h-screen bg-[#fafaf8] text-[#1a1a1a]`}>
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen bg-[#fafafa] text-[#1a1a1a]`}>
       <Nav />
       <main>
         <Hero />
-        <Benefits />
+        <TwoCards />
+        <Logos />
         <Features />
-        <UseCases />
+        <Conversations />
         <Orbit />
-        <Steps />
-        <PricingTeaser />
-        <Faq />
-        <Cta />
+        <Cases />
       </main>
-      <Footer />
+      <CtaFooter />
     </div>
   );
 }

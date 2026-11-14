@@ -93,3 +93,4 @@ body {
 .sb-float { animation: sb-float 7s ease-in-out infinite; }
 .sb-spin { animation: sb-spin 40s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .sb-float, .sb-spin { animation: none; } }
+.font-heading { font-family: var(--font-heading), sans-serif; }
