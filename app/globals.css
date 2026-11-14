@@ -116,3 +116,9 @@ body {
   .sb-cmp .sb-hide-m { display: none; }
   .sb-cmp > div:nth-child(-n+4) { min-height: 56px !important; }
 }
+
+/* Touch screens have no hover, so the case-card pictures are shown all the time */
+@media (hover: none) {
+  .sb-case .sb-case-bg { opacity: 1; }
+  .sb-case { --lead: var(--hl); --rest: var(--hr); }
+}

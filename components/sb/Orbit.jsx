@@ -20,6 +20,7 @@ export default function Orbit() {
     <section className="bg-[#fafaf9] py-20">
       <Wrap className="flex flex-col gap-10">
         <div className="flex flex-col items-center gap-8 text-center"><H2 className="max-w-[780px]">One agent for every channel, working from one dashboard</H2><TryLink href="/try">Try the live demo</TryLink></div>
+        <div className="hidden md:block">
         <ScaleBox base={1200} min={0} className="mx-auto w-full max-w-[1200px] overflow-hidden">
           <div className="relative h-[544px] w-[1200px] overflow-hidden">
             {[643, 550, 498, 430, 378].map(r => <div key={r} aria-hidden className="absolute rounded-full border border-[#1a1a1a]/[0.07] bg-gradient-to-b from-[#1a1a1a]/[0.02] to-transparent" style={{ width: r * 2, height: r * 2, left: CX - r, top: CY - r }} />)}
@@ -28,6 +29,18 @@ export default function Orbit() {
             <Scallop className="absolute left-1/2 top-[440px] h-[120px] w-[120px] -translate-x-1/2" />
           </div>
         </ScaleBox>
+        </div>
+        {/* phones: the middle of the picture at a bigger size so every icon stays readable */}
+        <div className="relative h-[372px] w-full overflow-hidden md:hidden">
+          <div className="absolute left-1/2 top-0" style={{ width: 1200, transform: "translateX(-50%) scale(.64)", transformOrigin: "top center" }}>
+            <div className="relative h-[544px] w-[1200px] overflow-hidden">
+            {[643, 550, 498, 430, 378].map(r => <div key={r} aria-hidden className="absolute rounded-full border border-[#1a1a1a]/[0.07] bg-gradient-to-b from-[#1a1a1a]/[0.02] to-transparent" style={{ width: r * 2, height: r * 2, left: CX - r, top: CY - r }} />)}
+            {ANGLES.map((a, i) => <Icon key={'o' + a} node={OUTER[i]} r={550} a={a} />)}
+            {ANGLES.map((a, i) => <Icon key={'i' + a} node={INNER[i]} r={430} a={a} />)}
+            <Scallop className="absolute left-1/2 top-[440px] h-[120px] w-[120px] -translate-x-1/2" />
+          </div>
+          </div>
+        </div>
       </Wrap>
     </section>
   )

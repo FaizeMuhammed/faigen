@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { Check, Home, MessagesSquare, ShoppingBag, Megaphone, CalendarDays, ClipboardList, LayoutGrid, List, Search, Clock, MessageCircle, ArrowUp, Inbox, Camera } from 'lucide-react'
 
 // The big picture in each feature card, built like Sunbeam's: a flat grained colour with soft clouds, and a product
@@ -18,26 +18,30 @@ function Cloud({ style, tint }) {
   return <div aria-hidden style={{ position: 'absolute', background: tint, WebkitMaskImage: 'url(/sb/cloud.png)', maskImage: 'url(/sb/cloud.png)', WebkitMaskSize: '100% 100%', maskSize: '100% 100%', WebkitMaskRepeat: 'no-repeat', maskRepeat: 'no-repeat', ...style }} />
 }
 
+// On phones the pictures use a compact layout (no side rail, fewer columns) so every part stays visible
+const Compact = createContext(false)
+
 const ICONS = [Home, MessagesSquare, ShoppingBag, Megaphone, CalendarDays, ClipboardList]
 
 function Window({ title, active, pills, search, bare, children }) {
+  const c = useContext(Compact)
   return (
-    <div style={abs({ left: 52, top: 58, width: 660, height: 560, borderTopLeftRadius: 16, background: '#f3f2f0', boxShadow: '0 20px 50px -20px rgba(60,40,120,.25)', overflow: 'hidden' })}>
-      <div style={abs({ left: 0, top: 0, bottom: 0, width: 53, background: '#fafaf9', borderRight: '1px solid rgba(0,0,0,.03)' })}>
+    <div style={abs({ left: c ? 12 : 52, top: c ? 40 : 58, width: c ? 348 : 660, height: 560, borderTopLeftRadius: 16, background: '#f3f2f0', boxShadow: '0 20px 50px -20px rgba(60,40,120,.25)', overflow: 'hidden' })}>
+      {!c && <div style={abs({ left: 0, top: 0, bottom: 0, width: 53, background: '#fafaf9', borderRight: '1px solid rgba(0,0,0,.03)' })}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/sb/faigen-logo.svg" alt="" style={abs({ left: 13, top: 16, width: 27, height: 27 })} />
         {ICONS.map((Ic, i) => (
           <span key={i} style={abs({ left: 9, top: 58 + i * 34, width: 35, height: 32, borderRadius: 10, background: i === active ? '#ebeae7' : 'transparent', ...flex({ justifyContent: 'center' }) })}><Ic size={17} strokeWidth={1.6} color={i === active ? INK : '#8d8d94'} /></span>
         ))}
-      </div>
-      <h4 className="font-heading" style={abs({ left: 93, top: 38, margin: 0, fontSize: 25, fontWeight: 500, lineHeight: 1.1, color: INK })}>{title}</h4>
-      {!bare && <div style={abs({ left: 93, top: 94, ...flex({ gap: 14 }) })}>
+      </div>}
+      <h4 className="font-heading" style={abs({ left: c ? 18 : 93, top: c ? 22 : 38, margin: 0, fontSize: 25, fontWeight: 500, lineHeight: 1.1, color: INK })}>{title}</h4>
+      {!bare && <div style={abs({ left: c ? 18 : 93, top: c ? 64 : 94, ...flex({ gap: c ? 6 : 14 }) })}>
         {pills.map(([Ic, label, on]) => (
           <span key={label} style={{ ...flex({ gap: 6 }), height: 32, padding: '0 14px', borderRadius: 16, fontSize: 12, color: INK, background: on ? '#ebeae7' : 'transparent', border: on ? '1px solid rgba(0,0,0,.05)' : '1px solid transparent' }}><Ic size={14} strokeWidth={1.7} />{label}</span>
         ))}
-        <span style={{ ...flex({ gap: 6 }), height: 32, padding: '0 14px', width: 150, borderRadius: 16, fontSize: 11.5, color: GREY, border: '1px solid rgba(0,0,0,.09)', background: '#faf9f8' }}><Search size={13} strokeWidth={1.7} />{search}</span>
+        <span style={{ ...flex({ gap: 6 }), height: 32, padding: '0 14px', width: c ? 120 : 150, borderRadius: 16, fontSize: 11.5, color: GREY, border: '1px solid rgba(0,0,0,.09)', background: '#faf9f8' }}><Search size={13} strokeWidth={1.7} />{search}</span>
       </div>}
-      <div style={abs({ left: 93, top: bare ? 92 : 138, right: 0, bottom: 0, ...(bare ? {} : { background: '#fff', borderTopLeftRadius: 14 }) })}>{children}</div>
+      <div style={abs({ left: c ? 18 : 93, top: bare ? (c ? 70 : 92) : (c ? 108 : 138), right: 0, bottom: 0, ...(bare ? {} : { background: '#fff', borderTopLeftRadius: 14 }) })}>{children}</div>
     </div>
   )
 }
@@ -57,17 +61,19 @@ function Chat({ tag, tagBg, text, meta, n, who, grad }) {
   )
 }
 function Col({ title, count, bg, badge, children }) {
+  const c = useContext(Compact)
   return (
-    <div style={{ width: 218, background: bg, borderRadius: 18, padding: '12px 11px 14px' }}>
+    <div style={{ width: c ? 150 : 218, background: bg, borderRadius: 18, padding: '12px 11px 14px' }}>
       <div style={flex({ gap: 9, padding: '0 3px' })}><span style={{ fontSize: 13, fontWeight: 500, color: INK }}>{title}</span><span style={{ width: 22, height: 22, borderRadius: 11, background: badge, fontSize: 10.5, ...flex({ justifyContent: 'center' }) }}>{count}</span></div>
       {children}
     </div>
   )
 }
 function InboxWin() {
+  const c = useContext(Compact)
   return (
     <Window title="Live inbox" active={1} pills={[[LayoutGrid, 'Chats', true], [List, 'Orders']]} search="Search chats">
-      <div style={{ ...flex({ alignItems: 'flex-start', gap: 12 }), padding: '14px 14px 0' }}>
+      <div style={{ ...flex({ alignItems: 'flex-start', gap: c ? 8 : 12 }), padding: c ? '12px 0 0 12px' : '14px 14px 0' }}>
         <Col title="AI replying" count="4" bg="#fafaf9" badge="#e9cbfb">
           <Chat tag="WhatsApp" tagBg="#cdf3d6" text="Price ethra aanu Coir Mat?" meta="3 sec" n={2} who="A" grad="linear-gradient(135deg,#9bbcf6,#7fa8ff)" />
           <Chat tag="Instagram" tagBg="#fbd3f3" text="Is the red bag still available?" meta="2 sec" n={1} who="P" grad="linear-gradient(135deg,#d79bf7,#a87bff)" />
@@ -93,16 +99,17 @@ const ROWS = [
   ['kochi_cafe', 'bulk price', 'Replied', ['#7fb800', '#f3fbd8'], 'Details sent to DMs'],
 ]
 function InstaWin() {
-  const cols = '230px 120px 190px'
+  const c = useContext(Compact)
+  const cols = c ? '1fr 78px' : '230px 120px 190px'
   return (
     <Window title="Instagram" active={1} pills={[[Inbox, 'Comments', true], [Camera, 'Reels']]} search="Search comments">
-      <div style={{ padding: '16px 14px 0' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: cols, height: 34, alignItems: 'center', padding: '0 14px', background: '#faf9f8', borderRadius: 10, fontSize: 12.5, fontWeight: 500, color: INK }}><span>Comment</span><span>Status</span><span>What Faigen did</span></div>
-        {ROWS.map(([who, said, st, [c, bg], did]) => (
-          <div key={who} style={{ display: 'grid', gridTemplateColumns: cols, height: 44, alignItems: 'center', padding: '0 14px', borderBottom: '1px solid rgba(0,0,0,.06)', fontSize: 12, color: INK }}>
+      <div style={{ padding: c ? '12px 14px 0 10px' : '16px 14px 0' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: cols, height: 34, alignItems: 'center', padding: c ? '0 8px' : '0 14px', background: '#faf9f8', borderRadius: 10, fontSize: 12.5, fontWeight: 500, color: INK }}><span>Comment</span><span>Status</span>{!c && <span>What Faigen did</span>}</div>
+        {ROWS.map(([who, said, st, [cl, bg], did]) => (
+          <div key={who} style={{ display: 'grid', gridTemplateColumns: cols, height: 44, alignItems: 'center', padding: c ? '0 8px' : '0 14px', borderBottom: '1px solid rgba(0,0,0,.06)', fontSize: 12, color: INK }}>
             <span style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', paddingRight: 8 }}><b style={{ fontWeight: 500 }}>{who}</b> <span style={{ color: GREY }}>“{said}”</span></span>
-            <span><span style={{ fontSize: 11.5, fontWeight: 500, color: c, background: bg, padding: '4px 11px', borderRadius: 12 }}>{st}</span></span>
-            <span style={{ color: '#6b6b72' }}>{did}</span>
+            <span><span style={{ fontSize: 11.5, fontWeight: 500, color: cl, background: bg, padding: '4px 10px', borderRadius: 12, whiteSpace: 'nowrap' }}>{st}</span></span>
+            {!c && <span style={{ color: '#6b6b72' }}>{did}</span>}
           </div>
         ))}
       </div>
@@ -112,23 +119,25 @@ function InstaWin() {
 
 // ── 3 · Campaigns (stat cards + replies chart, like Sunbeam's dashboard) ──
 function Stat({ title, sub, value, bar, w, left }) {
+  const c = useContext(Compact)
   return (
-    <div style={abs({ left, top: 0, width: 280, height: 76, background: '#fff', borderRadius: 14, padding: '12px 16px', boxShadow: '0 1px 0 rgba(0,0,0,.03)' })}>
-      <div style={flex({ justifyContent: 'space-between' })}><span style={{ fontSize: 14, color: INK }}>{title}</span><span style={flex({ gap: 3, fontSize: 13 })}>{value}<ArrowUp size={12} color="#5ad07f" /></span></div>
-      <p style={{ margin: '3px 0 0', fontSize: 10.5, color: '#a1a1aa' }}>{sub}</p>
+    <div style={abs({ left: c && left ? 162 : left, top: 0, width: c ? 152 : 280, height: 76, background: '#fff', borderRadius: 14, padding: c ? '12px 12px' : '12px 16px', boxShadow: '0 1px 0 rgba(0,0,0,.03)' })}>
+      <div style={flex({ justifyContent: 'space-between' })}><span style={{ fontSize: c ? 12.5 : 14, color: INK }}>{title}</span><span style={flex({ gap: 3, fontSize: 13 })}>{value}<ArrowUp size={12} color="#5ad07f" /></span></div>
+      <p style={{ margin: '3px 0 0', fontSize: 10.5, color: '#a1a1aa', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{sub}</p>
       <div style={abs({ left: 16, right: 16, bottom: 12, height: 5, borderRadius: 3, background: '#efeff2' })}><div style={{ width: w, height: '100%', borderRadius: 3, background: bar }} /></div>
     </div>
   )
 }
 function CampWin() {
+  const c = useContext(Compact)
   return (
     <Window title="Campaigns" active={3} pills={[]} search="" bare>
       <div style={abs({ left: 0, top: 0, right: 0, bottom: 0 })}>
         <Stat title="Delivered" sub="Kochi Customer Meet · Invite" value="1,240" bar="#d3f56a" w="86%" left={0} />
         <Stat title="Interested" sub="Taps on the Interested button" value="212" bar="#d79bf7" w="52%" left={292} />
-        <div style={abs({ left: 0, top: 90, width: 640, height: 400, background: '#fff', borderRadius: 14 })}>
+        <div style={abs({ left: 0, top: 90, width: c ? 316 : 640, height: c ? 300 : 400, background: '#fff', borderRadius: 14 })}>
           <p style={{ margin: 0, padding: '18px 20px 0', fontSize: 15, color: INK }}>Replies</p>
-          <svg viewBox="0 0 640 300" width="640" height="300" style={abs({ left: 0, top: 50 })}>
+          <svg viewBox={c ? '180 0 460 300' : '0 0 640 300'} width={c ? 316 : 640} height={c ? 206 : 300} style={abs({ left: 0, top: 50 })}>
             <defs>
               <linearGradient id="fa-b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#bfdcfb" stopOpacity=".35" /><stop offset="1" stopColor="#bfdcfb" stopOpacity="0" /></linearGradient>
               <linearGradient id="fa-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#dcf86b" stopOpacity=".35" /><stop offset="1" stopColor="#dcf86b" stopOpacity="0" /></linearGradient>
@@ -149,14 +158,15 @@ function CampWin() {
 }
 
 function DashWin() {
+  const c = useContext(Compact)
   return (
     <Window title="Dashboard" active={0} pills={[]} search="" bare>
       <div style={abs({ left: 0, top: 0, right: 0, bottom: 0 })}>
         <Stat title="Conversations" sub="This week, answered by the AI" value="1,240" bar="#d3f56a" w="86%" left={0} />
         <Stat title="Orders" sub="Collected in chat" value="86" bar="#d79bf7" w="52%" left={292} />
-        <div style={abs({ left: 0, top: 90, width: 640, height: 400, background: '#fff', borderRadius: 14 })}>
+        <div style={abs({ left: 0, top: 90, width: c ? 316 : 640, height: c ? 300 : 400, background: '#fff', borderRadius: 14 })}>
           <p style={{ margin: 0, padding: '18px 20px 0', fontSize: 15, color: INK }}>Orders</p>
-          <svg viewBox="0 0 640 300" width="640" height="300" style={abs({ left: 0, top: 50 })}>
+          <svg viewBox={c ? '180 0 460 300' : '0 0 640 300'} width={c ? 316 : 640} height={c ? 206 : 300} style={abs({ left: 0, top: 50 })}>
             <defs>
               <linearGradient id="fa-b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#bfdcfb" stopOpacity=".35" /><stop offset="1" stopColor="#bfdcfb" stopOpacity="0" /></linearGradient>
               <linearGradient id="fa-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#dcf86b" stopOpacity=".35" /><stop offset="1" stopColor="#dcf86b" stopOpacity="0" /></linearGradient>
@@ -209,21 +219,28 @@ const TONE = { inbox: 'purple', insta: 'blue', campaigns: 'lime', dashboard: 'pu
 export default function FeaturePanel({ kind, data }) {
   const outer = useRef(null)
   const [scale, setScale] = useState(1)
+  const [compact, setCompact] = useState(false)
   useEffect(() => {
-    const fit = () => setScale(Math.min(1, (outer.current?.clientWidth || 540) / 540))
+    const fit = () => {
+      const w = outer.current?.clientWidth || 540
+      const small = w < 480
+      setCompact(small)
+      setScale(Math.min(1, w / (small ? 360 : 540)))
+    }
     fit()
     const ro = new ResizeObserver(fit)
     outer.current && ro.observe(outer.current)
     return () => ro.disconnect()
   }, [])
+  const CW = compact ? 360 : 540, CH = compact ? 560 : 500
   const tone = (data && data.tone) || TONE[kind], Win = WINDOWS[kind]
   return (
-    <div ref={outer} style={{ position: 'relative', width: '100%', height: 500 * scale, borderRadius: 20, overflow: 'hidden', background: BASE[tone] }}>
-      <div style={{ position: 'absolute', left: 0, top: 0, width: 540, height: 500, transform: `scale(${scale})`, transformOrigin: 'top left', overflow: 'hidden', background: BASE[tone] }}>
+    <div ref={outer} style={{ position: 'relative', width: '100%', height: CH * scale, borderRadius: 20, overflow: 'hidden', background: BASE[tone] }}>
+      <div style={{ position: 'absolute', left: 0, top: 0, width: CW, height: CH, transform: `scale(${scale})`, transformOrigin: 'top left', overflow: 'hidden', background: BASE[tone] }}>
         <Cloud tint={CLOUD[tone]} style={{ left: -60, top: -40, width: 330, height: 165 }} />
         <Cloud tint={CLOUD[tone]} style={{ left: -20, top: 150, width: 240, height: 120 }} />
         <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/sb/grain.png)', backgroundSize: '256px 256px', mixBlendMode: 'overlay', opacity: 0.3, pointerEvents: 'none' }} />
-        <Win data={data} />
+        <Compact.Provider value={compact}><Win data={data} /></Compact.Provider>
       </div>
     </div>
   )
