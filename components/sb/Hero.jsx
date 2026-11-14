@@ -25,7 +25,7 @@ export default function Hero() {
         <div className="relative flex min-h-[600px] items-center justify-center overflow-visible">
           <HalfRing className="absolute left-[310px] top-[36px] h-[169px] w-[169px] lg:left-[80.4%] lg:top-[124px]" style={{ '--r': '8deg' }} />
           <HalfDisc className="absolute left-[355px] top-[488px] h-[235px] w-[178px] lg:left-[72.75%] lg:top-[400px]" style={{ '--r': '-4deg' }} />
-          <Scallop className="absolute left-[-87px] top-[330px] h-[115px] w-[115px] lg:left-[12.8%] lg:top-[73px]" style={{ '--r': '-6deg' }} />
+          <Scallop className="absolute left-[-29px] top-[20px] h-[115px] w-[115px] lg:left-[12.8%] lg:top-[73px]" style={{ '--r': '-6deg' }} />
           <Dot className="absolute left-[53.25%] top-0 hidden h-14 w-14 lg:block" color="#86b4ff" />
           <Diamond className="absolute left-[-126px] top-[597px] h-[73px] w-[73px] lg:left-[24.4%] lg:top-[460px]" />
           <div className="relative flex flex-col items-center gap-10 text-center">
@@ -43,10 +43,10 @@ export default function Hero() {
 
         {/* Tabs + product panel */}
         <div className="mt-[52px] flex flex-col items-center gap-5 pb-8">
-          <div className="-mx-5 flex w-[calc(100%+40px)] max-w-none flex-nowrap justify-start gap-x-5 overflow-x-auto px-5 [scrollbar-width:none] sm:mx-0 sm:w-auto sm:max-w-full sm:flex-wrap sm:justify-center sm:gap-y-2 sm:overflow-visible sm:px-0" role="tablist" aria-label="Product views">
+          <div className="flex w-full max-w-full flex-wrap justify-center gap-x-0 gap-y-2 sm:gap-x-5" role="tablist" aria-label="Product views">
             {TABS.map(t => (
               <button key={t.id} role="tab" aria-selected={tab === t.id} onClick={() => setTab(t.id)}
-                className={`inline-flex h-10 shrink-0 items-center gap-1 rounded-[24px] py-1 pl-3 pr-6 text-[16px] font-medium leading-[22.4px] transition-colors ${tab === t.id ? 'bg-[#f0eeeb]' : 'hover:bg-[#f0eeeb]/60'}`}>
+                className={`inline-flex h-10 shrink-0 items-center gap-1 rounded-[24px] py-1 pl-1 pr-2 text-[15px] sm:pl-3 sm:pr-6 sm:text-[16px] text-[16px] font-medium leading-[22.4px] transition-colors ${tab === t.id ? 'bg-[#f0eeeb]' : 'hover:bg-[#f0eeeb]/60'}`}>
                 <span className="flex h-8 w-8 items-center justify-center rounded-[12px] p-1"><t.Icon className="h-6 w-6" /></span>{t.label}
               </button>
             ))}
