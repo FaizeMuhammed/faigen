@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import LegalShell from "@/components/sb/LegalShell"
 import { Shield, Mail, ArrowLeft, Trash2, Unplug, Clock } from "lucide-react"
 
 export const metadata = {
@@ -51,41 +52,9 @@ const retained = [
 
 export default function DataDeletion() {
   return (
-    <div className="min-h-screen bg-[#FDFDFD] font-sans text-[#1A1A1A]">
+    <LegalShell narrow badge="Data Deletion" title="Delete your data" sub="You control the data connected to your Instagram account and your Faigen account. Here is how to remove it.">
+      <div className="space-y-6 text-gray-600 leading-relaxed text-[15px]">
 
-      <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <ArrowLeft size={18} className="text-gray-400 group-hover:text-[#2563EB] transition-colors" />
-            <img src="/logonew.png" alt="Faigen" style={{ height: "32px", width: "auto", objectFit: "contain" }} />
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/privacy" className="text-xs font-bold text-gray-400 hover:text-[#2563EB] uppercase tracking-widest transition-colors">
-              Privacy
-            </Link>
-            <Link href="/terms" className="text-xs font-bold text-gray-400 hover:text-[#2563EB] uppercase tracking-widest transition-colors">
-              Terms
-            </Link>
-          </div>
-        </div>
-      </nav>
-
-      <header className="pt-20 pb-12">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-[#2563EB] text-xs font-bold mb-6">
-            <Trash2 size={14} /> Data Deletion
-          </div>
-          <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-4 text-gray-900">
-            Delete your data
-          </h1>
-          <p className="text-gray-500 font-medium">
-            You control the data connected to your Instagram account and your Faigen account. Here is how to remove it.
-          </p>
-        </div>
-      </header>
-
-      <main className="max-w-3xl mx-auto px-6 pb-32">
-        <div className="space-y-6 text-gray-600 leading-relaxed text-[15px]">
 
           {steps.map(({ icon: Icon, title, body }) => (
             <section key={title} className="bg-white rounded-3xl p-7 border border-gray-100 shadow-sm">
@@ -141,18 +110,6 @@ export default function DataDeletion() {
             <Link href="/privacy" className="text-[#2563EB] hover:underline">Privacy Policy</Link>.
           </p>
         </div>
-      </main>
-
-      <footer className="bg-white border-t border-gray-100 py-10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[13px] text-gray-400 font-medium">© 2026 Faigen Technologies. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy" className="text-[13px] text-gray-400 hover:text-[#2563EB] font-medium transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="text-[13px] text-gray-400 hover:text-[#2563EB] font-medium transition-colors">Terms of Service</Link>
-            <Link href="/" className="text-[13px] text-gray-400 hover:text-[#2563EB] font-medium transition-colors">Back to Home</Link>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </LegalShell>
   )
 }

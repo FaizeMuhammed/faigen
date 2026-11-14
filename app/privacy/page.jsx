@@ -1,14 +1,9 @@
 'use client'
 
 import React from "react"
-import { motion } from "framer-motion"
 import { Shield, Mail, MapPin, Globe, ArrowLeft, Lock } from "lucide-react"
 import Link from "next/link"
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-}
+import LegalShell from '@/components/sb/LegalShell'
 
 const sections = [
   "Introduction",
@@ -32,84 +27,8 @@ const sections = [
 
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen bg-[#FDFDFD] font-sans text-[#1A1A1A]">
+    <LegalShell badge="Privacy Policy" title="Privacy Policy" sub="Last updated: October 2026 · Kerala, India" contents={sections} prefix="section-">
 
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <ArrowLeft size={18} className="text-gray-400 group-hover:text-[#2563EB] transition-colors" />
-            <img
-              src="/logonew.png"
-              alt="Faigen"
-              style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
-              onError={e => {
-                e.target.style.display = 'none'
-                e.target.insertAdjacentHTML('afterend', '<span style="font-weight:800;font-size:1.1rem;color:#1A1A1A;">Faigen</span>')
-              }}
-            />
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/terms" className="text-xs font-bold text-gray-400 hover:text-[#2563EB] uppercase tracking-widest transition-colors">
-              Terms
-            </Link>
-            <div className="hidden md:flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest">
-              <Lock size={14} className="text-[#2563EB]" /> Secure Document
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Header */}
-      <header className="relative pt-20 pb-16 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-[0.03]">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[#2563EB] blur-[120px] rounded-full" />
-        </div>
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <motion.div
-            initial="hidden" animate="visible" variants={fadeUp}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-[#2563EB] text-xs font-bold mb-6"
-          >
-            <Shield size={14} /> Privacy Policy
-          </motion.div>
-          <motion.h1
-            initial="hidden" animate="visible" variants={fadeUp}
-            className="text-4xl md:text-5xl font-medium tracking-tight mb-4 text-gray-900"
-          >
-            Privacy Policy
-          </motion.h1>
-          <motion.p
-            initial="hidden" animate="visible" variants={fadeUp}
-            className="text-gray-500 font-medium"
-          >
-            Last updated: October 2026 · Kerala, India
-          </motion.p>
-        </div>
-      </header>
-
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-6 pb-32">
-        <div className="flex flex-col lg:flex-row gap-16">
-
-          {/* Sidebar */}
-          <aside className="hidden lg:block w-64 shrink-0 sticky top-32 h-fit">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-5">Contents</p>
-            <ul className="space-y-2">
-              {sections.map((item, idx) => (
-                <li key={idx}>
-                  <a
-                    href={`#section-${idx + 1}`}
-                    className="text-[13px] font-medium text-gray-500 hover:text-[#2563EB] transition-colors block py-0.5"
-                  >
-                    {idx + 1}. {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </aside>
-
-          {/* Content */}
-          <article className="flex-1 max-w-3xl">
             <div className="space-y-14 text-gray-600 leading-relaxed text-[15px]">
 
               {/* 1 */}
@@ -426,25 +345,6 @@ export default function PrivacyPolicy() {
               </section>
 
             </div>
-          </article>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 py-10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[13px] text-gray-400 font-medium">© 2026 Faigen Technologies. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/terms" className="text-[13px] text-gray-400 hover:text-[#2563EB] font-medium transition-colors">
-              Terms of Service
-            </Link>
-            <Link href="/" className="text-[13px] text-gray-400 hover:text-[#2563EB] font-medium transition-colors">
-              Back to Home
-            </Link>
-          </div>
-        </div>
-      </footer>
-
-    </div>
+    </LegalShell>
   )
 }

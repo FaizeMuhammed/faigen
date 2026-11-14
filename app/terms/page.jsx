@@ -1,17 +1,12 @@
 'use client'
 
 import React from "react"
-import { motion } from "framer-motion"
 import {
   Scale, FileText, CheckCircle2, AlertCircle,
   ArrowLeft, Landmark, Mail, MapPin, Globe
 } from "lucide-react"
 import Link from "next/link"
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-}
+import LegalShell from '@/components/sb/LegalShell'
 
 const sections = [
   "Introduction",
@@ -35,69 +30,9 @@ const sections = [
 
 export default function TermsAndConditions() {
   return (
-    <div className="min-h-screen bg-[#FDFDFD] font-sans text-[#1A1A1A]">
-
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <ArrowLeft size={18} className="text-gray-400 group-hover:text-[#2563EB] transition-colors" />
-            <img
-              src="/logonew.png"
-              alt="Faigen"
-              style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
-              onError={e => {
-                e.target.style.display = 'none'
-                e.target.insertAdjacentHTML('afterend', '<span style="font-weight:800;font-size:1.1rem;color:#1A1A1A;">Faigen</span>')
-              }}
-            />
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/privacy" className="text-xs font-bold text-[#2563EB] hover:underline uppercase tracking-widest">
-              Privacy Policy
-            </Link>
-            <div className="hidden md:flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest">
-              <Scale size={14} className="text-[#2563EB]" /> Legal Framework
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Header */}
-      <header className="relative pt-20 pb-16 overflow-hidden border-b border-gray-50">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-[0.03]">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[#2563EB] blur-[120px] rounded-full" />
-        </div>
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <motion.div
-            initial="hidden" animate="visible" variants={fadeUp}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 text-slate-600 text-xs font-bold mb-6"
-          >
-            <Scale size={14} /> Terms & Conditions
-          </motion.div>
-          <motion.h1
-            initial="hidden" animate="visible" variants={fadeUp}
-            className="text-4xl md:text-5xl font-medium tracking-tight mb-4 text-gray-900"
-          >
-            Terms & Conditions
-          </motion.h1>
-          <motion.p
-            initial="hidden" animate="visible" variants={fadeUp}
-            className="text-gray-500 font-medium"
-          >
-            Effective as of March 2026 · Kerala, India
-          </motion.p>
-        </div>
-      </header>
-
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-6 py-16 pb-32">
-        <div className="flex flex-col lg:flex-row gap-16">
-
-          {/* Sidebar */}
-          <aside className="hidden lg:block w-72 shrink-0 sticky top-32 h-fit">
-            <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm mb-6">
-              <p className="text-[10px] font-bold text-[#2563EB] uppercase tracking-widest mb-4">Quick Summary</p>
+    <LegalShell badge="Terms & Conditions" title="Terms & Conditions" sub="Effective as of March 2026 · Kerala, India" contents={sections} prefix="term-"
+      summary={<>
+<p className="text-[10px] font-bold text-[#9a9aa2] uppercase tracking-widest mb-4">Quick Summary</p>
               <ul className="space-y-4">
                 <li className="flex gap-3 text-[12px] text-gray-600 leading-snug">
                   <CheckCircle2 size={16} className="text-green-500 shrink-0 mt-0.5" />
@@ -116,24 +51,8 @@ export default function TermsAndConditions() {
                   Governing law: Kerala, India courts.
                 </li>
               </ul>
-            </div>
+      </>}>
 
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 px-2">Sections</p>
-            <nav className="space-y-0.5">
-              {sections.map((item, idx) => (
-                <a
-                  key={idx}
-                  href={`#term-${idx + 1}`}
-                  className="block px-3 py-2 text-[13px] font-medium text-gray-500 hover:text-[#2563EB] hover:bg-blue-50/50 rounded-xl transition-all"
-                >
-                  {idx + 1}. {item}
-                </a>
-              ))}
-            </nav>
-          </aside>
-
-          {/* Content */}
-          <article className="flex-1 max-w-3xl">
             <div className="space-y-14 text-gray-600 leading-relaxed text-[15px]">
 
               {/* 1 */}
@@ -493,25 +412,6 @@ export default function TermsAndConditions() {
               </section>
 
             </div>
-          </article>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 py-10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[13px] text-gray-400 font-medium">© 2026 Faigen Technologies. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy" className="text-[13px] text-gray-400 hover:text-[#2563EB] font-medium transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/" className="text-[13px] text-gray-400 hover:text-[#2563EB] font-medium transition-colors">
-              Back to Home
-            </Link>
-          </div>
-        </div>
-      </footer>
-
-    </div>
+    </LegalShell>
   )
 }
