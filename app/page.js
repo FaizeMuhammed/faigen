@@ -4,7 +4,6 @@ import Hero from "@/components/sb/Hero";
 import TwoCards from "@/components/sb/TwoCards";
 import Logos from "@/components/sb/Logos";
 import Features from "@/components/sb/Features";
-import Conversations from "@/components/sb/Conversations";
 import Orbit from "@/components/sb/Orbit";
 import Cases from "@/components/sb/Cases";
 import CtaFooter from "@/components/sb/CtaFooter";
@@ -23,7 +22,7 @@ export default function Home() {
         <TwoCards />
         <Logos />
         <Features />
-        <Conversations />
+        {/* <Conversations /> hidden for now */}
         <Orbit />
         <Cases />
       </main>

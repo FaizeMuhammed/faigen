@@ -129,52 +129,49 @@ function Shell({ title, icon: Icon, tone, scenario, steps, c, rail, console: con
 }
 
 // ── WhatsApp: a customer asks in Manglish, the AI answers, an order is collected, and the contact panel fills in ──
-const CHATS = [['Anjali', 'Price ethra aanu Coir Mat?', '10:41', 2], ['Rahul', 'Is this available in black?', '10:32', 0], ['Fathima', 'Delivery Kochi undo?', '10:20', 1], ['Joseph', 'Order cheyyanam 🙌', '9:58', 0], ['Meera', 'Do you have size M?', '9:41', 0]]
+// Kept deliberately calm: four short messages, a quiet chat list, and a contact panel with room to breathe.
+const CHATS = [['Anjali', 'Price ethra aanu Coir Mat?', '10:41', 2], ['Rahul', 'Is this available in black?', '10:32', 0], ['Fathima', 'Delivery Kochi undo?', '10:20', 1], ['Joseph', 'Order cheyyanam 🙌', '9:58', 0]]
 function Bub({ me, children, t, c, k }) {
-  return <div style={fx(c, k, { alignSelf: me ? 'flex-end' : 'flex-start', maxWidth: '78%', background: me ? '#d9fdd3' : '#fff', borderRadius: me ? '10px 10px 3px 10px' : '10px 10px 10px 3px', padding: '7px 10px 4px', fontSize: 13.5, lineHeight: 1.35, boxShadow: '0 1px 1px rgba(11,20,26,.1)' })}>{children}<span style={{ display: 'block', textAlign: 'right', fontSize: 10, color: '#667781', marginTop: 2 }}>{t}{me && <CheckCheck size={12} color="#53bdeb" style={{ marginLeft: 4, verticalAlign: -2 }} />}</span></div>
+  return <div style={fx(c, k, { alignSelf: me ? 'flex-end' : 'flex-start', maxWidth: '80%', background: me ? '#d9fdd3' : '#fff', borderRadius: me ? '12px 12px 4px 12px' : '12px 12px 12px 4px', padding: '9px 13px 6px', fontSize: 14, lineHeight: 1.4, boxShadow: '0 1px 1px rgba(11,20,26,.08)' })}>{children}<span style={{ display: 'block', textAlign: 'right', fontSize: 10, color: '#7a8a93', marginTop: 3 }}>{t}{me && <CheckCheck size={12} color="#53bdeb" style={{ marginLeft: 4, verticalAlign: -2 }} />}</span></div>
 }
 const STAGES = ['New lead', 'Interested', 'Order placed', 'Customer']
-function Label({ icon: Ic, children, right }) {
-  return <div style={row({ justifyContent: 'space-between', marginBottom: 8 })}><span style={{ ...row({ gap: 6 }), fontSize: 11.5, fontWeight: 600, letterSpacing: '.05em', textTransform: 'uppercase', color: '#8b8b92' }}><Ic size={13} />{children}</span>{right}</div>
+function Label({ icon: Ic, children }) {
+  return <div style={{ ...row({ gap: 7 }), marginBottom: 10, fontSize: 11, fontWeight: 600, letterSpacing: '.07em', textTransform: 'uppercase', color: '#9a9aa2' }}><Ic size={13} />{children}</div>
 }
 function ContactPanel({ c }) {
   const stage = c >= 5 ? 2 : c >= 2 ? 1 : 0
   return (
-    <div style={abs({ left: 660, right: 0, top: 0, bottom: 0, background: '#fafaf9', borderLeft: `1px solid ${LINE}`, padding: '14px 18px', ...col({ gap: 12 }), overflow: 'hidden' })}>
-      <div style={row({ gap: 12 })}>
-        <Avatar n="Anjali" s={50} />
-        <div style={{ lineHeight: 1.25, flex: 1 }}><b className="font-heading" style={{ fontSize: 18, fontWeight: 500 }}>Anjali</b><div style={{ fontSize: 12, color: GREY }}>+91 98••• ••21 · Kakkanad</div></div>
-        <span style={{ ...row({ gap: 6 }), fontSize: 11.5, color: '#52525b' }}>AI<span style={{ width: 30, height: 17, borderRadius: 9, background: '#34c759', padding: 2, display: 'flex', justifyContent: 'flex-end' }}><span style={{ width: 13, height: 13, borderRadius: 7, background: '#fff' }} /></span></span>
+    <div style={abs({ left: 600, right: 0, top: 0, bottom: 0, borderLeft: `1px solid ${LINE}`, padding: '20px 24px', ...col({ gap: 20 }), overflow: 'hidden' })}>
+      <div style={row({ gap: 14 })}>
+        <Avatar n="Anjali" s={52} />
+        <div style={{ lineHeight: 1.3, flex: 1 }}><b className="font-heading" style={{ fontSize: 19, fontWeight: 500 }}>Anjali</b><div style={{ fontSize: 12.5, color: GREY, marginTop: 2 }}>+91 98••• ••21 · Kakkanad</div></div>
       </div>
       <div>
         <Label icon={Sparkles}>Stage</Label>
         <div style={{ ...row({ gap: 5 }), flexWrap: 'nowrap' }}>
           {STAGES.map((s, i) => (
-            <span key={s} style={{ fontSize: 11.5, padding: '6px 8px', borderRadius: 14, whiteSpace: 'nowrap', border: `1px solid ${i === stage ? INK : LINE}`, background: i === stage ? INK : '#fff', color: i === stage ? '#fff' : '#6b7280', transition: 'all .4s' }}>{s}</span>
+            <span key={s} style={{ fontSize: 11.5, padding: '7px 10px', borderRadius: 16, whiteSpace: 'nowrap', border: `1px solid ${i === stage ? INK : LINE}`, background: i === stage ? INK : '#fff', color: i === stage ? '#fff' : '#6b7280', transition: 'all .4s' }}>{s}</span>
           ))}
         </div>
-        <div style={fx(c, 5, { marginTop: 8, fontSize: 12, color: '#1d7a36', ...row({ gap: 5 }) })}><Check size={13} strokeWidth={3} />Moved to Order placed by the AI · #1048 · ₹1,200</div>
       </div>
       <div>
         <Label icon={TagIcon}>Tags</Label>
-        <div style={{ ...row({ gap: 6 }), flexWrap: 'wrap', minHeight: 26 }}>
-          <span style={fx(c, 1)}><Chip bg="#e8f1ff" color="#1c5fd4">Price enquiry</Chip></span>
-          <span style={fx(c, 2)}><Chip bg="#f3e8ff" color="#7a3cc4">Coir mats</Chip></span>
-          <span style={fx(c, 4)}><Chip bg="#e1f7e5" color="#1d7a36">Kakkanad</Chip></span>
-          <span style={fx(c, 5)}><Chip bg="#fff1cf" color="#9a6b00">First order</Chip></span>
-          <span style={{ fontSize: 11, padding: '4px 9px', borderRadius: 12, border: '1px dashed #c9c9cf', color: GREY, ...row({ gap: 3 }) }}><Plus size={11} />Tag</span>
+        <div style={{ ...row({ gap: 7 }), flexWrap: 'wrap', minHeight: 28 }}>
+          <span style={fx(c, 1)}><Chip bg="#e8f1ff" color="#1c5fd4" style={{ padding: '7px 12px', fontSize: 12 }}>Price enquiry</Chip></span>
+          <span style={fx(c, 2)}><Chip bg="#f3e8ff" color="#7a3cc4" style={{ padding: '7px 12px', fontSize: 12 }}>Coir mats</Chip></span>
+          <span style={fx(c, 5)}><Chip bg="#e1f7e5" color="#1d7a36" style={{ padding: '7px 12px', fontSize: 12 }}>Kakkanad</Chip></span>
         </div>
       </div>
       <div>
-        <Label icon={StickyNote}>Notes</Label>
-        <div style={{ background: '#fff', border: `1px solid ${LINE}`, borderRadius: 12, padding: '10px 12px', minHeight: 64, fontSize: 12.5, lineHeight: 1.45, color: '#3f3f46' }}>
-          <span style={fx(c, 5)}><b style={{ fontWeight: 500 }}>AI summary:</b> Wants 2 Premium Coir Mats. Deliver to Kakkanad 682030, pay on delivery.</span>
+        <Label icon={StickyNote}>Note</Label>
+        <div style={{ borderRadius: 14, background: '#f8f6f4', padding: '12px 14px', minHeight: 70, fontSize: 12.5, lineHeight: 1.5, color: '#3f3f46' }}>
+          <span style={fx(c, 5)}>Wants 2 Premium Coir Mats. Deliver to Kakkanad 682030, pay on delivery.</span>
           {c < 5 && <span style={{ color: '#a1a1aa' }}>Add a note for your team…</span>}
         </div>
       </div>
-      <div>
-        <Label icon={UserRound}>Owner</Label>
-        <div style={row({ gap: 10 })}><Portrait name="Kiran" size={28} /><span style={{ fontSize: 13, flex: 1 }}>Kiran <span style={{ color: GREY }}>· assigned</span></span><span style={{ background: INK, color: '#fff', borderRadius: 16, padding: '7px 14px', fontSize: 12.5 }}>Take over</span></div>
+      <div style={{ ...row({ justifyContent: 'space-between' }), marginTop: 'auto' }}>
+        <span style={row({ gap: 10 })}><Portrait name="Kiran" size={30} /><span style={{ fontSize: 13 }}>Kiran<span style={{ display: 'block', fontSize: 11.5, color: GREY }}>Owner</span></span></span>
+        <span style={{ background: INK, color: '#fff', borderRadius: 18, padding: '10px 18px', fontSize: 13 }}>Take over</span>
       </div>
     </div>
   )
@@ -183,29 +180,27 @@ function WhatsAppTab({ c }) {
   const typing = c === 1 || c === 3
   return (
     <Shell c={c} title="Live Inbox" icon={Inbox} tone="#387ed1" scenario="a shop gets a price question late at night" steps={['Customer asks', 'AI replies', 'Order collected']} rail={1}>
-      <div style={abs({ left: 0, top: 0, width: 250, bottom: 0, borderRight: `1px solid ${LINE}`, overflow: 'hidden' })}>
-        <div style={{ ...row({ gap: 8, margin: '12px 14px 8px', height: 34, padding: '0 12px' }), borderRadius: 17, border: `1px solid ${LINE}`, background: '#faf9f8', fontSize: 12.5, color: GREY }}><Search size={14} />Search phone or name…</div>
+      <div style={abs({ left: 0, top: 0, width: 230, bottom: 0, borderRight: `1px solid ${LINE}`, overflow: 'hidden', padding: '16px 10px' })}>
         {CHATS.map(([n, m, t, u], i) => (
-          <div key={n} style={{ ...row({ gap: 11, padding: '11px 14px' }), background: i === 0 ? '#f4f7fd' : 'transparent', borderBottom: `1px solid ${LINE}` }}>
+          <div key={n} style={{ ...row({ gap: 12, padding: '12px 10px' }), borderRadius: 14, background: i === 0 ? '#f4f7fd' : 'transparent', marginBottom: 4 }}>
             <Avatar n={n} s={40} />
-            <div style={{ flex: 1, minWidth: 0 }}><div style={row({ justifyContent: 'space-between' })}><b style={{ fontWeight: 500, fontSize: 14 }}>{n}</b><span style={{ fontSize: 10.5, color: u ? '#25a352' : GREY }}>{t}</span></div><div style={row({ justifyContent: 'space-between', marginTop: 3 })}><span style={{ fontSize: 12, color: GREY, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{i === 0 && c >= 5 ? 'Order #1048 collected ✓' : m}</span>{u > 0 && <span style={{ minWidth: 17, height: 17, borderRadius: 9, background: '#25d366', color: '#fff', fontSize: 10.5, ...row({ justifyContent: 'center' }), marginLeft: 6 }}>{u}</span>}</div></div>
+            <div style={{ flex: 1, minWidth: 0 }}><div style={row({ justifyContent: 'space-between' })}><b style={{ fontWeight: 500, fontSize: 14 }}>{n}</b><span style={{ fontSize: 10.5, color: u ? '#25a352' : GREY }}>{t}</span></div><div style={row({ justifyContent: 'space-between', marginTop: 4 })}><span style={{ fontSize: 12, color: GREY, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{i === 0 && c >= 5 ? 'Order #1048 collected ✓' : m}</span>{u > 0 && <span style={{ minWidth: 17, height: 17, borderRadius: 9, background: '#25d366', color: '#fff', fontSize: 10.5, ...row({ justifyContent: 'center' }), marginLeft: 6 }}>{u}</span>}</div></div>
           </div>
         ))}
       </div>
-      <div style={abs({ left: 250, top: 0, width: 410, bottom: 0, background: '#efeae2', overflow: 'hidden' })}>
-        <div style={{ ...row({ gap: 11, padding: '10px 16px' }), background: '#fff', borderBottom: `1px solid ${LINE}` }}>
-          <Avatar n="Anjali" s={34} /><div style={{ lineHeight: 1.2 }}><b style={{ fontWeight: 500, fontSize: 14 }}>Anjali</b><div style={{ fontSize: 11.5, color: '#1d7a36' }}>{typing ? 'AI is replying…' : 'online'}</div></div>
-          <span style={{ marginLeft: 'auto', ...row({ gap: 13 }), color: '#667781' }}><Video size={17} /><Phone size={16} /><MoreHorizontal size={17} /></span>
+      <div style={abs({ left: 230, top: 0, width: 370, bottom: 0, background: '#efeae2', overflow: 'hidden' })}>
+        <div style={{ ...row({ gap: 12, padding: '12px 20px' }), background: '#fff', borderBottom: `1px solid ${LINE}` }}>
+          <Avatar n="Anjali" s={36} /><div style={{ lineHeight: 1.25 }}><b style={{ fontWeight: 500, fontSize: 14.5 }}>Anjali</b><div style={{ fontSize: 12, color: '#1d7a36' }}>{typing ? 'AI is replying…' : 'online'}</div></div>
+          <span style={{ marginLeft: 'auto', ...row({ gap: 14 }), color: '#8696a0' }}><Video size={17} /><Phone size={16} /></span>
         </div>
-        <div style={{ ...col({ gap: 8 }), padding: '14px 16px' }}>
+        <div style={{ ...col({ gap: 12 }), padding: '20px 20px' }}>
           <Bub c={c} k={1} t="10:41">Price ethra aanu Coir Mat?</Bub>
-          <Bub c={c} k={2} me t="10:41">₹600 aanu 😊 45 stock undu. Ethra venam?</Bub>
-          <Bub c={c} k={3} t="10:42">2 venam. Kakkanad delivery undo?</Bub>
-          <Bub c={c} k={3.5} me t="10:42">Undu, 2 days-il ethum 🚚 Name and address ayakkamo?</Bub>
-          <Bub c={c} k={4} t="10:43">Anjali, Kakkanad 682030</Bub>
-          <div style={fx(c, 5, { alignSelf: 'center', ...row({ gap: 8 }), background: '#dbfc74', borderRadius: 14, padding: '7px 13px', fontSize: 12.5, fontWeight: 500 })}><Check size={14} strokeWidth={3} />Order #1048 collected by the AI</div>
+          <Bub c={c} k={2} me t="10:41">₹600 aanu 😊 Name and address ayakkamo?</Bub>
+          <Bub c={c} k={3} t="10:43">Anjali, 2 mats. Kakkanad 682030</Bub>
+          <Bub c={c} k={4} me t="10:43">Done 🚚 Order #1048 placed.</Bub>
+          <div style={fx(c, 5, { alignSelf: 'center', ...row({ gap: 8 }), background: '#dbfc74', borderRadius: 16, padding: '8px 14px', fontSize: 12.5, fontWeight: 500, marginTop: 2 })}><Check size={14} strokeWidth={3} />Order #1048 collected by the AI</div>
         </div>
-        <div style={abs({ left: 12, right: 12, bottom: 12, height: 40, borderRadius: 20, background: '#fff', ...row({ padding: '0 7px 0 14px', gap: 10 }) })}><Smile size={19} color="#8696a0" /><span style={{ fontSize: 13, color: '#8696a0', flex: 1 }}>Type a reply (pauses AI)</span><span style={{ width: 30, height: 30, borderRadius: 15, background: '#25d366', ...row({ justifyContent: 'center' }) }}><Send size={14} color="#fff" /></span></div>
+        <div style={abs({ left: 16, right: 16, bottom: 16, height: 44, borderRadius: 22, background: '#fff', ...row({ padding: '0 8px 0 18px', gap: 10 }) })}><span style={{ fontSize: 13.5, color: '#8696a0', flex: 1 }}>Type a reply (pauses AI)</span><span style={{ width: 32, height: 32, borderRadius: 16, background: '#25d366', ...row({ justifyContent: 'center' }) }}><Send size={15} color="#fff" /></span></div>
       </div>
       <ContactPanel c={c} />
     </Shell>
