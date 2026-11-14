@@ -137,8 +137,8 @@ export default function TwoCards() {
             const isOpen = open === i
             return (
               <div key={t} onMouseEnter={() => setOpen(i)} onClick={() => setOpen(i)}
-                className={`relative flex shrink-0 overflow-hidden rounded-[24px] p-2 transition-[width,background-color] duration-500 ease-out max-lg:w-full ${isOpen ? 'bg-white lg:w-[537px]' : 'bg-[#f8f6f4] lg:w-[316px]'}`}>
-                <div className={`flex w-full flex-col justify-between p-6 lg:shrink-0 ${isOpen ? "lg:w-[254px]" : "lg:w-[300px]"}`}>
+                className={`relative flex shrink-0 overflow-hidden rounded-[24px] p-2 transition-[width,background-color] duration-500 ease-out max-lg:w-full max-lg:flex-col max-lg:bg-white ${isOpen ? 'bg-white lg:w-[537px]' : 'bg-[#f8f6f4] lg:w-[316px]'}`}>
+                <div className={`flex w-full flex-col justify-between p-6 max-lg:gap-4 max-lg:px-4 lg:shrink-0 ${isOpen ? "lg:w-[254px]" : "lg:w-[300px]"}`}>
                   <FaceDisc tone={face} className="h-16 w-16 drop-shadow-[0_10px_16px_rgba(0,0,0,.14)]" />
                   <div className="mt-8 flex flex-col gap-1.5 lg:mt-0">
                     <h3 className="font-heading text-[24px] font-medium leading-[28.8px] text-[#1a1a1a]">{t}</h3>
@@ -146,6 +146,7 @@ export default function TwoCards() {
                   </div>
                 </div>
                 <div className={`relative ml-0 hidden h-full w-[267px] shrink-0 overflow-hidden rounded-[16px] ${isOpen ? 'lg:block' : ''}`} style={{ background: tone, width: 267, borderRadius: 16 }}><Texture /><div className="relative h-full"><Art kind={art} /></div></div>
+                <div className="relative mt-2 overflow-hidden rounded-[16px] lg:hidden" style={{ background: tone, height: 350 }}><Texture /><div className="relative h-full"><Art kind={art} /></div></div>
               </div>
             )
           })}

@@ -381,31 +381,21 @@ function Runner({ tab, at }) {
   return <Tab c={c} />
 }
 
-// Scales the 1080 x 634 window to the width it is given (never above 1). On phones it keeps a readable size instead
-// (about 0.6) and the picture can be swiped sideways, starting on the pane that matters for the tab.
-const START = { wa: 250, ig: 330, orders: 60, bc: 60, inbox: 60 }
+// Scales the 1080 x 634 window to the width it is given (never above 1). On phones that is about 0.29, like the
+// reference, which shows the whole product picture small inside a 195px panel.
 export default function HeroWindow({ tab, at }) {
   const outer = useRef(null)
   const [scale, setScale] = useState(1)
-  const [narrow, setNarrow] = useState(false)
   useEffect(() => {
-    const fit = () => {
-      const w = outer.current?.clientWidth || 1080
-      const small = w < 700
-      setNarrow(small)
-      setScale(small ? 0.6 : Math.min(1, w / 1080))
-    }
+    const fit = () => setScale(Math.min(1, (outer.current?.clientWidth || 1080) / 1080))
     fit()
     const ro = new ResizeObserver(fit)
     outer.current && ro.observe(outer.current)
     return () => ro.disconnect()
   }, [])
-  useEffect(() => { if (narrow && outer.current) outer.current.scrollLeft = (START[tab] || 0) * scale }, [narrow, tab, scale])
   return (
-    <div ref={outer} style={{ width: '100%', height: 634 * scale, overflowX: narrow ? 'auto' : 'visible', overflowY: 'hidden', scrollbarWidth: 'none' }}>
-      <div style={{ width: 1080 * scale, height: 634 * scale }}>
-        <div style={{ width: 1080, height: 634, transform: `scale(${scale})`, transformOrigin: 'top left' }}><Runner key={tab} tab={tab} at={at} /></div>
-      </div>
+    <div ref={outer} style={{ width: '100%', height: 634 * scale }}>
+      <div style={{ width: 1080, height: 634, transform: `scale(${scale})`, transformOrigin: 'top left' }}><Runner key={tab} tab={tab} at={at} /></div>
     </div>
   )
 }
