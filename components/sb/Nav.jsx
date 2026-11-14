@@ -3,9 +3,9 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react'
-import { FaigenLogo, WhatsAppGlyph, InstagramGlyph } from '../site/FaigenMark'
+import { WhatsAppGlyph, InstagramGlyph } from '../site/FaigenMark'
 import { ShoppingBag, Megaphone, Inbox } from 'lucide-react'
-
+import { SbLogo } from './ui'
 const PRODUCT = [
   { label: 'WhatsApp AI agent', Icon: WhatsAppGlyph, href: '/features' },
   { label: 'Instagram automation', Icon: InstagramGlyph, href: '/features' },
@@ -22,7 +22,7 @@ export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-[#fafafa]/80 backdrop-blur-[10px]">
       <div className="mx-auto flex h-20 w-full max-w-[1240px] items-center justify-between px-5 md:grid md:grid-cols-[240px_1fr_238px]">
-        <Link href="/" aria-label="Faigen home" className="flex h-[26px] items-center"><FaigenLogo /></Link>
+        <Link href="/" aria-label="Faigen home" className="flex h-[26px] items-center"><SbLogo /></Link>
 
         <nav className="hidden items-center justify-center gap-5 md:flex" aria-label="Main">
           <div className="relative" onMouseEnter={() => setMenu(true)} onMouseLeave={() => setMenu(false)}>

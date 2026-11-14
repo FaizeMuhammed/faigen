@@ -49,3 +49,11 @@ export const PANEL = {
   blue: 'linear-gradient(135deg,#b5d4fa 0%,#cde3fd 60%,#d0e5fd 100%)',
   lime: 'linear-gradient(135deg,#c8fb68 0%,#d6fd7e 60%,#dcfe87 100%)',
 }
+
+// New logo (test): the app-icon tile from the design file, icon only
+export function SbLogo({ size = 32 }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src="/sb/faigen-logo.svg" alt="Faigen" width={size} height={size} style={{ width: size, height: size }} />
+  )
+}
