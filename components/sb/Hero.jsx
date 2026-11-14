@@ -25,11 +25,11 @@ export default function Hero() {
       <Wrap>
         {/* Hero block: 600px high, content centred, shapes placed as on the reference */}
         <div className="relative flex min-h-[440px] items-center lg:min-h-[600px] justify-center overflow-visible">
-          <HalfRing className="absolute right-[5%] top-[120px] hidden h-[169px] w-[169px] lg:block" style={{ '--r': '10deg' }} />
-          <HalfDisc className="absolute right-[15%] top-[408px] hidden h-[235px] w-[178px] lg:block" style={{ '--r': '-4deg' }} />
-          <Scallop className="absolute left-[9%] top-[110px] hidden h-[108px] w-[108px] lg:block" style={{ '--r': '-8deg' }} />
-          <Dot className="absolute left-[calc(50%-28px)] top-0 hidden h-14 w-14 lg:block" color="#7fb2ff" />
-          <Diamond className="absolute left-[25%] top-[469px] hidden h-[73px] w-[73px] lg:block" />
+          <HalfRing className="absolute left-[80.4%] top-[150px] hidden h-[116px] w-[169px] lg:block" style={{ '--r': '8deg' }} />
+          <HalfDisc className="absolute left-[72.75%] top-[408px] hidden h-[222px] w-[178px] lg:block" style={{ '--r': '-4deg' }} />
+          <Scallop className="absolute left-[12.8%] top-[73px] hidden h-[115px] w-[115px] lg:block" style={{ '--r': '-6deg' }} />
+          <Dot className="absolute left-[53.25%] top-0 hidden h-14 w-14 lg:block" color="#86b4ff" />
+          <Diamond className="absolute left-[24.4%] top-[469px] hidden h-[56px] w-[56px] lg:block" />
           <div className="relative flex flex-col items-center gap-10 text-center">
             <div className="flex flex-col items-center gap-5">
               <p className="flex items-center gap-2 text-[16px] font-normal leading-[22.4px] text-[#535353]"><span className="h-2 w-2 rounded-full bg-[#34c759]" />Meta Verified Tech Provider</p>

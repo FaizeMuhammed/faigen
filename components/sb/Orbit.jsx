@@ -1,5 +1,6 @@
 import { Globe, Code2, ShoppingBag, KeyRound, Megaphone, LayoutDashboard, Languages, Bell } from 'lucide-react'
-import FaigenMark, { WhatsAppGlyph, InstagramGlyph } from '../site/FaigenMark'
+import { WhatsAppGlyph, InstagramGlyph } from '../site/FaigenMark'
+import { Scallop } from './art'
 import { TryLink, Wrap, H2 } from './ui'
 import ScaleBox from './ScaleBox'
 
@@ -24,7 +25,7 @@ export default function Orbit() {
             {[643, 550, 498, 430, 378].map(r => <div key={r} aria-hidden className="absolute rounded-full border border-[#1a1a1a]/[0.07] bg-gradient-to-b from-[#1a1a1a]/[0.02] to-transparent" style={{ width: r * 2, height: r * 2, left: CX - r, top: CY - r }} />)}
             {ANGLES.map((a, i) => <Icon key={'o' + a} node={OUTER[i]} r={550} a={a} />)}
             {ANGLES.map((a, i) => <Icon key={'i' + a} node={INNER[i]} r={430} a={a} />)}
-            <div className="absolute left-1/2 top-[438px] -translate-x-1/2"><FaigenMark className="sb-float h-[120px] w-[120px] drop-shadow-[0_16px_26px_rgba(0,113,227,.4)]" /></div>
+            <Scallop className="absolute left-1/2 top-[440px] h-[120px] w-[120px] -translate-x-1/2" />
           </div>
         </ScaleBox>
       </Wrap>

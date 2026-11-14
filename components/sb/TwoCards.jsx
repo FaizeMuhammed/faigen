@@ -3,12 +3,13 @@
 import { useState } from 'react'
 import { Zap, ShoppingBag, SlidersHorizontal, Check } from 'lucide-react'
 import { Wrap, Grain, PANEL } from './ui'
+import { FaceDisc } from './art'
 
 // Three cards in a #f0eeeb tray: one open (537px, with its picture), two closed (316px). Hover or tap to open another.
 const ITEMS = [
-  { Icon: Zap, t: 'Never miss a message', d: 'Every question gets a reply in seconds, day or night, in the language the customer wrote in.', tone: PANEL.blue, art: 'chat' },
-  { Icon: ShoppingBag, t: 'Turn chats into orders', d: 'The agent answers from your catalog, collects name, product, quantity and address, and hands you a finished order.', tone: PANEL.purple, art: 'order' },
-  { Icon: SlidersHorizontal, t: 'Stay in control', d: 'Watch every chat live, take over any conversation, and hand it back to the AI whenever you want.', tone: PANEL.lime, art: 'control' },
+  { face: 'blue', Icon: Zap, t: 'Never miss a message', d: 'Every question gets a reply in seconds, day or night, in the language the customer wrote in.', tone: PANEL.blue, art: 'chat' },
+  { face: 'violet', Icon: ShoppingBag, t: 'Turn chats into orders', d: 'The agent answers from your catalog, collects name, product, quantity and address, and hands you a finished order.', tone: PANEL.purple, art: 'order' },
+  { face: 'lime', Icon: SlidersHorizontal, t: 'Stay in control', d: 'Watch every chat live, take over any conversation, and hand it back to the AI whenever you want.', tone: PANEL.lime, art: 'control' },
 ]
 
 function Art({ kind }) {
@@ -46,13 +47,13 @@ export default function TwoCards() {
     <section className="pb-10 pt-5">
       <Wrap>
         <div className="flex flex-col gap-2 rounded-[32px] bg-[#f0eeeb] p-2 lg:h-[436px] lg:flex-row">
-          {ITEMS.map(({ Icon, t, d, tone, art }, i) => {
+          {ITEMS.map(({ face, t, d, tone, art }, i) => {
             const isOpen = open === i
             return (
               <div key={t} onMouseEnter={() => setOpen(i)} onClick={() => setOpen(i)}
                 className={`relative flex shrink-0 overflow-hidden rounded-[24px] p-2 transition-[width,background-color] duration-500 ease-out max-lg:w-full ${isOpen ? 'bg-white lg:w-[537px]' : 'bg-[#f8f6f4] lg:w-[316px]'}`}>
                 <div className={`flex w-full flex-col justify-between p-6 lg:shrink-0 ${isOpen ? "lg:w-[254px]" : "lg:w-[300px]"}`}>
-                  <span className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full shadow-[0_10px_24px_-10px_rgba(0,0,0,.25)]" style={{ background: tone }}><Icon size={28} strokeWidth={1.8} className="text-[#1a1a1a]" /></span>
+                  <FaceDisc tone={face} className="h-16 w-16 drop-shadow-[0_10px_16px_rgba(0,0,0,.14)]" />
                   <div className="mt-8 flex flex-col gap-1.5 lg:mt-0">
                     <h3 className="font-heading text-[24px] font-medium leading-[28.8px] text-[#1a1a1a]">{t}</h3>
                     <p className="text-[16px] font-normal leading-[22.4px] text-[#52525b]">{d}</p>
