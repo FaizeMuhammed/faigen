@@ -169,7 +169,7 @@ export default function TwoCards() {
                   </div>
                 </div>
                 <div className={`relative ml-0 hidden h-full w-[267px] shrink-0 overflow-hidden rounded-[16px] ${isOpen ? 'lg:block' : ''}`} style={{ background: tone, width: 267, borderRadius: 16 }}><Texture /><div className="relative h-full"><Art kind={art} /></div></div>
-                <div className="relative mt-2 overflow-hidden rounded-[16px] lg:hidden" style={{ background: tone, height: 350 }}><Texture /><div className="relative h-full"><Art kind={art} /></div></div>
+                <div className="relative mt-2 overflow-hidden rounded-[16px] lg:hidden" style={{ background: tone, height: 420 }}><Texture /><div className="relative h-full"><Art kind={art} /></div></div>
               </div>
             )
           })}
