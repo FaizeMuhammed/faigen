@@ -1,3 +1,5 @@
+import { useId } from 'react'
+
 // The Faigen mark, traced from the logo: an "f" whose branches end in four hollow nodes.
 // Coordinates are in the logo's own space (about x 141–369, y 109–361).
 function MarkShapes({ stroke, nodeFill, width = 18 }) {
@@ -59,14 +61,16 @@ export function WhatsAppGlyph({ className = '' }) {
 }
 
 export function InstagramGlyph({ className = '' }) {
+  // each icon gets its own gradient id, so a copy inside a hidden element can't break the others
+  const gid = `ig-${useId().replace(/:/g, '')}`
   return (
     <svg viewBox="0 0 32 32" className={className} aria-hidden="true">
       <defs>
-        <linearGradient id="ig-g" x1="0" y1="1" x2="1" y2="0">
+        <linearGradient id={gid} x1="0" y1="1" x2="1" y2="0">
           <stop offset="0" stopColor="#feda75" /><stop offset=".35" stopColor="#fa7e1e" /><stop offset=".65" stopColor="#d62976" /><stop offset="1" stopColor="#4f5bd5" />
         </linearGradient>
       </defs>
-      <rect width="32" height="32" rx="9" fill="url(#ig-g)" />
+      <rect width="32" height="32" rx="9" fill={`url(#${gid})`} />
       <rect x="8" y="8" width="16" height="16" rx="5" fill="none" stroke="#fff" strokeWidth="1.9" />
       <circle cx="16" cy="16" r="3.8" fill="none" stroke="#fff" strokeWidth="1.9" />
       <circle cx="20.6" cy="11.4" r="1.1" fill="#fff" />

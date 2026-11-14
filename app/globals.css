@@ -86,3 +86,10 @@ body {
   .float-slow, .float-slower, .typing-dot, .marquee-track { animation: none !important; }
   .flow-dot { display: none; }
 }
+
+/* ── Sunbeam-style home page (branch: sunbeam-style) ───────────── */
+@keyframes sb-float { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-14px) rotate(calc(var(--r, 0deg) + 4deg)); } }
+@keyframes sb-spin { to { transform: rotate(360deg); } }
+.sb-float { animation: sb-float 7s ease-in-out infinite; }
+.sb-spin { animation: sb-spin 40s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .sb-float, .sb-spin { animation: none; } }

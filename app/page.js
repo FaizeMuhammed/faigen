@@ -1,31 +1,35 @@
-import Nav from "@/components/site/Nav";
-import Footer from "@/components/site/Footer";
-import Hero from "@/components/site/home/Hero";
-import Statement from "@/components/site/home/Statement";
-import Showcase from "@/components/site/home/Showcase";
-import InstagramSuite from "@/components/site/home/InstagramSuite";
-import Bento from "@/components/site/home/Bento";
-import UseCases from "@/components/site/home/UseCases";
-import HowItWorks from "@/components/site/home/HowItWorks";
-import Faq from "@/components/site/home/Faq";
-import FinalCta from "@/components/site/home/FinalCta";
+import { Urbanist } from "next/font/google";
+import Nav from "@/components/sb/Nav";
+import Hero from "@/components/sb/Hero";
+import Benefits from "@/components/sb/Benefits";
+import Features from "@/components/sb/Features";
+import UseCases from "@/components/sb/UseCases";
+import Orbit from "@/components/sb/Orbit";
+import Steps from "@/components/sb/Steps";
+import PricingTeaser from "@/components/sb/PricingTeaser";
+import Faq from "@/components/sb/Faq";
+import Cta from "@/components/sb/Cta";
+import Footer from "@/components/sb/Footer";
 
+const urbanist = Urbanist({ subsets: ["latin"], weight: ["400", "500", "600"], display: "swap" });
+
+// Home page in the "sunbeam-style" design (branch: sunbeam-style).
 export default function Home() {
   return (
-    <>
+    <div className={`${urbanist.className} min-h-screen bg-[#fafaf8] text-[#1a1a1a]`}>
       <Nav />
       <main>
         <Hero />
-        <Statement />
-        <Showcase />
-        <InstagramSuite />
-        <Bento />
+        <Benefits />
+        <Features />
         <UseCases />
-        <HowItWorks />
+        <Orbit />
+        <Steps />
+        <PricingTeaser />
         <Faq />
-        <FinalCta />
+        <Cta />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
