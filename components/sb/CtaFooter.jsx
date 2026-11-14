@@ -16,12 +16,12 @@ export default function CtaFooter() {
       <Wrap>
         {/* CTA: padding 256 / 20 / 80, title 64/76.8, subtitle 21/29.4, link */}
         <div className="relative px-5 pb-20 pt-24 text-center lg:pt-64">
-          <Diamond className="absolute left-[11.9%] top-[140px] hidden h-[44px] w-[44px] lg:block" color="#fac6fb" />
-          <Dot className="absolute left-[66.75%] top-[174px] hidden h-[35px] w-[35px] lg:block" color="#dbfc74" />
+          <Diamond className="absolute left-[11.9%] top-[130px] hidden h-[73px] w-[73px] lg:block" />
+          <Dot className="absolute left-[66.75%] top-[170px] hidden h-14 w-14 lg:block" />
           <Scallop className="absolute left-[44.5%] top-[50px] hidden h-[108px] w-[108px] lg:block" style={{ '--r': '4deg' }} />
           <Pillar className="absolute left-[9.6%] top-[432px] hidden h-[191px] w-[108px] lg:block" style={{ '--r': '-3deg' }} />
-          <Cloud className="absolute left-[68.6%] top-[24px] hidden h-[249px] w-[484px] lg:block" />
-          <HalfDisc className="absolute left-[86.9%] top-[359px] hidden h-[169px] w-[135px] lg:block" style={{ '--r': '-6deg' }} />
+          <Cloud footer className="absolute left-[68.6%] top-[24px] hidden h-[249px] w-[484px] lg:block" />
+          <HalfDisc small className="absolute left-[86.9%] top-[359px] hidden h-[169px] w-[169px] lg:block" style={{ '--r': '-6deg' }} />
           <div className="relative mx-auto flex max-w-[780px] flex-col items-center gap-8">
             <div className="flex flex-col gap-1">
               <h2 className="font-heading text-balance text-[clamp(2.4rem,5vw,4rem)] font-medium leading-[1.2] text-[#1a1a1a]">Ready when your customers are.</h2>
