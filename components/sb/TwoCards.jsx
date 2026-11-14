@@ -71,7 +71,7 @@ function ChatArt() {
       <Cloud style={{ right: -44, bottom: -22, width: 240, height: 120 }} tint="rgba(143,190,248,.42)" />
       <Note ch={WhatsAppGlyph} tag="WhatsApp" tagBg="#cdf3d6" user="Anjali" text="Price ethra aanu Coir Mat?" reply="₹600 aanu 😊 Order?" meta="Replied in 3 sec" style={{ top: 26, transform: 'rotate(-2deg)', zIndex: 1 }} />
       <Note ch={InstagramGlyph} tag="Instagram" tagBg="#fbd3f3" user="priya_crafts" text="Is the red bag still available?" reply="Yes! Check your DMs 📩" meta="Replied in 2 sec" style={{ top: 150, zIndex: 2 }} />
-      <Note ch={WhatsAppGlyph} tag="Malayalam" tagBg="#e6d4ff" user="Fathima" text="Delivery Kochi undo?" reply="Undu, 2 days-il ethum 🚚" meta="Replied in 3 sec" style={{ top: 274, transform: 'rotate(2deg)', zIndex: 3 }} />
+      <Note ch={WhatsAppGlyph} tag="Any language" tagBg="#e6d4ff" user="Fathima" text="Delivery Kochi undo?" reply="Undu, 2 days-il ethum 🚚" meta="Replied in 3 sec" style={{ top: 274, transform: 'rotate(2deg)', zIndex: 3 }} />
     </>
   )
 }

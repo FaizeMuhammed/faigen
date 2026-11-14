@@ -328,7 +328,7 @@ export default function TryPage() {
                     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
                   </motion.div>
                   <h2 style={h2Style}>Verified. Now start chatting.</h2>
-                  <p style={pStyle}>Open WhatsApp and send a message to our agent. It replies instantly. Try Manglish, ask about products, or place a test order.</p>
+                  <p style={pStyle}>Open WhatsApp and send a message to our agent. It replies instantly. Write in any language, ask about products, or place a test order.</p>
                 </div>
 
                 <div style={{ marginTop: 24, borderRadius: 12, background: '#f8f6f4', padding: 20 }}>
@@ -359,7 +359,7 @@ export default function TryPage() {
               {[
                 ['blue', 'Enter your number', 'Type your WhatsApp number. Your name is optional and nothing is shared or used for ads.'],
                 ['violet', 'Get a code on WhatsApp', 'Our agent sends you a 6-digit code. Enter it to unlock the chat.'],
-                ['lime', 'Chat with the agent', 'Ask about products, try Manglish, or place a test order. It replies instantly.'],
+                ['lime', 'Chat with the agent', 'Ask about products, write in any language, or place a test order. It replies instantly.'],
               ].map(([tone, t, d], i) => (
                 <div key={t} style={{ background: '#fafaf9', borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column', gap: 16, minHeight: 238 }}>
                   <div style={{ padding: '0 8px 8px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

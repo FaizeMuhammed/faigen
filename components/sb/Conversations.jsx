@@ -10,7 +10,7 @@ const COLS = [
   ],
   [
     { wa: true, ask: 'Can I book tomorrow at 10 AM?', reply: '10 AM is free. Booked it, and I’ll send you a reminder.', who: 'Salon', role: 'Bookings', tone: '#cdeedb' },
-    { wa: true, ask: 'ഈ saree M size ഉണ്ടോ?', reply: 'ഉണ്ട്! 3 എണ്ണം stock ഉണ്ട്. Order ചെയ്യട്ടെ?', who: 'Textiles', role: 'Malayalam', tone: '#e1d1ff' },
+    { wa: true, ask: 'ഈ saree M size ഉണ്ടോ?', reply: 'ഉണ്ട്! 3 എണ്ണം stock ഉണ്ട്. Order ചെയ്യട്ടെ?', who: 'Textiles', role: 'Any language', tone: '#e1d1ff' },
   ],
   [
     { wa: true, ask: 'Do you deliver to Dubai?', reply: 'Yes, in 3 to 5 days. Shall I take your name and address?', who: 'Gift shop', role: 'Delivery', tone: '#cfe0ff' },

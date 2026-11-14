@@ -12,7 +12,7 @@ export const metadata = {
 const STATS = [
   ['24/7', 'Always online. No downtime, no missed messages.'],
   ['24–48h', 'From sharing your details to going live.'],
-  ['3', 'Languages understood: English, Malayalam and Manglish.'],
+  ['All', 'Languages understood. Customers write the way they speak and the agent replies in kind.'],
 ]
 
 const VALUES = [

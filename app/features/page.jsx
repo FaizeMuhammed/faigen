@@ -24,7 +24,7 @@ const ITEMS = [
 
 const HIGHLIGHTS = [
   { tone: 'blue', t: 'Always on', d: 'Every question gets a reply in seconds, day or night, with no missed messages.' },
-  { tone: 'violet', t: 'In your customer’s language', d: 'It understands Malayalam, Manglish and English, and replies the way the customer wrote.' },
+  { tone: 'violet', t: 'In your customer’s language', d: 'It understands every language, and replies the way the customer wrote.' },
   { tone: 'lime', t: 'You stay in control', d: 'Watch every chat live, take over any conversation, and hand it back to the AI.' },
 ]
 

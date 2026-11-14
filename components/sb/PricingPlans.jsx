@@ -37,7 +37,7 @@ function Dot({ dark }) {
 
 // Same ten rows on every plan, as on the reference: what the plan has is dark with the lime tick, what it lacks is grey
 const ROWS = [
-  { t: () => 'Multilingual AI (English, Manglish, Malayalam)', has: [1, 1, 1] },
+  { t: () => 'Multilingual AI in every language', has: [1, 1, 1] },
   { t: () => 'Trained on your FAQs, catalog and brand tone', has: [1, 1, 1] },
   { t: () => 'Automated order collection', has: [1, 1, 1], tip: 'The AI collects name, product, quantity and address in the chat and creates the order.' },
   { t: i => ['1 team seat', '3 team seats', 'Unlimited team seats'][i] + ' for the live inbox', has: [1, 1, 1], tip: 'Take over any chat from the live inbox, and hand it back to the AI when you are done.' },

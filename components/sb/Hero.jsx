@@ -32,7 +32,7 @@ export default function Hero() {
             <div className="flex flex-col items-center gap-5">
               <p className="flex items-center gap-2 text-[16px] font-normal leading-[22.4px] text-[#535353]"><span className="h-2 w-2 rounded-full bg-[#34c759]" />Meta Verified Tech Provider</p>
               <h1 className="font-heading max-w-[780px] text-balance text-[40px] sm:text-[clamp(2.6rem,5vw,4rem)] font-medium leading-[1.2] text-[#1a1a1a]">Never miss a customer again.</h1>
-              <p className="max-w-[520px] text-[clamp(1.05rem,1.5vw,1.3125rem)] font-normal leading-[1.4] text-[#535353]">The AI agent that replies, takes orders and follows up on WhatsApp and Instagram, in English, Malayalam and Manglish. Live in 24–48 hours.</p>
+              <p className="max-w-[520px] text-[clamp(1.05rem,1.5vw,1.3125rem)] font-normal leading-[1.4] text-[#535353]">The AI agent that replies, takes orders and follows up on WhatsApp and Instagram, in any language. Live in 24–48 hours.</p>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <TryLink href="/try">Try the live demo</TryLink>
