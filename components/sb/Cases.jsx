@@ -1,11 +1,13 @@
 import { ArrowUpRight, NotebookPen, Bot, Rocket } from 'lucide-react'
 import { GreyPill, Wrap, H2 } from './ui'
 
-// Three cards 376 x 430 (radius 24, padding 24) with a 24px dark arrow, as on the reference's case cards
+// Three cards 376 x 430 (radius 24, padding 24), as on the reference's case cards:
+// label top left, dark arrow top right, text at the bottom (first sentence dark, rest grey).
+// On hover a soft picture fades in over the card.
 const STEPS = [
-  { Icon: NotebookPen, n: 'Step 1', lead: 'Tell us about your business.', rest: ' Share your products, services, prices and FAQs. A spreadsheet, a PDF or even photos are fine.', bg: 'linear-gradient(160deg,#e6d4ff,#cdb2ff)' },
-  { Icon: Bot, n: 'Step 2', lead: 'We train and connect your agent.', rest: ' We set up the AI, connect your official WhatsApp number and test it with real questions.', bg: 'linear-gradient(160deg,#ffd6ea,#ffc9b6)' },
-  { Icon: Rocket, n: 'Step 3', lead: 'Go live in 24–48 hours.', rest: ' Your agent starts replying. You watch every conversation and order from your dashboard.', bg: 'linear-gradient(160deg,#ecffb0,#dbfc74)' },
+  { Icon: NotebookPen, n: 'Step 1', lead: 'Tell us about your business.', rest: ' Share your products, services, prices and FAQs. A spreadsheet, a PDF or even photos are fine.', disc: '#e6d4ff', img: '/sb/case-1.jpg', hl: '#1a1a1a', hr: 'rgba(26,26,26,.62)' },
+  { Icon: Bot, n: 'Step 2', lead: 'We train and connect your agent.', rest: ' We set up the AI, connect your official WhatsApp number and test it with real questions.', disc: '#ffd6ea', img: '/sb/case-2.jpg', hl: '#1a1a1a', hr: 'rgba(26,26,26,.62)' },
+  { Icon: Rocket, n: 'Step 3', lead: 'Go live in 24–48 hours.', rest: ' Your agent starts replying. You watch every conversation and order from your dashboard.', disc: '#dbfc74', img: '/sb/case-3.jpg', hl: '#ffffff', hr: 'rgba(255,255,255,.82)' },
 ]
 
 export default function Cases() {
@@ -17,11 +19,17 @@ export default function Cases() {
           <GreyPill href="/contact" tall>Talk to us</GreyPill>
         </div>
         <div className="grid gap-2 rounded-[32px] bg-[#f0eeeb]/70 p-2 md:grid-cols-3">
-          {STEPS.map(({ Icon, n, lead, rest, bg }) => (
-            <div key={n} className="flex min-h-[430px] flex-col rounded-[24px] bg-[#fafaf9] p-6 ring-1 ring-black/[0.04]">
-              <div className="flex items-center justify-between py-5"><span className="rounded-full bg-white px-3.5 py-1.5 text-[14px] font-medium ring-1 ring-black/[0.05]">{n}</span><span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#1a1a1a] p-1 text-white"><ArrowUpRight size={14} /></span></div>
-              <div className="flex flex-1 items-center justify-center rounded-[16px]" style={{ background: bg }}><span className="flex h-20 w-20 items-center justify-center rounded-[24px] bg-white shadow-[0_16px_36px_-14px_rgba(0,0,0,.35)]"><Icon size={34} strokeWidth={1.6} /></span></div>
-              <p className="mt-6 text-[21px] font-normal leading-[29.4px] text-[#a1a1aa]"><span className="text-[#1a1a1a]">{lead}</span>{rest}</p>
+          {STEPS.map(({ Icon, n, lead, rest, disc, img, hl, hr }) => (
+            <div key={n} className="sb-case" style={{ minHeight: 430, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#fafaf9', borderRadius: 24, padding: 24, '--hl': hl, '--hr': hr }}>
+              <div aria-hidden className="sb-case-bg" style={{ backgroundImage: `url(${img})` }} />
+              <div style={{ position: 'relative', zIndex: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 0' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ width: 30, height: 30, borderRadius: 15, background: disc, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Icon size={16} strokeWidth={1.8} color="#1a1a1a" /></span>
+                  <span className="font-heading" style={{ fontSize: 24, fontWeight: 600, letterSpacing: '-0.02em', color: '#1a1a1a' }}>{n}</span>
+                </span>
+                <span style={{ width: 24, height: 24, borderRadius: 12, background: '#1a1a1a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ArrowUpRight size={14} /></span>
+              </div>
+              <p style={{ position: 'relative', zIndex: 2, margin: 0, fontSize: 19, lineHeight: '26.6px', fontWeight: 400 }}><span className="sb-lead">{lead}</span><span className="sb-rest">{rest}</span></p>
             </div>
           ))}
         </div>

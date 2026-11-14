@@ -94,3 +94,11 @@ body {
 .sb-spin { animation: sb-spin 40s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .sb-float, .sb-spin { animation: none; } }
 .font-heading { font-family: var(--font-heading), sans-serif; }
+
+/* Case cards (Sunbeam style): a soft picture fades in over the card on hover */
+.sb-case { --lead: #1a1a1a; --rest: #a1a1aa; position: relative; overflow: hidden; }
+.sb-case .sb-case-bg { position: absolute; inset: 0; z-index: 1; opacity: 0; transition: opacity .35s ease; background-size: cover; background-position: center; }
+.sb-case:hover .sb-case-bg { opacity: 1; }
+.sb-case:hover { --lead: var(--hl); --rest: var(--hr); }
+.sb-case .sb-lead { color: var(--lead); transition: color .35s ease; }
+.sb-case .sb-rest { color: var(--rest); transition: color .35s ease; }
