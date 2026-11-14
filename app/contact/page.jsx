@@ -1,97 +1,84 @@
-'use client'
-import { useState } from 'react'
-import { Copy, Check, Send } from 'lucide-react'
-import Nav from '@/components/site/Nav'
-import Footer from '@/components/site/Footer'
-import PageHero from '@/components/site/PageHero'
-import Reveal from '@/components/site/Reveal'
-import { PillButton } from '@/components/site/Buttons'
-import { DoodleMail, DoodlePin, PlanPlane } from '@/components/site/Illustrations'
+import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
+import Nav from '@/components/sb/Nav'
+import CtaFooter from '@/components/sb/CtaFooter'
+import ContactForm from '@/components/sb/ContactForm'
+import CopyEmail from '@/components/sb/CopyEmail'
+import { FaceDisc } from '@/components/sb/art'
+import { H2 } from '@/components/sb/ui'
+import { urbanist, jost } from '@/components/sb/fonts'
+
+export const metadata = {
+  title: 'Contact — Faigen',
+  description: 'Tell us what you sell and where your customers message you. We will show you how Faigen would handle it.',
+}
 
 const EMAIL = 'info@faigen.in'
-const input = 'w-full rounded-2xl border border-black/10 bg-white px-5 py-3.5 text-[16px] text-ink placeholder:text-faint outline-none transition focus:border-accent focus:ring-4 focus:ring-accent/10'
+const Grain = () => <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/sb/grain.png)', backgroundSize: '256px 256px', mixBlendMode: 'overlay', opacity: 0.34, pointerEvents: 'none' }} />
 
+// Contact page in the layout of the reference contact page (branch: sunbeam-style):
+// hero with headline, two pictures and the form; three reach-us cards in a tray; closing call to action and footer.
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', business: '', message: '' })
-  const [copied, setCopied] = useState(false)
-  const [opened, setOpened] = useState(false)
-  const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
-
-  const copy = async () => {
-    try { await navigator.clipboard.writeText(EMAIL); setCopied(true); setTimeout(() => setCopied(false), 2000) } catch {}
-  }
-
-  // No server endpoint yet: open the visitor's email app with everything filled in.
-  const submit = (e) => {
-    e.preventDefault()
-    const subject = `Faigen enquiry${form.business ? ` — ${form.business}` : ''}`
-    const body = `Name: ${form.name}\nEmail: ${form.email}\nBusiness: ${form.business}\n\n${form.message}`
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    setOpened(true)
-  }
-
   return (
-    <>
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen bg-[#fafafa] text-[#1a1a1a]`}>
       <Nav />
       <main>
-        <PageHero
-          eyebrow="Contact"
-          title="Let’s talk about your business."
-          lead="Tell us what you sell and where your customers message you. We’ll show you how Faigen would handle it."
-        />
+        <section style={{ background: '#fafaf9', padding: '120px 0 80px' }}>
+          <div className="mx-auto grid w-full max-w-[1240px] gap-10 px-5 lg:grid-cols-[540px_1fr]">
+            <div className="flex flex-col gap-12 lg:gap-[100px]">
+              <div className="flex flex-col gap-5">
+                <p className="flex items-center gap-2 text-[16px] leading-[22.4px] text-[#535353]"><span className="h-2 w-2 rounded-full bg-[#34c759]" />Meta Verified Tech Provider · Kakkanad, Kerala</p>
+                <h1 className="font-heading text-balance text-[clamp(2.6rem,5vw,4rem)] font-medium leading-[1.2]">Let’s talk about your business.</h1>
+                <p className="max-w-[480px] text-[18px] leading-[1.4] text-[#535353]">Tell us what you sell and where your customers message you. We’ll show you how Faigen would handle it.</p>
+              </div>
+              <div className="flex gap-2">
+                <div style={{ position: 'relative', width: 246, height: 175, borderRadius: 12, overflow: 'hidden', background: '#d791f9', flexShrink: 0 }} className="max-sm:!w-[44%]">
+                  <Grain />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/sb/violet-pillar.png" alt="" aria-hidden style={{ position: 'absolute', left: '50%', top: '52%', width: 130, transform: 'translate(-50%,-50%)', maxWidth: 'none' }} />
+                </div>
+                <Link href="/try" style={{ position: 'relative', flex: 1, height: 175, borderRadius: 12, overflow: 'hidden', background: '#daedfe', padding: '0 20px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textDecoration: 'none', color: '#1a1a1a' }}>
+                  <Grain />
+                  <span style={{ position: 'relative', paddingTop: 20 }}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/sb/faigen-logo.svg" alt="Faigen" width={40} height={40} style={{ width: 40, height: 40 }} /></span>
+                  <span style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 8, fontSize: 14, lineHeight: '19.6px' }}>
+                    <span style={{ maxWidth: 160 }}>Prefer to see it first? Chat with a live agent on WhatsApp.</span>
+                    <span style={{ width: 36, height: 36, borderRadius: 18, background: '#1a1a1a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><ArrowUpRight size={16} /></span>
+                  </span>
+                </Link>
+              </div>
+            </div>
+            <ContactForm />
+          </div>
+        </section>
 
-        <section className="bg-white pb-24 sm:pb-32">
-          <div className="container-x grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-            {/* ways to reach us, drawn, no boxes */}
-            <Reveal className="space-y-10">
-              <div className="flex items-start gap-5">
-                <DoodleMail className="h-16 w-16 shrink-0" />
-                <div className="min-w-0">
-                  <p className="text-[13px] font-medium text-muted">Email</p>
-                  <div className="mt-1 flex items-center gap-3">
-                    <a href={`mailto:${EMAIL}`} className="text-[22px] font-semibold tracking-[-0.02em] text-ink hover:text-accent">{EMAIL}</a>
-                    <button onClick={copy} aria-label="Copy email" className="flex h-9 w-9 items-center justify-center rounded-full bg-alt text-muted transition hover:text-ink">{copied ? <Check size={16} /> : <Copy size={16} />}</button>
+        <section style={{ background: '#fafaf9', padding: '80px 0' }}>
+          <div className="mx-auto w-full max-w-[1240px] px-5">
+            <div className="text-center"><H2 className="mx-auto max-w-[780px]">Reach us your way</H2></div>
+            <div style={{ marginTop: 40, background: '#f0eeeb', borderRadius: 20, padding: 8 }}>
+              <div className="grid gap-2 lg:grid-cols-3">
+                {[
+                  { tone: 'blue', t: 'Email', d: EMAIL, extra: <CopyEmail email={EMAIL} />, href: `mailto:${EMAIL}`, hint: 'We reply the same day.' },
+                  { tone: 'violet', t: 'Visit us', d: 'BCG Residency Towers 4a1, Kakkanad, Ernakulam, Kerala 682037', href: 'https://maps.google.com/?q=BCG+Residency+Towers+Kakkanad+Ernakulam', hint: 'Open in Maps' },
+                  { tone: 'lime', t: 'Try the demo', d: 'Chat with a live Faigen agent on WhatsApp in under a minute.', href: '/try', hint: 'Start the demo' },
+                ].map(c => (
+                  <div key={c.t} style={{ background: '#fafaf9', borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column', gap: 16, minHeight: 238 }}>
+                    <div style={{ padding: '0 8px 8px 0' }}><FaceDisc tone={c.tone} className="h-16 w-16" /></div>
+                    <div style={{ marginTop: 'auto' }}>
+                      <h3 className="font-heading" style={{ margin: 0, fontSize: 21, lineHeight: '29.4px', fontWeight: 500 }}>{c.t}</h3>
+                      <p style={{ margin: '4px 0 0', fontSize: 16, lineHeight: '22.4px', color: '#52525b' }}>{c.d}</p>
+                      <div style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 12 }}>
+                        <a href={c.href} {...(c.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})} style={{ fontSize: 16, fontWeight: 500, color: '#1a1a1a', textDecoration: 'underline', textUnderlineOffset: 4 }}>{c.hint}</a>
+                        {c.extra}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-
-              <div className="flex items-start gap-5 border-t border-black/10 pt-10">
-                <DoodlePin className="h-16 w-16 shrink-0" />
-                <div>
-                  <p className="text-[13px] font-medium text-muted">Office</p>
-                  <a href="https://maps.google.com/?q=BCG+Residency+Towers+Kakkanad+Ernakulam" target="_blank" rel="noreferrer" className="mt-1 block text-[19px] font-semibold leading-snug tracking-[-0.015em] text-ink hover:text-accent">BCG Residency Towers 4a1, Kakkanad, Ernakulam — 682037</a>
-                </div>
-              </div>
-
-              <div className="relative overflow-hidden rounded-[32px] bg-black p-8 text-white">
-                <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 h-[260px] w-[260px] rounded-full bg-[radial-gradient(circle,rgba(0,113,227,.55),transparent_70%)] blur-2xl" />
-                <PlanPlane className="absolute right-6 top-6 h-14 w-14" />
-                <p className="relative max-w-[16ch] text-[24px] font-semibold leading-tight tracking-[-0.025em]">Prefer to see it first?</p>
-                <p className="relative mt-2 max-w-xs text-[15px] text-white/60">Chat with a live Faigen agent on WhatsApp in under a minute.</p>
-                <div className="relative mt-6"><PillButton href="/try" tone="light" arrow>Try the demo</PillButton></div>
-              </div>
-            </Reveal>
-
-            {/* form on a soft gradient */}
-            <Reveal delay={0.12}>
-              <form onSubmit={submit} className="space-y-4 rounded-[36px] bg-gradient-to-br from-[#e6f1ff] via-[#f5f5f7] to-[#efe9ff] p-6 sm:p-10">
-                <h2 className="text-[26px] font-semibold tracking-[-0.025em]">Send us a message</h2>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="block"><span className="mb-1.5 block text-[13px] font-medium text-muted">Your name</span><input required className={input} value={form.name} onChange={set('name')} placeholder="Anjali Menon" autoComplete="name" /></label>
-                  <label className="block"><span className="mb-1.5 block text-[13px] font-medium text-muted">Email</span><input required type="email" className={input} value={form.email} onChange={set('email')} placeholder="you@business.com" autoComplete="email" /></label>
-                </div>
-                <label className="block"><span className="mb-1.5 block text-[13px] font-medium text-muted">Business name</span><input className={input} value={form.business} onChange={set('business')} placeholder="Your shop, clinic or company" autoComplete="organization" /></label>
-                <label className="block"><span className="mb-1.5 block text-[13px] font-medium text-muted">How can we help?</span><textarea required rows={5} className={`${input} resize-none`} value={form.message} onChange={set('message')} placeholder="WhatsApp, Instagram, or both? What do your customers usually ask?" /></label>
-                <button type="submit" className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-accent px-6 text-[16px] font-medium text-white shadow-[0_6px_20px_-6px_rgba(0,113,227,.55)] transition hover:bg-[#0077ed] active:scale-[0.98]">
-                  <Send size={16} /> Send by email
-                </button>
-                {opened && <p className="text-center text-[14px] text-muted">Your email app should have opened with the message ready. If not, write to <a className="text-accent" href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>}
-              </form>
-            </Reveal>
+            </div>
           </div>
         </section>
       </main>
-      <Footer />
-    </>
+      <CtaFooter />
+    </div>
   )
 }
