@@ -148,8 +148,36 @@ function CampWin() {
   )
 }
 
-const WINDOWS = { inbox: InboxWin, insta: InstaWin, campaigns: CampWin }
-const TONE = { inbox: 'purple', insta: 'blue', campaigns: 'lime' }
+function DashWin() {
+  return (
+    <Window title="Dashboard" active={0} pills={[]} search="" bare>
+      <div style={abs({ left: 0, top: 0, right: 0, bottom: 0 })}>
+        <Stat title="Conversations" sub="This week, answered by the AI" value="1,240" bar="#d3f56a" w="86%" left={0} />
+        <Stat title="Orders" sub="Collected in chat" value="86" bar="#d79bf7" w="52%" left={292} />
+        <div style={abs({ left: 0, top: 90, width: 640, height: 400, background: '#fff', borderRadius: 14 })}>
+          <p style={{ margin: 0, padding: '18px 20px 0', fontSize: 15, color: INK }}>Orders</p>
+          <svg viewBox="0 0 640 300" width="640" height="300" style={abs({ left: 0, top: 50 })}>
+            <defs>
+              <linearGradient id="fa-b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#bfdcfb" stopOpacity=".35" /><stop offset="1" stopColor="#bfdcfb" stopOpacity="0" /></linearGradient>
+              <linearGradient id="fa-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#dcf86b" stopOpacity=".35" /><stop offset="1" stopColor="#dcf86b" stopOpacity="0" /></linearGradient>
+            </defs>
+            {[40, 130, 220, 310, 400, 490, 580].map(x => <line key={x} x1={x} x2={x} y1="20" y2="270" stroke="#e8e8ec" strokeDasharray="3 4" />)}
+            <path d="M0 150 C40 120 90 200 150 215 C210 230 250 130 290 100 C330 70 370 140 410 190 C450 240 500 230 540 190 L640 170 L640 270 L0 270Z" fill="url(#fa-b)" />
+            <path d="M0 150 C40 120 90 200 150 215 C210 230 250 130 290 100 C330 70 370 140 410 190 C450 240 500 230 540 190 L640 170" fill="none" stroke="#a9d3fb" strokeWidth="2.2" />
+            <path d="M0 130 C60 130 120 170 170 210 C215 245 240 240 270 190 C310 120 340 60 390 70 C430 80 450 140 480 190 C510 235 560 245 640 260 L640 270 L0 270Z" fill="url(#fa-g)" />
+            <path d="M0 130 C60 130 120 170 170 210 C215 245 240 240 270 190 C310 120 340 60 390 70 C430 80 450 140 480 190 C510 235 560 245 640 260" fill="none" stroke="#c9ee52" strokeWidth="2.4" />
+            <circle cx="425" cy="88" r="7" fill="#d9f76a" opacity=".9" />
+            <g transform="translate(445 82)"><rect width="150" height="54" rx="6" fill="#fff" stroke="#f0f0f3" /><text x="14" y="21" fontSize="11.5" fill="#8b8b92">Saturday</text><text x="14" y="42" fontSize="16" fontWeight="600" fill="#1a1a1a">24 orders</text></g>
+          </svg>
+          <div style={abs({ left: 0, right: 0, bottom: 0, height: 36, borderTop: '1px solid #f0f0f3', ...flex({ justifyContent: 'space-around' }), fontSize: 11.5, color: '#8f8fa0' })}>{['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(d => <span key={d} style={d === 'Sat' ? { color: INK, fontWeight: 500 } : undefined}>{d}</span>)}</div>
+        </div>
+      </div>
+    </Window>
+  )
+}
+
+const WINDOWS = { inbox: InboxWin, insta: InstaWin, campaigns: CampWin, dashboard: DashWin }
+const TONE = { inbox: 'purple', insta: 'blue', campaigns: 'lime', dashboard: 'purple' }
 
 export default function FeaturePanel({ kind }) {
   const outer = useRef(null)

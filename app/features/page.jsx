@@ -1,90 +1,87 @@
-import Nav from '@/components/site/Nav'
-import Footer from '@/components/site/Footer'
-import PageHero from '@/components/site/PageHero'
-import FeatureRow from '@/components/site/FeatureRow'
-import Reveal from '@/components/site/Reveal'
-import Bento from '@/components/site/home/Bento'
-import FinalCta from '@/components/site/home/FinalCta'
-import { PillButton, TextLink } from '@/components/site/Buttons'
-import { OrdersScene, InstagramScene, BroadcastScene, DashboardScene } from '@/components/site/Scenes'
+import { ShoppingBag, BookOpen, Handshake, Megaphone, CheckCheck, Banknote, Inbox, BarChart3, Users, MessageSquareReply, ShieldCheck, Sparkles } from 'lucide-react'
+import Nav from '@/components/sb/Nav'
+import CtaFooter from '@/components/sb/CtaFooter'
+import FeatureStack from '@/components/sb/FeatureStack'
+import { FaceDisc } from '@/components/sb/art'
+import { TryLink, GreyPill, H2, Tag } from '@/components/sb/ui'
+import { urbanist, jost } from '@/components/sb/fonts'
 
 export const metadata = {
   title: 'Features — Faigen',
   description: 'AI replies, orders, broadcasts, OTP, a clear dashboard and Instagram automation — everything Faigen does for your business.',
 }
 
+const ITEMS = [
+  { title: 'Answers from your business, not from guesswork.', text: 'Faigen learns your products, prices and policies, then replies like your best salesperson, and turns the chat into a finished order.',
+    tags: [[BookOpen, 'Trained on your FAQs, catalog and tone'], [ShoppingBag, 'Collects name, product, quantity and address'], [Handshake, 'Hands off to you whenever you want']], kind: 'inbox', link: ['Try it on WhatsApp', '/try'] },
+  { title: 'Reach your whole list in minutes.', text: 'Send offers and updates with approved templates, and see exactly who received and read them.',
+    tags: [[CheckCheck, 'Delivery and read tracking per campaign'], [Megaphone, 'OTP and verification messages'], [Banknote, 'Message fees at Meta’s price, no markup']], kind: 'campaigns', link: ['See pricing', '/pricing'] },
+  { title: 'Every conversation in one calm place.', text: 'Live inbox, orders, templates and analytics. Take over any chat, or let the agent run.',
+    tags: [[Inbox, 'Live inbox with AI on/off per chat'], [Users, 'Orders and customers at a glance'], [BarChart3, 'Numbers that matter, no clutter']], kind: 'dashboard', link: ['Try the live demo', '/try'] },
+  { title: 'Comments become conversations.', text: 'The same agent works your Instagram: it replies to comments, sends the details by DM, hides spam and shows you the numbers.',
+    tags: [[Sparkles, 'Included in the launch offer'], [MessageSquareReply, 'Comment-to-DM with a public reply'], [ShieldCheck, 'Spam shield and account insights']], kind: 'insta', link: ['See what’s included', '/pricing'] },
+]
+
+const HIGHLIGHTS = [
+  { tone: 'blue', t: 'Always on', d: 'Every question gets a reply in seconds, day or night, with no missed messages.' },
+  { tone: 'violet', t: 'In your customer’s language', d: 'It understands Malayalam, Manglish and English, and replies the way the customer wrote.' },
+  { tone: 'lime', t: 'You stay in control', d: 'Watch every chat live, take over any conversation, and hand it back to the AI.' },
+]
+
 const ALSO = ['Order collection', 'Product catalog', 'Custom services menu', 'WhatsApp templates', 'OTP messages', 'Delivery and read tracking', 'Live inbox', 'Analytics', 'API keys and docs']
 
 export default function FeaturesPage() {
   return (
-    <>
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen bg-[#fafafa] text-[#1a1a1a]`}>
       <Nav />
       <main>
-        <PageHero
-          eyebrow="Features"
-          title="One agent. Every conversation."
-          lead="Faigen answers your customers, collects orders, sends broadcasts and gives you a clear view of it all — on WhatsApp and Instagram."
-        >
-          <PillButton href="/try" arrow>Try the live demo</PillButton>
-          <TextLink href="/pricing">See pricing</TextLink>
-        </PageHero>
-
-        <section className="bg-white section !pt-8 space-y-28 sm:space-y-40">
-          <FeatureRow
-            bare
-            eyebrow="Replies & orders"
-            title="Answers from your business, not from guesswork."
-            text="Faigen learns your products, prices and policies, then replies like your best salesperson — and turns the chat into a finished order."
-            points={['Trained on your FAQs, catalog and tone', 'Collects name, product, quantity and address', 'Hands off to you whenever you want']}
-            visual={<OrdersScene className="w-full" />}
-          />
-          <FeatureRow
-            bare
-            reverse
-            eyebrow="Broadcasts & OTP"
-            title="Reach your whole list in minutes."
-            text="Send offers and updates with approved templates, and see exactly who received and read them."
-            points={['Delivery and read tracking per campaign', 'OTP and verification messages', 'Message fees at Meta’s price, no markup']}
-            visual={<BroadcastScene className="w-full" />}
-            link={['See pricing', '/pricing']}
-          />
-          <FeatureRow
-            bare
-            eyebrow="Dashboard"
-            title="Every conversation in one calm place."
-            text="Live inbox, orders, templates and analytics. Take over any chat, or let the agent run."
-            points={['Live inbox with AI on/off per chat', 'Orders and customers at a glance', 'Numbers that matter, no clutter']}
-            visual={<DashboardScene className="w-full" />}
-          />
-          <FeatureRow
-            bare
-            reverse
-            badge="Included in launch offer"
-            eyebrow="Instagram"
-            title="Comments become conversations."
-            text="The same agent works your Instagram: it replies to comments, sends the details by DM, hides spam and shows you the numbers."
-            points={['Comment-to-DM with a public reply', 'AI drafts replies you approve first', 'Spam shield and account insights']}
-            visual={<InstagramScene className="w-full" />}
-            link={['See pricing', '/pricing']}
-          />
-        </section>
-
-        <Bento />
-
-        <section className="bg-alt section !py-16 sm:!py-20">
-          <div className="container-x max-w-4xl text-center">
-            <Reveal>
-              <p className="eyebrow">Also included</p>
-              <div className="mt-6 flex flex-wrap justify-center gap-2.5">
-                {ALSO.map(a => <span key={a} className="rounded-full bg-white px-4 py-2 text-[14.5px] font-medium text-ink shadow-[0_1px_2px_rgba(0,0,0,.05)]">{a}</span>)}
-              </div>
-            </Reveal>
+        <section className="relative px-5 pb-12 pt-[120px] text-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/sb/pink-arch.png" alt="" aria-hidden className="pointer-events-none absolute hidden select-none lg:block" style={{ left: 'calc(50% - 600px)', top: 80, width: 169, maxWidth: 'none' }} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/sb/blue-wedge.png" alt="" aria-hidden className="pointer-events-none absolute hidden select-none lg:block" style={{ right: 'calc(50% - 600px)', top: 90, width: 178, maxWidth: 'none' }} />
+          <div className="mx-auto flex max-w-[780px] flex-col items-center gap-5">
+            <p className="flex items-center gap-2 text-[16px] leading-[22.4px] text-[#535353]"><span className="h-2 w-2 rounded-full bg-[#34c759]" />Features</p>
+            <h1 className="font-heading text-balance text-[clamp(2.6rem,5vw,4rem)] font-medium leading-[1.2]">One agent. Every conversation.</h1>
+            <p className="max-w-[560px] text-[clamp(1.05rem,1.5vw,1.3125rem)] leading-[1.4] text-[#535353]">Faigen answers your customers, collects orders, sends broadcasts and gives you a clear view of it all, on WhatsApp and Instagram.</p>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <TryLink href="/try">Try the live demo</TryLink>
+              <GreyPill href="/pricing" tall>See pricing</GreyPill>
+            </div>
           </div>
         </section>
 
-        <FinalCta />
+        <section className="mx-auto w-full max-w-[1240px] px-5 pb-20">
+          <FeatureStack items={ITEMS} />
+        </section>
+
+        <section style={{ background: '#fafaf9', padding: '80px 0' }}>
+          <div className="mx-auto w-full max-w-[1240px] px-5">
+            <div className="text-center"><H2 className="mx-auto max-w-[780px]">Built for businesses that talk to customers all day</H2></div>
+            <div style={{ marginTop: 40, background: '#f0eeeb', borderRadius: 20, padding: 8 }}>
+              <div className="grid gap-2 lg:grid-cols-3">
+                {HIGHLIGHTS.map(c => (
+                  <div key={c.t} style={{ background: '#fafaf9', borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column', gap: 16, minHeight: 238 }}>
+                    <div style={{ padding: '0 8px 8px 0' }}><FaceDisc tone={c.tone} className="h-16 w-16" /></div>
+                    <div style={{ marginTop: 'auto' }}>
+                      <h3 className="font-heading" style={{ margin: 0, fontSize: 21, lineHeight: '29.4px', fontWeight: 500 }}>{c.t}</h3>
+                      <p style={{ margin: '4px 0 0', fontSize: 16, lineHeight: '22.4px', color: '#52525b' }}>{c.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section style={{ padding: '80px 0' }}>
+          <div className="mx-auto w-full max-w-[1000px] px-5 text-center">
+            <H2>Also included</H2>
+            <div className="mt-8 flex flex-wrap justify-center gap-2">{ALSO.map(a => <Tag key={a}>{a}</Tag>)}</div>
+          </div>
+        </section>
       </main>
-      <Footer />
-    </>
+      <CtaFooter />
+    </div>
   )
 }
