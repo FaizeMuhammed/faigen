@@ -5,21 +5,19 @@ import { ShoppingBag, Megaphone, Inbox } from 'lucide-react'
 import { WhatsAppGlyph, InstagramGlyph } from '../site/FaigenMark'
 import { TryLink, GreyPill, Wrap } from './ui'
 import { Scallop, HalfRing, HalfDisc, Diamond, Dot } from './art'
-import ScaleBox from './ScaleBox'
-import { WhatsAppMock, InstagramMock, OrdersMock, BroadcastMock, InboxMock } from './mocks'
+import HeroWindow from './HeroMocks'
 
 const TABS = [
-  { id: 'wa', label: 'WhatsApp', Icon: WhatsAppGlyph, Mock: WhatsAppMock },
-  { id: 'ig', label: 'Instagram', Icon: InstagramGlyph, Mock: InstagramMock },
-  { id: 'orders', label: 'Orders', Icon: ShoppingBag, Mock: OrdersMock },
-  { id: 'bc', label: 'Broadcasts', Icon: Megaphone, Mock: BroadcastMock },
-  { id: 'inbox', label: 'Live inbox', Icon: Inbox, Mock: InboxMock },
+  { id: 'wa', label: 'WhatsApp', Icon: WhatsAppGlyph },
+  { id: 'ig', label: 'Instagram', Icon: InstagramGlyph },
+  { id: 'orders', label: 'Orders', Icon: ShoppingBag },
+  { id: 'bc', label: 'Broadcasts', Icon: Megaphone },
+  { id: 'inbox', label: 'Live inbox', Icon: Inbox },
 ]
 
 export default function Hero() {
   const [tab, setTab] = useState('wa')
   const cur = TABS.find(t => t.id === tab)
-  const Mock = cur.Mock
   return (
     <section className="pt-[120px]">
       <Wrap>
@@ -56,7 +54,7 @@ export default function Hero() {
           <div className="relative h-[460px] w-full overflow-hidden rounded-[24px] sm:h-[560px] lg:h-[668px]">
             <img aria-hidden alt="" src="/sb/hero-bg.jpg" draggable={false} className="absolute -left-10 -top-[22px] h-[712px] w-[calc(100%+80px)] max-w-none select-none object-cover" />
             <div className="relative mx-auto mt-6 w-[calc(100%-32px)] max-w-[1080px] sm:mt-12 lg:mt-[81px]" key={tab}>
-              <ScaleBox base={720} min={900}><Mock /></ScaleBox>
+              <HeroWindow tab={tab} />
             </div>
           </div>
         </div>
