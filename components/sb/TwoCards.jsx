@@ -2,16 +2,21 @@
 
 import { useState } from 'react'
 import { Zap, ShoppingBag, SlidersHorizontal } from 'lucide-react'
-import { Wrap, Grain } from './ui'
+import { Wrap } from './ui'
 import { FaceDisc } from './art'
 import { WhatsAppGlyph, InstagramGlyph } from '../site/FaigenMark'
 
 // Three cards in a #f0eeeb tray: one open (537px, with its picture), two closed (316px). Hover or tap to open another.
 const ITEMS = [
-  { face: 'blue', Icon: Zap, t: 'Never miss a message', d: 'Every question gets a reply in seconds, day or night, in the language the customer wrote in.', tone: '#c4dbfb', art: 'chat' },
-  { face: 'violet', Icon: ShoppingBag, t: 'Turn chats into orders', d: 'The agent answers from your catalog, collects name, product, quantity and address, and hands you a finished order.', tone: '#d89bfc', art: 'order' },
-  { face: 'lime', Icon: SlidersHorizontal, t: 'Stay in control', d: 'Watch every chat live, take over any conversation, and hand it back to the AI whenever you want.', tone: '#c9fa62', art: 'control' },
+  { face: 'blue', Icon: Zap, t: 'Never miss a message', d: 'Every question gets a reply in seconds, day or night, in the language the customer wrote in.', tone: '#daedfe', art: 'chat' },
+  { face: 'violet', Icon: ShoppingBag, t: 'Turn chats into orders', d: 'The agent answers from your catalog, collects name, product, quantity and address, and hands you a finished order.', tone: '#d791f9', art: 'order' },
+  { face: 'lime', Icon: SlidersHorizontal, t: 'Stay in control', d: 'Watch every chat live, take over any conversation, and hand it back to the AI whenever you want.', tone: '#c1f744', art: 'control' },
 ]
+
+// Film grain like the reference: a fine noise tile blended over the flat colour
+function Texture() {
+  return <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', backgroundImage: 'url(/sb/grain.png)', backgroundSize: '256px 256px', mixBlendMode: 'overlay', opacity: 0.34 }} />
+}
 
 // Pictures inside the cards. All layout and sizes here are inline styles (no utility classes), so they cannot go missing.
 const SHADOW = '0 16px 36px -12px rgba(30,50,110,.28), 0 2px 6px rgba(30,50,110,.06)'
@@ -19,9 +24,9 @@ const abs = o => ({ position: 'absolute', ...o })
 const row = (o = {}) => ({ display: 'flex', alignItems: 'center', ...o })
 const Glyph = ({ G, size = 12 }) => <span style={{ display: 'inline-block', width: size, height: size, flexShrink: 0 }}><G className="h-full w-full" /></span>
 
-// Soft clouds baked into each Sunbeam picture: the cloud shape, tinted white
-function Cloud({ style, a = 0.3 }) {
-  return <div aria-hidden style={{ position: 'absolute', background: `rgba(255,255,255,${a})`, WebkitMaskImage: 'url(/sb/cloud.png)', maskImage: 'url(/sb/cloud.png)', WebkitMaskSize: '100% 100%', maskSize: '100% 100%', WebkitMaskRepeat: 'no-repeat', maskRepeat: 'no-repeat', ...style }} />
+// Soft tone-on-tone clouds baked into each Sunbeam picture (darker on blue and purple, lighter on lime)
+function Cloud({ style, tint }) {
+  return <div aria-hidden style={{ position: 'absolute', background: tint, WebkitMaskImage: 'url(/sb/cloud.png)', maskImage: 'url(/sb/cloud.png)', WebkitMaskSize: '100% 100%', maskSize: '100% 100%', WebkitMaskRepeat: 'no-repeat', maskRepeat: 'no-repeat', ...style }} />
 }
 
 // A real WhatsApp conversation: customer in white, the agent's reply in green
@@ -37,8 +42,8 @@ function Bubble({ me, children, time }) {
 function ChatArt() {
   return (
     <>
-      <Cloud style={{ left: -34, top: -8, width: 200, height: 100 }} a={0.3} />
-      <Cloud style={{ right: -44, bottom: -22, width: 240, height: 120 }} a={0.34} />
+      <Cloud style={{ left: -34, top: -8, width: 200, height: 100 }} tint="rgba(143,190,248,.42)" />
+      <Cloud style={{ right: -44, bottom: -22, width: 240, height: 120 }} tint="rgba(143,190,248,.42)" />
       <div style={abs({ left: 16, top: 30, width: 235, height: 352, borderRadius: 22, background: '#efeae2', boxShadow: SHADOW, overflow: 'hidden' })}>
         <div style={row({ height: 48, background: '#fff', padding: '0 12px', gap: 8, borderBottom: '1px solid rgba(0,0,0,.05)' })}>
           <span style={{ width: 28, height: 28, borderRadius: 14, background: 'linear-gradient(135deg,#9bbcf6,#c797f7)', color: '#fff', fontSize: 11, fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>K</span>
@@ -65,8 +70,8 @@ function OrderArt() {
   const Line = ({ k, v }) => <div style={row({ justifyContent: 'space-between', padding: '4px 0', fontSize: 11 })}><span style={{ color: '#8b8b92' }}>{k}</span><span style={{ color: '#1a1a1a', fontWeight: 500 }}>{v}</span></div>
   return (
     <>
-      <Cloud style={{ left: -34, top: 0, width: 190, height: 95 }} a={0.28} />
-      <Cloud style={{ right: -46, bottom: -26, width: 230, height: 115 }} a={0.3} />
+      <Cloud style={{ left: -34, top: 0, width: 190, height: 95 }} tint="rgba(203,118,243,.40)" />
+      <Cloud style={{ right: -46, bottom: -26, width: 230, height: 115 }} tint="rgba(203,118,243,.40)" />
       {[[40, 0.22, 36], [50, 0.34, 26], [60, 0.5, 16]].map(([top, o, inset]) => <div key={top} aria-hidden style={abs({ top, left: inset, right: inset, height: 80, borderRadius: 22, background: '#fff', opacity: o })} />)}
       <div style={abs({ left: 16, right: 16, top: 74, borderRadius: 20, background: '#fff', padding: 14, boxShadow: SHADOW })}>
         <div style={row({ justifyContent: 'space-between' })}>
@@ -100,8 +105,8 @@ function InboxArt() {
   const AI = ['#e1f7e5', '#1d7a36'], NEED = ['#ffe2bd', '#a64b00']
   return (
     <>
-      <Cloud style={{ left: -34, top: -8, width: 200, height: 100 }} a={0.34} />
-      <Cloud style={{ right: -44, bottom: -22, width: 240, height: 120 }} a={0.3} />
+      <Cloud style={{ left: -34, top: -8, width: 200, height: 100 }} tint="rgba(255,255,255,.26)" />
+      <Cloud style={{ right: -44, bottom: -22, width: 240, height: 120 }} tint="rgba(255,255,255,.26)" />
       <div style={abs({ left: 16, top: 30, width: 235, height: 352, borderRadius: 22, background: '#fff', boxShadow: SHADOW, padding: '14px 8px' })}>
         <div style={row({ justifyContent: 'space-between', padding: '0 6px 10px' })}>
           <span style={{ display: 'flex', flexDirection: 'column', gap: 4 }}><span className="font-heading" style={{ fontSize: 15, fontWeight: 500, lineHeight: 1 }}>Live inbox</span><span style={{ fontSize: 9.5, color: '#71717a', lineHeight: 1 }}>24 chats today</span></span>
@@ -140,7 +145,7 @@ export default function TwoCards() {
                     <p className="text-[16px] font-normal leading-[22.4px] text-[#52525b]">{d}</p>
                   </div>
                 </div>
-                <div className={`relative ml-0 hidden h-full w-[267px] shrink-0 overflow-hidden rounded-[16px] ${isOpen ? 'lg:block' : ''}`} style={{ background: tone, width: 267, borderRadius: 16 }}><div className="relative h-full"><Art kind={art} /></div><Grain strength={0.9} /></div>
+                <div className={`relative ml-0 hidden h-full w-[267px] shrink-0 overflow-hidden rounded-[16px] ${isOpen ? 'lg:block' : ''}`} style={{ background: tone, width: 267, borderRadius: 16 }}><Texture /><div className="relative h-full"><Art kind={art} /></div></div>
               </div>
             )
           })}
