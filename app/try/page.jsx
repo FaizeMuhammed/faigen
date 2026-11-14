@@ -3,24 +3,26 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, CheckCircle2, Loader2, RefreshCw } from 'lucide-react'
-import Nav from '@/components/site/Nav'
-import FaigenMark from '@/components/site/FaigenMark'
-import { Squiggle, Sparkle } from '@/components/site/Illustrations'
-
-const WhatsAppIcon = ({ size = 20, className = '' }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-)
+import { ArrowRight, Loader2, RefreshCw } from 'lucide-react'
+import Nav from '@/components/sb/Nav'
+import { urbanist, jost } from '@/components/sb/fonts'
+import { WhatsAppGlyph } from '@/components/site/FaigenMark'
 
 const BACKEND = 'https://myagent.faigen.in'
 const WA_NUMBER = '919633820462'
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=Hi%20Faigen%20AI!`
 
-const field = 'w-full rounded-2xl border border-black/10 bg-white px-4 py-3.5 text-[16px] text-ink outline-none transition focus:border-accent focus:ring-4 focus:ring-accent/10 placeholder:text-faint'
-const label = 'mb-2 block text-[13px] font-medium text-muted'
-const primary = 'flex w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-4 text-[16px] font-medium text-white shadow-[0_6px_20px_-6px_rgba(0,113,227,.55)] transition hover:bg-[#0077ed] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40'
+// Styles follow the reference: grey (#f8f6f4) inputs with radius 12, white radius-24 form card, dark pill buttons, lime for "done".
+const fieldStyle = { width: '100%', border: 0, outline: 0, background: '#f8f6f4', borderRadius: 12, padding: '12px', minHeight: 48, fontSize: 16, lineHeight: '24px', color: '#1a1a1a', fontFamily: 'inherit' }
+const labelStyle = { display: 'block', marginBottom: 10, fontSize: 16, lineHeight: '22.4px', color: '#535353' }
+const buttonStyle = (disabled) => ({ display: 'flex', width: '100%', height: 50, alignItems: 'center', justifyContent: 'center', gap: 8, borderRadius: 24, border: 0, background: '#1a1a1a', color: '#fff', fontSize: 16, fontWeight: 500, cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.4 : 1, textDecoration: 'none', fontFamily: 'inherit' })
+const errorStyle = { borderRadius: 12, background: '#fff2f2', padding: '12px 16px', fontSize: 14, lineHeight: '19.6px', color: '#d70015' }
+const h2Style = { margin: 0, fontFamily: 'var(--font-heading), sans-serif', fontSize: 32, lineHeight: '38px', fontWeight: 500, color: '#1a1a1a' }
+const pStyle = { margin: '10px 0 0', fontSize: 16, lineHeight: '22.4px', color: '#535353' }
+
+function Tick({ size = 24 }) {
+  return <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden style={{ flexShrink: 0 }}><g transform="translate(7 7)"><circle cx="5" cy="5" r="5" fill="#dbfc74" stroke="#dbfc74" strokeWidth="1.29" /><path d="M3.857 5.336s.667.381 1 .938c0 0 1-2.188 2.333-2.917" fill="none" stroke="#1a1a1a" strokeWidth="1.07" strokeLinecap="round" strokeLinejoin="round" /></g></svg>
+}
 
 function OtpInput({ value, onChange, disabled }) {
   const inputs = useRef([])
@@ -49,7 +51,7 @@ function OtpInput({ value, onChange, disabled }) {
   }
 
   return (
-    <div className="flex gap-2 sm:gap-3 justify-center">
+    <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
       {[0,1,2,3,4,5].map(i => (
         <input
           key={i}
@@ -62,10 +64,7 @@ function OtpInput({ value, onChange, disabled }) {
           onKeyDown={e => handleKeyDown(i, e)}
           onPaste={handlePaste}
           disabled={disabled}
-          className={`h-14 w-11 rounded-2xl border-2 text-center text-[20px] font-semibold outline-none transition-all sm:h-16 sm:w-12
-            ${value[i] ? 'border-accent bg-accent-soft text-accent' : 'border-black/10 bg-white text-ink'}
-            focus:border-accent focus:bg-accent-soft
-            disabled:cursor-not-allowed disabled:opacity-50`}
+          style={{ width: 48, height: 56, borderRadius: 12, border: 0, outline: 0, textAlign: 'center', fontSize: 20, fontWeight: 500, fontFamily: 'inherit', color: '#1a1a1a', background: value[i] ? '#dbfc74' : '#f8f6f4', opacity: disabled ? 0.5 : 1, transition: 'background .2s' }}
         />
       ))}
     </div>
@@ -194,41 +193,38 @@ export default function TryPage() {
     { user: 'Ente order eppol delivery aakum?', bot: 'Naale vaikunneram delivery aakum!' },
     { user: 'Book appointment for tomorrow 10 AM', bot: 'Confirmed. Tomorrow 10:00 AM. Reply Cancel to cancel.' },
   ]
+  const grain = { position: 'absolute', inset: 0, backgroundImage: 'url(/sb/grain.png)', backgroundSize: '256px 256px', mixBlendMode: 'overlay', opacity: 0.34, pointerEvents: 'none' }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-white">
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[620px] bg-[radial-gradient(900px_420px_at_50%_-8%,#e3efff_0%,transparent_70%)]" />
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen bg-[#fafaf9] text-[#1a1a1a]`}>
       <Nav />
+      <main className="mx-auto grid w-full max-w-[1240px] gap-10 px-5 pb-20 pt-[120px] lg:grid-cols-[540px_1fr] lg:items-start">
+        {/* left: promise + sample chat on a grained panel */}
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-5">
+            <p className="flex items-center gap-2 text-[16px] leading-[22.4px] text-[#535353]"><span className="h-2 w-2 rounded-full bg-[#34c759]" />Free live demo</p>
+            <h1 className="font-heading text-balance text-[clamp(2.6rem,5vw,4rem)] font-medium leading-[1.2]">Chat with Faigen on WhatsApp.</h1>
+            <p className="max-w-[480px] text-[18px] leading-[1.4] text-[#535353]">Enter your number and our agent sends you a code on WhatsApp. Then you can chat with it for real, in under a minute.</p>
+          </div>
 
-      <main className="container-x relative grid min-h-screen items-center gap-12 pb-16 pt-28 lg:grid-cols-[1fr_460px] lg:gap-20 lg:pt-24">
-        {/* left: promise + sample chat */}
-        <div>
-          <p className="eyebrow">Free live demo</p>
-          <h1 className="display-lg mt-3 max-w-xl">
-            Chat with Faigen on{' '}
-            <span className="relative inline-block text-accent">
-              WhatsApp.
-              <Squiggle className="absolute -bottom-2 left-0 h-[0.2em] w-full" />
-            </span>
-          </h1>
-          <p className="lead mt-6 max-w-lg">Enter your number and our agent sends you a code on WhatsApp. Then you can chat with it for real, in under a minute.</p>
-
-          <div className="relative mt-10 max-w-md">
-            <Sparkle className="pointer-events-none absolute -right-4 -top-5 h-6 w-6" />
-            <div className="rounded-[28px] bg-gradient-to-br from-[#e6f1ff] via-[#f5f5f7] to-[#efe9ff] p-5">
-              <div className="mb-4 flex items-center gap-2.5 border-b border-black/5 pb-3">
-                <FaigenMark className="h-8 w-8" />
-                <div className="leading-tight">
-                  <p className="text-[14px] font-semibold text-ink">Faigen AI</p>
-                  <p className="flex items-center gap-1.5 text-[12px] text-muted"><span className="h-1.5 w-1.5 rounded-full bg-[#34c759]" /> Online 24/7</p>
+          <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 24, background: '#daedfe', padding: 24 }}>
+            <div aria-hidden style={{ position: 'absolute', left: -60, top: -30, width: 300, height: 150, background: 'rgba(150,196,250,.36)', WebkitMaskImage: 'url(/sb/cloud.png)', maskImage: 'url(/sb/cloud.png)', WebkitMaskSize: '100% 100%', maskSize: '100% 100%' }} />
+            <div style={grain} />
+            <div style={{ position: 'relative', background: '#efeae2', borderRadius: 20, overflow: 'hidden', boxShadow: '0 16px 36px -12px rgba(30,50,110,.28)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#fff', padding: '12px 16px' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/sb/faigen-logo.svg" alt="" width={32} height={32} style={{ width: 32, height: 32 }} />
+                <div style={{ lineHeight: 1.2 }}>
+                  <p style={{ margin: 0, fontSize: 14, fontWeight: 500 }}>Faigen AI</p>
+                  <p style={{ margin: 0, fontSize: 12, color: '#1d7a36' }}>Online 24/7</p>
                 </div>
-                <span className="ml-auto rounded-full bg-white px-2.5 py-1 text-[11px] font-medium text-accent">Example chat</span>
+                <span style={{ marginLeft: 'auto', background: '#f0eeeb', borderRadius: 10, padding: '4px 10px', fontSize: 11 }}>Example chat</span>
               </div>
-              <div className="flex flex-col gap-3">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, padding: 14 }}>
                 {sampleChats.map((c, i) => (
-                  <div key={i} className="flex flex-col gap-1.5">
-                    <p className="w-fit max-w-[85%] self-start rounded-2xl rounded-tl-md bg-white px-3.5 py-2 text-[14px] leading-snug text-ink">{c.user}</p>
-                    <p className="w-fit max-w-[85%] self-end rounded-2xl rounded-tr-md bg-accent px-3.5 py-2 text-[14px] leading-snug text-white">{c.bot}</p>
+                  <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                    <p style={{ margin: 0, alignSelf: 'flex-start', maxWidth: '82%', background: '#fff', borderRadius: '10px 10px 10px 3px', padding: '7px 11px', fontSize: 14, lineHeight: 1.35, boxShadow: '0 1px 1px rgba(11,20,26,.1)' }}>{c.user}</p>
+                    <p style={{ margin: 0, alignSelf: 'flex-end', maxWidth: '82%', background: '#d9fdd3', borderRadius: '10px 10px 3px 10px', padding: '7px 11px', fontSize: 14, lineHeight: 1.35, boxShadow: '0 1px 1px rgba(11,20,26,.1)' }}>{c.bot}</p>
                   </div>
                 ))}
               </div>
@@ -236,11 +232,11 @@ export default function TryPage() {
           </div>
         </div>
 
-        {/* right: the steps */}
-        <div className="w-full rounded-[36px] bg-white p-7 shadow-[0_30px_80px_-30px_rgba(0,0,0,.22)] ring-1 ring-black/[0.06] sm:p-9">
-          <div className="mb-8 flex items-center justify-center gap-2">
-            {[1, 2, 3].map(s => (
-              <div key={s} className={`rounded-full transition-all duration-500 ${s === step ? 'h-2 w-8 bg-accent' : s < step ? 'h-2 w-2 bg-accent' : 'h-2 w-2 bg-black/10'}`} />
+        {/* right: the steps in a white card (radius 24, padding 40) */}
+        <div style={{ background: '#fff', borderRadius: 24, padding: 40 }} className="max-sm:!p-6">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 28 }}>
+            {[1, 2, 3].map(n => (
+              <div key={n} style={{ height: 8, width: n === step ? 32 : 8, borderRadius: 4, background: n === step ? '#1a1a1a' : n < step ? '#dbfc74' : '#e9e6e1', transition: 'all .4s' }} />
             ))}
           </div>
 
@@ -248,38 +244,36 @@ export default function TryPage() {
             {/* STEP 1: phone */}
             {step === 1 && (
               <motion.div key="step1" variants={fadeUp} initial="hidden" animate="visible" exit="exit">
-                <h2 className="text-[28px] font-semibold leading-tight tracking-[-0.03em]">Get your verification code</h2>
-                <p className="mt-2 text-[15px] leading-relaxed text-muted">We send a 6-digit code to your WhatsApp. Then you can chat with the agent directly.</p>
+                <h2 style={h2Style}>Get your verification code</h2>
+                <p style={pStyle}>We send a 6-digit code to your WhatsApp. Then you can chat with the agent directly.</p>
 
-                <form onSubmit={handleRequestOtp} className="mt-7 flex flex-col gap-5">
+                <form onSubmit={handleRequestOtp} style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 20 }}>
                   <div>
-                    <label className={label}>Your name (optional)</label>
-                    <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Rahul" className={field} />
+                    <label style={labelStyle}>Your name (optional)</label>
+                    <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Rahul" style={fieldStyle} />
                   </div>
                   <div>
-                    <label className={label}>WhatsApp number</label>
-                    <div className="flex gap-2">
-                      <div className="flex shrink-0 items-center rounded-2xl border border-black/10 bg-alt px-3.5 text-[15px] font-medium text-ink">+91</div>
-                      <input
-                        type="tel" value={phone} onChange={e => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                        placeholder="98765 43210" inputMode="numeric" autoFocus className={field}
-                      />
+                    <label style={labelStyle}>WhatsApp number</label>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <div style={{ ...fieldStyle, width: 'auto', display: 'flex', alignItems: 'center', fontWeight: 500, flexShrink: 0 }}>+91</div>
+                      <input type="tel" value={phone} onChange={e => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                        placeholder="98765 43210" inputMode="numeric" autoFocus style={fieldStyle} />
                     </div>
                   </div>
 
-                  {error && <div className="rounded-2xl border border-[#ffd0d0] bg-[#fff2f2] px-4 py-3 text-[14px] text-[#d70015]">{error}</div>}
+                  {error && <div style={errorStyle}>{error}</div>}
 
-                  <button type="submit" disabled={loading || phone.replace(/\D/g, '').length < 10} className={primary}>
+                  <button type="submit" disabled={loading || phone.replace(/\D/g, '').length < 10} style={buttonStyle(loading || phone.replace(/\D/g, '').length < 10)}>
                     {loading ? <Loader2 size={18} className="animate-spin" /> : <>Get verification code <ArrowRight size={17} /></>}
                   </button>
                 </form>
 
-                <p className="mt-6 text-center text-[12.5px] leading-relaxed text-faint">
+                <p style={{ margin: '24px 0 0', textAlign: 'center', fontSize: 13, lineHeight: '19px', color: '#71717a' }}>
                   By continuing you agree to receive a WhatsApp message from Faigen AI. Your number is never shared or used for ads.
                 </p>
-                <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2">
+                <div style={{ marginTop: 18, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px 20px' }}>
                   {['Free demo', 'No signup needed', 'Live in 60 seconds'].map(f => (
-                    <div key={f} className="flex items-center gap-1.5 text-[13px] text-muted"><CheckCircle2 size={14} className="text-[#25d366]" /> {f}</div>
+                    <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 2, fontSize: 14, color: '#535353' }}><Tick size={22} />{f}</div>
                   ))}
                 </div>
               </motion.div>
@@ -288,31 +282,31 @@ export default function TryPage() {
             {/* STEP 2: code */}
             {step === 2 && (
               <motion.div key="step2" variants={fadeUp} initial="hidden" animate="visible" exit="exit">
-                <h2 className="text-[28px] font-semibold leading-tight tracking-[-0.03em]">Check your WhatsApp</h2>
-                <p className="mt-2 text-[15px] leading-relaxed text-muted">
-                  {info ? info : (<>Our agent sent a 6-digit code to <span className="font-semibold text-ink">+91 {maskPhone(phone)}</span></>)}
+                <h2 style={h2Style}>Check your WhatsApp</h2>
+                <p style={pStyle}>
+                  {info ? info : (<>Our agent sent a 6-digit code to <b style={{ fontWeight: 500, color: '#1a1a1a' }}>+91 {maskPhone(phone)}</b></>)}
                 </p>
 
-                <form onSubmit={handleVerifyOtp} className="mt-8 flex flex-col gap-6">
+                <form onSubmit={handleVerifyOtp} style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 24 }}>
                   <OtpInput value={otp} onChange={setOtp} disabled={loading} />
 
-                  {error && <div className="rounded-2xl border border-[#ffd0d0] bg-[#fff2f2] px-4 py-3 text-center text-[14px] text-[#d70015]">{error}</div>}
+                  {error && <div style={{ ...errorStyle, textAlign: 'center' }}>{error}</div>}
 
-                  <button type="submit" disabled={loading || otp.length < 6} className={primary}>
+                  <button type="submit" disabled={loading || otp.length < 6} style={buttonStyle(loading || otp.length < 6)}>
                     {loading ? <Loader2 size={18} className="animate-spin" /> : <>Verify and start chatting <ArrowRight size={17} /></>}
                   </button>
 
-                  <div className="text-center">
+                  <div style={{ textAlign: 'center', fontSize: 14, color: '#71717a' }}>
                     {canResend ? (
-                      <button type="button" onClick={() => { setOtp(''); setError(''); setInfo(''); setStep(1) }} className="mx-auto flex items-center gap-1.5 text-[14px] font-medium text-accent hover:underline">
+                      <button type="button" onClick={() => { setOtp(''); setError(''); setInfo(''); setStep(1) }} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'none', border: 0, cursor: 'pointer', fontSize: 14, fontWeight: 500, color: '#1a1a1a', textDecoration: 'underline', fontFamily: 'inherit' }}>
                         <RefreshCw size={14} /> Resend code
                       </button>
                     ) : (
-                      <p className="text-[14px] text-muted">Resend in <span className="font-semibold text-ink">{formatTimer(resendTimer)}</span></p>
+                      <p style={{ margin: 0 }}>Resend in <b style={{ fontWeight: 500, color: '#1a1a1a' }}>{formatTimer(resendTimer)}</b></p>
                     )}
                   </div>
 
-                  <button type="button" onClick={() => { setStep(1); setOtp(''); setError(''); setInfo('') }} className="text-center text-[14px] text-muted transition-colors hover:text-ink">
+                  <button type="button" onClick={() => { setStep(1); setOtp(''); setError(''); setInfo('') }} style={{ background: 'none', border: 0, cursor: 'pointer', textAlign: 'center', fontSize: 14, color: '#71717a', fontFamily: 'inherit' }}>
                     ← Change number
                   </button>
                 </form>
@@ -322,33 +316,32 @@ export default function TryPage() {
             {/* STEP 3: verified */}
             {step === 3 && (
               <motion.div key="step3" variants={fadeUp} initial="hidden" animate="visible" exit="exit">
-                <div className="text-center">
+                <div style={{ textAlign: 'center' }}>
                   <motion.div
                     initial={{ scale: 0 }} animate={{ scale: 1 }}
                     transition={{ type: 'spring', stiffness: 200, damping: 14, delay: 0.1 }}
-                    className="mb-5 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#e9f9ee]"
+                    style={{ display: 'inline-flex', width: 64, height: 64, alignItems: 'center', justifyContent: 'center', borderRadius: 32, background: '#dbfc74', marginBottom: 20 }}
                   >
-                    <CheckCircle2 size={34} className="text-[#25d366]" strokeWidth={2} />
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
                   </motion.div>
-                  <h2 className="text-[28px] font-semibold leading-tight tracking-[-0.03em]">Verified. Now start chatting.</h2>
-                  <p className="mt-2 text-[15px] leading-relaxed text-muted">Open WhatsApp and send a message to our agent. It replies instantly. Try Manglish, ask about products, or place a test order.</p>
+                  <h2 style={h2Style}>Verified. Now start chatting.</h2>
+                  <p style={pStyle}>Open WhatsApp and send a message to our agent. It replies instantly. Try Manglish, ask about products, or place a test order.</p>
                 </div>
 
-                <div className="mt-6 rounded-2xl bg-alt p-5">
-                  <p className="mb-3 text-[13px] font-medium text-muted">Try asking:</p>
-                  <div className="flex flex-col gap-2.5">
+                <div style={{ marginTop: 24, borderRadius: 12, background: '#f8f6f4', padding: 20 }}>
+                  <p style={{ margin: '0 0 12px', fontSize: 14, color: '#71717a' }}>Try asking:</p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                     {['What products do you have?', 'Ente order eppol delivery aakum?', 'Book an appointment for tomorrow', 'Send me your price list'].map((q, i) => (
-                      <div key={i} className="flex items-center gap-2.5"><span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" /><p className="text-[14.5px] text-ink">{q}</p></div>
+                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 2 }}><Tick size={22} /><p style={{ margin: 0, fontSize: 15, color: '#1a1a1a' }}>{q}</p></div>
                     ))}
                   </div>
                 </div>
 
-                <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
-                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[#25d366] px-6 py-4 text-[16px] font-medium text-white transition hover:bg-[#20ba5a]">
-                  <WhatsAppIcon size={20} /> Open WhatsApp and chat
+                <a href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{ ...buttonStyle(false), marginTop: 24 }}>
+                  <span style={{ width: 20, height: 20, display: 'inline-block' }}><WhatsAppGlyph className="h-full w-full" /></span> Open WhatsApp and chat
                 </a>
-                <p className="mt-3 text-center text-[13px] text-muted">Tap above, send any message, and the agent replies.</p>
-                <Link href="/" className="mt-6 block text-center text-[14px] font-medium text-accent hover:underline">Learn more about Faigen</Link>
+                <p style={{ margin: '12px 0 0', textAlign: 'center', fontSize: 13, color: '#71717a' }}>Tap above, send any message, and the agent replies.</p>
+                <Link href="/" style={{ display: 'block', marginTop: 20, textAlign: 'center', fontSize: 14, fontWeight: 500, color: '#1a1a1a', textDecoration: 'underline' }}>Learn more about Faigen</Link>
               </motion.div>
             )}
           </AnimatePresence>
