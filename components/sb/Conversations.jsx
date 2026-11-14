@@ -5,7 +5,7 @@ import { GreyPill, Wrap, H2 } from './ui'
 // No customer quotes are invented: these are sample conversations, labelled as such.
 const COLS = [
   [
-    { wa: true, ask: 'Menu please, and do you deliver to Kakkanad?', reply: 'Yes, within 45 mins. Here is our menu. What would you like?', who: 'Restaurant', role: 'Orders', tone: '#ffd9b3' },
+    { wa: true, ask: 'Menu please, and do you deliver to Kochi?', reply: 'Yes, within 45 mins. Here is our menu. What would you like?', who: 'Restaurant', role: 'Orders', tone: '#ffd9b3' },
     { wa: false, ask: 'price?', reply: 'Check your DMs 📩 We’ve sent you the price list.', who: 'Boutique', role: 'Instagram comment', tone: '#ffd3e6' },
   ],
   [

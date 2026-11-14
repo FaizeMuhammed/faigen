@@ -388,7 +388,7 @@ export default function TermsAndConditions() {
                     <p className="font-black text-gray-900 text-[16px]">Faigen</p>
                     <div className="flex items-center gap-3 text-[14px] text-gray-500">
                       <MapPin size={16} className="text-[#2563EB] shrink-0" />
-                      CG Residency Towers 4a1,Kakkanad,ERNAKULAM , Pin 682037
+                      Kochi, Kerala, India
                     </div>
                     <div className="flex items-center gap-3 text-[14px] text-gray-500">
                       <Mail size={16} className="text-[#2563EB] shrink-0" />

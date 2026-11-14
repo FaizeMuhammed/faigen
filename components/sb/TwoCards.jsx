@@ -93,7 +93,7 @@ function OrderArt() {
         <div style={row({ justifyContent: 'space-between', fontSize: 11, fontWeight: 500, padding: '3px 0 5px' })}><span>2 × Premium Coir Mat</span><span>₹1,200</span></div>
         <Line k="Customer" v="Anjali" />
         <Line k="Phone" v="+91 98••• ••21" />
-        <Line k="Address" v="Kakkanad" />
+        <Line k="Address" v="Kochi" />
         <Line k="Delivery" v="2–3 days" />
         <div style={{ height: 1, background: 'rgba(0,0,0,.07)', margin: '6px 0' }} />
         <div style={row({ justifyContent: 'space-between', fontSize: 12.5, fontWeight: 600 })}><span>Total</span><span>₹1,200</span></div>

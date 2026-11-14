@@ -144,7 +144,7 @@ function ContactPanel({ c }) {
     <div style={abs({ left: 600, right: 0, top: 0, bottom: 0, borderLeft: `1px solid ${LINE}`, padding: '20px 24px', ...col({ gap: 20 }), overflow: 'hidden' })}>
       <div style={row({ gap: 14 })}>
         <Avatar n="Anjali" s={52} />
-        <div style={{ lineHeight: 1.3, flex: 1 }}><b className="font-heading" style={{ fontSize: 19, fontWeight: 500 }}>Anjali</b><div style={{ fontSize: 12.5, color: GREY, marginTop: 2 }}>+91 98••• ••21 · Kakkanad</div></div>
+        <div style={{ lineHeight: 1.3, flex: 1 }}><b className="font-heading" style={{ fontSize: 19, fontWeight: 500 }}>Anjali</b><div style={{ fontSize: 12.5, color: GREY, marginTop: 2 }}>+91 98••• ••21 · Kochi</div></div>
       </div>
       <div>
         <Label icon={Sparkles}>Stage</Label>
@@ -159,13 +159,13 @@ function ContactPanel({ c }) {
         <div style={{ ...row({ gap: 7 }), flexWrap: 'wrap', minHeight: 28 }}>
           <span style={fx(c, 1)}><Chip bg="#e8f1ff" color="#1c5fd4" style={{ padding: '7px 12px', fontSize: 12 }}>Price enquiry</Chip></span>
           <span style={fx(c, 2)}><Chip bg="#f3e8ff" color="#7a3cc4" style={{ padding: '7px 12px', fontSize: 12 }}>Coir mats</Chip></span>
-          <span style={fx(c, 5)}><Chip bg="#e1f7e5" color="#1d7a36" style={{ padding: '7px 12px', fontSize: 12 }}>Kakkanad</Chip></span>
+          <span style={fx(c, 5)}><Chip bg="#e1f7e5" color="#1d7a36" style={{ padding: '7px 12px', fontSize: 12 }}>Kochi</Chip></span>
         </div>
       </div>
       <div>
         <Label icon={StickyNote}>Note</Label>
         <div style={{ borderRadius: 14, background: '#f8f6f4', padding: '12px 14px', minHeight: 70, fontSize: 12.5, lineHeight: 1.5, color: '#3f3f46' }}>
-          <span style={fx(c, 5)}>Wants 2 Premium Coir Mats. Deliver to Kakkanad 682030, pay on delivery.</span>
+          <span style={fx(c, 5)}>Wants 2 Premium Coir Mats. Deliver to Kochi, pay on delivery.</span>
           {c < 5 && <span style={{ color: '#a1a1aa' }}>Add a note for your team…</span>}
         </div>
       </div>
@@ -196,7 +196,7 @@ function WhatsAppTab({ c }) {
         <div style={{ ...col({ gap: 12 }), padding: '20px 20px' }}>
           <Bub c={c} k={1} t="10:41">Price ethra aanu Coir Mat?</Bub>
           <Bub c={c} k={2} me t="10:41">₹600 aanu 😊 Name and address ayakkamo?</Bub>
-          <Bub c={c} k={3} t="10:43">Anjali, 2 mats. Kakkanad 682030</Bub>
+          <Bub c={c} k={3} t="10:43">Anjali, 2 mats. Kochi 682030</Bub>
           <Bub c={c} k={4} me t="10:43">Done 🚚 Order #1048 placed.</Bub>
           <div style={fx(c, 5, { alignSelf: 'center', ...row({ gap: 8 }), background: '#dbfc74', borderRadius: 16, padding: '8px 14px', fontSize: 12.5, fontWeight: 500, marginTop: 2 })}><Check size={14} strokeWidth={3} />Order #1048 collected by the AI</div>
         </div>

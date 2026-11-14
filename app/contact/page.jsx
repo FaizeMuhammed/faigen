@@ -27,7 +27,7 @@ export default function ContactPage() {
           <div className="mx-auto grid w-full max-w-[1240px] gap-10 px-5 lg:grid-cols-[540px_1fr]">
             <div className="flex flex-col gap-12 lg:gap-[100px]">
               <div className="flex flex-col gap-5">
-                <p className="flex items-center gap-2 text-[16px] leading-[22.4px] text-[#535353]"><span className="h-2 w-2 rounded-full bg-[#34c759]" />Meta Verified Tech Provider · Kakkanad, Kerala</p>
+                <p className="flex items-center gap-2 text-[16px] leading-[22.4px] text-[#535353]"><span className="h-2 w-2 rounded-full bg-[#34c759]" />Meta Verified Tech Provider · Kochi, Kerala</p>
                 <h1 className="font-heading text-balance text-[clamp(2.6rem,5vw,4rem)] font-medium leading-[1.2]">Let’s talk about your business.</h1>
                 <p className="max-w-[480px] text-[18px] leading-[1.4] text-[#535353]">Tell us what you sell and where your customers message you. We’ll show you how Faigen would handle it.</p>
               </div>
@@ -58,7 +58,7 @@ export default function ContactPage() {
               <div className="grid gap-2 lg:grid-cols-3">
                 {[
                   { tone: 'blue', t: 'Email', d: EMAIL, extra: <CopyEmail email={EMAIL} />, href: `mailto:${EMAIL}`, hint: 'We reply the same day.' },
-                  { tone: 'violet', t: 'Visit us', d: 'BCG Residency Towers 4a1, Kakkanad, Ernakulam, Kerala 682037', href: 'https://maps.google.com/?q=BCG+Residency+Towers+Kakkanad+Ernakulam', hint: 'Open in Maps' },
+                  { tone: 'violet', t: 'Based in Kochi', d: 'We are a Kerala team and work with businesses across the state, mostly over chat and video calls.', href: '/about', hint: 'About us' },
                   { tone: 'lime', t: 'Try the demo', d: 'Chat with a live Faigen agent on WhatsApp in under a minute.', href: '/try', hint: 'Start the demo' },
                 ].map(c => (
                   <div key={c.t} style={{ background: '#fafaf9', borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column', gap: 16, minHeight: 238 }}>

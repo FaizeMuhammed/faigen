@@ -6,8 +6,8 @@ import { Scallop, HalfDisc, Diamond, Dot, Pillar, Cloud } from './art'
 
 const COLS = [
   { title: 'Product', links: [['WhatsApp AI agent', '/features'], ['Instagram automation', '/features'], ['Orders & catalog', '/features'], ['Broadcast campaigns', '/features'], ['Live inbox', '/features']] },
-  { title: 'Company', links: [['Use cases', '/use-cases'], ['Pricing', '/pricing'], ['About', '/about'], ['Contact', '/contact'], ['Book a consultation', '/consultation']] },
-  { title: 'Resources', links: [['Brochure', '/brochure'], ['Dashboard guide', '/guide'], ['Terms of service', '/terms'], ['Privacy policy', '/privacy'], ['Data deletion', '/data-deletion']] },
+  { title: 'Company', links: [['Use cases', '/use-cases'], ['Pricing', '/pricing'], ['About', '/about'], ['Contact', '/contact']] },
+  { title: 'Resources', links: [['Terms of service', '/terms'], ['Privacy policy', '/privacy'], ['Data deletion', '/data-deletion']] },
 ]
 
 export default function CtaFooter() {
@@ -54,7 +54,7 @@ export default function CtaFooter() {
           </div>
           <div className="mt-10 flex flex-col gap-1 text-[14px] font-medium leading-[19.6px] text-[#1a1a1a] sm:flex-row sm:justify-between">
             <p>© 2026 Faigen Technologies. All rights reserved.</p>
-            <p className="font-normal text-[#71717a]">Kakkanad, Ernakulam, Kerala, India · info@faigen.in</p>
+            <p className="font-normal text-[#71717a]">Kochi, Kerala, India · info@faigen.in</p>
           </div>
         </div>
       </Wrap>

@@ -61,7 +61,7 @@ export default function AboutPage() {
                 <span style={{ position: 'relative', alignSelf: 'flex-start', background: '#1a1a1a', color: '#dbfc74', fontSize: 13, padding: '6px 12px', borderRadius: 14 }}>Official Meta Tech Provider</span>
                 <div style={{ position: 'relative' }}>
                   <p className="font-heading" style={{ margin: 0, fontSize: 'clamp(2.2rem,3.4vw,3rem)', lineHeight: 1.1, fontWeight: 500 }}>Made in Kerala.</p>
-                  <p style={{ margin: '10px 0 0', fontSize: 16, lineHeight: '22.4px', color: 'rgba(26,26,26,.75)' }}>Built in Kakkanad, Ernakulam, for the way Kerala’s customers really write.</p>
+                  <p style={{ margin: '10px 0 0', fontSize: 16, lineHeight: '22.4px', color: 'rgba(26,26,26,.75)' }}>Built in Kochi, for the way Kerala’s customers really write.</p>
                 </div>
               </div>
             </div>
@@ -87,9 +87,8 @@ export default function AboutPage() {
                   <img src="/sb/faigen-logo.svg" alt="Faigen" width={56} height={56} style={{ position: 'absolute', left: 24, bottom: 24, width: 56, height: 56 }} />
                 </div>
                 <div style={{ padding: 8 }}>
-                  <p className="font-heading" style={{ margin: 0, fontSize: 21, lineHeight: '24px', fontWeight: 500 }}>Kakkanad</p>
-                  <p style={{ margin: '8px 0 0', fontSize: 16, lineHeight: '22.4px', color: '#52525b' }}>BCG Residency Towers 4a1, Kakkanad, Ernakulam, Kerala 682037</p>
-                  <a href="https://maps.google.com/?q=BCG+Residency+Towers+Kakkanad+Ernakulam" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: 12, fontSize: 16, fontWeight: 500, color: '#1a1a1a', textDecoration: 'underline', textUnderlineOffset: 4 }}>Open in Maps</a>
+                  <p className="font-heading" style={{ margin: 0, fontSize: 21, lineHeight: '24px', fontWeight: 500 }}>Kochi, Kerala</p>
+                  <p style={{ margin: '8px 0 0', fontSize: 16, lineHeight: '22.4px', color: '#52525b' }}>A Kerala-based team, working with businesses across the state.</p>
                 </div>
               </div>
             </div>
