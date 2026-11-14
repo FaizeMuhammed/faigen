@@ -7,6 +7,8 @@ import { ArrowRight, Loader2, RefreshCw } from 'lucide-react'
 import Nav from '@/components/sb/Nav'
 import { urbanist, jost } from '@/components/sb/fonts'
 import { WhatsAppGlyph } from '@/components/site/FaigenMark'
+import CtaFooter from '@/components/sb/CtaFooter'
+import { Scallop, FaceDisc } from '@/components/sb/art'
 
 const BACKEND = 'https://myagent.faigen.in'
 const WA_NUMBER = '919633820462'
@@ -207,8 +209,8 @@ export default function TryPage() {
             <p className="max-w-[480px] text-[18px] leading-[1.4] text-[#535353]">Enter your number and our agent sends you a code on WhatsApp. Then you can chat with it for real, in under a minute.</p>
           </div>
 
-          <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 24, background: '#daedfe', padding: 24 }}>
-            <div aria-hidden style={{ position: 'absolute', left: -60, top: -30, width: 300, height: 150, background: 'rgba(150,196,250,.36)', WebkitMaskImage: 'url(/sb/cloud.png)', maskImage: 'url(/sb/cloud.png)', WebkitMaskSize: '100% 100%', maskSize: '100% 100%' }} />
+          <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 24, background: '#e4b5fd', padding: 24 }}>
+            <div aria-hidden style={{ position: 'absolute', left: -60, top: -30, width: 300, height: 150, background: 'rgba(215,150,250,.36)', WebkitMaskImage: 'url(/sb/cloud.png)', maskImage: 'url(/sb/cloud.png)', WebkitMaskSize: '100% 100%', maskSize: '100% 100%' }} />
             <div style={grain} />
             <div style={{ position: 'relative', background: '#efeae2', borderRadius: 20, overflow: 'hidden', boxShadow: '0 16px 36px -12px rgba(30,50,110,.28)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#fff', padding: '12px 16px' }}>
@@ -233,7 +235,8 @@ export default function TryPage() {
         </div>
 
         {/* right: the steps in a white card (radius 24, padding 40) */}
-        <div style={{ background: '#fff', borderRadius: 24, padding: 40 }} className="max-sm:!p-6">
+        <div style={{ position: 'relative', background: '#fff', borderRadius: 24, padding: 40 }} className="max-sm:!p-6">
+          <Scallop className="absolute hidden lg:block" style={{ right: -34, top: -44, width: 96, height: 96 }} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 28 }}>
             {[1, 2, 3].map(n => (
               <div key={n} style={{ height: 8, width: n === step ? 32 : 8, borderRadius: 4, background: n === step ? '#1a1a1a' : n < step ? '#dbfc74' : '#e9e6e1', transition: 'all .4s' }} />
@@ -347,6 +350,33 @@ export default function TryPage() {
           </AnimatePresence>
         </div>
       </main>
+
+      <section style={{ background: '#fafaf9', padding: '40px 0 80px' }}>
+        <div className="mx-auto w-full max-w-[1240px] px-5">
+          <h2 className="font-heading mx-auto max-w-[780px] text-balance text-center text-[clamp(2.1rem,4.4vw,3.375rem)] font-medium leading-[1.2]">Three steps, under a minute</h2>
+          <div style={{ marginTop: 40, background: '#f0eeeb', borderRadius: 20, padding: 8 }}>
+            <div className="grid gap-2 lg:grid-cols-3">
+              {[
+                ['blue', 'Enter your number', 'Type your WhatsApp number. Your name is optional and nothing is shared or used for ads.'],
+                ['violet', 'Get a code on WhatsApp', 'Our agent sends you a 6-digit code. Enter it to unlock the chat.'],
+                ['lime', 'Chat with the agent', 'Ask about products, try Manglish, or place a test order. It replies instantly.'],
+              ].map(([tone, t, d], i) => (
+                <div key={t} style={{ background: '#fafaf9', borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column', gap: 16, minHeight: 238 }}>
+                  <div style={{ padding: '0 8px 8px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <FaceDisc tone={tone} className="h-16 w-16" />
+                    <span style={{ fontSize: 14, color: '#71717a', background: '#fff', borderRadius: 14, padding: '5px 12px' }}>Step {i + 1}</span>
+                  </div>
+                  <div style={{ marginTop: 'auto' }}>
+                    <h3 className="font-heading" style={{ margin: 0, fontSize: 21, lineHeight: '29.4px', fontWeight: 500 }}>{t}</h3>
+                    <p style={{ margin: '4px 0 0', fontSize: 16, lineHeight: '22.4px', color: '#52525b' }}>{d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+      <CtaFooter />
     </div>
   )
 }
