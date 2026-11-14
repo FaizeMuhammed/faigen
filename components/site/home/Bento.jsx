@@ -3,7 +3,7 @@ import { FeatureUnlimited, FeatureStepIn, FeatureRules, FeatureRates, FeatureSec
 
 const SMALL = [
   { Art: FeatureRules, t: 'Your rules, your tone', d: 'Trained on your FAQs and voice, with guardrails on what it must never say.' },
-  { Art: FeatureRates, t: 'Pay per broadcast', d: 'Campaigns and OTP codes are billed only per message sent: ₹0.20 for utility and OTP, ₹1.10 for marketing.' },
+  { Art: FeatureRates, t: 'Meta’s price, no markup', d: 'Broadcast, utility and OTP messages are charged at Meta’s own rates. We add nothing on top.' },
   { Art: FeatureSecure, t: 'Open and secure', d: 'API keys and docs for your own systems. An official Meta Tech Provider, and your data is never sold.' },
 ]
 

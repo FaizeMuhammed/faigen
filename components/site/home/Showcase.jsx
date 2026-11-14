@@ -42,19 +42,19 @@ export default function Showcase() {
       />
       <Row
         reverse
-        badge="Early access"
+        badge="Included in launch offer"
         eyebrow="Instagram"
         title="Comments turn into conversations."
         text="When someone comments “price” on your Reel, Faigen replies publicly and slides into their DMs with the details — and keeps the conversation going."
         points={['A public reply plus a private DM, automatically', 'You choose the trigger words and the wording', 'Spam comments hidden for you']}
         visual={<InstagramScene className="w-full" />}
-        link={['Ask about Instagram', '/contact']}
+        link={['See pricing', '/pricing']}
       />
       <Row
         eyebrow="Broadcasts"
         title="One message. A thousand customers."
         text="Send offers, festival greetings and order updates to your whole list in minutes, with delivery and read tracking for every campaign."
-        points={['Approved WhatsApp templates', 'Delivery and read reports', 'Pay per message — no monthly cap']}
+        points={['Approved WhatsApp templates', 'Delivery and read reports', 'Message fees at Meta’s price, no markup']}
         visual={<BroadcastScene className="w-full" />}
         link={['See pricing', '/pricing']}
       />

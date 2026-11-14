@@ -192,9 +192,9 @@ export function FeatureRates({ className = '' }) {
       <Label x={54} y={90} size={40} anchor="middle" fill={BLUE} delay={0.9}>₹</Label>
       <Draw d="M88 66 C 98 60, 104 56, 112 52 M88 86 C 98 92, 104 96, 112 100" width={2.2} dash="1 7" delay={1.2} duration={0.6} />
       <Draw d="M112 36 H160 a10 10 0 0 1 10 10 V56 a10 10 0 0 1 -10 10 H112 a10 10 0 0 1 -10 -10 V46 a10 10 0 0 1 10 -10 Z" fill="#fff" delay={1.3} duration={0.6} />
-      <Label x={136} y={58} size={21} anchor="middle" delay={1.8}>₹0.20</Label>
+      <Label x={136} y={58} size={21} anchor="middle" delay={1.8}>Meta</Label>
       <Draw d="M112 88 H160 a10 10 0 0 1 10 10 V108 a10 10 0 0 1 -10 10 H112 a10 10 0 0 1 -10 -10 V98 a10 10 0 0 1 10 -10 Z" fill="#fff" delay={1.5} duration={0.6} />
-      <Label x={136} y={110} size={21} anchor="middle" delay={2.0}>₹1.10</Label>
+      <Label x={136} y={110} size={21} anchor="middle" delay={2.0}>+₹0</Label>
     </svg>
   )
 }

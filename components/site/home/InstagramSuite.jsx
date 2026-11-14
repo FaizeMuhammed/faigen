@@ -24,7 +24,7 @@ export default function InstagramSuite() {
             <Reveal>
               <div className="flex items-center gap-3">
                 <p className="eyebrow text-[#ff9ec7]">Instagram</p>
-                <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold">Early access</span>
+                <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold">Launch offer: included</span>
               </div>
               <h2 className="display-lg mt-3">Your Instagram, on autopilot.</h2>
               <p className="lead mt-5 text-white/65">The same agent that handles your WhatsApp now works your Instagram too — comments, DMs and the numbers behind them.</p>
@@ -44,8 +44,8 @@ export default function InstagramSuite() {
           </div>
 
           <Reveal className="relative mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
-            <PillButton href="/contact" tone="light" arrow>Get early access</PillButton>
-            <p className="text-[15px] text-white/55">Rolling out to early customers first.</p>
+            <PillButton href="/pricing" tone="light" arrow>See pricing</PillButton>
+            <p className="text-[15px] text-white/55">Included in Essential and Standard during our launch offer.</p>
           </Reveal>
         </div>
       </div>

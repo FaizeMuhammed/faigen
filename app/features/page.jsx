@@ -23,7 +23,7 @@ export default function FeaturesPage() {
         <PageHero
           eyebrow="Features"
           title="One agent. Every conversation."
-          lead="Faigen answers your customers, collects orders, sends broadcasts and gives you a clear view of it all — on WhatsApp, and soon Instagram."
+          lead="Faigen answers your customers, collects orders, sends broadcasts and gives you a clear view of it all — on WhatsApp and Instagram."
         >
           <PillButton href="/try" arrow>Try the live demo</PillButton>
           <TextLink href="/pricing">See pricing</TextLink>
@@ -44,9 +44,9 @@ export default function FeaturesPage() {
             eyebrow="Broadcasts & OTP"
             title="Reach your whole list in minutes."
             text="Send offers and updates with approved templates, and see exactly who received and read them."
-            points={['Delivery and read tracking per campaign', 'OTP and verification messages', 'Billed only per message sent']}
+            points={['Delivery and read tracking per campaign', 'OTP and verification messages', 'Message fees at Meta’s price, no markup']}
             visual={<BroadcastScene className="w-full" />}
-            link={['See message rates', '/pricing']}
+            link={['See pricing', '/pricing']}
           />
           <FeatureRow
             bare
@@ -59,13 +59,13 @@ export default function FeaturesPage() {
           <FeatureRow
             bare
             reverse
-            badge="Early access"
+            badge="Included in launch offer"
             eyebrow="Instagram"
             title="Comments become conversations."
             text="The same agent works your Instagram: it replies to comments, sends the details by DM, hides spam and shows you the numbers."
             points={['Comment-to-DM with a public reply', 'AI drafts replies you approve first', 'Spam shield and account insights']}
             visual={<InstagramScene className="w-full" />}
-            link={['Ask about Instagram', '/contact']}
+            link={['See pricing', '/pricing']}
           />
         </section>
 
