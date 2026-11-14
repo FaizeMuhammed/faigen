@@ -28,7 +28,16 @@ const PEOPLE = {
   'meera.s': { bg: '#fff1cf', skin: '#e0a37c', hair: '#241914', shirt: '#f0b429', style: 'long' },
   Kiran: { bg: '#dbfc74', skin: '#d9a077', hair: '#1f1713', shirt: '#1a1a1a', style: 'short' },
 }
+// Real human portraits (stock photos from the design template, used with the designer's permission); fall back to the drawing
+const FACE = { Anjali: 2, Rahul: 7, Fathima: 6, Joseph: 3, Meera: 5, Daniel: 1, priya_crafts: 9, 'arjun.k': 10, 'meera.s': 8, Kiran: 4 }
 function Portrait({ name, size }) {
+  if (FACE[name]) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={`/sb/faces/f${FACE[name]}.png`} alt="" width={size} height={size} draggable={false} style={{ display: 'block', width: size, height: size, borderRadius: size / 2, objectFit: 'cover', background: '#e4e4e7' }} />
+  }
+  return <DrawnPortrait name={name} size={size} />
+}
+function DrawnPortrait({ name, size }) {
   const P = PEOPLE[name] || PEOPLE.Anjali
   const { bg, skin, hair, shirt, style } = P
   return (
