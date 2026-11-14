@@ -70,28 +70,27 @@ export default function PricingPlans() {
             const rad = i === 0 ? '24px 0 0 24px' : i === PLANS.length - 1 ? '0 24px 24px 0' : 24
             return (
               <div key={p.id} className="max-lg:!rounded-[24px]"
-                style={{ position: 'relative', overflow: 'hidden', background: p.highlight ? 'linear-gradient(160deg,#e9ffa4 0%,#d9fb6e 45%,#c4f84a 100%)' : '#fff', borderRadius: rad, padding: 24, display: 'flex', flexDirection: 'column', gap: 20 }}>
-                {p.highlight && <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/sb/grain.png)', backgroundSize: '256px 256px', mixBlendMode: 'overlay', opacity: 0.3, pointerEvents: 'none' }} />}
-                <h3 style={{ position: 'relative', margin: 0, display: 'flex', alignItems: 'center', gap: 10, fontSize: 21, lineHeight: '29.4px', fontWeight: 400, color: p.highlight ? '#1a1a1a' : '#52525b' }}>{p.name}{p.highlight && <span style={{ background: '#1a1a1a', color: '#dbfc74', fontSize: 11, lineHeight: 1, padding: '5px 9px', borderRadius: 10, fontWeight: 500 }}>Most popular</span>}</h3>
-                <div style={{ position: 'relative', height: 1, background: p.highlight ? 'rgba(26,26,26,.14)' : '#f8f6f4' }} />
-                <p style={{ position: 'relative', margin: 0, minHeight: 38, fontSize: 16, lineHeight: '19.2px', color: p.highlight ? '#1a1a1a' : '#52525b' }}>{p.tagline}</p>
+                style={{ position: 'relative', overflow: 'hidden', background: '#fff', borderRadius: rad, boxShadow: p.highlight ? '0 0 0 2px #1a1a1a, 0 24px 48px -24px rgba(26,26,26,.35)' : undefined, zIndex: p.highlight ? 1 : undefined, padding: 24, display: 'flex', flexDirection: 'column', gap: 20 }}>
+                <h3 style={{ position: 'relative', margin: 0, display: 'flex', alignItems: 'center', gap: 10, fontSize: 21, lineHeight: '29.4px', fontWeight: 400, color: '#52525b' }}>{p.name}{p.highlight && <span style={{ background: '#1a1a1a', color: '#dbfc74', fontSize: 11, lineHeight: 1, padding: '5px 9px', borderRadius: 10, fontWeight: 500 }}>Most popular</span>}</h3>
+                <div style={{ position: 'relative', height: 1, background: '#f8f6f4' }} />
+                <p style={{ position: 'relative', margin: 0, minHeight: 38, fontSize: 16, lineHeight: '19.2px', color: '#52525b' }}>{p.tagline}</p>
 
                 <div style={{ position: 'relative', minHeight: 76 }}>
                   {p.custom ? (
                     <p className="font-heading" style={{ margin: 0, fontSize: 42, lineHeight: '50.4px', fontWeight: 500, color: '#1a1a1a' }}>Let’s talk</p>
                   ) : (
                     <>
-                      <p style={{ margin: 0, display: 'flex', alignItems: 'baseline', gap: 4 }}><span className="font-heading" style={{ fontSize: 42, lineHeight: '50.4px', fontWeight: 500, color: '#1a1a1a' }}>{inr(p.monthly)}</span><span style={{ fontSize: 14, lineHeight: '19.6px', color: p.highlight ? '#1a1a1a' : '#52525b' }}>/month</span></p>
-                      <p style={{ margin: '6px 0 0', fontSize: 14, lineHeight: '19.6px', color: p.highlight ? '#1a1a1a' : '#52525b' }}>
+                      <p style={{ margin: 0, display: 'flex', alignItems: 'baseline', gap: 4 }}><span className="font-heading" style={{ fontSize: 42, lineHeight: '50.4px', fontWeight: 500, color: '#1a1a1a' }}>{inr(p.monthly)}</span><span style={{ fontSize: 14, lineHeight: '19.6px', color: '#52525b' }}>/month</span></p>
+                      <p style={{ margin: '6px 0 0', fontSize: 14, lineHeight: '19.6px', color: '#52525b' }}>
                         {yearly && <><b style={{ color: '#1a1a1a', fontWeight: 500 }}>{inr(p.monthly * YEARLY_MONTHS)}/year</b>, 2 months free. </>}
-                        {offer ? <><s style={{ color: p.highlight ? 'rgba(26,26,26,.5)' : '#a1a1aa' }}>{inr(p.setup)}</s> <b style={{ color: '#1a1a1a', fontWeight: 500 }}>₹0</b> one-time setup <span style={{ background: p.highlight ? '#1a1a1a' : '#dbfc74', color: p.highlight ? '#dbfc74' : '#1a1a1a', fontSize: 11, padding: '2px 8px', borderRadius: 9, marginLeft: 4, whiteSpace: 'nowrap' }}>{LAUNCH_OFFER.badge}</span></> : <>+ {inr(p.setup)} one-time setup</>}
+                        {offer ? <><s style={{ color: '#a1a1aa' }}>{inr(p.setup)}</s> <b style={{ color: '#1a1a1a', fontWeight: 500 }}>₹0</b> one-time setup <span style={{ background: '#dbfc74', color: '#1a1a1a', fontSize: 11, padding: '2px 8px', borderRadius: 9, marginLeft: 4, whiteSpace: 'nowrap' }}>{LAUNCH_OFFER.badge}</span></> : <>+ {inr(p.setup)} one-time setup</>}
                       </p>
                     </>
                   )}
                 </div>
 
                 <ul style={{ position: 'relative', listStyle: 'none', margin: 0, padding: 8, borderRadius: 12 }}>
-                  {ROWS.map(r => <Row key={r.t(0)} on={!!r.has[i]} title={r.tip} hi={p.highlight}>{r.t(i)}{r.ig && r.has[i] && LAUNCH_OFFER.active && !p.custom ? <span style={{ background: p.highlight ? '#1a1a1a' : '#dbfc74', color: p.highlight ? '#dbfc74' : '#1a1a1a', fontSize: 11, padding: '2px 7px', borderRadius: 9, marginLeft: 6, whiteSpace: 'nowrap' }}>Included</span> : null}</Row>)}
+                  {ROWS.map(r => <Row key={r.t(0)} on={!!r.has[i]} title={r.tip}>{r.t(i)}{r.ig && r.has[i] && LAUNCH_OFFER.active && !p.custom ? <span style={{ background: '#dbfc74', color: '#1a1a1a', fontSize: 11, padding: '2px 7px', borderRadius: 9, marginLeft: 6, whiteSpace: 'nowrap' }}>Included</span> : null}</Row>)}
                 </ul>
 
                 <p style={{ position: 'relative', margin: 0, fontSize: 16, lineHeight: '22.4px', color: '#1a1a1a' }}>{NOTE[p.id]}</p>
