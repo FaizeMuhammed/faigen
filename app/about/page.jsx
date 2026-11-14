@@ -60,8 +60,8 @@ export default function AboutPage() {
                 <div style={grainStyle} />
                 <span style={{ position: 'relative', alignSelf: 'flex-start', background: '#1a1a1a', color: '#dbfc74', fontSize: 13, padding: '6px 12px', borderRadius: 14 }}>Official Meta Tech Provider</span>
                 <div style={{ position: 'relative' }}>
-                  <p className="font-heading" style={{ margin: 0, fontSize: 'clamp(2.2rem,3.4vw,3rem)', lineHeight: 1.1, fontWeight: 500 }}>Made in Kerala.</p>
-                  <p style={{ margin: '10px 0 0', fontSize: 16, lineHeight: '22.4px', color: 'rgba(26,26,26,.75)' }}>Built in Kochi, for the way Kerala’s customers really write.</p>
+                  <p className="font-heading" style={{ margin: 0, fontSize: 'clamp(2.2rem,3.4vw,3rem)', lineHeight: 1.1, fontWeight: 500 }}>Made for every business.</p>
+                  <p style={{ margin: '10px 0 0', fontSize: 16, lineHeight: '22.4px', color: 'rgba(26,26,26,.75)' }}>From a corner shop to a growing brand, Faigen answers customers the way they really write.</p>
                 </div>
               </div>
             </div>
