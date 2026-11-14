@@ -32,15 +32,15 @@ const ALSO = ['Order collection', 'Product catalog', 'Custom services menu', 'Wh
 
 export default function FeaturesPage() {
   return (
-    <div className={`${urbanist.variable} ${jost.className} min-h-screen bg-[#fafafa] text-[#1a1a1a]`}>
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen overflow-x-clip bg-[#fafafa] text-[#1a1a1a]`}>
       <Nav />
       <main>
         <section className="relative px-5 pb-12 pt-[120px] text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/sb/pink-arch.png" alt="" aria-hidden className="pointer-events-none absolute hidden select-none lg:block" style={{ left: 'calc(50% - 600px)', top: 80, width: 169, maxWidth: 'none' }} />
+          <img src="/sb/pink-arch.png" alt="" aria-hidden className="pointer-events-none absolute left-[-52px] top-[300px] w-[120px] max-w-none select-none lg:left-[calc(50%-600px)] lg:top-[80px] lg:w-[169px]" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/sb/blue-wedge.png" alt="" aria-hidden className="pointer-events-none absolute hidden select-none lg:block" style={{ right: 'calc(50% - 600px)', top: 90, width: 178, maxWidth: 'none' }} />
-          <div className="mx-auto flex max-w-[780px] flex-col items-center gap-5">
+          <img src="/sb/blue-wedge.png" alt="" aria-hidden className="pointer-events-none absolute right-[-56px] top-[84px] w-[110px] max-w-none select-none lg:right-[calc(50%-600px)] lg:top-[90px] lg:w-[178px]" />
+          <div className="relative mx-auto flex max-w-[780px] flex-col items-center gap-5">
             <p className="flex items-center gap-2 text-[16px] leading-[22.4px] text-[#535353]"><span className="h-2 w-2 rounded-full bg-[#34c759]" />Features</p>
             <h1 className="font-heading text-balance text-[clamp(2.6rem,5vw,4rem)] font-medium leading-[1.2]">One agent. Every conversation.</h1>
             <p className="max-w-[560px] text-[clamp(1.05rem,1.5vw,1.3125rem)] leading-[1.4] text-[#535353]">Faigen answers your customers, collects orders, sends broadcasts and gives you a clear view of it all, on WhatsApp and Instagram.</p>

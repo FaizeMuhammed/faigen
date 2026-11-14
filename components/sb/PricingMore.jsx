@@ -24,7 +24,7 @@ export function FeeCards() {
         </div>
         <div className="mt-10 grid gap-3 md:grid-cols-3">
           {FEES.map(f => (
-            <div key={f.label} style={{ background: '#fff', borderRadius: 16, padding: 16, minHeight: 276, display: 'flex', gap: 16 }}>
+            <div key={f.label} className="flex flex-col-reverse sm:flex-row" style={{ background: '#fff', borderRadius: 16, padding: 16, minHeight: 276, gap: 16 }}>
               <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
                   <p className="font-heading" style={{ margin: 0, fontSize: 40, lineHeight: '50px', fontWeight: 500, color: '#1a1a1a' }}>₹0</p>
@@ -35,7 +35,7 @@ export function FeeCards() {
                   <span style={{ display: 'inline-flex', height: 46, alignItems: 'center', borderRadius: 24, background: '#f0eeeb', padding: '0 20px', fontSize: 16, fontWeight: 500, color: '#1a1a1a' }}>At Meta’s price</span>
                 </div>
               </div>
-              <div className="hidden sm:block" style={{ position: 'relative', width: 182, flexShrink: 0, borderRadius: 8, overflow: 'hidden', background: f.bg }}>
+              <div className="h-[150px] w-full shrink-0 sm:h-auto sm:w-[182px]" style={{ position: 'relative', borderRadius: 8, overflow: 'hidden', background: f.bg }}>
                 <Texture />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={f.art} alt="" style={{ position: 'absolute', left: '50%', top: '50%', width: f.w * 1.5, transform: 'translate(-50%,-50%)', maxWidth: 'none' }} />
@@ -59,7 +59,7 @@ function Cross() {
 function Cell({ v }) {
   if (v === true) return <Tick />
   if (v === false) return <Cross />
-  if (v === 'launch') return <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><Tick /><span className="sb-hide-m" style={{ fontSize: 16, color: '#52525b' }}>Included</span></span>
+  if (v === 'launch') return <span className="sb-launch" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><Tick /><span className="sb-inc" style={{ fontSize: 16, color: '#52525b' }}>Included</span></span>
   return <span style={{ fontSize: 16, lineHeight: '22.4px', color: '#52525b' }}>{v}</span>
 }
 export function CompareTable() {
@@ -78,9 +78,9 @@ export function CompareTable() {
             {PLANS.map((p, i) => (
               <div key={p.id} className="sb-c" style={{ background: '#f8f6f4', padding: '12px 24px', minHeight: 95, borderRadius: i === 0 ? '24px 0 0 0' : i === 2 ? '0 24px 0 0' : 0 }}>
                 <p className="sb-pn" style={{ margin: 0, fontSize: 21, lineHeight: '29.4px', color: '#52525b' }}>{p.name}</p>
-                <div className="sb-hide-m">{p.custom
-                  ? <p className="font-heading" style={{ margin: '2px 0 0', fontSize: 31, lineHeight: '37.2px', fontWeight: 500, color: '#1a1a1a' }}>Let’s talk</p>
-                  : <p style={{ margin: '2px 0 0', display: 'flex', alignItems: 'baseline', gap: 4 }}><span className="font-heading" style={{ fontSize: 31, lineHeight: '37.2px', fontWeight: 500, color: '#1a1a1a' }}>₹{p.monthly.toLocaleString('en-IN')}</span><span style={{ fontSize: 14, color: '#52525b' }}>/month</span></p>}</div>
+                <div>{p.custom
+                  ? <p className="font-heading sb-price" style={{ margin: '2px 0 0', fontSize: 31, lineHeight: '37.2px', fontWeight: 500, color: '#1a1a1a' }}>Let’s talk</p>
+                  : <p style={{ margin: '2px 0 0', display: 'flex', alignItems: 'baseline', gap: 4 }}><span className="font-heading sb-price" style={{ fontSize: 31, lineHeight: '37.2px', fontWeight: 500, color: '#1a1a1a' }}>₹{p.monthly.toLocaleString('en-IN')}</span><span className="sb-hide-m" style={{ fontSize: 14, color: '#52525b' }}>/month</span></p>}</div>
               </div>
             ))}
             {COMPARE.map(g => (
@@ -127,7 +127,7 @@ export function Faq() {
       <div className="mx-auto w-full max-w-[1240px] px-5">
         <div style={{ position: 'relative', textAlign: 'center' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/sb/pink-arch.png" alt="" aria-hidden className="hidden lg:block" style={{ position: 'absolute', left: 93, top: 10, width: 168, maxWidth: 'none' }} />
+          <img src="/sb/pink-arch.png" alt="" aria-hidden className="absolute left-[-14px] top-[-52px] w-[96px] max-w-none lg:left-[93px] lg:top-[10px] lg:w-[168px]" />
           <H2 className="mx-auto max-w-[780px]">Questions? Here are the answers</H2>
           <p style={{ margin: '12px auto 0', maxWidth: 520, fontSize: 21, lineHeight: '29.4px', color: '#535353' }}>Can’t find what you need? <Link href="/contact" style={{ color: '#1a1a1a', textDecoration: 'underline' }}>Talk to us</Link> and we’ll reply the same day.</p>
         </div>

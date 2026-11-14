@@ -20,7 +20,7 @@ const Grain = () => <div aria-hidden style={{ position: 'absolute', inset: 0, ba
 // hero with headline, two pictures and the form; three reach-us cards in a tray; closing call to action and footer.
 export default function ContactPage() {
   return (
-    <div className={`${urbanist.variable} ${jost.className} min-h-screen bg-[#fafafa] text-[#1a1a1a]`}>
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen overflow-x-clip bg-[#fafafa] text-[#1a1a1a]`}>
       <Nav />
       <main>
         <section style={{ background: '#fafaf9', padding: '120px 0 80px' }}>

@@ -16,7 +16,7 @@ const jost = Jost({ subsets: ["latin"], weight: ["400", "500"], display: "swap" 
 // Sections in order: hero + product tabs, three cards, platforms, feature cards, conversations, orbit, steps, CTA + footer.
 export default function Home() {
   return (
-    <div className={`${urbanist.variable} ${jost.className} min-h-screen bg-[#fafafa] text-[#1a1a1a]`}>
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen overflow-x-clip bg-[#fafafa] text-[#1a1a1a]`}>
       <Nav />
       <main>
         <Hero />

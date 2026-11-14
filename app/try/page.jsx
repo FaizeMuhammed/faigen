@@ -198,7 +198,7 @@ export default function TryPage() {
   const grain = { position: 'absolute', inset: 0, backgroundImage: 'url(/sb/grain.png)', backgroundSize: '256px 256px', mixBlendMode: 'overlay', opacity: 0.34, pointerEvents: 'none' }
 
   return (
-    <div className={`${urbanist.variable} ${jost.className} min-h-screen bg-[#fafaf9] text-[#1a1a1a]`}>
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen overflow-x-clip bg-[#fafaf9] text-[#1a1a1a]`}>
       <Nav />
       <main className="mx-auto grid w-full max-w-[1240px] gap-10 px-5 pb-20 pt-[120px] lg:grid-cols-[540px_1fr] lg:items-start">
         {/* left: promise + sample chat on a grained panel */}
@@ -236,7 +236,7 @@ export default function TryPage() {
 
         {/* right: the steps in a white card (radius 24, padding 40) */}
         <div style={{ position: 'relative', background: '#fff', borderRadius: 24, padding: 40 }} className="max-sm:!p-6">
-          <Scallop className="absolute hidden lg:block" style={{ right: -34, top: -44, width: 96, height: 96 }} />
+          <Scallop className="absolute right-[-10px] top-[-38px] h-[72px] w-[72px] lg:right-[-34px] lg:top-[-44px] lg:h-[96px] lg:w-[96px]" />
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 28 }}>
             {[1, 2, 3].map(n => (
               <div key={n} style={{ height: 8, width: n === step ? 32 : 8, borderRadius: 4, background: n === step ? '#1a1a1a' : n < step ? '#dbfc74' : '#e9e6e1', transition: 'all .4s' }} />

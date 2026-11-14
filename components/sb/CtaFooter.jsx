@@ -16,12 +16,12 @@ export default function CtaFooter() {
       <Wrap>
         {/* CTA: padding 256 / 20 / 80, title 64/76.8, subtitle 21/29.4, link */}
         <div className="relative px-5 pb-20 pt-24 text-center lg:pt-64">
-          <Diamond className="absolute left-[11.9%] top-[130px] hidden h-[73px] w-[73px] lg:block" />
-          <Dot className="absolute left-[66.75%] top-[170px] hidden h-14 w-14 lg:block" />
-          <Scallop className="absolute left-[44.5%] top-[50px] hidden h-[108px] w-[108px] lg:block" style={{ '--r': '4deg' }} />
-          <Pillar className="absolute left-[9.6%] top-[432px] hidden h-[191px] w-[108px] lg:block" style={{ '--r': '-3deg' }} />
-          <Cloud footer className="absolute left-[68.6%] top-[24px] hidden h-[249px] w-[484px] lg:block" />
-          <HalfDisc small className="absolute left-[86.9%] top-[359px] hidden h-[169px] w-[169px] lg:block" style={{ '--r': '-6deg' }} />
+          <Diamond className="absolute left-[6%] top-[70px] h-[40px] w-[40px] lg:left-[11.9%] lg:top-[130px] lg:h-[73px] lg:w-[73px]" />
+          <Dot className="absolute left-[84%] top-[110px] h-8 w-8 lg:left-[66.75%] lg:top-[170px] lg:h-14 lg:w-14" />
+          <Scallop className="absolute left-[calc(50%-40px)] top-[14px] h-[80px] w-[80px] lg:left-[44.5%] lg:top-[50px] lg:h-[108px] lg:w-[108px]" style={{ '--r': '4deg' }} />
+          <Pillar className="absolute left-[-6px] top-[300px] h-[110px] w-[62px] lg:left-[9.6%] lg:top-[432px] lg:h-[191px] lg:w-[108px]" style={{ '--r': '-3deg' }} />
+          <Cloud footer className="absolute right-[-110px] top-[6px] h-[130px] w-[250px] lg:left-[68.6%] lg:right-auto lg:top-[24px] lg:h-[249px] lg:w-[484px]" />
+          <HalfDisc small className="absolute right-[-30px] top-[290px] h-[100px] w-[100px] lg:left-[86.9%] lg:right-auto lg:top-[359px] lg:h-[169px] lg:w-[169px]" style={{ '--r': '-6deg' }} />
           <div className="relative mx-auto flex max-w-[780px] flex-col items-center gap-8">
             <div className="flex flex-col gap-1">
               <h2 className="font-heading text-balance text-[clamp(2.4rem,5vw,4rem)] font-medium leading-[1.2] text-[#1a1a1a]">Ready when your customers are.</h2>

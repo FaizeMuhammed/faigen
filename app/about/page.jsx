@@ -29,7 +29,7 @@ const cloud = (tint, style) => ({ position: 'absolute', background: tint, Webkit
 // hero (headline + intro with two pictures), a two-column story section, values, numbers, closing CTA + footer.
 export default function AboutPage() {
   return (
-    <div className={`${urbanist.variable} ${jost.className} min-h-screen bg-[#fafafa] text-[#1a1a1a]`}>
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen overflow-x-clip bg-[#fafafa] text-[#1a1a1a]`}>
       <Nav />
       <main>
         <section style={{ background: '#fafaf9', padding: '120px 0 80px' }}>
@@ -37,7 +37,7 @@ export default function AboutPage() {
             <div className="relative grid gap-6 lg:grid-cols-2 lg:gap-10">
               <h1 className="font-heading text-balance text-[clamp(2.6rem,5vw,4rem)] font-medium leading-[1.2]">We help Kerala’s businesses answer every customer.</h1>
               <p className="self-center text-[clamp(1.05rem,1.5vw,1.3125rem)] leading-[1.4] text-[#535353]">Faigen is a Kerala-based team building AI agents that handle customer conversations, orders and follow-ups on WhatsApp and Instagram.</p>
-              <Scallop className="absolute z-10 hidden lg:block" style={{ left: 'calc(50% - 78px)', top: 150, width: 156, height: 156 }} />
+              <Scallop className="absolute right-[-30px] top-[-60px] z-0 h-[84px] w-[84px] lg:left-[calc(50%-78px)] lg:right-auto lg:top-[150px] lg:z-10 lg:h-[156px] lg:w-[156px]" />
             </div>
 
             <div className="mt-10 grid gap-5 lg:grid-cols-[1fr_386px]">
@@ -47,11 +47,11 @@ export default function AboutPage() {
                 <div aria-hidden style={cloud('rgba(215,150,250,.3)', { right: -90, bottom: -40, width: 460, height: 230 })} />
                 <div style={grainStyle} />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/sb/violet-pillar.png" alt="" aria-hidden className="hidden sm:block" style={{ position: 'absolute', right: 70, top: 60, width: 200, maxWidth: 'none' }} />
+                <img src="/sb/violet-pillar.png" alt="" aria-hidden className="absolute right-[18px] top-[28px] w-[120px] max-w-none sm:right-[70px] sm:top-[60px] sm:w-[200px]" />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/sb/pink-arch.png" alt="" aria-hidden className="hidden sm:block" style={{ position: 'absolute', right: 290, top: 40, width: 230, maxWidth: 'none' }} />
+                <img src="/sb/pink-arch.png" alt="" aria-hidden className="absolute right-[96px] top-[20px] w-[130px] max-w-none sm:right-[290px] sm:top-[40px] sm:w-[230px]" />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/sb/blue-wedge.png" alt="" aria-hidden className="hidden sm:block" style={{ position: 'absolute', right: 30, bottom: 10, width: 190, maxWidth: 'none' }} />
+                <img src="/sb/blue-wedge.png" alt="" aria-hidden className="absolute bottom-[150px] right-[8px] w-[110px] max-w-none sm:bottom-[10px] sm:right-[30px] sm:w-[190px]" />
                 <p className="font-heading" style={{ position: 'absolute', left: 40, bottom: 40, margin: 0, maxWidth: 400, fontSize: 'clamp(1.9rem,3.4vw,2.8rem)', lineHeight: 1.15, fontWeight: 500, color: '#1a1a1a' }}>Your customers never sleep. Neither does our AI.</p>
               </div>
               {/* narrow picture: lime panel */}

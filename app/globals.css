@@ -122,3 +122,11 @@ body {
   .sb-case .sb-case-bg { opacity: 1; }
   .sb-case { --lead: var(--hl); --rest: var(--hr); }
 }
+
+/* Compare table on phones: prices and the launch-offer label stay visible */
+@media (max-width: 700px) {
+  .sb-cmp { grid-template-columns: minmax(0, 1fr) repeat(3, 66px); }
+  .sb-cmp .sb-price { font-size: 13.5px !important; line-height: 17px !important; }
+  .sb-cmp .sb-launch { flex-direction: column; gap: 0 !important; }
+  .sb-cmp .sb-launch .sb-inc { font-size: 9.5px !important; line-height: 11px !important; }
+}

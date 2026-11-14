@@ -42,15 +42,15 @@ const MORE = ['Education', 'Salons & spas', 'Gyms & studios', 'Travel & tours', 
 
 export default function UseCasesPage() {
   return (
-    <div className={`${urbanist.variable} ${jost.className} min-h-screen bg-[#fafafa] text-[#1a1a1a]`}>
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen overflow-x-clip bg-[#fafafa] text-[#1a1a1a]`}>
       <Nav />
       <main>
         <section className="relative px-5 pb-12 pt-[120px] text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/sb/violet-pillar.png" alt="" aria-hidden className="pointer-events-none absolute hidden select-none lg:block" style={{ left: 'calc(50% - 590px)', top: 70, width: 120, maxWidth: 'none' }} />
+          <img src="/sb/violet-pillar.png" alt="" aria-hidden className="pointer-events-none absolute left-[-18px] top-[300px] w-[72px] max-w-none select-none lg:left-[calc(50%-590px)] lg:top-[70px] lg:w-[120px]" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/sb/pink-arch.png" alt="" aria-hidden className="pointer-events-none absolute hidden select-none lg:block" style={{ right: 'calc(50% - 610px)', top: 80, width: 169, maxWidth: 'none' }} />
-          <div className="mx-auto flex max-w-[780px] flex-col items-center gap-5">
+          <img src="/sb/pink-arch.png" alt="" aria-hidden className="pointer-events-none absolute right-[-48px] top-[84px] w-[112px] max-w-none select-none lg:right-[calc(50%-610px)] lg:top-[80px] lg:w-[169px]" />
+          <div className="relative mx-auto flex max-w-[780px] flex-col items-center gap-5">
             <p className="flex items-center gap-2 text-[16px] leading-[22.4px] text-[#535353]"><span className="h-2 w-2 rounded-full bg-[#34c759]" />Use cases</p>
             <h1 className="font-heading text-balance text-[clamp(2.6rem,5vw,4rem)] font-medium leading-[1.2]">Tailored for the way you work.</h1>
             <p className="max-w-[560px] text-[clamp(1.05rem,1.5vw,1.3125rem)] leading-[1.4] text-[#535353]">Faigen is trained on your business, so the same agent can sell, book and support, whatever your day looks like.</p>
