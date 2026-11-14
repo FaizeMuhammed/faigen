@@ -16,6 +16,13 @@ export const metadata = {
     url: "https://www.faigen.in",
     siteName: "Faigen",
     type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Faigen: the AI agent for WhatsApp and Instagram, with the live inbox, stage, tags and notes" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Faigen — AI agents for WhatsApp and Instagram",
+    description: "Never miss a customer again. Replies, orders and follow-ups on WhatsApp and Instagram.",
+    images: ["/og.png"],
   },
 };
 
