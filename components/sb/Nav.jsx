@@ -1,11 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react'
 import { WhatsAppGlyph, InstagramGlyph } from '../site/FaigenMark'
 import { ShoppingBag, Megaphone, Inbox } from 'lucide-react'
-import { SbLogo } from './ui'
 const PRODUCT = [
   { label: 'WhatsApp AI agent', Icon: WhatsAppGlyph, href: '/features' },
   { label: 'Instagram automation', Icon: InstagramGlyph, href: '/features' },
@@ -19,10 +18,22 @@ const LINKS = [['Use cases', '/use-cases'], ['Pricing', '/pricing'], ['About', '
 export default function Nav() {
   const [open, setOpen] = useState(false)
   const [menu, setMenu] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 24)
+    on(); window.addEventListener('scroll', on, { passive: true })
+    return () => window.removeEventListener('scroll', on)
+  }, [])
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-[#fafafa]/80 backdrop-blur-[10px]">
       <div className="mx-auto flex h-20 w-full max-w-[1240px] items-center justify-between px-5 md:grid md:grid-cols-[240px_1fr_238px]">
-        <Link href="/" aria-label="Faigen home" className="flex h-[26px] items-center"><SbLogo /></Link>
+        <Link href="/" aria-label="Faigen home" className="flex h-8 items-center">
+          {/* At the top: tile + wordmark. After scrolling the box narrows so only the tile (the icon) shows. */}
+          <span className="block h-8 overflow-hidden transition-[width] duration-300 ease-out" style={{ width: scrolled ? 32 : 108 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/sb/faigen-logo-full.svg" alt="Faigen" width={108} height={32} className="block h-8 w-[108px] max-w-none" />
+          </span>
+        </Link>
 
         <nav className="hidden items-center justify-center gap-5 md:flex" aria-label="Main">
           <div className="relative" onMouseEnter={() => setMenu(true)} onMouseLeave={() => setMenu(false)}>
