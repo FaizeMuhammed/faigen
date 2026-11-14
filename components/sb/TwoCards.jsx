@@ -43,22 +43,22 @@ function Bubble({ me, children, time }) {
 const FACES = { Anjali: '/sb/faces/f2.png', priya_crafts: '/sb/faces/f9.png', Fathima: '/sb/faces/f6.png', Daniel: '/sb/faces/f1.png' }
 function Note({ ch, tag, tagBg, user, text, reply, meta, style }) {
   return (
-    <div style={abs({ width: 232, background: '#fff', borderRadius: 16, padding: '11px 13px 10px', boxShadow: SHADOW, ...style })}>
+    <div style={abs({ width: 200, left: 'calc(50% - 100px)', background: '#fff', borderRadius: 14, padding: '9px 11px 8px', boxShadow: SHADOW, ...style })}>
       <div style={row({ gap: 8 })}>
-        <span style={{ position: 'relative', width: 30, height: 30, flexShrink: 0 }}>
+        <span style={{ position: 'relative', width: 26, height: 26, flexShrink: 0 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={FACES[user]} alt="" width={30} height={30} style={{ display: 'block', width: 30, height: 30, borderRadius: 15, objectFit: 'cover' }} />
-          <span style={abs({ right: -4, bottom: -4, background: '#fff', borderRadius: 8, padding: 1.5, display: 'flex' })}><Glyph G={ch} size={12} /></span>
+          <img src={FACES[user]} alt="" width={26} height={26} style={{ display: 'block', width: 26, height: 26, borderRadius: 13, objectFit: 'cover' }} />
+          <span style={abs({ right: -4, bottom: -4, background: '#fff', borderRadius: 8, padding: 1.5, display: 'flex' })}><Glyph G={ch} size={11} /></span>
         </span>
-        <span style={{ fontSize: 13, fontWeight: 500, color: '#1a1a1a' }}>{user}</span>
-        <span style={{ marginLeft: 'auto', fontSize: 10.5, lineHeight: 1, padding: '4px 9px', borderRadius: 10, background: tagBg, color: '#1a1a1a' }}>{tag}</span>
+        <span style={{ fontSize: 12, fontWeight: 500, color: '#1a1a1a' }}>{user}</span>
+        <span style={{ marginLeft: 'auto', fontSize: 9.5, lineHeight: 1, padding: '4px 8px', borderRadius: 10, background: tagBg, color: '#1a1a1a' }}>{tag}</span>
       </div>
-      <p style={{ margin: '8px 0 0', fontSize: 13, lineHeight: 1.35, color: '#1a1a1a' }}>{text}</p>
-      <div style={{ marginTop: 7, background: '#d9fdd3', borderRadius: '12px 12px 4px 12px', padding: '6px 10px', fontSize: 12, lineHeight: 1.35, color: '#111b21' }}>
+      <p style={{ margin: '7px 0 0', fontSize: 12, lineHeight: 1.35, color: '#1a1a1a' }}>{text}</p>
+      <div style={{ marginTop: 7, background: '#d9fdd3', borderRadius: '12px 12px 4px 12px', padding: '5px 9px', fontSize: 11, lineHeight: 1.35, color: '#111b21' }}>
         <span style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: '.04em', color: '#1d7a36', marginRight: 6 }}>AI</span>{reply}
       </div>
-      <div style={{ ...row({ gap: 6 }), marginTop: 7, fontSize: 10.5, color: '#8b8b92' }}>
-        <span style={{ width: 6, height: 6, borderRadius: 3, background: '#34c759' }} />{meta}
+      <div style={{ ...row({ gap: 6 }), marginTop: 6, fontSize: 9.5, color: '#8b8b92' }}>
+        <span style={{ width: 5, height: 6, borderRadius: 3, background: '#34c759' }} />{meta}
         <span style={{ marginLeft: 'auto', color: '#53bdeb', letterSpacing: -2 }}>✓✓</span>
       </div>
     </div>
@@ -69,28 +69,28 @@ function ChatArt() {
     <>
       <Cloud style={{ left: -34, top: -8, width: 200, height: 100 }} tint="rgba(143,190,248,.42)" />
       <Cloud style={{ right: -44, bottom: -22, width: 240, height: 120 }} tint="rgba(143,190,248,.42)" />
-      <Note ch={WhatsAppGlyph} tag="WhatsApp" tagBg="#cdf3d6" user="Anjali" text="Price ethra aanu Coir Mat?" reply="₹600 aanu 😊 Order?" meta="Replied in 3 sec" style={{ left: 22, top: 8, transform: 'rotate(-3deg)', zIndex: 1 }} />
-      <Note ch={InstagramGlyph} tag="Instagram" tagBg="#fbd3f3" user="priya_crafts" text="Is the red bag still available?" reply="Yes! Check your DMs 📩" meta="Replied in 2 sec" style={{ left: 16, top: 142, zIndex: 2 }} />
-      <Note ch={WhatsAppGlyph} tag="Malayalam" tagBg="#e6d4ff" user="Fathima" text="Delivery Kochi undo?" reply="Undu, 2 days-il ethum 🚚" meta="Replied in 3 sec" style={{ left: 26, top: 268, transform: 'rotate(3deg)', zIndex: 3 }} />
+      <Note ch={WhatsAppGlyph} tag="WhatsApp" tagBg="#cdf3d6" user="Anjali" text="Price ethra aanu Coir Mat?" reply="₹600 aanu 😊 Order?" meta="Replied in 3 sec" style={{ top: 26, transform: 'rotate(-2deg)', zIndex: 1 }} />
+      <Note ch={InstagramGlyph} tag="Instagram" tagBg="#fbd3f3" user="priya_crafts" text="Is the red bag still available?" reply="Yes! Check your DMs 📩" meta="Replied in 2 sec" style={{ top: 150, zIndex: 2 }} />
+      <Note ch={WhatsAppGlyph} tag="Malayalam" tagBg="#e6d4ff" user="Fathima" text="Delivery Kochi undo?" reply="Undu, 2 days-il ethum 🚚" meta="Replied in 3 sec" style={{ top: 274, transform: 'rotate(2deg)', zIndex: 3 }} />
     </>
   )
 }
 
 function OrderArt() {
-  const Line = ({ k, v }) => <div style={row({ justifyContent: 'space-between', padding: '4px 0', fontSize: 11 })}><span style={{ color: '#8b8b92' }}>{k}</span><span style={{ color: '#1a1a1a', fontWeight: 500 }}>{v}</span></div>
+  const Line = ({ k, v }) => <div style={row({ justifyContent: 'space-between', padding: '3px 0', fontSize: 10.5 })}><span style={{ color: '#8b8b92' }}>{k}</span><span style={{ color: '#1a1a1a', fontWeight: 500 }}>{v}</span></div>
   return (
     <>
       <Cloud style={{ left: -34, top: 0, width: 190, height: 95 }} tint="rgba(203,118,243,.40)" />
       <Cloud style={{ right: -46, bottom: -26, width: 230, height: 115 }} tint="rgba(203,118,243,.40)" />
-      {[[40, 0.22, 36], [50, 0.34, 26], [60, 0.5, 16]].map(([top, o, inset]) => <div key={top} aria-hidden style={abs({ top, left: inset, right: inset, height: 80, borderRadius: 22, background: '#fff', opacity: o })} />)}
-      <div style={abs({ left: 16, right: 16, top: 74, borderRadius: 20, background: '#fff', padding: 14, boxShadow: SHADOW })}>
+      {[[44, 0.22, 44], [54, 0.34, 34], [62, 0.5, 24]].map(([top, o, inset]) => <div key={top} aria-hidden style={abs({ top, left: inset, right: inset, height: 80, borderRadius: 20, background: '#fff', opacity: o })} />)}
+      <div style={abs({ width: 212, left: 'calc(50% - 106px)', top: 70, borderRadius: 18, background: '#fff', padding: 12, boxShadow: SHADOW })}>
         <div style={row({ justifyContent: 'space-between' })}>
-          <span className="font-heading" style={{ fontSize: 15, fontWeight: 500, lineHeight: 1 }}>Order #1048</span>
+          <span className="font-heading" style={{ fontSize: 14, fontWeight: 500, lineHeight: 1 }}>Order #1048</span>
           <span style={{ background: '#fff1cf', color: '#9a6b00', fontSize: 10, fontWeight: 500, padding: '3px 8px', borderRadius: 10 }}>Pending</span>
         </div>
         <div style={row({ gap: 5, marginTop: 7, fontSize: 10, color: '#71717a' })}><Glyph G={WhatsAppGlyph} size={12} />Captured from a WhatsApp chat</div>
         <div style={{ height: 1, background: 'rgba(0,0,0,.07)', margin: '10px 0 6px' }} />
-        <div style={row({ justifyContent: 'space-between', fontSize: 11.5, fontWeight: 500, padding: '3px 0 6px' })}><span>2 × Premium Coir Mat</span><span>₹1,200</span></div>
+        <div style={row({ justifyContent: 'space-between', fontSize: 11, fontWeight: 500, padding: '3px 0 5px' })}><span>2 × Premium Coir Mat</span><span>₹1,200</span></div>
         <Line k="Customer" v="Anjali" />
         <Line k="Phone" v="+91 98••• ••21" />
         <Line k="Address" v="Kakkanad" />
@@ -98,7 +98,7 @@ function OrderArt() {
         <div style={{ height: 1, background: 'rgba(0,0,0,.07)', margin: '6px 0' }} />
         <div style={row({ justifyContent: 'space-between', fontSize: 12.5, fontWeight: 600 })}><span>Total</span><span>₹1,200</span></div>
         <div style={row({ gap: 4, marginTop: 6, fontSize: 10.5, color: '#1d7a36' })}><span style={{ fontWeight: 700 }}>✓</span>Collected by the AI</div>
-        <div style={{ marginTop: 10, background: '#1a1a1a', color: '#fff', borderRadius: 10, textAlign: 'center', fontSize: 11.5, fontWeight: 500, padding: '8px 0' }}>Confirm order</div>
+        <div style={{ marginTop: 9, background: '#1a1a1a', color: '#fff', borderRadius: 10, textAlign: 'center', fontSize: 11, fontWeight: 500, padding: '7px 0' }}>Confirm order</div>
       </div>
     </>
   )
@@ -107,17 +107,17 @@ function OrderArt() {
 // Card 3: a small live inbox. Chats from both channels, one flagged "Needs you", with the Take over button
 function InboxArt() {
   const Chat = ({ user, ch, last, chip, tone, hot }) => (
-    <div style={{ ...row({ gap: 9 }), padding: '8px 9px', borderRadius: 12, background: hot ? '#fff3e2' : 'transparent', border: hot ? '1px solid #f6d9ad' : '1px solid transparent' }}>
-      <span style={{ position: 'relative', width: 34, height: 34, flexShrink: 0 }}>
+    <div style={{ ...row({ gap: 9 }), padding: '6px 7px', borderRadius: 11, background: hot ? '#fff3e2' : 'transparent', border: hot ? '1px solid #f6d9ad' : '1px solid transparent' }}>
+      <span style={{ position: 'relative', width: 30, height: 30, flexShrink: 0 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={FACES[user]} alt="" width={34} height={34} style={{ display: 'block', width: 34, height: 34, borderRadius: 17, objectFit: 'cover' }} />
+        <img src={FACES[user]} alt="" width={30} height={30} style={{ display: 'block', width: 30, height: 30, borderRadius: 15, objectFit: 'cover' }} />
         <span style={abs({ right: -4, bottom: -4, background: '#fff', borderRadius: 8, padding: 1.5, display: 'flex' })}><Glyph G={ch} size={12} /></span>
       </span>
       <span style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0, flex: 1 }}>
-        <span style={{ fontSize: 12.5, fontWeight: 500, lineHeight: 1 }}>{user}</span>
-        <span style={{ fontSize: 11, lineHeight: 1.1, color: '#71717a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{last}</span>
+        <span style={{ fontSize: 11.5, fontWeight: 500, lineHeight: 1 }}>{user}</span>
+        <span style={{ fontSize: 10, lineHeight: 1.1, color: '#71717a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{last}</span>
       </span>
-      <span style={{ fontSize: 9.5, fontWeight: 600, padding: '4px 8px', borderRadius: 9, background: tone[0], color: tone[1], flexShrink: 0 }}>{chip}</span>
+      <span style={{ fontSize: 9, fontWeight: 600, padding: '4px 7px', borderRadius: 9, background: tone[0], color: tone[1], flexShrink: 0 }}>{chip}</span>
     </div>
   )
   const AI = ['#e1f7e5', '#1d7a36']
@@ -125,7 +125,7 @@ function InboxArt() {
     <>
       <Cloud style={{ left: -34, top: -8, width: 200, height: 100 }} tint="rgba(255,255,255,.3)" />
       <Cloud style={{ right: -44, bottom: -22, width: 240, height: 120 }} tint="rgba(255,255,255,.26)" />
-      <div style={abs({ left: 16, top: 26, width: 240, borderRadius: 20, background: '#fff', boxShadow: SHADOW, padding: '14px 8px 12px' })}>
+      <div style={abs({ left: 'calc(50% - 108px)', top: 40, width: 216, borderRadius: 18, background: '#fff', boxShadow: SHADOW, padding: '12px 6px 10px' })}>
         <div style={row({ justifyContent: 'space-between', padding: '0 7px 8px' })}>
           <span className="font-heading" style={{ fontSize: 15, fontWeight: 500, lineHeight: 1 }}>Live inbox</span>
           <span style={row({ gap: 6, fontSize: 10.5, fontWeight: 500 })}>AI replies<span style={{ width: 28, height: 16, borderRadius: 8, background: '#34c759', padding: 2, display: 'flex', justifyContent: 'flex-end' }}><span style={{ width: 12, height: 12, borderRadius: 6, background: '#fff' }} /></span></span>
@@ -133,13 +133,13 @@ function InboxArt() {
         <Chat user="Anjali" ch={WhatsAppGlyph} last="Price ethra aanu Coir Mat?" chip="AI" tone={AI} />
         <Chat user="priya_crafts" ch={InstagramGlyph} last="Is the red bag available?" chip="AI" tone={AI} />
         <Chat user="Daniel" ch={WhatsAppGlyph} last="Wants a person" chip="Needs you" tone={['#ffe2bd', '#a64b00']} hot />
-        <div style={{ ...row({ justifyContent: 'center', gap: 6 }), margin: '10px 4px 0', background: '#1a1a1a', color: '#fff', borderRadius: 12, padding: '10px 0', fontSize: 12.5, fontWeight: 500 }}>Take over Daniel’s chat <span>→</span></div>
+        <div style={{ ...row({ justifyContent: 'center', gap: 6 }), margin: '8px 4px 0', background: '#1a1a1a', color: '#fff', borderRadius: 11, padding: '9px 0', fontSize: 11.5, fontWeight: 500 }}>Take over Daniel’s chat <span>→</span></div>
       </div>
-      <div style={abs({ left: 52, top: 318, width: 200, borderRadius: 14, background: '#fff', boxShadow: SHADOW, padding: '10px 12px', transform: 'rotate(3deg)' })}>
+      <div style={abs({ left: 'calc(50% - 84px)', top: 292, width: 168, borderRadius: 12, background: '#fff', boxShadow: SHADOW, padding: '8px 10px', transform: 'rotate(2deg)' })}>
         <div style={row({ gap: 8 })}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/sb/faces/f4.png" alt="" width={24} height={24} style={{ display: 'block', width: 24, height: 24, borderRadius: 12, objectFit: 'cover' }} />
-          <span style={{ fontSize: 12, lineHeight: 1.3 }}><b style={{ fontWeight: 500 }}>You’re replying.</b><br /><span style={{ color: '#71717a' }}>AI paused for this chat</span></span>
+          <span style={{ fontSize: 11, lineHeight: 1.3 }}><b style={{ fontWeight: 500 }}>You’re replying.</b><br /><span style={{ color: '#71717a' }}>AI paused for this chat</span></span>
         </div>
       </div>
     </>
