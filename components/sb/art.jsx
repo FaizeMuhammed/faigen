@@ -1,19 +1,20 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+
 // Decorative artwork from the Sunbeam template (used with the designer's permission),
 // served from /public/sb. Each export keeps the same props as before so the sections do not change.
 
 /* eslint-disable @next/next/no-img-element */
 const Img = ({ src, className = '', style, alt = '' }) => (
-  <img src={src} alt={alt} aria-hidden draggable={false} className={`sb-float select-none ${className}`} style={style} />
+  <img src={src} alt={alt} aria-hidden draggable={false} className={`select-none ${className}`} style={style} />
 )
 
-// Lime sun: round body image with the smile layered on top
+// Lime sun: Sunbeam's own Lottie animation (/sb/sun.json), played in a loop. Static sun image until it loads.
 export function Scallop({ className = '', style }) {
   return (
-    <div className={`sb-float ${className}`} style={style}>
-      <div className="relative h-full w-full">
-        <img src="/sb/sun-1.png" alt="" aria-hidden draggable={false} className="absolute inset-0 h-full w-full select-none" />
-        <img src="/sb/sun-0.png" alt="" aria-hidden draggable={false} className="absolute left-1/2 top-[46%] w-[48%] -translate-x-1/2 select-none" />
-      </div>
+    <div className={`z-10 ${className}`} style={style}>
+      <SunLottie />
     </div>
   )
 }
@@ -33,4 +34,28 @@ export const Dot = ({ className = '' }) => <Img src="/sb/blue-circle.png" classN
 export function FaceDisc({ tone = 'blue', className = '' }) {
   const src = { blue: '/sb/disc-blue.png', violet: '/sb/disc-violet.png', lime: '/sb/disc-green.png', green: '/sb/disc-green.png' }[tone] || '/sb/disc-blue.png'
   return <img src={src} alt="" aria-hidden draggable={false} className={`select-none ${className}`} />
+}
+
+function SunLottie() {
+  const ref = useRef(null)
+  const animRef = useRef(null)
+  useEffect(() => {
+    let dead = false
+    import('lottie-web/build/player/lottie_light').then(m => {
+      if (dead || !ref.current) return
+      const lottie = m.default || m
+      const anim = lottie.loadAnimation({ container: ref.current, renderer: 'svg', loop: false, autoplay: false, path: '/sb/sun.json', rendererSettings: { preserveAspectRatio: 'xMidYMid slice' } })
+      anim.addEventListener('complete', () => anim.goToAndStop(0, true))
+      animRef.current = anim
+    }).catch(() => {})
+    return () => { dead = true; animRef.current?.destroy() }
+  }, [])
+  // Same as Sunbeam: the sun rests with its face on, and plays its animation while hovered.
+  const start = () => { const a = animRef.current; if (a) { a.loop = true; a.play() } }
+  const stop = () => { const a = animRef.current; if (a) a.loop = false }
+  return (
+    <div className="relative h-full w-full cursor-pointer" onMouseEnter={start} onMouseLeave={stop} onTouchStart={start}>
+      <div ref={ref} className="h-full w-full" />
+    </div>
+  )
 }
