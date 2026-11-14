@@ -1,9 +1,8 @@
-import Nav from '@/components/site/Nav'
-import Footer from '@/components/site/Footer'
-import PageHero from '@/components/site/PageHero'
-import Reveal from '@/components/site/Reveal'
-import FinalCta from '@/components/site/home/FinalCta'
-import { MoonDoodle } from '@/components/site/Illustrations'
+import Nav from '@/components/sb/Nav'
+import CtaFooter from '@/components/sb/CtaFooter'
+import { Scallop, FaceDisc } from '@/components/sb/art'
+import { H2 } from '@/components/sb/ui'
+import { urbanist, jost } from '@/components/sb/fonts'
 
 export const metadata = {
   title: 'About — Faigen',
@@ -17,83 +16,120 @@ const STATS = [
 ]
 
 const VALUES = [
-  ['01', 'Built for conversion', 'Every reply is meant to move a customer closer to an order or a booking, not just to answer.'],
-  ['02', 'Local by design', 'Customers write the way they speak. The agent understands context and replies in kind.'],
-  ['03', 'Frictionless setup', 'No coding, no messy integrations. You share your business details; we hand you a trained agent.'],
-  ['04', 'Your data stays yours', 'We are an official Meta Tech Provider. Your data is never sold, and you can delete it any time.'],
+  ['blue', 'Built for conversion', 'Every reply is meant to move a customer closer to an order or a booking, not just to answer.'],
+  ['violet', 'Local by design', 'Customers write the way they speak. The agent understands context and replies in kind.'],
+  ['lime', 'Frictionless setup', 'No coding, no messy integrations. You share your business details; we hand you a trained agent.'],
+  ['blue', 'Your data stays yours', 'We are an official Meta Tech Provider. Your data is never sold, and you can delete it any time.'],
 ]
 
+const grainStyle = { position: 'absolute', inset: 0, backgroundImage: 'url(/sb/grain.png)', backgroundSize: '256px 256px', mixBlendMode: 'overlay', opacity: 0.34, pointerEvents: 'none' }
+const cloud = (tint, style) => ({ position: 'absolute', background: tint, WebkitMaskImage: 'url(/sb/cloud.png)', maskImage: 'url(/sb/cloud.png)', WebkitMaskSize: '100% 100%', maskSize: '100% 100%', ...style })
+
+// About page in the layout of the reference about page (branch: sunbeam-style):
+// hero (headline + intro with two pictures), a two-column story section, values, numbers, closing CTA + footer.
 export default function AboutPage() {
   return (
-    <>
+    <div className={`${urbanist.variable} ${jost.className} min-h-screen bg-[#fafafa] text-[#1a1a1a]`}>
       <Nav />
       <main>
-        <PageHero
-          eyebrow="About"
-          title="We help Kerala’s businesses answer every customer."
-          lead="Faigen is a Kerala-based team building AI agents that handle customer conversations, orders and follow-ups on WhatsApp and Instagram."
-        />
+        <section style={{ background: '#fafaf9', padding: '120px 0 80px' }}>
+          <div className="mx-auto w-full max-w-[1240px] px-5">
+            <div className="relative grid gap-6 lg:grid-cols-2 lg:gap-10">
+              <h1 className="font-heading text-balance text-[clamp(2.6rem,5vw,4rem)] font-medium leading-[1.2]">We help Kerala’s businesses answer every customer.</h1>
+              <p className="self-center text-[clamp(1.05rem,1.5vw,1.3125rem)] leading-[1.4] text-[#535353]">Faigen is a Kerala-based team building AI agents that handle customer conversations, orders and follow-ups on WhatsApp and Instagram.</p>
+              <Scallop className="absolute z-10 hidden lg:block" style={{ left: 'calc(50% - 78px)', top: 150, width: 156, height: 156 }} />
+            </div>
 
-        {/* story + pull quote */}
-        <section className="bg-white section !pt-8">
-          <div className="container-x grid items-stretch gap-10 lg:grid-cols-2 lg:gap-16">
-            <Reveal>
-              <p className="eyebrow">Our story</p>
-              <h2 className="display-md mt-3">Born from a simple observation.</h2>
-              <div className="lead mt-6 space-y-5">
+            <div className="mt-10 grid gap-5 lg:grid-cols-[1fr_386px]">
+              {/* wide picture: lilac panel, grain, clouds, the three mascots and the line that sums us up */}
+              <div style={{ position: 'relative', minHeight: 516, borderRadius: 24, overflow: 'hidden', background: '#e4b5fd' }}>
+                <div aria-hidden style={cloud('rgba(215,150,250,.34)', { left: -80, top: -50, width: 420, height: 210 })} />
+                <div aria-hidden style={cloud('rgba(215,150,250,.3)', { right: -90, bottom: -40, width: 460, height: 230 })} />
+                <div style={grainStyle} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/sb/violet-pillar.png" alt="" aria-hidden className="hidden sm:block" style={{ position: 'absolute', right: 70, top: 60, width: 200, maxWidth: 'none' }} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/sb/pink-arch.png" alt="" aria-hidden className="hidden sm:block" style={{ position: 'absolute', right: 290, top: 40, width: 230, maxWidth: 'none' }} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/sb/blue-wedge.png" alt="" aria-hidden className="hidden sm:block" style={{ position: 'absolute', right: 30, bottom: 10, width: 190, maxWidth: 'none' }} />
+                <p className="font-heading" style={{ position: 'absolute', left: 40, bottom: 40, margin: 0, maxWidth: 400, fontSize: 'clamp(1.9rem,3.4vw,2.8rem)', lineHeight: 1.15, fontWeight: 500, color: '#1a1a1a' }}>Your customers never sleep. Neither does our AI.</p>
+              </div>
+              {/* narrow picture: lime panel */}
+              <div style={{ position: 'relative', minHeight: 360, borderRadius: 24, overflow: 'hidden', background: '#c1f744', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 32 }}>
+                <div aria-hidden style={cloud('rgba(255,255,255,.26)', { left: -60, top: -30, width: 340, height: 170 })} />
+                <div style={grainStyle} />
+                <span style={{ position: 'relative', alignSelf: 'flex-start', background: '#1a1a1a', color: '#dbfc74', fontSize: 13, padding: '6px 12px', borderRadius: 14 }}>Official Meta Tech Provider</span>
+                <div style={{ position: 'relative' }}>
+                  <p className="font-heading" style={{ margin: 0, fontSize: 'clamp(2.2rem,3.4vw,3rem)', lineHeight: 1.1, fontWeight: 500 }}>Made in Kerala.</p>
+                  <p style={{ margin: '10px 0 0', fontSize: 16, lineHeight: '22.4px', color: 'rgba(26,26,26,.75)' }}>Built in Kakkanad, Ernakulam, for the way Kerala’s customers really write.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* story: title left, text and office card right */}
+        <section style={{ background: '#fafaf9', padding: '80px 0' }}>
+          <div className="mx-auto grid w-full max-w-[1240px] gap-10 px-5 lg:grid-cols-[418px_1fr]">
+            <H2>Born from a simple observation.</H2>
+            <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-5 text-[21px] leading-[29.4px] text-[#535353]">
                 <p>Kerala businesses are brilliant at what they do, but lose customers every day because they can’t reply fast enough. A customer asks about a product at midnight. Nobody answers. They go to a competitor.</p>
                 <p>We built Faigen to fix exactly that. Our agents never sleep, never miss a message, and speak your customer’s language, whether you run a local boutique or a large agency.</p>
               </div>
-            </Reveal>
-            <Reveal delay={0.12}>
-              <div className="relative flex h-full min-h-[360px] flex-col justify-end overflow-hidden rounded-[36px] bg-black p-8 text-white sm:p-12">
-                <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(0,113,227,.55),transparent_70%)] blur-2xl" />
-                <div aria-hidden className="pointer-events-none absolute -bottom-32 -left-16 h-[300px] w-[300px] rounded-full bg-[radial-gradient(circle,rgba(214,41,118,.4),rgba(250,126,30,.2)_50%,transparent_70%)] blur-2xl" />
-                <MoonDoodle className="pointer-events-none absolute right-8 top-8 h-28 w-32" />
-                <p className="relative text-[clamp(1.9rem,3.6vw,2.8rem)] font-semibold leading-[1.1] tracking-[-0.035em]">
-                  Your customers never sleep.{' '}
-                  <span className="bg-gradient-to-r from-[#2997ff] to-[#7dd3fc] bg-clip-text text-transparent">Neither does our AI.</span>
-                </p>
+              <div style={{ background: '#f8f6f4', borderRadius: 20, padding: 8 }} className="flex flex-col gap-2 sm:flex-row">
+                <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', background: '#daedfe', minHeight: 200 }} className="sm:w-[414px] sm:shrink-0">
+                  <div aria-hidden style={cloud('rgba(150,196,250,.36)', { left: -40, top: -20, width: 300, height: 150 })} />
+                  <div style={grainStyle} />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/sb/footer-blue.png" alt="" aria-hidden style={{ position: 'absolute', right: 20, top: 8, width: 190, maxWidth: 'none' }} />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/sb/faigen-logo.svg" alt="Faigen" width={56} height={56} style={{ position: 'absolute', left: 24, bottom: 24, width: 56, height: 56 }} />
+                </div>
+                <div style={{ padding: 8 }}>
+                  <p className="font-heading" style={{ margin: 0, fontSize: 21, lineHeight: '24px', fontWeight: 500 }}>Kakkanad</p>
+                  <p style={{ margin: '8px 0 0', fontSize: 16, lineHeight: '22.4px', color: '#52525b' }}>BCG Residency Towers 4a1, Kakkanad, Ernakulam, Kerala 682037</p>
+                  <a href="https://maps.google.com/?q=BCG+Residency+Towers+Kakkanad+Ernakulam" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: 12, fontSize: 16, fontWeight: 500, color: '#1a1a1a', textDecoration: 'underline', textUnderlineOffset: 4 }}>Open in Maps</a>
+                </div>
               </div>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* three numbers */}
-        <section className="bg-alt section !py-16 sm:!py-24">
-          <div className="container-x">
-            <div className="grid gap-10 text-center sm:grid-cols-3 sm:gap-6">
-              {STATS.map(([n, l], i) => (
-                <Reveal key={n} delay={i * 0.1}>
-                  <p className="bg-gradient-to-br from-[#0071e3] to-[#5ac8fa] bg-clip-text text-[64px] font-semibold leading-none tracking-[-0.05em] text-transparent sm:text-[80px]">{n}</p>
-                  <p className="mx-auto mt-4 max-w-[230px] text-[16px] leading-snug text-muted">{l}</p>
-                </Reveal>
-              ))}
             </div>
           </div>
         </section>
 
-        {/* values as an editorial list */}
-        <section className="bg-white section">
-          <div className="container-x max-w-4xl">
-            <Reveal className="text-center"><p className="eyebrow">What we believe</p><h2 className="display-lg mt-3">Simple, useful, trustworthy.</h2></Reveal>
-            <div className="mt-14 divide-y divide-black/10 border-y border-black/10">
-              {VALUES.map(([n, t, d], i) => (
-                <Reveal key={n} delay={i * 0.06}>
-                  <div className="grid gap-3 py-8 sm:grid-cols-[90px_1fr_1.3fr] sm:items-baseline sm:gap-8 sm:py-10">
-                    <span className="text-[34px] leading-none text-accent" style={{ fontFamily: 'var(--font-hand), cursive', fontWeight: 600 }}>{n}</span>
-                    <h3 className="text-[24px] font-semibold tracking-[-0.025em]">{t}</h3>
-                    <p className="text-[16.5px] leading-relaxed text-muted">{d}</p>
+        {/* values: title left, four cards right */}
+        <section style={{ background: '#fafaf9', padding: '80px 0' }}>
+          <div className="mx-auto grid w-full max-w-[1240px] gap-10 px-5 lg:grid-cols-[418px_1fr]">
+            <H2>Simple, useful, trustworthy.</H2>
+            <div className="grid gap-2 rounded-[20px] bg-[#f0eeeb] p-2 sm:grid-cols-2">
+              {VALUES.map(([tone, t, d]) => (
+                <div key={t} style={{ background: '#fafaf9', borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column', gap: 24, minHeight: 250 }}>
+                  <div style={{ padding: '0 8px 8px 0' }}><FaceDisc tone={tone} className="h-16 w-16" /></div>
+                  <div style={{ marginTop: 'auto' }}>
+                    <h3 className="font-heading" style={{ margin: 0, fontSize: 21, lineHeight: '29.4px', fontWeight: 500 }}>{t}</h3>
+                    <p style={{ margin: '4px 0 0', fontSize: 16, lineHeight: '22.4px', color: '#52525b' }}>{d}</p>
                   </div>
-                </Reveal>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        <FinalCta />
+        {/* numbers: title left, three cards right */}
+        <section style={{ background: '#fafaf9', padding: '80px 0' }}>
+          <div className="mx-auto grid w-full max-w-[1240px] gap-10 px-5 lg:grid-cols-[418px_1fr]">
+            <H2>Faigen in numbers</H2>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {STATS.map(([n, l]) => (
+                <div key={n} style={{ background: '#e9e6e1', borderRadius: 24, padding: 24, minHeight: 240, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <p className="font-heading" style={{ margin: 0, fontSize: 'clamp(2.6rem,4vw,3.4rem)', lineHeight: 1.1, fontWeight: 500, color: '#1a1a1a' }}>{n}</p>
+                  <p style={{ margin: 0, fontSize: 16, lineHeight: '22.4px', color: '#52525b' }}>{l}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
-      <Footer />
-    </>
+      <CtaFooter />
+    </div>
   )
 }
