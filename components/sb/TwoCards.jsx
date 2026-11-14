@@ -1,94 +1,125 @@
 'use client'
 
 import { useState } from 'react'
-import { Zap, ShoppingBag, SlidersHorizontal, Check, Clock, MessageCircle, ChevronDown, X, ArrowRight } from 'lucide-react'
-import { Wrap, Grain, PANEL } from './ui'
+import { Zap, ShoppingBag, SlidersHorizontal } from 'lucide-react'
+import { Wrap, Grain } from './ui'
 import { FaceDisc } from './art'
+import { WhatsAppGlyph, InstagramGlyph } from '../site/FaigenMark'
 
 // Three cards in a #f0eeeb tray: one open (537px, with its picture), two closed (316px). Hover or tap to open another.
 const ITEMS = [
-  { face: 'blue', Icon: Zap, t: 'Never miss a message', d: 'Every question gets a reply in seconds, day or night, in the language the customer wrote in.', tone: PANEL.blue, art: 'chat' },
-  { face: 'violet', Icon: ShoppingBag, t: 'Turn chats into orders', d: 'The agent answers from your catalog, collects name, product, quantity and address, and hands you a finished order.', tone: PANEL.purple, art: 'order' },
-  { face: 'lime', Icon: SlidersHorizontal, t: 'Stay in control', d: 'Watch every chat live, take over any conversation, and hand it back to the AI whenever you want.', tone: PANEL.lime, art: 'control' },
+  { face: 'blue', Icon: Zap, t: 'Never miss a message', d: 'Every question gets a reply in seconds, day or night, in the language the customer wrote in.', tone: '#c4dbfb', art: 'chat' },
+  { face: 'violet', Icon: ShoppingBag, t: 'Turn chats into orders', d: 'The agent answers from your catalog, collects name, product, quantity and address, and hands you a finished order.', tone: '#d89bfc', art: 'order' },
+  { face: 'lime', Icon: SlidersHorizontal, t: 'Stay in control', d: 'Watch every chat live, take over any conversation, and hand it back to the AI whenever you want.', tone: '#c9fa62', art: 'control' },
 ]
 
-// Soft clouds baked into each Sunbeam picture: the cloud shape, tinted white, with the panel grain on top
-function Cloud({ className = '', a = 0.28 }) {
-  return <div aria-hidden className={`absolute ${className}`} style={{ background: `rgba(255,255,255,${a})`, WebkitMaskImage: 'url(/sb/cloud.png)', maskImage: 'url(/sb/cloud.png)', WebkitMaskSize: '100% 100%', maskSize: '100% 100%', WebkitMaskRepeat: 'no-repeat', maskRepeat: 'no-repeat' }} />
+// Pictures inside the cards. All layout and sizes here are inline styles (no utility classes), so they cannot go missing.
+const SHADOW = '0 16px 36px -12px rgba(30,50,110,.28), 0 2px 6px rgba(30,50,110,.06)'
+const abs = o => ({ position: 'absolute', ...o })
+const row = (o = {}) => ({ display: 'flex', alignItems: 'center', ...o })
+const Glyph = ({ G, size = 12 }) => <span style={{ display: 'inline-block', width: size, height: size, flexShrink: 0 }}><G className="h-full w-full" /></span>
+
+// Soft clouds baked into each Sunbeam picture: the cloud shape, tinted white
+function Cloud({ style, a = 0.3 }) {
+  return <div aria-hidden style={{ position: 'absolute', background: `rgba(255,255,255,${a})`, WebkitMaskImage: 'url(/sb/cloud.png)', maskImage: 'url(/sb/cloud.png)', WebkitMaskSize: '100% 100%', maskSize: '100% 100%', WebkitMaskRepeat: 'no-repeat', maskRepeat: 'no-repeat', ...style }} />
 }
 
-const SHADOW = '0 14px 34px -10px rgba(40,60,120,.18), 0 2px 6px rgba(40,60,120,.05)'
-
-function Note({ tag, tagBg, text, meta, className = '', avatar }) {
+// A real WhatsApp conversation: customer in white, the agent's reply in green
+function Bubble({ me, children, time }) {
   return (
-    <div className={`absolute rounded-[14px] bg-white p-3.5 ${className}`} style={{ boxShadow: SHADOW }}>
-      <span className="inline-block rounded-full px-2.5 py-[3px] text-[10px] font-normal leading-none text-[#1a1a1a]" style={{ background: tagBg }}>{tag}</span>
-      <p className="mt-2 pr-4 text-[12px] font-normal leading-[1.45] text-[#1a1a1a]">{text}</p>
-      <div className="mt-2.5 flex items-center gap-3 text-[10px] text-[#a1a1aa]">
-        <span className="flex items-center gap-1"><Clock size={11} />{meta}</span>
-        <span className="relative flex items-center gap-1"><MessageCircle size={11} /><i className="absolute -left-0.5 -top-0.5 h-1.5 w-1.5 rounded-full bg-[#ef5350]" />1</span>
-        <span className="flex items-center gap-1"><Check size={11} />Sent</span>
-      </div>
-      <span className="absolute right-3.5 top-3.5 flex gap-[3px]"><i className="h-[3px] w-[3px] rounded-full bg-[#c9c9cf]" /><i className="h-[3px] w-[3px] rounded-full bg-[#c9c9cf]" /><i className="h-[3px] w-[3px] rounded-full bg-[#c9c9cf]" /></span>
-      {avatar && <span className="absolute bottom-3 right-3 flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-[#9bbcf6] to-[#c797f7] text-[11px] font-medium text-white">{avatar}</span>}
+    <div style={{ alignSelf: me ? 'flex-end' : 'flex-start', maxWidth: '80%', background: me ? '#d9fdd3' : '#fff', borderRadius: me ? '10px 10px 3px 10px' : '10px 10px 10px 3px', padding: '6px 9px 4px', fontSize: 11.5, lineHeight: 1.35, color: '#111b21', boxShadow: '0 1px 1px rgba(11,20,26,.1)' }}>
+      {children}
+      <span style={{ display: 'block', textAlign: 'right', fontSize: 8.5, color: '#667781', marginTop: 1 }}>{time}{me && <span style={{ color: '#53bdeb', marginLeft: 3 }}>✓✓</span>}</span>
     </div>
   )
 }
 
-function Field({ label, value, className = '', chevron }) {
+function ChatArt() {
   return (
-    <div className={className}>
-      <p className="text-[8px] leading-none text-[#8b8b92]">{label}</p>
-      <div className="mt-1 flex items-center justify-between rounded-[8px] border border-black/[0.07] bg-white px-2 py-[5px] text-[9.5px] leading-none text-[#1a1a1a]"><span className="truncate">{value}</span>{chevron && <ChevronDown size={10} className="shrink-0 text-[#555]" />}</div>
+    <>
+      <Cloud style={{ left: -34, top: -8, width: 200, height: 100 }} a={0.3} />
+      <Cloud style={{ right: -44, bottom: -22, width: 240, height: 120 }} a={0.34} />
+      <div style={abs({ left: 16, top: 30, width: 235, height: 352, borderRadius: 22, background: '#efeae2', boxShadow: SHADOW, overflow: 'hidden' })}>
+        <div style={row({ height: 48, background: '#fff', padding: '0 12px', gap: 8, borderBottom: '1px solid rgba(0,0,0,.05)' })}>
+          <span style={{ width: 28, height: 28, borderRadius: 14, background: 'linear-gradient(135deg,#9bbcf6,#c797f7)', color: '#fff', fontSize: 11, fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>K</span>
+          <span style={{ display: 'flex', flexDirection: 'column', gap: 2 }}><span style={{ fontSize: 11.5, fontWeight: 500, lineHeight: 1, color: '#111b21' }}>Kerala Coir Co.</span><span style={{ fontSize: 9, lineHeight: 1, color: '#1d7a36' }}>AI is replying…</span></span>
+          <span style={{ marginLeft: 'auto' }}><Glyph G={WhatsAppGlyph} size={16} /></span>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '10px 10px 0' }}>
+          <Bubble time="10:41">Price ethra aanu?</Bubble>
+          <Bubble me time="10:41">₹600 aanu 😊 Order cheyyano?</Bubble>
+          <Bubble time="10:42">Delivery undo? Kakkanad</Bubble>
+          <Bubble me time="10:42">Undu, 2 days-il ethum 🚚 Name and address ayakkumo?</Bubble>
+        </div>
+        <div style={abs({ left: 8, right: 8, bottom: 8, height: 30, borderRadius: 15, background: '#fff', ...row({ padding: '0 6px 0 12px', justifyContent: 'space-between' }) })}>
+          <span style={{ fontSize: 10.5, color: '#8696a0' }}>Type a message</span>
+          <span style={{ width: 22, height: 22, borderRadius: 11, background: '#25d366', color: '#fff', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>➤</span>
+        </div>
+      </div>
+      <div style={abs({ right: 10, top: 366, background: '#fff', borderRadius: 14, padding: '5px 10px', fontSize: 10, fontWeight: 500, boxShadow: SHADOW, ...row({ gap: 5 }) })}><span style={{ width: 6, height: 6, borderRadius: 3, background: '#34c759' }} />Replied in 3 sec</div>
+    </>
+  )
+}
+
+function OrderArt() {
+  const Line = ({ k, v }) => <div style={row({ justifyContent: 'space-between', padding: '4px 0', fontSize: 11 })}><span style={{ color: '#8b8b92' }}>{k}</span><span style={{ color: '#1a1a1a', fontWeight: 500 }}>{v}</span></div>
+  return (
+    <>
+      <Cloud style={{ left: -34, top: 0, width: 190, height: 95 }} a={0.28} />
+      <Cloud style={{ right: -46, bottom: -26, width: 230, height: 115 }} a={0.3} />
+      {[[40, 0.22, 36], [50, 0.34, 26], [60, 0.5, 16]].map(([top, o, inset]) => <div key={top} aria-hidden style={abs({ top, left: inset, right: inset, height: 80, borderRadius: 22, background: '#fff', opacity: o })} />)}
+      <div style={abs({ left: 16, right: 16, top: 74, borderRadius: 20, background: '#fff', padding: 14, boxShadow: SHADOW })}>
+        <div style={row({ justifyContent: 'space-between' })}>
+          <span className="font-heading" style={{ fontSize: 15, fontWeight: 500, lineHeight: 1 }}>Order #1048</span>
+          <span style={{ background: '#fff1cf', color: '#9a6b00', fontSize: 10, fontWeight: 500, padding: '3px 8px', borderRadius: 10 }}>Pending</span>
+        </div>
+        <div style={row({ gap: 5, marginTop: 7, fontSize: 10, color: '#71717a' })}><Glyph G={WhatsAppGlyph} size={12} />Captured from a WhatsApp chat</div>
+        <div style={{ height: 1, background: 'rgba(0,0,0,.07)', margin: '10px 0 6px' }} />
+        <div style={row({ justifyContent: 'space-between', fontSize: 11.5, fontWeight: 500, padding: '3px 0 6px' })}><span>2 × Premium Coir Mat</span><span>₹1,200</span></div>
+        <Line k="Customer" v="Anjali" />
+        <Line k="Phone" v="+91 98••• ••21" />
+        <Line k="Address" v="Kakkanad" />
+        <Line k="Delivery" v="2–3 days" />
+        <div style={{ height: 1, background: 'rgba(0,0,0,.07)', margin: '6px 0' }} />
+        <div style={row({ justifyContent: 'space-between', fontSize: 12.5, fontWeight: 600 })}><span>Total</span><span>₹1,200</span></div>
+        <div style={row({ gap: 4, marginTop: 6, fontSize: 10.5, color: '#1d7a36' })}><span style={{ fontWeight: 700 }}>✓</span>Collected by the AI</div>
+        <div style={{ marginTop: 10, background: '#1a1a1a', color: '#fff', borderRadius: 10, textAlign: 'center', fontSize: 11.5, fontWeight: 500, padding: '8px 0' }}>Confirm order</div>
+      </div>
+    </>
+  )
+}
+
+function InboxArt() {
+  const Chat = ({ ic, name, last, chip, tone, hot, avatar }) => (
+    <div style={row({ gap: 8, padding: '8px 10px', borderRadius: 12, background: hot ? '#fff6ea' : 'transparent' })}>
+      <span style={{ position: 'relative', width: 30, height: 30, borderRadius: 15, background: avatar, color: '#fff', fontSize: 11.5, fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{name[0].toUpperCase()}<span style={{ position: 'absolute', right: -3, bottom: -3, background: '#fff', borderRadius: 8, padding: 1, display: 'flex' }}><Glyph G={ic} size={11} /></span></span>
+      <span style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0, flex: 1 }}><span style={{ fontSize: 11.5, fontWeight: 500, lineHeight: 1 }}>{name}</span><span style={{ fontSize: 10, lineHeight: 1.1, color: '#71717a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{last}</span></span>
+      <span style={{ fontSize: 9, fontWeight: 600, padding: '3px 7px', borderRadius: 9, background: tone[0], color: tone[1], flexShrink: 0 }}>{chip}</span>
     </div>
+  )
+  const AI = ['#e1f7e5', '#1d7a36'], NEED = ['#ffe2bd', '#a64b00']
+  return (
+    <>
+      <Cloud style={{ left: -34, top: -8, width: 200, height: 100 }} a={0.34} />
+      <Cloud style={{ right: -44, bottom: -22, width: 240, height: 120 }} a={0.3} />
+      <div style={abs({ left: 16, top: 30, width: 235, height: 352, borderRadius: 22, background: '#fff', boxShadow: SHADOW, padding: '14px 8px' })}>
+        <div style={row({ justifyContent: 'space-between', padding: '0 6px 10px' })}>
+          <span style={{ display: 'flex', flexDirection: 'column', gap: 4 }}><span className="font-heading" style={{ fontSize: 15, fontWeight: 500, lineHeight: 1 }}>Live inbox</span><span style={{ fontSize: 9.5, color: '#71717a', lineHeight: 1 }}>24 chats today</span></span>
+          <span style={row({ gap: 5, fontSize: 9.5, fontWeight: 500 })}>AI replies<span style={{ width: 26, height: 15, borderRadius: 8, background: '#34c759', padding: 2, display: 'flex', justifyContent: 'flex-end' }}><span style={{ width: 11, height: 11, borderRadius: 6, background: '#fff' }} /></span></span>
+        </div>
+        <Chat ic={WhatsAppGlyph} name="Anjali" last="Delivery undo? Kakkanad" chip="AI" tone={AI} avatar="linear-gradient(135deg,#9bbcf6,#7fa8ff)" />
+        <Chat ic={WhatsAppGlyph} name="Daniel" last="Wants to talk to a person" chip="Needs you" tone={NEED} avatar="linear-gradient(135deg,#f6a56b,#ef7d57)" hot />
+        <Chat ic={InstagramGlyph} name="priya_crafts" last="Price for the red bag?" chip="AI" tone={AI} avatar="linear-gradient(135deg,#d79bf7,#a87bff)" />
+        <Chat ic={WhatsAppGlyph} name="Meera" last="Do you have size M in stock?" chip="AI" tone={AI} avatar="linear-gradient(135deg,#f2a3c8,#e87fb0)" />
+        <Chat ic={WhatsAppGlyph} name="Rahul" last="Order placed ✓ ₹1,200" chip="AI" tone={AI} avatar="linear-gradient(135deg,#8fd9a8,#4cc07d)" />
+        <div style={abs({ left: 12, right: 12, bottom: 12, background: '#1a1a1a', color: '#fff', borderRadius: 12, padding: '9px 12px', fontSize: 11.5, fontWeight: 500, ...row({ justifyContent: 'space-between' }) })}>Take over Daniel’s chat<span>→</span></div>
+      </div>
+    </>
   )
 }
 
 function Art({ kind }) {
-  if (kind === 'chat') return (
-    <div className="relative h-full w-full overflow-hidden">
-      <Cloud className="-left-8 -top-2 h-[100px] w-[200px]" a={0.34} />
-      <Cloud className="-bottom-6 -right-10 h-[120px] w-[240px]" a={0.4} />
-      <Note tag="Malayalam" tagBg="#e2fb96" text="Price ethra aanu? Stock undo?" meta="3 sec" className="left-[20px] top-[40px] z-[1] w-[236px] rotate-[8deg]" />
-      <Note tag="English" tagBg="#ecd2fb" text="Do you deliver to Kakkanad? What is the price for 2 mats?" meta="2 sec" className="left-[16px] top-[148px] z-[2] w-[234px]" />
-      <Note tag="Manglish" tagBg="#bddafb" text="Delivery undo? Nale kittumo? Address ithu aanu." meta="3 sec" avatar="A" className="left-[10px] top-[238px] z-[3] w-[240px] -rotate-[9deg]" />
-    </div>
-  )
-  if (kind === 'order') return (
-    <div className="relative h-full w-full overflow-hidden">
-      <Cloud className="-left-8 top-1 h-[90px] w-[180px]" a={0.3} />
-      <Cloud className="-bottom-8 -right-10 h-[100px] w-[200px]" a={0.3} />
-      {[[66, 0.2, 38], [75, 0.3, 28], [84, 0.45, 18]].map(([top, o, inset]) => <div key={top} aria-hidden className="absolute rounded-[22px] bg-white" style={{ top, left: inset, right: inset, height: 70, opacity: o }} />)}
-      <div className="absolute left-[16px] right-[16px] top-[92px] rounded-[18px] bg-white px-3.5 pb-3.5 pt-4" style={{ boxShadow: SHADOW }}>
-        <div className="flex items-center justify-between"><p className="font-heading text-[14px] font-medium leading-none">Order #1048</p><X size={12} className="text-[#444]" /></div>
-        <div className="mt-3 grid grid-cols-2 gap-2"><Field label="Customer" value="Anjali" /><Field label="Phone" value="+91 98•••" /></div>
-        <Field className="mt-2" label="Product" value="2 × Premium Coir Mat" />
-        <Field className="mt-2" label="Address" value="Kakkanad, Ernakulam" />
-        <div className="mt-2 grid grid-cols-2 gap-2"><Field label="Delivery" value="2–3 days" chevron /><Field label="Payment" value="Cash on delivery" chevron /></div>
-        <div className="mt-3 flex items-center justify-between"><span className="text-[9.5px] text-[#8b8b92]">Cancel</span><span className="flex items-center gap-2"><span className="rounded-[8px] border border-black/[0.1] px-2 py-1.5 text-[9.5px] leading-none">Edit</span><span className="rounded-[8px] bg-[#1a1a1a] px-3 py-1.5 text-[9.5px] leading-none text-white">Confirm ₹1,200</span></span></div>
-      </div>
-    </div>
-  )
-  return (
-    <div className="relative h-full w-full overflow-hidden">
-      <Cloud className="-left-8 -top-2 h-[100px] w-[200px]" a={0.38} />
-      <div className="absolute left-[34px] top-[79px] h-[420px] w-[300px] rounded-[18px] bg-white px-3.5 pt-4" style={{ boxShadow: SHADOW }}>
-        <p className="font-heading text-[18px] font-medium leading-none">Live inbox</p>
-        <p className="mt-2 text-[9px] text-[#8b8b92]">Today · <span className="font-medium text-[#1a1a1a]">24 chats</span></p>
-        <div className="mt-3 rounded-[10px] border border-black/[0.07] p-2.5">
-          <div className="flex items-start justify-between"><div><p className="text-[8px] text-[#8b8b92]">Needs you</p><p className="mt-1 text-[11px] font-medium leading-none">Daniel</p></div><div className="text-right"><p className="text-[8px] text-[#8b8b92]">Waiting</p><p className="mt-1 text-[11px] font-medium leading-none">2 min</p></div></div>
-          <p className="mt-2 border-t border-black/[0.06] pt-2 text-[9px] leading-snug text-[#555]">Wants to talk to a person about a bulk order.</p>
-        </div>
-        <div className="mt-3 overflow-hidden rounded-[10px] border border-black/[0.07] text-[9px]">
-          <div className="grid grid-cols-[1.3fr_.8fr_.8fr] bg-[#fdfde4] px-2.5 py-1.5 text-[#8b8b92]"><span>Chat</span><span>Msgs</span><span>By</span></div>
-          {[['Anjali', '12', 'AI'], ['Daniel', '5', 'You'], ['Meera', '8', 'AI'], ['Rahul', '3', 'AI']].map(r => (
-            <div key={r[0]} className="grid grid-cols-[1.3fr_.8fr_.8fr] border-t border-black/[0.05] px-2.5 py-[7px]"><span>{r[0]}</span><span>{r[1]}</span><span>{r[2]}</span></div>
-          ))}
-        </div>
-        <div className="mt-3 flex w-[150px] items-center justify-between rounded-[8px] bg-[#1a1a1a] px-3 py-2 text-[10px] text-white"><span>Take over</span><ArrowRight size={11} /></div>
-      </div>
-    </div>
-  )
+  return <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', minWidth: 267 }}>{kind === 'chat' ? <ChatArt /> : kind === 'order' ? <OrderArt /> : <InboxArt />}</div>
 }
 
 export default function TwoCards() {
@@ -109,7 +140,7 @@ export default function TwoCards() {
                     <p className="text-[16px] font-normal leading-[22.4px] text-[#52525b]">{d}</p>
                   </div>
                 </div>
-                <div className={`relative ml-0 hidden h-full w-[267px] shrink-0 overflow-hidden rounded-[16px] ${isOpen ? 'lg:block' : ''}`} style={{ background: tone }}><div className="relative h-full"><Art kind={art} /></div><Grain strength={0.9} /></div>
+                <div className={`relative ml-0 hidden h-full w-[267px] shrink-0 overflow-hidden rounded-[16px] ${isOpen ? 'lg:block' : ''}`} style={{ background: tone, width: 267, borderRadius: 16 }}><div className="relative h-full"><Art kind={art} /></div><Grain strength={0.9} /></div>
               </div>
             )
           })}
