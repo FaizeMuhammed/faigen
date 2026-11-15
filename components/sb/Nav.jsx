@@ -75,7 +75,6 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center justify-end gap-4">
-          <a href="https://workspace.faigen.in" className="hidden h-10 items-center rounded-[24px] bg-[#f0eeeb] px-6 py-3 text-[16px] font-medium leading-[22.4px] hover:bg-[#e7e4df] sm:inline-flex">Login</a>
           <Link href="/try" className="hidden h-10 items-center gap-1 rounded-[24px] py-1.5 pl-1 pr-3 text-[16px] font-medium leading-[22.4px] sm:inline-flex">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#1a1a1a] text-white"><ArrowRight size={16} /></span><span className="px-1">Try it free</span>
           </Link>
@@ -94,8 +93,7 @@ export default function Nav() {
               ))}
             </nav>
             <div className="flex items-center gap-2 p-2 pt-3">
-              <a href="https://workspace.faigen.in" onClick={() => setOpen(false)} className="flex h-12 flex-1 items-center justify-center rounded-[24px] bg-white text-[16px] font-medium">Login</a>
-              <Link href="/try" onClick={() => setOpen(false)} className="flex h-12 flex-[1.4] items-center justify-center gap-2 rounded-[24px] bg-[#1a1a1a] text-[16px] font-medium text-white">Try it free<ArrowRight size={16} /></Link>
+              <Link href="/try" onClick={() => setOpen(false)} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-[24px] bg-[#1a1a1a] text-[16px] font-medium text-white">Try it free<ArrowRight size={16} /></Link>
             </div>
           </div>
         </div>
