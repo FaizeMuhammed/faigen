@@ -6,11 +6,11 @@ import { ArrowRight, ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react'
 import { WhatsAppGlyph, InstagramGlyph } from '../site/FaigenMark'
 import { ShoppingBag, Megaphone, Inbox } from 'lucide-react'
 const PRODUCT = [
-  { label: 'WhatsApp AI agent', Icon: WhatsAppGlyph, href: '/features' },
-  { label: 'Instagram automation', Icon: InstagramGlyph, href: '/features' },
-  { label: 'Orders & catalog', Icon: ShoppingBag, href: '/features' },
-  { label: 'Broadcast campaigns', Icon: Megaphone, href: '/features' },
-  { label: 'Live inbox', Icon: Inbox, href: '/features' },
+  { label: 'WhatsApp AI agent', desc: 'Replies, takes orders, hands off to you', Icon: WhatsAppGlyph, href: '/features', tile: '#e1f7e5' },
+  { label: 'Instagram automation', desc: 'Comment-to-DM, buttons and chat menu', Icon: InstagramGlyph, href: '/features', tile: '#fbe3f4' },
+  { label: 'Orders & catalog', desc: 'Name, product and address, in chat', Icon: ShoppingBag, href: '/features', tile: '#fff1cf' },
+  { label: 'Broadcast campaigns', desc: 'Offers with images and Interested buttons', Icon: Megaphone, href: '/features', tile: '#ece3ff' },
+  { label: 'Live inbox', desc: 'Watch every chat and take over any time', Icon: Inbox, href: '/features', tile: '#dcebff' },
 ]
 const LINKS = [['Use cases', '/use-cases'], ['Pricing', '/pricing'], ['About', '/about'], ['Contact', '/contact']]
 
@@ -49,11 +49,24 @@ export default function Nav() {
           <div className="relative" onMouseEnter={() => setMenu(true)} onMouseLeave={() => setMenu(false)}>
             <button className="flex h-8 items-center gap-1 py-[5px] text-[16px] font-medium leading-[22.4px]" aria-expanded={menu}>Product<ChevronDown size={15} className={`transition-transform ${menu ? 'rotate-180' : ''}`} /></button>
             {menu && (
-              <div className="absolute left-1/2 top-full w-[260px] -translate-x-1/2 pt-2">
-                <div className="rounded-[20px] bg-white p-2 shadow-[0_20px_50px_-20px_rgba(0,0,0,.3)] ring-1 ring-black/[0.05]">
-                  {PRODUCT.map(({ label, Icon, href }) => (
-                    <Link key={label} href={href} className="flex items-center gap-3 rounded-[14px] px-3 py-2.5 text-[15px] font-medium hover:bg-[#f0eeeb]"><Icon className="h-5 w-5" size={20} />{label}</Link>
-                  ))}
+              <div className="sb-menu-in absolute left-1/2 top-full z-10 w-[400px] -translate-x-1/2 pt-3">
+                <div className="rounded-[28px] bg-[#f0eeeb] p-2 shadow-[0_30px_70px_-24px_rgba(0,0,0,.35)]">
+                  <div className="rounded-[22px] bg-white p-2">
+                    {PRODUCT.map(({ label, desc, Icon, href, tile }) => (
+                      <Link key={label} href={href} onClick={() => setMenu(false)} className="group flex items-center gap-3.5 rounded-[16px] px-3 py-2.5 hover:bg-[#f8f6f4]">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px]" style={{ background: tile }}><Icon className="h-[22px] w-[22px]" size={22} strokeWidth={1.8} /></span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-[15.5px] font-medium leading-[20px] text-[#1a1a1a]">{label}</span>
+                          <span className="block text-[13px] leading-[18px] text-[#71717a]">{desc}</span>
+                        </span>
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f0eeeb] text-[#1a1a1a] opacity-0 transition-opacity group-hover:opacity-100"><ArrowUpRight size={14} /></span>
+                      </Link>
+                    ))}
+                  </div>
+                  <Link href="/features" onClick={() => setMenu(false)} className="flex items-center justify-between px-4 py-3 text-[14px] font-medium text-[#1a1a1a]">
+                    See everything Faigen does
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#1a1a1a] text-white"><ArrowRight size={13} /></span>
+                  </Link>
                 </div>
               </div>
             )}
