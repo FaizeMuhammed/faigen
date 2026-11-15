@@ -21,13 +21,13 @@ export default function Features() {
         <H2 className="mx-auto max-w-[780px] text-center">Everything your customers ask for, handled in one place</H2>
         <div className="flex flex-col gap-10">
           {PANELS.map(({ title, text, tags, kind, link }) => (
-            <article key={title} className="sticky top-[90px] rounded-[24px] bg-[#f0eeeb] p-6 shadow-[0_-12px_32px_rgba(128,128,128,0.05)] sm:p-10">
+            <article key={title} className="rounded-[24px] lg:sticky lg:top-[90px] bg-[#f0eeeb] p-6 shadow-[0_-12px_32px_rgba(128,128,128,0.05)] sm:p-10">
               <div className="grid gap-10 lg:min-h-[500px] lg:grid-cols-2">
                 <div className="flex flex-col justify-between gap-8">
                   <div className="flex flex-col gap-5">
                     <h3 className="font-heading text-[clamp(1.9rem,3vw,2.625rem)] font-medium leading-[1.2] text-[#1a1a1a]">{title}</h3>
                     <p className="text-[16px] font-normal leading-[22.4px] text-[#52525b]">{text}</p>
-                    <div className="mt-1 flex flex-col gap-2">{tags.map(([Icon, label]) => <Tag key={label} icon={Icon}>{label}</Tag>)}</div>
+                    <div className="mt-1 flex flex-row flex-wrap gap-2 lg:flex-col">{tags.map(([Icon, label]) => <Tag key={label} icon={Icon}>{label}</Tag>)}</div>
                   </div>
                   <TryLink href={link[1]}>{link[0]}</TryLink>
                 </div>

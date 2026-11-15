@@ -31,7 +31,7 @@ export default function Orbit() {
         </ScaleBox>
         </div>
         {/* phones: the middle of the picture at a bigger size so every icon stays readable */}
-        <div className="relative h-[372px] w-full overflow-hidden md:hidden">
+        <div className="relative -mx-5 h-[372px] w-[calc(100%+40px)] overflow-hidden md:hidden">
           <div className="absolute left-1/2 top-0" style={{ width: 1200, transform: "translateX(-50%) scale(.64)", transformOrigin: "top center" }}>
             <div className="relative h-[544px] w-[1200px] overflow-hidden">
             {[643, 550, 498, 430, 378].map(r => <div key={r} aria-hidden className="absolute rounded-full border border-[#1a1a1a]/[0.07] bg-gradient-to-b from-[#1a1a1a]/[0.02] to-transparent" style={{ width: r * 2, height: r * 2, left: CX - r, top: CY - r }} />)}
