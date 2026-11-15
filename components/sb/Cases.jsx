@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import { ArrowUpRight, NotebookPen, Bot, Rocket } from 'lucide-react'
 import { GreyPill, Wrap, H2 } from './ui'
 
@@ -11,6 +14,8 @@ const STEPS = [
 ]
 
 export default function Cases() {
+  // One card is always selected (Step 1 to begin with). Hover or tap another to move the selection; it stays where you leave it.
+  const [on, setOn] = useState(0)
   return (
     <section className="bg-[#fafaf9] py-20">
       <Wrap className="flex flex-col gap-10">
@@ -19,8 +24,8 @@ export default function Cases() {
           <GreyPill href="/contact" tall>Talk to us</GreyPill>
         </div>
         <div className="grid gap-2 rounded-[32px] bg-[#f0eeeb]/70 p-2 md:grid-cols-3">
-          {STEPS.map(({ Icon, n, lead, rest, disc, img, hl, hr }) => (
-            <div key={n} className="sb-case" style={{ minHeight: 430, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#fafaf9', borderRadius: 24, padding: 24, '--hl': hl, '--hr': hr }}>
+          {STEPS.map(({ Icon, n, lead, rest, disc, img, hl, hr }, i) => (
+            <div key={n} className="sb-case" data-on={on === i} onMouseEnter={() => setOn(i)} onClick={() => setOn(i)} style={{ minHeight: 430, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#fafaf9', borderRadius: 24, padding: 24, '--hl': hl, '--hr': hr }}>
               <div aria-hidden className="sb-case-bg" style={{ backgroundImage: `url(${img})` }} />
               <div style={{ position: 'relative', zIndex: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 0' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
