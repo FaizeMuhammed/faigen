@@ -35,7 +35,7 @@ export default function CtaFooter() {
         <div className="relative z-10 rounded-[24px] bg-white/80 p-6 backdrop-blur-sm sm:p-10">
           <div className="flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-[91px]">
             <div className="flex flex-col gap-10 lg:w-[400px]">
-              <SbLogo />
+              <SbLogo full />
               <p className="max-w-[320px] text-[16px] leading-[22.4px] text-[#535353]">AI agents that answer your customers on WhatsApp and Instagram, in every language.</p>
               <div className="flex gap-2">
                 {[[InstagramGlyph, 'https://instagram.com/faigen_ai', 'Instagram'], [WhatsAppGlyph, '/try', 'WhatsApp'], [Mail, 'mailto:info@faigen.in', 'Email']].map(([Icon, href, label]) => (

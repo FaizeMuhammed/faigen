@@ -50,10 +50,12 @@ export const PANEL = {
   lime: 'linear-gradient(135deg,#c8fb68 0%,#d6fd7e 60%,#dcfe87 100%)',
 }
 
-// New logo (test): the app-icon tile from the design file, icon only
-export function SbLogo({ size = 32 }) {
+// Downloaded brand assets: icon only or full wordmark for light/dark backgrounds.
+export function SbLogo({ size = 32, full = false, dark = false }) {
+  const width = full ? size * 538 / 160 : size
+  const src = full ? `/sb/faigen-logo-full${dark ? '-white' : ''}.svg` : '/sb/faigen-logo.svg'
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src="/sb/faigen-logo.svg" alt="Faigen" width={size} height={size} style={{ width: size, height: size }} />
+    <img src={src} alt="Faigen" width={width} height={size} style={{ width, height: size }} />
   )
 }
